@@ -1,5 +1,9 @@
 ---
 title: 使用 hexo + github 部署博客
+toc: true
+date: 2018-05-14 19:19:44
+tags:
+	- tool
 ---
 
 # 安装部署 [hexo](https://hexo.io/zh-cn/docs/index.html)
@@ -52,7 +56,7 @@ $ npm d
 1. 带目录结构的：
 	2. [cactus](https://github.com/probberechts/hexo-theme-cactus/blob/master/README.md)：英文的，有几种颜色可以选，带目录，可以配置搜索，简洁，这是[white 版本的](https://probberechts.github.io/hexo-theme-cactus/cactus-white/public/archives/)
 	3. [aircloud](https://github.com/aircloud/hexo-theme-aircloud)：英文中文都 ok，有目录，还可以搜索
-	4. [next](https://github.com/theme-next/hexo-theme-next)：有目录，也有集成搜索的文档，这是一个 [example](http://www.itfanr.cc/about/)，参照 [第三方集成](https://theme-next.iissnan.com/third-party-services.html) 集成搜索等功能
+	4. [next](https://github.com/theme-next/hexo-theme-next)：有目录，也有集成搜索的文档，这是一个 [example](http://www.itfanr.cc/about/)，参照 [第三方集成](https://theme-next.iissnan.com/third-party-services.html) 集成搜索等功能. next 优化配置可参考 [这篇文章](http://www.vitah.net/posts/20f300cc/)
 	5. [yilia](https://github.com/litten/hexo-theme-yilia)：有目录，有搜索，[owner 博客](http://litten.me/2017/12/29/diary-2017-1222-1229/)
 3. 没有目录，没有 tag
 	3. [apollo](https://github.com/pinggod/hexo-theme-apollo)：[blog](http://pinggod.com/archives/) 是中文的，比较简单，颜色也好看

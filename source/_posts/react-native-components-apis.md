@@ -2,6 +2,7 @@
 title: react native components & apis
 tags:
   - react native
+  - react
 ---
 
 react 提倡组件化开发，以促进复用。react native 也一样是组件化开发思想。不同的是，react 中是使用原生的 html 组件作为基本组件（div、a...），而 react native 使用的是另一些原生组件。用户的自定义组件也是基于这些原生组件。
