@@ -1,10 +1,11 @@
 ---
 title: java reflection
 toc: true
-date: 2018-07-14 22:37:43
 tags:
-	- java
+  - java
+date: 2018-07-14 22:37:43
 ---
+
 
 
 # 泛型

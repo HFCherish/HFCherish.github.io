@@ -156,5 +156,5 @@ $ aws cloudformation describe-stacks \
 ]
 
 # 根据生成的链接访问 api
-$ curl https://xxxxxxx.execute-api.us-west-2.amazonaws.com/Prod/ping
+$ curl https://xxxxxxx.execute-api.us-west-2.amazonaws.com/Prod/ping¡
 ```

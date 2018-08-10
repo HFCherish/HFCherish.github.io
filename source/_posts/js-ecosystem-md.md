@@ -1,10 +1,11 @@
 ---
 title: js ecosystem
 toc: true
-date: 2018-06-21 11:54:38
 tags:
-	- javascript
+  - javascript
+date: 2018-06-21 11:54:38
 ---
+
 
 我在学习 react，一直在使用 [create-react-app](https://github.com/facebook/create-react-app) 创建项目。create-react-app 其实包括两个核心：
 
