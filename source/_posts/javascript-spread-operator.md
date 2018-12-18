@@ -6,6 +6,8 @@ tags:
 	- javascript
 ---
 
+# `...` 扩展运算符
+
 `...obj` 是 js 的扩展运算符，可以将一个可迭代的对象在函数调用的位置展开成为多个参数,或者在数组字面量中展开成多个数组元素。(其他可参见[运算符介绍](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators#Relational_operators)，[运算符和表达式清单 reference](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators))
 
 eg.
@@ -22,3 +24,10 @@ function f(x, y, z) { }
 var args = [0, 1, 2];
 f(...args);
 ```
+
+# `` template literals
+
+[template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
+
+[sql template strings](https://www.npmjs.com/package/sql-template-strings)
+
