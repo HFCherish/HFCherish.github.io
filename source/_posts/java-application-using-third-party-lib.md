@@ -1,5 +1,5 @@
 ---
-title: java.lang.UnsatisfiedLinkError: no xxx in java.library.path
+title: "java.lang.UnsatisfiedLinkError: no xxx in java.library.path"
 toc: true
 date: 2018-08-14 10:07:06
 tags:

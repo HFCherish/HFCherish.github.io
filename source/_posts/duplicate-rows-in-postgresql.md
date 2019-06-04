@@ -1,11 +1,12 @@
 ---
 title: duplicate rows in postgresql
 toc: true
-date: 2018-11-06 14:53:28
 tags:
-	- sql
-	- postgres
+  - sql
+  - postgres
+date: 2018-11-06 14:53:28
 ---
+
 
 参见 [Search and destroy duplicate rows in PostgreSQL](https://blog.theodo.fr/2018/01/search-destroy-duplicate-rows-postgresql/)
 

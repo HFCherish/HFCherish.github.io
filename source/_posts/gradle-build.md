@@ -19,3 +19,9 @@ tags:
 # classpath
 
 classpath 指定的是 java 类所在的目录（包括当前项目的类、依赖的类等）。应该是当打 jar 包的时候，默认会加上当前目录(.)到 classpath，这样就包含了 jar 内部的类？
+
+
+
+# implementation vs compile vs api
+
+[stackoverflow](https://stackoverflow.com/questions/44493378/whats-the-difference-between-implementation-and-compile-in-gradle)
