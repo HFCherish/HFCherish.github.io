@@ -1,10 +1,11 @@
 ---
-title: 'c# simple'
+title: 'c# basic'
 toc: true
 tags:
   - 'c#'
 date: 2019-06-05 17:11:28
 ---
+
 
 
 # .net, asp.net, c#
