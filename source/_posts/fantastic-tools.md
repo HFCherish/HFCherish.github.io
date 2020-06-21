@@ -49,6 +49,18 @@ tags:
 	* 刷新配置使其生效：`source ~/.zshrc`
 7. 显示快捷键配置
 	* preferences -> keys -> hotKey -> Show/Hide all... -> 设置为 `⌘.`
+7. 常用的配置：
+   1. 配置新开重开使用之前的目录：preferences -> profiles -> general -> working directory -> reuse previous session's directory
+   2. 配置快速切换 iterm 的快捷键：preferences -> keys -> hot key -> show/hide all windows with a system-wide hotkey
+   3. 配置窗口透明度和默认启动大小：preferences -> profiles -> window
+   4. 配置 command line move-by-word, delete-by-word: preferences -> profiles -> keys ([stackoverflow](https://apple.stackexchange.com/questions/154292/iterm-going-one-word-backwards-and-forwards))
+      1. 向左移动 by word (⌥b)，向右移动 by word (⌥f)，删除右边 by word (⌥d)
+         1. Under Profile Shortcut Keys, click the + sign.
+         2. Type your key shortcut (option-b, option-f, option-d, option-left, etc.)
+         3. For Action, choose Send Escape Sequence.
+         4. Write b, d or f in the input field.
+      2. 删除左边 by word (⌥⌫)
+         1. preferences -> profiles -> keys -> left option (⌥) key : Esc+
 
 ### iterm2 常用快捷键
 
@@ -56,6 +68,7 @@ tags:
 * `⌘⇧d`：竖分屏
 * `⌘⌥ + direction`：navigate between panes
 * `⌘.`：show/hide iterm2
+* `⌘⇧↩︎`: 最大化当前 pane / 回复当前 pane
 
 # reading
 
@@ -68,3 +81,16 @@ tags:
 * [json editor online](https://jsoneditoronline.org/): 界面简单，有 json tree，统计了 tree 节点数
 * [json viewer](http://jsonviewer.stack.hu/): 功能精简，格式化 json，没有 tree
 * [yaml to json](https://codebeautify.org/yaml-to-json-xml-csv): yaml 和 json 之间的转化
+
+# Editing
+
+* typora: markdown tool
+* [clipy](https://github.com/Clipy/Clipy): free tool for pasting
+
+# Others
+
+* [karabiner](https://karabiner-elements.pqrs.org/): 定义快捷键。可以将 caps 键重新映射，在自定义快捷键时避免冲突
+* [shiftit](https://github.com/fikovnik/ShiftIt): 窗口 size & location 定义。用 brew 安装 `brew cask install shiftit`
+* Eudic: 好用的词典，可以有一个简单悬浮窗口
+* Alfred: easy used spotlight substitute to search in Mac
+
