@@ -75,6 +75,10 @@ tags:
 * [我的小书屋](http://www.shuwu.mobi/)
 * [readfree](http://readfree.me/)：可以直接推送到 kindle，很方便
 
+# music
+
+* [超高无损音乐下载](https://www.sq688.com)
+
 # json
 
 * [json formatter](https://jsonformatter.org/xml-viewer): json、xml 等都支持，可以格式化，有 json tree，统计了节点数
