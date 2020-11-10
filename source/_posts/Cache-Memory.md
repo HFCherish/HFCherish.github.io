@@ -76,6 +76,15 @@ date: 2020-06-28 15:29:22
 
 ![cache-memory-simple.036](/images/cache-memory-simple.036.jpeg)
 
+[cache coherency](https://www.infoq.cn/article/cache-coherency-primer)
+
+MESI protocol: (Modified, Exclusive, Shared, Invalid)
+
+>* **I**nvalid lines are cache lines that are either not present in the cache, or whose contents are known to be stale. For the purposes of caching, these are ignored. Once a cache line is invalidated, it’s as if it wasn’t in the cache in the first place.
+>* **S**hared lines are clean copies of the contents of main memory. Cache lines in the shared state can be used to serve reads but they can’t be written to. Multiple caches are allowed to have a copy of the same memory location in “shared” state at the same time, hence the name.
+>* **E**xclusive lines are also clean copies of the contents of main memory, just like the S state. The difference is that when one core holds a line in E state, no other core may hold it at the same time, hence “exclusive”. That is, the same line must be in the I state in the caches of all other cores.
+>* **M**odified lines are dirty; they have been locally modified. If a line is in the M state, it must be in the I state for all other cores, same as E. In addition, modified cache lines need to be written back to memory when they get evicted or invalidated – same as the regular dirty state in a write-back cache.
+
 # Principle Of Locality
 
 ![cache-memory-simple.038](/images/cache-memory-simple.038.jpeg)

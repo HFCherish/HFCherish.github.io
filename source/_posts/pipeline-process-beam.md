@@ -1,11 +1,12 @@
 ---
 title: 'pipeline process: beam'
 toc: true
-date: 2019-01-30 17:02:49
 tags:
-	- bigdata
-	- distributed processing
+  - bigdata
+  - distributed processing
+date: 2019-01-30 17:02:49
 ---
+
 
 # What's beam
 

@@ -5,12 +5,12 @@ tags:
   - hadoop
   - hive
   - data warehouse
+  - big data
 toc: true
 date: 2019-01-03 14:50:02
 ---
 
-
-[apache hive](https://cwiki.apache.org/confluence/display/Hive/Home#Home-HiveDocumentation) 是一个 data warehouse 应用。支持分布式存储的大数据读、写和管理，并且支持使用标准的 SQL 语法查询。
+[apache hive](https://cwiki.apache.org/confluence/display/Hive/Home#Home-HiveDocumentation) 是一个 data warehouse 应用。支持分布式存储的大数据读、写和管理，并且支持使用标准的 SQL 语法查询。Hive is not a database.  This is to make use of SQL capabilities by defining a metadata to the files in HDFS.  Long story short, it brings the possibility to query the hdfs file.
 
 hive 并没有固定的数据存储方式。自带的是 csv（comma-separated value）和 tsv (tab-separated values) connectors，也可以使用 connector for other formats。
 

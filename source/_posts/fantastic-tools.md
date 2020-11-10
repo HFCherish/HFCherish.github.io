@@ -18,6 +18,9 @@ tags:
 [组件库大合集2](https://github.com/JingwenTian/awesome-frontend)
 
 # mac
+
+[强迫症的Mac设置指南](https://insights.thoughtworks.cn/ocds-guide-to-setting-up-mac/)
+
 ## terminal
 
 [10 Must know terminal commands and tips for productivity](10 Must know terminal commands and tips for productivity) 介绍了一些，简单罗列下：
@@ -70,10 +73,16 @@ tags:
 * `⌘.`：show/hide iterm2
 * `⌘⇧↩︎`: 最大化当前 pane / 回复当前 pane
 
+# Git
+
+* [git-fitler-repo](https://github.com/newren/git-filter-repo)
+
 # reading
 
 * [我的小书屋](http://www.shuwu.mobi/)
 * [readfree](http://readfree.me/)：可以直接推送到 kindle，很方便
+* [不老歌](http://bulaoge.cn/)：写日记
+* [宝书网](https://www.baoshuu.com/)
 
 # music
 

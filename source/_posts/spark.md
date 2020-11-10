@@ -1,11 +1,13 @@
 ---
 title: spark
 toc: true
-date: 2019-01-10 10:17:01
 tags:
-	- hadoop
-	- distributed computing
+  - hadoop
+  - distributed computing
+  - big data
+date: 2019-01-10 10:17:01
 ---
+
 
 [spark](https://spark.apache.org/docs/2.4.0/) is a fast and general-purpose cluster computing system like Hadoop Map-reduce.
 

@@ -5,6 +5,7 @@ tags:
   - hadoop
   - distributed computing
   - resource manager
+  - big data
 date: 2019-01-09 17:27:05
 ---
 

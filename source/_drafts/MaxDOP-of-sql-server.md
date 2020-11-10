@@ -20,3 +20,6 @@ When setting it as 1, you alwase process the query sequentially. You suppress th
 
 Why? While this options seems to give better performance on queries and other options, why do we want to reduce it?
 
+
+
+Say a server 
