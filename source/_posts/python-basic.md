@@ -36,6 +36,64 @@ Errors should never pass silently: In general, when an error occurs, you should 
 \- constants (variables that never change value) should be CAPS_WITH_UNDERSCORES;
 \- names that would clash with Python keywords (such as 'class' or 'if') should have a trailing underscore.
 
+# install
+
+## Brew install
+
+```sh
+$ brew install python
+```
+
+## install multiple version
+
+```sh
+# use pyenv to install multiple version
+$ brew update
+$ brew install pyenv
+
+# Clone the repository to to get the latest version of pyenv
+$ git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+
+# define envs
+$ echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
+$ echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
+$ source ~/.zshrc
+
+# get all versions that can be installed
+$ pyenv install --list
+$ pyenv install 3.7
+
+# all current installed
+$ pyenv versions
+# current active
+$ pyenv version
+
+# set as gloabl version
+$ pyenv global 3.7
+# set a local version 
+# This command creates a .python-version file in your current directory. If you have pyenv active in your environment, this file will automatically activate this version for you.
+$ pyenv local 3.7
+# set as shell version
+# This command activates the version specified by setting the PYENV_VERSION environment variable. This command overwrites any applications or global settings you may have. If you want to deactivate the version, you can use the --unset flag.
+$ pyenv shell 3.7
+
+
+# check the version
+$ python3 --version
+
+# add this to ~/.zshrc if the global command not work, to active the pyenv shell features
+$ eval "$(pyenv init -)"
+```
+
+![Pyenv pyramid for order of resolution](https://files.realpython.com/media/pyenv-pyramid.d2f35a19ded9.png)
+
+
+
+Other pythons installed:
+
+* /usr/local/bin
+* /usr/local/Cellar
+
 # pip
 
 [pip](https://pypi.org/project/pip/) is the package installer for python.
@@ -50,12 +108,26 @@ On windows, to use `pip` after python installation, you need to config both the 
 $ export PATH=$PATH:c/users/xiaoming/AppData/Programs/Python/Python37:c/users/xiaoming/AppData/Programs/Python/Python37/Scripts
 ```
 
+## common used commands
+
+```sh
+# list all installed packages
+$ pip freeze
+
+# downgrade pip
+$ python -m install pip=20.2.4
+# upgrade pip
+$ python -m pip install --upgrade pip
+```
+
+
+
 # Packaging
 
 In Python, the term **packaging** refers to putting modules you have written in a standard format, so that other programmers can install and use them with ease.
 This involves use of the modules **setuptools** and **distutils**.
 
-1. organize existing files correctly. Place all of the files you want to put in a library in the same parent directory. This directory should also contain a file called **\__init__.py**, which can be blank but must be present in the directory.
+1. organize existing files correctly. Place all of the files you want to put in a library in the same parent directory. This directory should also contain a file called **\__init__.py**, which can be blank but must be present in the directory. `__init__.py` turns a directory to a module.
    This directory goes into another directory containing the readme and license, as well as an important file called **setup.py**.
 
 	 ```
@@ -85,6 +157,44 @@ This involves use of the modules **setuptools** and **distutils**.
   1. Run `python setup.py bdist` or, for Windows, `python setup.py bdist_wininst` to build a binary distribution.
 5. Upload the package to **PyPI**. Use `python setup.py register`, followed by `python setup.py sdist upload` to upload a package.
 6. install a package with `python setup.py install`.
+
+## \__init__.py
+
+[Python __init__.py 作用详解](https://www.cnblogs.com/Lands-ljk/p/5880483.html)
+
+`__init__.py` 文件的作用是将文件夹变为一个Python模块,Python 中的每个模块的包中，都有`__init__.py` 文件。
+
+通常`__init__.py` 文件为空，但是我们还可以为它增加其他的功能。我们在导入一个包时，实际上是导入了它的`__init__.py`文件。这样我们可以在`__init__.py`文件中批量导入我们所需要的模块，而不再需要一个一个的导入。
+
+```
+# package
+# __init__.py
+import re
+import urllib
+import sys
+import os
+
+# a.py
+import package 
+print(package.re, package.urllib, package.sys, package.os)
+```
+
+注意这里访问`__init__.py`文件中的引用文件，需要加上包名。
+
+`__init__.py`中还有一个重要的变量，`__all__`, 它用来将模块全部导入。
+
+```
+# __init__.py
+__all__ = ['os', 'sys', 're', 'urllib']
+
+# a.py
+from package import *
+```
+
+这时就会把注册在`__init__.py`文件中`__all__`列表中的模块和包导入到当前文件中来。
+
+可以了解到，`__init__.py`主要控制包的导入行为。
+
 ## setup.py
 
 [setuptools](https://setuptools.readthedocs.io/en/latest/) is the packaging tool for python (like maven/gradle for java?)
@@ -198,7 +308,7 @@ d.name 	# 'heidou'
 d.shout()	
 # wong
 # ha
-  ```
+```
 
 ## `__new__` vs `__init__`
 
@@ -212,9 +322,9 @@ When you are instantiate an instance by calling the class, the `__new__` gets ca
 
 The `__new__` definition:
 
-​```python
+```python
 __new__(cls, *args, **kwargs)	
-  ```
+```
 
 An example:
 
@@ -306,7 +416,7 @@ r.area() # 20
 s = Rectangle.new_square(4)
 s.area() # 16
 Rectangle.validate_int('fd')
-```
+  ```
 
 ## Properties
 
@@ -316,7 +426,7 @@ One common use of a property is to make an attribute **read-only**.
 Properties can also be set by defining **setter/getter** functions.
 The **setter** function sets the corresponding property's value. To define a **setter**, you need to use a decorator of the same name as the property, followed by a dot and the **setter** keyword.
 
-```python
+​```python
 class Pizza:
   def __init__(self, a):
     self._a = a
@@ -331,7 +441,7 @@ p = Pizza(7)
 p.a_list # [7, 7, 7, 7, 7, 7, 7, 7, 7, 7]
 p.a_list = [1]
 p.a_list # [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-```
+  ```
 
 
 
@@ -803,3 +913,37 @@ The library **SciPy** contains numerous extensions to the functionality of **Num
 Python can also be used for **game development**.
 Usually, it is used as a scripting language for games written in other languages, but it can be used to make games by itself.
 For 3D games, the library **Panda3D** can be used. For 2D games, you can use **pygame**.
+
+# Issues
+
+## Make class method return self type
+
+https://stackoverflow.com/questions/33533148/how-do-i-type-hint-a-method-with-the-type-of-the-enclosing-class
+
+If you are using Python 3.10 or later, it just works. As of today (2019) in 3.7+ you must turn this feature on using a future statement (`from __future__ import annotations`) - for Python 3.6 or below use a string.
+
+### Python 3.7+: `from __future__ import annotations`
+
+```python
+from __future__ import annotations
+
+class Position:
+    def __add__(self, other: Position) -> Position:
+        ...
+```
+
+### Python <3.7: use a string
+
+```python
+class Position:
+    ...
+    def __add__(self, other: 'Position') -> 'Position':
+       ...
+```
+
+## Circular import
+
+[circular import](https://zhuanlan.zhihu.com/p/66228942)
+
+modify the position of import to fix the issues
+

@@ -57,6 +57,15 @@ copy content in source to dest
 
 ## hdfs dfs -get
 
+## hdfs dfs -du -h -v
+
+It displays sizes of files and directories contained in the given directory or the length of a file in case it's just a file.
+
+- The **-s** option will result in an **aggregate summary of file lengths** being displayed, rather than the individual files. Without the -s option, the calculation is done by going 1-level deep from the given path.
+- The **-h** option will format file sizes in a **human-readable** fashion (e.g 64.0m instead of 67108864)
+- The **-v** option will display **the names of columns** as a header line.
+- The **-x** option will **exclude snapshots** from the result calculation. Without the -x option (default), the result is always calculated from all INodes, including all snapshots under the given path.
+
 # web ui
 
 [hdfs default ports](https://ambari.apache.org/1.2.3/installing-hadoop-using-ambari/content/reference_chap2_1.html) are changed. see [here](https://issues.apache.org/jira/browse/HDFS-9427)

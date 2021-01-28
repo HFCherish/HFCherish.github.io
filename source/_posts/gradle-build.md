@@ -22,6 +22,42 @@ classpath 指定的是 java 类所在的目录（包括当前项目的类、依�
 
 
 
+# Thin jar
+
+[gradle lean](https://github.com/cuzfrog/gradle-lean)
+
+This plugin depends on `JavaPlugin` and `ApplicationPlugin`.
+
+- for `installDist`, jars under `install/$PROJECT_NAME$/lib/`
+- for `distZip`, jars under `/lib/` inside package
+
+```groovy
+plugins {
+    id 'java'
+    // Apply the application plugin to add support for building a CLI application.
+    id 'application'
+
+    id 'scala'
+
+    id 'com.github.maiflai.scalatest' version '0.26'
+
+    id "com.github.gradle-lean" version "0.1.2"
+}
+```
+
 # implementation vs compile vs api
 
 [stackoverflow](https://stackoverflow.com/questions/44493378/whats-the-difference-between-implementation-and-compile-in-gradle)
+
+# Dependency Conflict
+
+## force some edition
+
+```groovy
+configurations.all {
+    resolutionStrategy {
+        force 'com.fasterxml.jackson.module:jackson-module-scala_2.11:2.10.3'
+    }
+}
+```
+

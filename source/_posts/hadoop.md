@@ -5,6 +5,7 @@ tags:
   - hadoop
   - distributed storage
   - distributed computing
+  - big data
 toc: true
 date: 2019-01-07 14:46:44
 ---

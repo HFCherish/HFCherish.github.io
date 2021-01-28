@@ -138,3 +138,28 @@ $ mapred historyserver
 * yarn rest api:  throught postman http://localhost:8088/ws/v1/cluster/apps (get all the apps)
 * history rest api: http://cnpzzheng.local:19888/ws/v1/history (get server info)
   * use 19888 instead of 10020
+
+
+
+# CheatSheet
+
+[link](https://www.jianshu.com/p/f510a1f8e5f0)
+
+```sh
+# 查看正在运行的程序资源使用情况
+$ yarn top
+$ yarn node -all -list
+
+# 查看指定queue使用情况
+$ yarn queue -status root.users.xxx
+$ yarn application -movetoqueue application_1528080031923_0067 -queue root.users.xxx
+
+$ yarn application -list -appStates [ALL,NEW,NEW_SAVING,SUBMITTED,ACCEPTED,RUNNING,FINISHED,FAILED,KILLED]
+$ yarn application -list -appTypes [SUBMITTED, ACCEPTED, RUNNING]
+$ yarn applicationattempt -list application_1528080031923_0064
+
+$ yarn application -kill application_1528080031923_0067
+
+$ yarn logs -applicationId application_1528080031923_0064
+```
+

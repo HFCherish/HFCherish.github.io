@@ -71,3 +71,58 @@ $ chown user1:family file1
 $ find ./* -name '*.xml'
 ```
 
+To find all files modified in the last 24 hours (last full day) in a particular specific directory and its sub-directories:
+
+```sh
+$ find /directory_path -mtime -1 -ls
+```
+
+Should be to your liking
+
+The `-` before `1` is important - it means anything changed one day or less ago. A `+` before `1` would instead mean anything changed at least one day ago, while having nothing before the `1` would have meant it was changed exacted one day ago, no more, no less.
+
+
+Another, more humane way:
+
+```sh
+find /<directory> -newermt "-24 hours" -ls
+```
+
+or:
+
+```sh
+find /<directory> -newermt "1 day ago" -ls
+```
+
+or:
+
+```sh
+find /<directory> -newermt "yesterday" -ls
+```
+
+# ls
+
+```sh
+# list file with creation date and sort by it
+$ ls -lct
+```
+
+# List users
+
+```sh
+$ cat /etc/passwd | cut -d: -f1
+```
+
+# pbcopy
+
+```sh
+# copy file content to clipboard
+$ pbcopy < test.txt
+```
+
+# dstat
+
+```sh
+$ dstat -t -a --tcp --output network.log
+```
+

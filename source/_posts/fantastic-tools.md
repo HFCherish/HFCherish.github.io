@@ -27,14 +27,15 @@ tags:
 
 1. `iterm2`：是一种 terminal，将其作为默认 terminal，可以方便的分屏等
 2. `oh my zsh`：管理 zsh 配置的，使用 `~/.zshrc`，利用 `source ~/.zshrc` 可以是配置立马生效
+   1. [oh my zsh 插件](https://hustyichi.github.io/2018/09/19/oh-my-zsh/)
 3. `cat`：不打开文件的情况下查看内容
 4. `imgcat`：同上，不过查看的是图片
 5. `less [filename]`：同 `cat`，不过如果长文件，可以用这个，仅显示一部分
-5. `pbcopy < [filename]`：复制文件内容到 clipboard
-6. `touch`：创建各种各样的文件，可以同时创建多个。eg. `touch index.html readme.md index.php`
-7. `lsof -i :[port]`：查看端口占用
-8. `&&`：实现 command chaining，即同时写多个命令，依次执行。eg. `npm i && npm start`
-9. `open .`：打开当前目录
+6. `pbcopy < [filename]`：复制文件内容到 clipboard
+7. `touch`：创建各种各样的文件，可以同时创建多个。eg. `touch index.html readme.md index.php`
+8. `lsof -i :[port]`：查看端口占用
+9. `&&`：实现 command chaining，即同时写多个命令，依次执行。eg. `npm i && npm start`
+10. `open .`：打开当前目录
 
 ### iterm2 + oh my zsh + theme 配置
 
@@ -106,4 +107,51 @@ tags:
 * [shiftit](https://github.com/fikovnik/ShiftIt): 窗口 size & location 定义。用 brew 安装 `brew cask install shiftit`
 * Eudic: 好用的词典，可以有一个简单悬浮窗口
 * Alfred: easy used spotlight substitute to search in Mac
+* [cheatsheet](https://mediaatelier.com/CheatSheet/?lang=en): 显示当前应用的快捷键。Just hold the ⌘-Key a bit longer to get a list of all active short cuts of the current application.
+
+# 给图片加水印
+
+* 美图秀秀：批量添加水印，编辑水印位置、大小、透明度
+* [Photoshop 批量添加水印](https://jingyan.baidu.com/article/0eb457e555170643f1a90592.html)
+* 免费软件：
+  * [XnConvert](https://www.xnview.com/en/xnconvert/#downloads)：[使用 XnConvert 批量添加水印](https://uiiiuiii.com/software/202192.html)
+  * [imagemagick](https://imagemagick.org/index.php): 基于命令行的图形处理库（现有的图像处理软件大多都用到此库）
+* [6 个小工具，打造图片批处理工作流](https://sspai.com/post/53079)
+
+## ImageMagick
+
+```sh
+# 安装
+$ brew install imagemagick
+
+$ cd /images
+# 获取图片基本信息
+$ identify a.jpg
+# 转换图片格式
+$ magick a.jpg a.png
+
+
+# 批量为图片添加水印
+  1 #!/bin/bash
+  2
+  3 dir=$1
+  4 mark=$2
+  5
+  6 echo "the images dir to process: $dir"
+  7 echo "the mark location: $mark"
+  8
+  9 shopt -s nullglob # 如果不添加这个，当目录中没有 .png 类型的文件时，他会产生 "$dir"/*.png，那么后边就会报错
+ 10 for each in "$dir"/{*.jpg,*.jpeg,*.png}
+ 11 do
+ 12         echo "each is: $each"
+ 13         convert $each $mark -gravity southeast -geometry +5+20 -composite $each
+ 14         convert $each $mark -gravity center -composite $each
+ 15         convert $each $mark -gravity northwest -geometry +5+20 -composite $each
+ 16         echo "$each: done"
+ 17 done
+ 18 shopt -u nullglob
+ 19 exit 0
+```
+
+
 
