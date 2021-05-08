@@ -292,6 +292,60 @@ select * from (
 
 
 
+# Optimization
+
+## 小文件问题
+
+和 spark 的小文件问题一样，hive 的运算引擎（mapreduce 或 Tez），为了提高性能，最后都会采用多个 reducer 来写数据，这个时候就会有小文件。不同于 Spark，Hive 本身提供了多种措施来优化小文件存储，我们只需要设置就行
+
+### 1. 使用 concatenate
+
+[hive concatenate](https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DDL#LanguageManualDDL-AlterTable/PartitionConcatenate) 主要针对 orc 和 rcfile 文件格式存储的文件，特别是 orc ，可以直接执行 stripe level 的 merge，省掉 deserialize 和 decode 的开销，很高效。（concatenate 可以执行多次，最终文件数量不会变化）
+
+```sql
+ALTER TABLE table_name [PARTITION (partition_key = 'partition_value' [, ...])] CONCATENATE;
+```
+
+### 2. 使用一些配置，在写文件时，自动 merge
+
+输入时合并：
+
+```sql
+--  每个Map最大输入大小，决定合并后的文件数
+set  mapred. max .split.size=256000000;
+-- 一个节点上split的至少的大小 ，决定了多个data node上的文件是否需要合并
+set  mapred. min .split.size.per.node=100000000;
+-- 一个交换机下split的至少的大小，决定了多个交换机上的文件是否需要合并
+set  mapred. min .split.size.per.rack=100000000;
+-- 执行Map前进行小文件合并
+set  hive.input.format=org.apache.hadoop.hive.ql.io.CombineHiveInputFormat; 
+```
+
+
+
+输出时合并：
+
+```sql
+-- hive 输出时合并的配置参数
+-- 在Map-only的任务结束时合并小文件
+set hive.merge.mapfiles = true;
+-- 在Map-Reduce的任务结束时合并小文件, 默认 false
+set hive.merge.tezfiles=true;
+set hive.merge.mapredfiles = true;
+-- 合并文件的大小, 默认 256000000
+set hive.merge.size.per.task=256000000;
+-- 当输出文件的平均大小小于该值时, 启动一个独立的map-reduce任务进行文件merge， 默认 16000000
+set hive.merge.smallfiles.avgsize=256000000;
+-- 当这个参数设置为true,orc文件进行stripe Level级别的合并,当设置为false,orc文件进行文件级别的合并。默认 true
+set hive.merge.orcfile.stripe.level=true;
+```
+
+Hive在对结果文件进行合并时会执行一个额外的map-only脚本，mapper的数量是文件总大小除以size.per.task参数所得的值，触发合并的条件是：
+
+根据查询类型不同，相应的mapfiles/mapredfiles参数需要打开；
+
+结果文件的平均大小需要大于avgsize参数的值。
+
 # Issues
 
 ## count(*) return 0
@@ -363,5 +417,16 @@ set hive.tez.log.level=DEBUG;
 
 ```sql
 explain select sum(id) from my;
+```
+
+## \xa0
+
+(`SPACE_SEPARATOR`, `LINE_SEPARATOR`, or `PARAGRAPH_SEPARATOR`) but is not also a non-breaking space (`'\u00A0'`, `'\u2007'`, `'\u202F'`).
+
+[java isWhiteSpace()](https://docs.oracle.com/javase/8/docs/api/java/lang/Character.html#isWhitespace-char-)
+
+```
+print(res.selectExpr("trim(translate(mobile1, '\u00A0', ' '))").collect())
+print(res.selectExpr("trim(regexp_replace(mobile1, '\u00A0|\u2007|\u202F', ' '))").collect())
 ```
 

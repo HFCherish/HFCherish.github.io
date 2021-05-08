@@ -66,6 +66,10 @@ It displays sizes of files and directories contained in the given directory or t
 - The **-v** option will display **the names of columns** as a header line.
 - The **-x** option will **exclude snapshots** from the result calculation. Without the -x option (default), the result is always calculated from all INodes, including all snapshots under the given path.
 
+## hadoop fs -count -h /dir/*
+
+显示文件夹下的所有文件数、大小
+
 # web ui
 
 [hdfs default ports](https://ambari.apache.org/1.2.3/installing-hadoop-using-ambari/content/reference_chap2_1.html) are changed. see [here](https://issues.apache.org/jira/browse/HDFS-9427)

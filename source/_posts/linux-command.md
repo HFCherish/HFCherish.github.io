@@ -107,6 +107,14 @@ find /<directory> -newermt "yesterday" -ls
 $ ls -lct
 ```
 
+# du
+
+```sh
+$ du -sh -- * | sort -hr
+```
+
+
+
 # List users
 
 ```sh

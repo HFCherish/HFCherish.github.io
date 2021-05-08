@@ -17,4 +17,7 @@ $ hbase zkcli
 $ ls /hbase-unsecure/table
 ```
 
+[hbase 在大数据生态圈中的位置](https://developer.ibm.com/zh/technologies/analytics/articles/ba-cn-bigdata-hbase/)
+
 # Base
+

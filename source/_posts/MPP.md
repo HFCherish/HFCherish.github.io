@@ -1,11 +1,10 @@
 ---
 title: MPP (Massively Parallel Processing)
 toc: true
-tags:
-  - big data
 date: 2020-11-10 10:12:56
+tags:
+	- big data
 ---
-
 
 # Concept
 
@@ -20,7 +19,7 @@ MPP (Massively Parallel Processing)，即大规模并行处理。简单来说，
 - 分布式计算;
 - 私有资源;
 - 横向扩展;
-- Shared Nothing架构。
+- [Shared Nothing](#share-nothing)架构。
 
 # MPPDB v.s. Hadoop
 
@@ -54,3 +53,18 @@ hadoop 和 MPPDB **最大的区别在于：对数据管理理念的不同。**
 - Sybase IQ
 - TD Aster Data
 
+# Share Nothing<a name="share-nothing" />
+
+[数据库架构设计的三种模式：share nothing , share everythong , share disk](https://www.cnblogs.com/kzwrcom/p/6397709.html)
+
+数据库构架设计中主要有Shared Everthting、Shared Nothing、和Shared Disk：
+
+1. Shared Everthting:一般是针对单个主机，完全透明共享CPU/MEMORY/IO，并行处理能力是最差的，典型的代表SQLServer
+
+2. Shared Disk：各个处理单元使用自己的私有 CPU和Memory，共享磁盘系统。典型的代表Oracle Rac， 它是数据共享，可通过增加节点来提高并行处理的能力，扩展能力较好。其类似于SMP（对称多处理）模式，但是当存储器接口达到饱和的时候，增加节点并不能获得更高的性能 。
+3. Shared Nothing：各个处理单元都有自己私有的CPU/内存/硬盘等，不存在共享资源，类似于MPP（大规模并行处理）模式，各处理单元之间通过协议通信，并行处理和扩展能力更好。典型代表DB2 DPF和Hadoop ，各节点相互独立，各自处理自己的数据，处理后的结果可能向上层汇总或在节点间流转。
+   我们常说的 Sharding 其实就是Share Nothing架构，它是把某个表从物理存储上被水平分割，并分配给多台服务器（或多个实例），每台服务器可以独立工作，具备共同的schema，比如MySQL Proxy和Google的各种架构，只需增加服务器数就可以增加处理能力和容量。
+
+# GreenPlum
+
+[greenplum](https://gpdb.docs.pivotal.io/5280/admin_guide/intro/arch_overview.html#arch_segments)
