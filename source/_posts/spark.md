@@ -526,6 +526,16 @@ spark.conf.set("spark.sql.adaptive.enabled", 'true')
 spark.conf.set("spark.sql.adaptive.shuffle.targetPostShuffleInputSize", '134217728')
 ```
 
+## python udf vs scala udf
+
+[python udf vs scala udf](https://medium.com/quantumblack/spark-udf-deep-insights-in-performance-f0a95a4d8c62)
+
+![img](https://miro.medium.com/max/1570/1*ddtDqMvoDGhxsw0CDEnfag.png)
+
+![img](https://miro.medium.com/max/1415/1*SMlxTZJBsAPKmpdRH5VFVw.png)
+
+![img](https://miro.medium.com/max/1500/1*FFi8Yk6mwSc6AvI-avWcYw.png)
+
 # Issues
 
 ## Null-aware predicate sub-queries cannot be used in nested conditions
