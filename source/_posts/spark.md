@@ -300,6 +300,8 @@ df.withColumn('new_column', lit(10))
 
 [deep dive - spark optimization](https://www.youtube.com/watch?v=daXEp4HmS-E)
 
+[performance tuning](https://spark.apache.org/docs/latest/sql-performance-tuning.html)
+
 ## Get Baseline
 
 1. 利用 spark-ui 观察任务运行情况（long stages，spill，laggard tasks, etc.）
@@ -409,7 +411,6 @@ Balance 体现在很多方面：网络、GC、数据，当然最常见的问题�
    1. ![image-20210317130839506](/Users/zhenzheng/code/hfcherish.github.io/source/images/spark-gc-skew.png)
 3. 
 
-[performance tuning](https://spark.apache.org/docs/latest/sql-performance-tuning.html)
 
 ## Persistence<a name="persistence" />
 
