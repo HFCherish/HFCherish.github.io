@@ -6,7 +6,7 @@ tags:
 date: 2020-11-23 15:36:44
 ---
 
-[reference](https://www.cnblogs.com/shook/p/12409759.html)
+[reference](https://wbaseurlww.cnblogs.com/shook/p/12409759.html)
 
 [官方安装指导](https://docs.cloudera.com/HDPDocuments/Ambari-latest/bk_ambari-installation/content/set_up_password-less_ssh.html)
 
@@ -647,6 +647,7 @@ tmpfs                          6.3G     0  6.3G    0% /run/user/0
 $ du -hs /*
 $ du -hs /root/*
 $ du -hs /var/log/*
+$ du -h /var/* -d 1 | sort -n -r
 ```
 
 

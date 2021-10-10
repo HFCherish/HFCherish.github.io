@@ -67,6 +67,18 @@ When you call `collect()` on an RDD or Dataset, the whole data is sent to the **
 > 3. Other steps will be organized into ***stages\***, with each job being the result of a sequence of stages. For simple things a job can have a single stage, but the need to repartition data (for instance, the join on step 3) or anything that breaks the locality of the data usually causes more stages to appear. You can think of stages as computations that produce intermediate results, which can in fact be persisted. For instance, we can persist RDD1 since we'll be using it more than once, avoiding recomputation.
 > 4. All 3 above basically talk about how the *logic* of a given algorithm will be broken. In contrast, a ***task\*** is a particular *piece of data* that will go through a given stage, on a given executor.
 
+### RDD
+
+RDD 数据模型
+
+|       属性名       | 成员类型 |        属性含义         |
+| :----------------: | :------: | :---------------------: |
+|    dependencies    |   变量   | 生成该RDD所依赖的父RDD  |
+|      compute       |   方法   |   生成该RDD的计算接口   |
+|     partitions     |   变量   | 该RDD的所有数据分片实体 |
+|    partitioner     |   方法   |   划分数据分片的规则    |
+| preferredLocations |   变量   | 数据分片的物理位置偏好  |
+
 ## SparkContext
 
 [SparkContext](https://data-flair.training/blogs/learn-apache-spark-sparkcontext/) is the entry point of Spark functionality. The most important step of any Spark driver application is to generate SparkContext. **It allows your Spark Application to access Spark Cluster** with the help of Resource Manager. 

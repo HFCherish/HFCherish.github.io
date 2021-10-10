@@ -180,6 +180,40 @@ Hive relies on Hadoop. The data in hive is saved in hdfs in fact. And the metada
 >Tables or partitions are sub-divided into **buckets,** to provide extra structure to the data that may be used for more efficient querying. Bucketing works based on the value of hash function of some column of a table.
 >For example, a table named **Tab1** contains employee data such as id, name, dept, and yoj (i.e., year of joining). Suppose you need to retrieve the details of all employees who joined in 2012. A query searches the whole table for the required information. However, if you partition the employee data with the year and store it in a separate file, it reduces the query processing time. The following example shows how to partition a file and its data:
 
+## Hive bucket
+
+[hive partitioning vs bucket with examples](https://sparkbyexamples.com/apache-hive/hive-partitioning-vs-bucketing-with-examples/)
+
+[stack-overflow: hive partition vs bucket](https://sparkbyexamples.com/apache-hive/hive-partitioning-vs-bucketing-with-examples/)
+
+```sql
+CREATE TABLE zipcodes(
+RecordNumber int,
+Country string,
+City string,
+Zipcode int)
+PARTITIONED BY(state string)
+CLUSTERED BY Zipcode INTO 10 BUCKETS
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ',';
+```
+
+| PARTITIONING                                        | BUCKETING                                                    |
+| :-------------------------------------------------- | :----------------------------------------------------------- |
+| Directory is created on HDFS for each partition.    | File is created on HDFS for each bucket.                     |
+| You can have one or more Partition columns          | You can have only one Bucketing column                       |
+| You can’t manage the number of partitions to create | You can manage the number of buckets to create by specifying the count |
+| NA                                                  | Bucketing can be created on a partitioned table              |
+| Uses PARTITIONED BY                                 | Uses CLUSTERED BY                                            |
+
+partition  和 bucket 都是将大数据集拆成更小的数据集，加速查询处理的方式。比如按日期拆分区，很多分析只拿当天的分区，处理的数据量、读取的 hdfs 文件很少，就快。
+
+最大的区别是 partition 拆数据就是按 column 值拆，bucket 拆数据是按 column hash 值拆，所以 bucket 最终的桶的数目是固定的，同时一个桶里可能有多个 column 值（parition 每个分区只会存一种 column 的值）
+
+相对来讲，bucket 粒度可能更细。比如一个场景，我们将 order 按 date 分区，分区后每天的数据量还是特别大，如果我们很多查询/join是基于 employee，此时可以基于 employe_id 再分成更多的小集合，即按 employe_id 字段 hash 到 n 个桶里，这种拆桶方式特别有利于宏宇今天说的 map-side join，而且相比 partition，可以控制文件数量（有时想用的 partition 字段可能会分成特别特别多小分区，这个时候 bucket 就更合适些）
+
+上边那个例子，假如 order 按 date+employee_id partition，分区就会特别多（对 hdfs namenode 造成大压力，hive metadata 也有压力），所以按 date partition, 按 employee_id bucket 就比较合适
+
 ## ORC vs Parquet
 
 [orc vs Parquet](https://community.cloudera.com/t5/Support-Questions/ORC-vs-Parquet-When-to-use-one-over-the-other/td-p/95942)
