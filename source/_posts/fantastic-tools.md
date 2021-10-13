@@ -96,9 +96,8 @@ $ vi ~/.gitconfig
         aa = add .
         b = branch
         c = commit
-        ca = commit -a
-        cam = commit -a -m
         cm = commit -m
+        ca = commit --amend
         d = diff
         l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset | %C(bold)%an' --abbrev-commit --date=relative
         o = checkout
