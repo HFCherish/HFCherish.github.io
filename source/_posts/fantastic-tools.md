@@ -2,6 +2,7 @@
 title: fantastic tools
 tags:
   - tool
+
 ---
 
 # 设计
@@ -41,18 +42,18 @@ tags:
 
 1. [download iterm2](https://www.iterm2.com/)，解压安装
 2. 设置 iterm2 为默认 terminal：iterm2 -> make iterm2 default Term
-2. 安装 [oh my zsh](https://github.com/robbyrussell/oh-my-zsh): 
-	* `sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-`
-3. 配置主题和颜色
-	4. 主题，我选用默认的 robbyrussell。其他下载主题然后在 `~/.zshrc` 中配置 `ZSH_THEME`
-	5. 颜色，下载 [iterm2 color schemes](https://github.com/mbadolato/iTerm2-Color-Schemes)，然后在 iterm2 perferences -> profiles -> colors -> color presets -> import -> 从前边下载的库中选择自己喜欢的 scheme
-6. 配置高亮
-	* `brew install zsh-syntax-highlighting`
-	* 在 `~/.zshrc` 中添加：`source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh`
-	* 刷新配置使其生效：`source ~/.zshrc`
-7. 显示快捷键配置
-	* preferences -> keys -> hotKey -> Show/Hide all... -> 设置为 `⌘.`
+3. 安装 [oh my zsh](https://github.com/robbyrussell/oh-my-zsh): 
+   * `sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+     `
+4. 配置主题和颜色
+   4. 主题，我选用默认的 robbyrussell。其他下载主题然后在 `~/.zshrc` 中配置 `ZSH_THEME`
+   5. 颜色，下载 [iterm2 color schemes](https://github.com/mbadolato/iTerm2-Color-Schemes)，然后在 iterm2 perferences -> profiles -> colors -> color presets -> import -> 从前边下载的库中选择自己喜欢的 scheme
+5. 配置高亮
+   * `brew install zsh-syntax-highlighting`
+   * 在 `~/.zshrc` 中添加：`source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh`
+   * 刷新配置使其生效：`source ~/.zshrc`
+6. 显示快捷键配置
+   * preferences -> keys -> hotKey -> Show/Hide all... -> 设置为 `⌘.`
 7. 常用的配置：
    1. 配置新开重开使用之前的目录：preferences -> profiles -> general -> working directory -> reuse previous session's directory
    2. 配置快速切换 iterm 的快捷键：preferences -> keys -> hot key -> show/hide all windows with a system-wide hotkey
@@ -77,6 +78,38 @@ tags:
 # Git
 
 * [git-fitler-repo](https://github.com/newren/git-filter-repo)
+* 常用的 git config 配置
+
+```sh
+# 在 ~/.zshrc 中添加 alias
+$ vi ~/.zshrc
+alias g="/usr/bin/git"
+
+# 在 .gitconfig 中添加 alias 配置
+$ vi ~/.gitconfig
+[user]
+        name = xxx
+        email = xxx@some.com
+
+[alias]
+        a = add
+        aa = add .
+        b = branch
+        c = commit
+        ca = commit -a
+        cam = commit -a -m
+        cm = commit -m
+        d = diff
+        l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset | %C(bold)%an' --abbrev-commit --date=relative
+        o = checkout
+        pl = pull
+        pb = pull --rebase
+        ps = push
+        r = reset
+        st = status
+```
+
+
 
 # reading
 
@@ -153,5 +186,9 @@ $ magick a.jpg a.png
  19 exit 0
 ```
 
+# Windows
 
+## terminal
+
+[打造 Windows 10 下最强终端方案：WSL + Terminus + Oh My Zsh + The Fuck](https://p3terx.com/archives/the-strongest-terminal-solution-under-windows-10.html)
 
