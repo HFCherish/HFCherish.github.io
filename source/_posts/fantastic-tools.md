@@ -191,3 +191,16 @@ $ magick a.jpg a.png
 
 [打造 Windows 10 下最强终端方案：WSL + Terminus + Oh My Zsh + The Fuck](https://p3terx.com/archives/the-strongest-terminal-solution-under-windows-10.html)
 
+## copy
+
+mac 下有免费的 clipy 来实现 copy history，windows 下有 [copyq](https://copyq.readthedocs.io/en/latest/basic-usage.html)（也可以用于 mac）
+
+copyq 在它的窗口里可以配置各种命令的快捷键（全局或程序内），包括显示和隐藏 copyq 窗口的
+
+## search
+
+mac 下有 alfred 来搜索文件，windows 有一些替代的：
+
+1. listary：有免费版
+2. wox：开源
+
