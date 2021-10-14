@@ -191,6 +191,8 @@ $ magick a.jpg a.png
 
 [打造 Windows 10 下最强终端方案：WSL + Terminus + Oh My Zsh + The Fuck](https://p3terx.com/archives/the-strongest-terminal-solution-under-windows-10.html)
 
+> 注意这里装的是 wsl1，可以改成 wsl2，参见[install wsl](https://docs.microsoft.com/en-us/windows/wsl/install)
+
 ## copy
 
 mac 下有免费的 clipy 来实现 copy history，windows 下有 [copyq](https://copyq.readthedocs.io/en/latest/basic-usage.html)（也可以用于 mac）
