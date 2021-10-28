@@ -326,6 +326,16 @@ select * from (
 
 
 
+## hive cli pretty
+
+```sql
+set hive.cli.print.header=true; // 打印列名
+set hive.cli.print.row.to.vertical=true; // 开启行转列功能, 前提必须开启打印列名功能
+set hive.cli.print.row.to.vertical.num=1; // 设置每行显示的列数
+```
+
+
+
 # Optimization
 
 ## 小文件问题

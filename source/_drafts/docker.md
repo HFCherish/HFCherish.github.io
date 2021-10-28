@@ -40,3 +40,12 @@ define the container port, so that other containers in docker can access it.
 
 You can only define a single value for `expose`
 
+## chmod & echo
+
+```dockerfile
+RUN chmod -R a+x /tmp/dir/
+RUN echo $(ls -l /tmp/dir)
+RUN FILE="$(ls -l /tmp/dir)" && echo $FILE
+```
+
+如果 `echo` 没有在 `docker build` 时打印出来，则可以通过指定 `docker build --progress=plain` 参数来显示（没有打出来也可能是因为 cache 的原因，也可以 no-cache 指定一下） 
