@@ -170,19 +170,15 @@ UNIQUE KEY(site_id, city_code)	-- 这个采用更新模型，这些主键被作�
 DISTRIBUTED BY HASH(site_id) BUCKETS 10;
 ```
 
-## shortkey 索引
+### duplicate model
 
-StarRocks在Sort Key的基础上引入稀疏的shortkey index，Sort Index的内容会比数据量少1024倍，因此会全量缓存在内存中，实际查找的过程中可以有效加速查询。
+[duplicate model with example](https://doris.apache.org/master/en/getting-started/data-model-rollup.html#duplicate-model)
 
-但是 sort key 的取值、列可能很多，这个时候为将所有 sort key 加入到 shortkey index 就会占用大量内存，所有有限制：
-
-- shortkey 的列只能是排序键的前缀;
-- shortkey 列数不超过3;
-- 字节数不超过36字节;
-- 不包含FLOAT/DOUBLE类型的列;
-- VARCHAR类型列只能出现一次, 并且是末尾位置;
-- 当shortkey index的末尾列为CHAR或者VARCHAR类型时, shortkey的长度会超过36字节;
-- 当用户在建表语句中指定PROPERTIES {short_key = "integer"}时, 可突破上述限制;
+> In some multidimensional analysis scenarios, data has neither primary keys nor aggregation requirements. **Data is stored entirely in accordance with the data in the imported file**, without any aggregation.
+>
+> The **DUPLICATE KEY** specified in the table building statement is **only used to specify which columns the underlying data is sorted according to**. (The more appropriate name should be "Sorted Column", where the name "DUPLICATE KEY" is used to specify the data model used. On the choice of DUPLICATE KEY, we **recommend that the first 2-4 columns** be selected appropriately.
+>
+> This data model is suitable for storing raw data without aggregation requirements and primary key uniqueness constraints.
 
 ## 分区和分桶
 
@@ -319,6 +315,43 @@ PROPERTIES(
 );
 ```
 
+# 性能
+
+[性能优化](https://docs.starrocks.com/zh-cn/main/administration/Profiling)
+
+## shortkey 索引
+
+[prefix index](https://doris.apache.org/master/en/getting-started/data-model-rollup.html#rollup)
+
+所有的 key 列就是 order key ----> 这就是建议将维度列都做排序，维度列的顺序影响稀疏索引的建立。
+
+1. 先按 key 去排序数据，存储
+2. 然后基于 key 顺序建立稀疏索引
+
+> Unlike traditional database design, Doris does not support indexing on any column.
+>
+> In Aggregate, Uniq and Duplicate three data models. The underlying data storage is sorted and stored according to the columns specified in AGGREGATE KEY, UNIQ KEY and DUPLICATE KEY in their respective table-building statements.
+>
+> The prefix index, which is based on sorting, **implements an index method** to query data quickly according to a given prefix column.
+
+StarRocks**对数据进行有序存储, 在数据有序的基础上为其建立稀疏索引**,索引粒度为block(1024行)。
+
+- 稀疏索引选取schema中固定长度的前缀作为索引内容, 目前StarRocks选取36个字节的前缀作为索引。
+- 建表时建议将查询中常见的过滤字段放在schema的前面, 区分度越大，频次越高的查询字段越往前放。
+- 这其中有一个特殊的地方,就是varchar类型的字段,varchar类型字段只能作为稀疏索引的最后一个字段，索引会在varchar处截断, 因此varchar如果出现在前面，可能索引的长度不足36个字节。
+
+StarRocks在Sort Key的基础上引入稀疏的shortkey index，Sort Index的内容会比数据量少1024倍，因此会全量缓存在内存中，实际查找的过程中可以有效加速查询。
+
+但是 sort key 的取值、列可能很多，这个时候为将所有 sort key 加入到 shortkey index 就会占用大量内存，所有有限制：
+
+- shortkey 的列只能是排序键的前缀;
+- shortkey 列数不超过3;
+- 字节数不超过36字节;
+- 不包含FLOAT/DOUBLE类型的列;
+- VARCHAR类型列只能出现一次, 并且是末尾位置;
+- 当shortkey index的末尾列为CHAR或者VARCHAR类型时, shortkey的长度会超过36字节;
+- 当用户在建表语句中指定PROPERTIES {short_key = "integer"}时, 可突破上述限制;
+
 ## Materialized View
 
 [物化视图](https://docs.starrocks.com/zh-cn/main/table_design/Materialized_view)，和 hive 的 materialized view 类似，目前只能创建单表的，查询时，用户不需要指定 MV 表，starrocks 会根据 sql 智能选择最佳的 MV 表。
@@ -331,11 +364,22 @@ MV表的选择规则如下：
 4. 行数最小的MV表
 5. 列数最小的MV表
 
-# 性能
+什么时候使用 MV：
 
-## 索引
+- Analyze requirements to cover both detailed data query and fixed-dimensional query.
+- The query only involves a small part of the columns or rows in the table.
+- The query contains some time-consuming processing operations, such as long-time aggregation operations.
+- The query needs to match different prefix indexes
 
 ## Rollup
+
+ROLLUP in multidimensional analysis means "scroll up", which means that data is aggregated further at a specified granularity
+
+Rollup本质上可以理解为原始表(base table)的一个物化索引。建立rollup时可只选取base table中的部分列作为schema，schema中的字段顺序也可与base table不同。**物化**是因为其数据在物理上独立存储，而**索引**的意思是，Rollup可以调整列顺序以增加前缀索引的命中率，也可以减少key列以增加数据的聚合度。
+
+[materialized view vs Rollup](https://doris.apache.org/master/en/administrator-guide/materialized_view.html#materialized-view-vs-rollup)
+
+和 materialized view 的区别是，**rollup 针对明细模型不能做预聚合**。**MV 相当于 rollup 的 superset**，包含了所有 rollup 的能力，但能支持更多的聚合 function，也能对明细模型做预聚合。所有用 `alter table add rollup` 能做的，都能通过 `create materialized view` 来做到。
 
 ## 查询并行度parallel_fragment_exec_instance_num
 
