@@ -5,7 +5,6 @@ date: 2021-02-24 19:43:25
 tags:
 ---
 
-
 other storage 主要是存的系统的一些缓存、日志等数据。有时会占特别大空间，可以按下列步骤清理
 
 ## 1. 暂时关闭 SIP，以能查看和删除系统文件（解决 not permitted 问题）
@@ -170,5 +169,5 @@ $ docker run --privileged --pid=host docker/desktop-reclaim-space
 ```
 
 > `/private/var/tmp` 文件夹下可能还有很多 `sysdiagnose` 文件，这个应该是可以删，是系统诊断结果。但不太确定，我没删。
->
+> 
 > Sysdiagnose 可以通过 `command+control+option+shift+.` 来启动一次，所以也要注意

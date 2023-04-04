@@ -6,7 +6,6 @@ tags:
 date: 2019-01-23 15:32:13
 ---
 
-
 # chmod, chown
 
 [understanding linux file permissions](https://www.linux.com/learn/understanding-linux-file-permissions)
@@ -81,7 +80,6 @@ Should be to your liking
 
 The `-` before `1` is important - it means anything changed one day or less ago. A `+` before `1` would instead mean anything changed at least one day ago, while having nothing before the `1` would have meant it was changed exacted one day ago, no more, no less.
 
-
 Another, more humane way:
 
 ```sh
@@ -100,6 +98,17 @@ or:
 find /<directory> -newermt "yesterday" -ls
 ```
 
+# rm
+
+找到文件并删除
+
+```shell
+find /home/raven -name abc.txt | xargs rm -rf
+
+# 不使用 xargs
+
+```
+
 # ls
 
 ```sh
@@ -112,8 +121,6 @@ $ ls -lct
 ```sh
 $ du -sh -- * | sort -hr
 ```
-
-
 
 # List users
 
@@ -133,4 +140,3 @@ $ pbcopy < test.txt
 ```sh
 $ dstat -t -a --tcp --output network.log
 ```
-

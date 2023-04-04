@@ -6,10 +6,11 @@ tags:
 date: 2019-03-26 12:43:42
 ---
 
-
 [great free learning website with quiz](https://www.sololearn.com/play/python)
 
 [great online editor & debugger](http://pythontutor.com/live.html#mode=edit)
+
+[Python学习资料/文章/指南整理](https://zhuanlan.zhihu.com/p/41381773)
 
 # Zen of Python
 
@@ -87,8 +88,6 @@ $ eval "$(pyenv init -)"
 
 ![Pyenv pyramid for order of resolution](https://files.realpython.com/media/pyenv-pyramid.d2f35a19ded9.png)
 
-
-
 Other pythons installed:
 
 * /usr/local/bin
@@ -120,8 +119,6 @@ $ python -m install pip=20.2.4
 $ python -m pip install --upgrade pip
 ```
 
-
-
 # Packaging
 
 In Python, the term **packaging** refers to putting modules you have written in a standard format, so that other programmers can install and use them with ease.
@@ -129,33 +126,38 @@ This involves use of the modules **setuptools** and **distutils**.
 
 1. organize existing files correctly. Place all of the files you want to put in a library in the same parent directory. This directory should also contain a file called **\__init__.py**, which can be blank but must be present in the directory. `__init__.py` turns a directory to a module.
    This directory goes into another directory containing the readme and license, as well as an important file called **setup.py**.
-
-	 ```
-   SoloLearn/
-      LICENSE.txt
-      README.txt
-      setup.py
-      sololearn/
-         __init__.py
-         sololearn.py
-         sololearn2.py
-    ```
    
+   ```
+   SoloLearn/
+    LICENSE.txt
+    README.txt
+    setup.py
+    sololearn/
+       __init__.py
+       sololearn.py
+       sololearn2.py
+   ```
+
 2. Write the **setup.py** file. This contains information necessary to assemble the package so it can be uploaded to **PyPI** and installed with **pip** (name, version, etc.).
    
- ```python
-	  setup(
+   ```python
+      setup(
         name='SoloLearn', 
         version='0.1dev',
         packages=['sololearn',],
         license='MIT', 
         long_description=open('README.txt').read(),
      )
- ```
+   ```
+
 3. Write Other Files   
+
 4. Build a source distribution, use the command line to navigate to the directory containing setup.py, and run the command `python setup.py sdist`.
-  1. Run `python setup.py bdist` or, for Windows, `python setup.py bdist_wininst` to build a binary distribution.
+   
+   1. Run `python setup.py bdist` or, for Windows, `python setup.py bdist_wininst` to build a binary distribution.
+
 5. Upload the package to **PyPI**. Use `python setup.py register`, followed by `python setup.py sdist upload` to upload a package.
+
 6. install a package with `python setup.py install`.
 
 ## \__init__.py
@@ -244,14 +246,14 @@ def for_else():
       break
   else:
     print('first for finish completely')
-    
+
   for i in range(10):
     if i > 10:
       # print('Never get here. The else will be executed')
       break
   else:
     print('second for finish completely')
-    
+
 def try_else():
   try:
     print(5/0)
@@ -277,8 +279,6 @@ second try finished successfully
 '''
 ```
 
-
-
 # class
 
 Classes are created using the keyword **class** and an indented block, which contains class **methods** (which are functions). All methods must have **self** as their first parameter, you do not need to include it when you call the methods. Within a method definition, **self** refers to the instance calling the method.
@@ -294,18 +294,18 @@ class Animal:
     self.color = color
   def shout(self):
     print('ha')
-    
+
 class Dog(Animal):
-  legs = 4	# the class attribute
+  legs = 4    # the class attribute
   def shout(self):
     print('wong')
-    super().shout()	# call super method
-    
-Dog.legs	# 4
+    super().shout()    # call super method
+
+Dog.legs    # 4
 d = Dog('heidou', 'black')
-d.legs	# 4
-d.name 	# 'heidou'
-d.shout()	
+d.legs    # 4
+d.name     # 'heidou'
+d.shout()    
 # wong
 # ha
 ```
@@ -323,7 +323,7 @@ When you are instantiate an instance by calling the class, the `__new__` gets ca
 The `__new__` definition:
 
 ```python
-__new__(cls, *args, **kwargs)	
+__new__(cls, *args, **kwargs)    
 ```
 
 An example:
@@ -380,7 +380,7 @@ class A:
   __egg = 7
   def __init__(self, a):
     self.__a = a
-    
+
 A._A__egg # 7
 a = A('a')
 a._A__a # 'a'
@@ -410,13 +410,13 @@ class Rectangle:
   @staticmethod
   def validate_int(a):
     assert isinstance(a, int), 'must be int'
-    
+
 r = Rectangle(4, 5)
 r.area() # 20
 s = Rectangle.new_square(4)
 s.area() # 16
 Rectangle.validate_int('fd')
-  ```
+```
 
 ## Properties
 
@@ -436,15 +436,13 @@ class Pizza:
   @a_list.setter
   def a_list(self, value):
     self._a = value[0]
-    
+
 p = Pizza(7)
 p.a_list # [7, 7, 7, 7, 7, 7, 7, 7, 7, 7]
 p.a_list = [1]
 p.a_list # [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-  ```
 
-
-
+```
 ## Magic Methods
 
 **Magic methods** are special methods which have **double underscores** at the beginning and end of their names. They are used to create functionality that can't be represented as a normal method.
@@ -495,28 +493,28 @@ There are equivalent **r** methods for all magic methods that overloads operator
 
 ```python
 class PairNumber:
-  def __init__(self, n1, n2):
-    self.n1 = n1
-    self.n2 = n2
-  def __floordiv__(self, other):
-    return PairNumber(self.n1//other.n1, self.n2 // other.n2)
-  def __rtruediv__(self, other):
-    return PairNumber(other/self.n1, other/self.n2)
-  def __repr__(self):
-    return 'PairNumber{0}'.format((self.n1, self.n2))
-  def __str__(self):
-    return str((self.n1, self.n2))
-  
+def __init__(self, n1, n2):
+  self.n1 = n1
+  self.n2 = n2
+def __floordiv__(self, other):
+  return PairNumber(self.n1//other.n1, self.n2 // other.n2)
+def __rtruediv__(self, other):
+  return PairNumber(other/self.n1, other/self.n2)
+def __repr__(self):
+  return 'PairNumber{0}'.format((self.n1, self.n2))
+def __str__(self):
+  return str((self.n1, self.n2))
+
 class IntPairNumber(PairNumber):
-  def __int__(self):
-    return self.n1 + self.n2
-    
+def __int__(self):
+  return self.n1 + self.n2
+
 p1 = IntPairNumber(4, 10)
 p2 = IntPairNumber(3, 19)
 p1 // p2 # PairNumber(1, 0)
 print(p1 // p2) # (1, 0)
-str(2 / p1)		# PairNumber(0.5, 0.2)
-int(p1)				# 14
+str(2 / p1)        # PairNumber(0.5, 0.2)
+int(p1)                # 14
 ```
 
 ### `__call__` method
@@ -530,13 +528,13 @@ class PairNumber:
     self.n2 = n2
   def __call__(self, other):
     return self.n1 + self.n2 + other
-  
+
 def addTwice(func, other):
   return func(other) + other
 
 p1 = PairNumber(1,2)
-p1(4)		# 7
-addTwice(p1, 4)	# 11
+p1(4)        # 7
+addTwice(p1, 4)    # 11
 ```
 
 ### `__str__` vs `__repr__`
@@ -572,7 +570,7 @@ open("filename.txt", "wb")
 ```
 
 > You can use the + sign with each of the modes above to give them extra access to files. For example, r+ opens the file for both reading and writing.
->
+> 
 > Use `help(open)` to see the complete file modes supported.
 
 * "r"  
@@ -628,8 +626,8 @@ slice can have 3 parameters:
 3. Step
 
 ```python
-str	= '0123456'
-tp = tuple(str)	# ('0', '1', '2', '3', '4', '5', '6')
+str    = '0123456'
+tp = tuple(str)    # ('0', '1', '2', '3', '4', '5', '6')
 lst = list(str) # ['0', '1', '2', '3', '4', '5', '6']
 
 # get first 2
@@ -652,7 +650,7 @@ str[3:0:-1]
 ## List Comprehensions
 
 ```python
-cubes = [i**3 for i in range(5)]	# [0, 1, 8, 27, 64]
+cubes = [i**3 for i in range(5)]    # [0, 1, 8, 27, 64]
 
 # with if statement
 evenSquares = [i**2 for i in range(5) if i ** 2 % 2 == 0] # [0, 4, 16]
@@ -702,11 +700,11 @@ def spell():
   for c in 'spam':
     word += c
     yield word
-    
+
 for w in spell():
   print(w)
 
-print(list(spell()))	# to normal list ['s', 'sp', 'spa', 'spam']
+print(list(spell()))    # to normal list ['s', 'sp', 'spa', 'spam']
 ```
 
 ## Set
@@ -733,7 +731,7 @@ print(s1 ^ s2) # not in s1 or not in s2: {1,2,6,7}
 ```python
 ####### hello world hello
 '{0} {1} {0}'.format('hello', 'world')
-'{x} {y} {x}'.format(x='hello', y='world')	# use name
+'{x} {y} {x}'.format(x='hello', y='world')    # use name
 
 r'fdjks/fjdkls' # r means raw, so you don't need to escape any character
 ```
@@ -753,7 +751,7 @@ def some_func(a, some_default='this is a default value', *args, **kwargs):
   print(args)
   print(kwargs)
 
-  
+
 some_func('this is a')
 '''
 this is a
@@ -777,12 +775,12 @@ A lambda defines an anoymous function. It consists of the **lambda** keyword fol
 ```python
 ## use named function
 def cube(x):
-	return x ** 3	
-print(cube(3))	# 27
+    return x ** 3    
+print(cube(3))    # 27
 
 ## use lambda
 cube = lambda x: x ** 3
-print(cube(3))	# 27
+print(cube(3))    # 27
 ```
 
 ### Common used functors:
@@ -804,12 +802,12 @@ The function **repeat** repeats an object, either infinitely or a specific numbe
 ```python
 from itertools import accumulate, takewhile, product, permutations
 
-nums = list(accumulate(range(5)))	# [0,1,3,6,10]
+nums = list(accumulate(range(5)))    # [0,1,3,6,10]
 list(takewhile(lambda x: x <6, nums)) # [0,1,3]
 
 letters = ('a', 'b')
-list(product(letters, range(2)))	# [(a,0), (a,1), (b,0), (b,1)] The result is always iterable of tuple
-list(permutations(letters))	# [('a', 'b'), ('b', 'a')]
+list(product(letters, range(2)))    # [(a,0), (a,1), (b,0), (b,1)] The result is always iterable of tuple
+list(permutations(letters))    # [('a', 'b'), ('b', 'a')]
 ```
 
 ## Decorator
@@ -821,8 +819,12 @@ Python provides support to wrap a function in a decorator by pre-pending the fun
 > You can use a decorator if you want to modify more than one function in the same way. It's the common template of multiple functions.
 
 ```python
+from functools import wraps
+
 ## define two decorators
 def input_print_deca(func):
+  ## this annotation make the callback return the original func's name instead of the wrap function's name.
+  @wraps
   def wrap():
     x = int(input('x: '))
     y = int(input('y: '))
@@ -833,16 +835,16 @@ def input_print_deca(func):
 ## use a decorator, and replace the origin method with the decorated one
 def add(x,y):
   return x+y
-add = input_print_deca(add)	# if the add method is a function from third library, you may want to add function to it, this way will help. However, you don't need to replace the original method, and you can just assign it to a new one.
+add = input_print_deca(add)    # if the add method is a function from third library, you may want to add function to it, this way will help. However, you don't need to replace the original method, and you can just assign it to a new one.
 
-## use @ grammar to quick add common code to a function
+## use @ grammar to quick add common code to a function. This has the same effect as the above equation.
 @input_print_deca
 def diff(x, y):
   return x - y
 @input_print_deca
 def divide(x, y):
   assert y != 0, 'cannot divide zero'
-	return x / y
+    return x / y
 
 ## call the decorated functions, notice now there's no input
 add()
@@ -875,22 +877,204 @@ def success_deca2(func):
 @success_deca
 @success_deca2
 def diff(x,y):
-	return x - y
+    return x - y
 
 ## call the decorated func
 diff()
 
 """
-x: 5		# the call to diff() trigger the input_print_deca decorator
+x: 5        # the call to diff() trigger the input_print_deca decorator
 y: 6
-in success deca			# in input_print_deca, the call to func trigger the first success_deca decorator
-in success deca			# in success_deca, the call to func trigger the second success_deca decorator
-in success deca2		# in the second success_deca, the call to func trigger the success_deca2 decorator
-yay success 2----------	# the success_deca2 first return
-yay success!**********	# the second success_deca return
-yay success!**********	# the first success_deca return
-the res: -1							# the input_print_deca return
+in success deca            # in input_print_deca, the call to func trigger the first success_deca decorator
+in success deca            # in success_deca, the call to func trigger the second success_deca decorator
+in success deca2        # in the second success_deca, the call to func trigger the success_deca2 decorator
+yay success 2----------    # the success_deca2 first return
+yay success!**********    # the second success_deca return
+yay success!**********    # the first success_deca return
+the res: -1                            # the input_print_deca return
 """
+```
+
+## Generator
+
+see **Iterable Containers / Generator** above.
+
+## async/await
+
+some links: 
+
+* [Fear and Awaiting in Async: A Savage Journey to the Heart of the Coroutine Dream - youtube](https://www.youtube.com/watch?v=E-1Y4kSsAFc)
+
+* [GitHub - dabeaz/curio: Good Curio!](https://github.com/dabeaz/curio) a library to separate the asynchronus world and synchronus world by the author of the above video.
+
+* [Python Asyncio与多线程/多进程那些事](https://zhuanlan.zhihu.com/p/38575715)
+
+* [Python Async/Await入门指南](https://zhuanlan.zhihu.com/p/27258289)
+
+* [从0到1，Python网络编程的入门之路](https://zhuanlan.zhihu.com/p/25354747)
+
+* [从0到1，Python异步编程的演进之路](https://zhuanlan.zhihu.com/p/25228075)
+
+ `async` create a coroutine which should be excuted when called. Use `await` in an async function to hung up the coroutine itself until the awaited coroutine finished. `await` can only be used in `async` functions. The  object after `await` must be an `Awaitable` (as long as you implement `__await__()`, it's an `Awaitable`.  `Coroutine` extends from `Awaitable`)
+
+ `async` can be used anywhere except for:
+
+- lambda
+
+- list comprehension (available since python 3.6)
+
+- default methods (e.g. `__init__()`), but we can use metaclass to make `__init__` awaitable.
+
+### eventloop
+
+The essence of aysncio is an eventloop. All awaitables are added to the eventloop and  wait for executing sequentially. If an event is interrupted by IO or sth, another event will be executed. 
+
+For every thread, it has its own eventloop. Events in different eventloops cannot communicate.
+
+So basically, events in asyncio are executed sequentially, whereas their requests to IO may be paralled.
+
+And the `await` keyword means to emit the Awaitable event at once and the program will wait until it finishes. Thus if we want to emit two or more Awaitable events at almost the same time, we use `asyncio.create_task(awaitable)`. 
+
+> (function) create_task: (coro: Generator[Any, None, _T@create_task] | Coroutine[Any, Any, _T@create_task], *, name: str | None = ...) -> Task[_T@create_task]
+> 
+> ---
+> 
+> Schedule the execution of a coroutine object in a spawn task. 
+> 
+> Return a Task object.
+
+When using `create_task`, the Awaitable is told to be emited as soon as possible. 
+
+```python
+import asyncio
+from datetime import timedelta
+from time import time, time_ns
+
+def ns_to_time(nanoseconds):
+    return timedelta(microseconds=(nanoseconds/1000))
+
+def now():
+  return ns_to_time(time_ns())
+
+first_times = []
+second_times = []
+
+async def print_first(n, if_print = True):
+    print(f'{now()}: first print start.')
+    for i in range(n):
+        anow = time_ns()
+        first_times.append(anow)
+        if if_print:
+            print(f'{ns_to_time(anow)}: first-{i}')
+        await asyncio.sleep(0.1)
+    print(f'{now()}: first print end.')
+
+async def print_second(n, if_print = True):
+    print(f'{now()}: second print start.')
+    for i in range(n):
+        anow = time_ns()
+        second_times.append(anow)
+        if if_print:
+            print(f'{ns_to_time(anow)}: second-{i}')
+        await asyncio.sleep(0.1)
+    print(f'{now()}: second print end.')
+
+
+async def main():
+    # task1 & task2 are emitted immediately
+    task1 = asyncio.create_task(print_first(5))
+    task2 = asyncio.create_task(print_second(5))
+
+    # wait for the two tasks to finish, or the program will end while the tasks are still running.
+    await task1
+    await task2
+
+    # no intersection and the print result shows that all the events are executed sequentially
+    print(first_times)
+    print(second_times)
+    print(f'the intersected times: {set(first_times) & set(second_times)}')
+
+asyncio.run(main())
+```
+
+### async & decorator
+
+```python
+# 创建一个 anotation, 可以根据 function 是否在 async 环境运行
+def from_coro(n):
+    return bool(sys._getframe(n).f_code.co_flags & 0x80)
+
+def run(coro):
+    try:
+        coro.send(None)
+    except StopIteration as e:
+        return e.value
+
+from functools import wraps
+def awaitable(syncfunc):
+    def decorator(asyncfunc):
+        @wraps(asyncfunc)
+        def wrapper(*args, **kwargs):
+            if from_coro(2):
+                print('from coro...')
+                return asyncfunc(*args, **kwargs)
+            else:
+                print('not from coro...')
+                return syncfunc(*args, **kwargs)
+        return wrapper
+    return decorator
+
+def spam():
+    print('the blue one')
+
+@awaitable(spam)
+async def spam():
+    print('the red one')
+
+spam()
+async def main():
+    await spam()
+```
+
+### Awaitable & Coroutine class
+
+The object after `await` must be an `Awaitable` (as long as you implement `__await__()`, it's an `Awaitable`. `Coroutine` extends from `Awaitable`.
+
+```python
+# The abstract `Awaitable` and `Coroutine` class:
+class Awaitable(metaclass=ABCMeta):
+    __slots__ = ()
+
+    @abstractmethod
+    def __await__(self):
+        yield
+
+    @classmethod
+    def __subclasshook__(cls, C):
+        if cls is Awaitable:
+            return _check_methods(C, "__await__")
+        return NotImplemented
+
+
+class Coroutine(Awaitable):
+    __slots__ = ()
+
+    @abstractmethod
+    def send(self, value):
+        ...
+
+    @abstractmethod
+    def throw(self, typ, val=None, tb=None):
+        ...
+
+    def close(self):
+        ...
+
+    @classmethod
+    def __subclasshook__(cls, C):
+        if cls is Coroutine:
+            return _check_methods(C, '__await__', 'send', 'throw', 'close')
+        return NotImplemented
 ```
 
 ## Some convinent functions
@@ -914,7 +1098,7 @@ Python can also be used for **game development**.
 Usually, it is used as a scripting language for games written in other languages, but it can be used to make games by itself.
 For 3D games, the library **Panda3D** can be used. For 2D games, you can use **pygame**.
 
-# Issues
+# # Issues
 
 ## Make class method return self type
 
@@ -946,4 +1130,3 @@ class Position:
 [circular import](https://zhuanlan.zhihu.com/p/66228942)
 
 modify the position of import to fix the issues
-
