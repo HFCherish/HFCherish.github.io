@@ -14,7 +14,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: http://hfcherish.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -75,7 +75,8 @@ pagination_dir: page
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: next
-
+plugins:
+  - hexo-symbols-count-time
 
 # security count config
 # reference: https://github.com/theme-next/hexo-leancloud-counter-security
@@ -93,6 +94,24 @@ search:
   field: post
   format: html
   limit: 10000
+  content: true
+
+algolia:
+  appID: "86BA1IZ4IX"
+  apiKey: "84ce143edd62dda5d39d9b52a07ac01a"
+  indexName: "hexo_blog"
+  adminApiKey: "cf8417f087dfd5404b7fb767c509f1ca"
+  chunkSize: 5000
+  fields:
+    - content:strip:truncate,0,500
+    - excerpt:strip
+    - gallery
+    - permalink
+    - photos
+    - slug
+    - tags
+    - title
+
 
 # article count & time
 # reference: https://github.com/theme-next/hexo-symbols-count-time
@@ -101,6 +120,9 @@ symbols_count_time:
   time: true
   total_symbols: true
   total_time: true
+  exclude_codeblock: false
+  wpm: 275
+  suffix: "mins."
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
