@@ -73,6 +73,60 @@
       </tags>
   </entry>
   <entry>
+    <title>Cache - MicroService</title>
+    <url>/2020/06/03/Cache-MicroService/</url>
+    <content><![CDATA[<h1 id="Where-is-my-cache-for-a-service"><a href="#Where-is-my-cache-for-a-service" class="headerlink" title="Where is my cache for a service"></a>Where is my cache for a service</h1><p>[Architectural Patterns for Caching Microservices](Architectural Patterns for Caching Microservices)</p>
+<p>Patterns:</p>
+<ol>
+<li><strong>embedded</strong>: save cache in the service</li>
+<li><strong>client-server</strong>: a completely separate cache server</li>
+<li><strong>reverse-proxy</strong>: put the cache in front of each service</li>
+<li><strong>Sidecar</strong>: put the cache as a sidecar container that belongs to the service</li>
+</ol>
+<p>How does cache work? The application receives the request and checks if <strong>the same request</strong> was already executed (and stored in the cache)</p>
+<h2 id="Embedded"><a href="#Embedded" class="headerlink" title="Embedded"></a>Embedded</h2><p><strong>Embedded Distributed Cache</strong></p>
+<p>Why distributed?</p>
+<ol>
+<li>Same requests happen on different instances, and we want to use cache on the second same request no matter whether they reached the same instance.</li>
+<li>An update request reached one instance, and we want all the cache of this resource on all instances should be updated.</li>
+</ol>
+<h2 id="Client-Server"><a href="#Client-Server" class="headerlink" title="Client-Server"></a>Client-Server</h2><p>pros:</p>
+<ul>
+<li>sperarate server, so you can use any programming language you want</li>
+<li>separate management. you can scale up&#x2F;down, do backup, design security separatly on need.</li>
+</ul>
+<p>cons:</p>
+<ul>
+<li>a new deployment &amp; related ops work (cloud can make this simple)</li>
+</ul>
+<h2 id="Sidecar"><a href="#Sidecar" class="headerlink" title="Sidecar"></a>Sidecar</h2><p>A mixture of Embedded &amp; client-server. (<a href="https://hazelcast.com/blog/hazelcast-sidecar-container-pattern/">sidecar container pattern</a>)</p>
+<p>Take k8s as example (now most of the sidecar pattern is implemented on k8s, becaused it supports this pattern inborn), we put the cache server with the service as separate containers on the same pod. The request reach the service container first, and then the service can access the cache server by <code>localhost</code> .</p>
+<blockquote>
+<p>The <a href="https://docs.microsoft.com/en-us/azure/architecture/patterns/sidecar">sidecar pattern</a> is a technique of attaching an additional container to the main parent container so that both would share the same lifecycle and the same resources. You may think of it as a perfect tool for decomposing your application into reusable modules, in which each part is written in a different technology or programming language.</p>
+</blockquote>
+<h2 id="Reverse-proxy"><a href="#Reverse-proxy" class="headerlink" title="Reverse proxy"></a>Reverse proxy</h2><ol>
+<li>Everytime you try to access the servcie, you go to the reverse proxy (e.g. nginx). </li>
+<li>And the proxy will first check the cache for the request. If cache exists, return immediately, else, forward to the service and write the cache.</li>
+</ol>
+<p>pros: </p>
+<ul>
+<li>In this way, the service has no idea about the cache, so nothing will change on the service when cache introduced.</li>
+</ul>
+<p>cons:</p>
+<ul>
+<li>cannot use any application-based code to invalidate the cache.</li>
+</ul>
+<p>Also, you can put the reverse proxy into the side-car, that is, <strong>reverse-proxy-sidecar</strong> pattern.</p>
+<p>Now, there is no mature <strong>HTTP Reverse Proxy Cache Sidecar</strong> solution at all. Nginx can do it, but it’s not a good choice since it’s not mature.</p>
+<h1 id="Caching-Practices"><a href="#Caching-Practices" class="headerlink" title="Caching Practices"></a>Caching Practices</h1><ul>
+<li>Always use caching in one place for a service. Mutliple caches will make the cache invalication and error-prone difficult.</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>cache</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>FluentValidator</title>
     <url>/2020/01/17/FluentValidator/</url>
     <content><![CDATA[<p><a href="https://fluentvalidation.net/start#setting-the-cascade-mode">FluentValidation</a></p>
@@ -279,60 +333,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Cache - MicroService</title>
-    <url>/2020/06/03/Cache-MicroService/</url>
-    <content><![CDATA[<h1 id="Where-is-my-cache-for-a-service"><a href="#Where-is-my-cache-for-a-service" class="headerlink" title="Where is my cache for a service"></a>Where is my cache for a service</h1><p>[Architectural Patterns for Caching Microservices](Architectural Patterns for Caching Microservices)</p>
-<p>Patterns:</p>
-<ol>
-<li><strong>embedded</strong>: save cache in the service</li>
-<li><strong>client-server</strong>: a completely separate cache server</li>
-<li><strong>reverse-proxy</strong>: put the cache in front of each service</li>
-<li><strong>Sidecar</strong>: put the cache as a sidecar container that belongs to the service</li>
-</ol>
-<p>How does cache work? The application receives the request and checks if <strong>the same request</strong> was already executed (and stored in the cache)</p>
-<h2 id="Embedded"><a href="#Embedded" class="headerlink" title="Embedded"></a>Embedded</h2><p><strong>Embedded Distributed Cache</strong></p>
-<p>Why distributed?</p>
-<ol>
-<li>Same requests happen on different instances, and we want to use cache on the second same request no matter whether they reached the same instance.</li>
-<li>An update request reached one instance, and we want all the cache of this resource on all instances should be updated.</li>
-</ol>
-<h2 id="Client-Server"><a href="#Client-Server" class="headerlink" title="Client-Server"></a>Client-Server</h2><p>pros:</p>
-<ul>
-<li>sperarate server, so you can use any programming language you want</li>
-<li>separate management. you can scale up&#x2F;down, do backup, design security separatly on need.</li>
-</ul>
-<p>cons:</p>
-<ul>
-<li>a new deployment &amp; related ops work (cloud can make this simple)</li>
-</ul>
-<h2 id="Sidecar"><a href="#Sidecar" class="headerlink" title="Sidecar"></a>Sidecar</h2><p>A mixture of Embedded &amp; client-server. (<a href="https://hazelcast.com/blog/hazelcast-sidecar-container-pattern/">sidecar container pattern</a>)</p>
-<p>Take k8s as example (now most of the sidecar pattern is implemented on k8s, becaused it supports this pattern inborn), we put the cache server with the service as separate containers on the same pod. The request reach the service container first, and then the service can access the cache server by <code>localhost</code> .</p>
-<blockquote>
-<p>The <a href="https://docs.microsoft.com/en-us/azure/architecture/patterns/sidecar">sidecar pattern</a> is a technique of attaching an additional container to the main parent container so that both would share the same lifecycle and the same resources. You may think of it as a perfect tool for decomposing your application into reusable modules, in which each part is written in a different technology or programming language.</p>
-</blockquote>
-<h2 id="Reverse-proxy"><a href="#Reverse-proxy" class="headerlink" title="Reverse proxy"></a>Reverse proxy</h2><ol>
-<li>Everytime you try to access the servcie, you go to the reverse proxy (e.g. nginx). </li>
-<li>And the proxy will first check the cache for the request. If cache exists, return immediately, else, forward to the service and write the cache.</li>
-</ol>
-<p>pros: </p>
-<ul>
-<li>In this way, the service has no idea about the cache, so nothing will change on the service when cache introduced.</li>
-</ul>
-<p>cons:</p>
-<ul>
-<li>cannot use any application-based code to invalidate the cache.</li>
-</ul>
-<p>Also, you can put the reverse proxy into the side-car, that is, <strong>reverse-proxy-sidecar</strong> pattern.</p>
-<p>Now, there is no mature <strong>HTTP Reverse Proxy Cache Sidecar</strong> solution at all. Nginx can do it, but it’s not a good choice since it’s not mature.</p>
-<h1 id="Caching-Practices"><a href="#Caching-Practices" class="headerlink" title="Caching Practices"></a>Caching Practices</h1><ul>
-<li>Always use caching in one place for a service. Mutliple caches will make the cache invalication and error-prone difficult.</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>cache</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>asure storage</title>
     <url>/2018/07/27/asure-storage/</url>
     <content><![CDATA[<p>asure storage 提供四种存储支持（<a href="https://www.youtube.com/watch?v=y6bIUHtdp6Y">asure storage overview (youtube)</a>）：</p>
@@ -359,6 +359,196 @@
       <tags>
         <tag>cloud</tag>
         <tag>asure</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>atlas</title>
+    <url>/2020/11/13/atlas/</url>
+    <content><![CDATA[<h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><p><img src="http://atlas.apache.org/public/images/twiki/architecture.png" alt="img"></p>
+<h1 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h1><p><a href="https://atlas.apache.org/2.0.0/InstallationSteps.html">install steps</a></p>
+<p>Access Apache Atlas UI using a browser: <a href="http://localhost:21000/">http://localhost:21000</a> </p>
+<p>You can also access the rest api <code>http://localhost:21000/api/atlas/v2</code></p>
+<p>默认的用户名密码是 (admin, admin)</p>
+<h1 id="Atlas-Features"><a href="#Atlas-Features" class="headerlink" title="Atlas Features"></a>Atlas Features</h1><h2 id="定义元模型，规范元数据"><a href="#定义元模型，规范元数据" class="headerlink" title="定义元模型，规范元数据"></a>定义元模型，规范元数据</h2><p>atlas 可以维护（增删改查） metadata types，支持</p>
+<ul>
+<li>创建多种类型的 metadata types<ul>
+<li>businessmetadatadef：业务元数据的元模型</li>
+<li>classificationdef：标签数据的元模型</li>
+<li>entitydef：一般元数据的元模型</li>
+<li>enumdef</li>
+<li>relationshipdef：关系元数据的元模型</li>
+<li>structdef</li>
+</ul>
+</li>
+<li>元模型支持定义属性约束、索引、唯一性等</li>
+<li>按 id&#x2F;typename&#x2F;query 来检索</li>
+</ul>
+<blockquote>
+<p><a href="http://atlas.apache.org/api/v2/resource_TypesREST.html#resource_TypesREST_createAtlasTypeDefs_POST">相关 API 定义</a></p>
+<p><a href="http://atlas.apache.org/api/v2/json_AtlasTypesDef.html">typedef request schema object</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># DELETE/GET/POST/PUT</span><br><span class="line">/v2/types/typedef</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h3><ul>
+<li>typename 全局唯一</li>
+</ul>
+<h2 id="可以维护元数据"><a href="#可以维护元数据" class="headerlink" title="可以维护元数据"></a>可以维护元数据</h2><h3 id="import-metadata"><a href="#import-metadata" class="headerlink" title="import metadata"></a>import metadata</h3><p>atlas 提供以下途径将元数据引入系统：</p>
+<ol>
+<li>REST API：atlas 提供 api 可以 bulk saveOrUpdate 某个 type 的元数据</li>
+<li>文件：atlas 可以上传文件，并 saveOrUpdate 文件中所定义的元模型、元数据等</li>
+<li>atlas hook：atlas 通过监听 kafka topic <code>ATLAS_HOOK</code> ，来实时引入数据源中的元数据。目前已提供 Apache Hive&#x2F;Apache HBase&#x2F;Apache Storm&#x2F;Apache Sqoop 的 hook<ol>
+<li>hive hook<ol>
+<li>可以 import hive databases &amp; tables 元数据</li>
+<li>可以监听以下类型的 hive 操作，capture 其中的元数据：<ol>
+<li>create database</li>
+<li>create table&#x2F;view, create table as select</li>
+<li>load, import, export</li>
+<li>DMLs (insert)</li>
+<li>alter database</li>
+<li>alter table (skewed table information, stored as, protection is not supported)</li>
+<li>alter view</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>sqoop<ol>
+<li>目前仅支持监听 sqoop 的 hiveimport operation 完成后，capture 其中的元数据。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="业务元数据"><a href="#业务元数据" class="headerlink" title="业务元数据"></a>业务元数据</h2><p>atlas 可以:</p>
+<ol>
+<li>定义业务元数据元模型规范业务元数据</li>
+<li>在技术元数据上，添加业务元数据，来实现关联</li>
+<li>支持按业务元数据检索</li>
+</ol>
+<h2 id="血缘"><a href="#血缘" class="headerlink" title="血缘"></a>血缘</h2><p>atlas 可以查询元数据血缘关系。应该是基于关系图实现。</p>
+<p>目前 hive 表可以支撑到 column 级别的血缘分析。</p>
+<h2 id="可以维护标签"><a href="#可以维护标签" class="headerlink" title="可以维护标签"></a>可以维护标签</h2><p>atlas 中的 classification 即标签，可以打在元数据、术语等地方。</p>
+<p>可以基于 classification 检索元数据。</p>
+<p>可以做 classification 的传播：</p>
+<ul>
+<li>基于继承关系链的传播</li>
+<li>基于血缘关系链的传播</li>
+</ul>
+<h3 id="Classification-vs-label"><a href="#Classification-vs-label" class="headerlink" title="Classification vs label"></a>Classification vs label</h3><p>Atlas 中的 classification 和 label 都是标签的概念，label 是轻量级、谁都可以加的简单标签，classification 则有更多的支持。</p>
+<p><a href="https://docs.cloudera.com/runtime/7.2.1/atlas-working-with-classifications/topics/atlas-working-with-classifications.html">atlas classification vs label</a></p>
+<h2 id="可以维护企业术语表"><a href="#可以维护企业术语表" class="headerlink" title="可以维护企业术语表"></a>可以维护企业术语表</h2><p>atlas 可以维护企业的术语，并将术语与元数据关联，支持按术语检索元数据，通过以下三个概念来实现细粒度的术语管理：</p>
+<ol>
+<li>glossary：术语表，最高级别，所有的术语都必须属于某个术语表</li>
+<li>category：术语分类，必须挂在某个 glossary。可以拥有 childCategories</li>
+<li>term：术语。必须挂在某个 glossary。可以挂在某个 category</li>
+</ol>
+<h2 id="Notifications"><a href="#Notifications" class="headerlink" title="Notifications"></a>Notifications</h2><p>atlas 通过 kafka 实现 hook，引入元数据；也通过 kafka 广播元数据修改，供消费者使用。</p>
+<ul>
+<li><p>notifications to atlas：<code>ATLAS_HOOK</code>. 目前已提供 Apache Hive&#x2F;Apache HBase&#x2F;Apache Storm&#x2F;Apache Sqoop 的 hook，来监听这些数据源的元数据</p>
+</li>
+<li><p>notifications from atlas: <code>ATLAS_ENTITIES</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 监听并发布以下事件的通知</span><br><span class="line">ENTITY_CREATE:         sent when an entity instance is created</span><br><span class="line">ENTITY_UPDATE:         sent when an entity instance is updated</span><br><span class="line">ENTITY_DELETE:         sent when an entity instance is deleted</span><br><span class="line">CLASSIFICATION_ADD:    sent when classifications are added to an entity instance</span><br><span class="line">CLASSIFICATION_UPDATE: sent when classifications of an entity instance are updated</span><br><span class="line">CLASSIFICATION_DELETE: sent when classifications are removed from an entity instance</span><br><span class="line"></span><br><span class="line"># notification data</span><br><span class="line">AtlasEntity  entity;</span><br><span class="line">OperationType operationType;</span><br><span class="line">List&lt;AtlasClassification&gt;  classifications</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="检索"><a href="#检索" class="headerlink" title="检索"></a>检索</h2><p>atlas 所有的元数据存储在图数据库 JanusGraph，而索引数据则存储在 index store（solr &#x2F; elasticsearch）来做全文检索</p>
+<p>atlas 支持以下检索方式：</p>
+<ol>
+<li>唯一定位元数据：通过 id</li>
+<li>basic 检索：基于 type、attributes、classifciation、terms 等 query parameter 做全文检索</li>
+<li>advance 检索：可以使用 dsl 语言做全文检索</li>
+</ol>
+<h2 id="高可用"><a href="#高可用" class="headerlink" title="高可用"></a>高可用</h2><ol>
+<li>基础设施高可用。<ol>
+<li>atlas 使用 JanusGraph 存储元数据，并将 HBase（默认，可采用其他数据库）作为 backing store。HBase 本身的高可用特性支撑了 metadata store 的高可用</li>
+<li>atlas 使用 solr &#x2F; elasticsearch 存储元数据索引。这些组件同样支持高可用</li>
+</ol>
+</li>
+<li>Web Service 高可用。<ol>
+<li>目前 atlas 的 web service 同一时间只能有一个 active instance 响应，以实现元数据维护、缓存等的一致性问题。高可用模式即有多个备用（passive）instances，当 active instance down 后，可以自动切换某个 passive instance，作为新的 active instance。</li>
+</ol>
+</li>
+</ol>
+<h2 id="访问控制"><a href="#访问控制" class="headerlink" title="访问控制"></a>访问控制</h2><p>atlas 支持非常细粒度的访问控制：</p>
+<ul>
+<li><p>元模型：基于某个元模型或某类元模型的访问控制。典型 example：</p>
+<blockquote>
+<ul>
+<li>Admin users can create&#x2F;update&#x2F;delete types of all categories</li>
+<li>Data stewards can create&#x2F;update&#x2F;delete classification types</li>
+<li>Healthcare data stewards can create&#x2F;update&#x2F;delete types having names start with “hc”</li>
+</ul>
+</blockquote>
+</li>
+<li><p>元数据：基于元模型、标签、元数据 id 的元数据访问控制。典型 example：</p>
+<blockquote>
+<ul>
+<li>Admin users can perform all entity operations on entities of all types</li>
+<li>Data stewards can perform all entity operations, except delete, on entities of all types</li>
+<li>Data quality admins can add&#x2F;update&#x2F;remove DATA_QUALITY classification</li>
+<li>Users in specific groups can read&#x2F;update entities with PII classification or its sub-classification</li>
+<li>Finance users can read&#x2F;update entities whose ID start with ‘finance’</li>
+</ul>
+</blockquote>
+</li>
+<li><p>admin 操作：可以控制 user&#x2F;group 来 import&#x2F;export entities</p>
+</li>
+</ul>
+<h2 id="UI"><a href="#UI" class="headerlink" title="UI"></a>UI</h2><p>有个 ui 可以管理元数据、标签、术语</p>
+<h1 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h1><ol>
+<li>web service 只有一个 active instance</li>
+<li>Typename 全局唯一</li>
+<li>ui 挺慢的</li>
+</ol>
+<h1 id="基于-atlas-我们可以做什么"><a href="#基于-atlas-我们可以做什么" class="headerlink" title="基于 atlas 我们可以做什么"></a>基于 atlas 我们可以做什么</h1><ol>
+<li>数据集发现<ol>
+<li>数据字典浏览和检索</li>
+</ol>
+</li>
+<li>数据集导入和导出<ol>
+<li>导出数据集，供系统之间交互使用</li>
+<li>导入数据集（数据标准、指标口径等）</li>
+</ol>
+</li>
+<li>标签管理：<ol>
+<li>维护用户画像标签 (增删改查)</li>
+<li>基于标签检索数据集</li>
+</ol>
+</li>
+<li>数据标准维护和浏览：（可以通过术语做？）<ol>
+<li>维护数据标准（增删改查）</li>
+<li>可以为数据标准加标签</li>
+</ol>
+</li>
+<li>指标和口径维护和浏览<ol>
+<li>维护指标口径（增删改查）</li>
+<li>可以为指标口径加标签</li>
+</ol>
+</li>
+<li>数据集 staticstics<ol>
+<li>数据接入和使用情况统计</li>
+</ol>
+</li>
+<li>辅助数据分析师生成分析：<ol>
+<li>通过关联技术元数据和业务元数据，当数据分析师按业务语言定义分析后，可以快速查找相关的表、字段等</li>
+</ol>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>big data</tag>
+        <tag>metadata</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>automatic drive</title>
+    <url>/2019/01/15/automatic-drive/</url>
+    <content><![CDATA[<p>reference:</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/29393415">coco</a>: one format for data labelling</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/721960-5e6217ea2a76689a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="auto-drive system"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/721960-6a7eac9f5586b04a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="labelling system"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/721960-5e82ce0148c621a5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="training system.png"></p>
+]]></content>
+      <tags>
+        <tag>automatic drive</tag>
       </tags>
   </entry>
   <entry>
@@ -637,196 +827,6 @@
       </tags>
   </entry>
   <entry>
-    <title>atlas</title>
-    <url>/2020/11/13/atlas/</url>
-    <content><![CDATA[<h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><p><img src="http://atlas.apache.org/public/images/twiki/architecture.png" alt="img"></p>
-<h1 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h1><p><a href="https://atlas.apache.org/2.0.0/InstallationSteps.html">install steps</a></p>
-<p>Access Apache Atlas UI using a browser: <a href="http://localhost:21000/">http://localhost:21000</a> </p>
-<p>You can also access the rest api <code>http://localhost:21000/api/atlas/v2</code></p>
-<p>默认的用户名密码是 (admin, admin)</p>
-<h1 id="Atlas-Features"><a href="#Atlas-Features" class="headerlink" title="Atlas Features"></a>Atlas Features</h1><h2 id="定义元模型，规范元数据"><a href="#定义元模型，规范元数据" class="headerlink" title="定义元模型，规范元数据"></a>定义元模型，规范元数据</h2><p>atlas 可以维护（增删改查） metadata types，支持</p>
-<ul>
-<li>创建多种类型的 metadata types<ul>
-<li>businessmetadatadef：业务元数据的元模型</li>
-<li>classificationdef：标签数据的元模型</li>
-<li>entitydef：一般元数据的元模型</li>
-<li>enumdef</li>
-<li>relationshipdef：关系元数据的元模型</li>
-<li>structdef</li>
-</ul>
-</li>
-<li>元模型支持定义属性约束、索引、唯一性等</li>
-<li>按 id&#x2F;typename&#x2F;query 来检索</li>
-</ul>
-<blockquote>
-<p><a href="http://atlas.apache.org/api/v2/resource_TypesREST.html#resource_TypesREST_createAtlasTypeDefs_POST">相关 API 定义</a></p>
-<p><a href="http://atlas.apache.org/api/v2/json_AtlasTypesDef.html">typedef request schema object</a></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># DELETE/GET/POST/PUT</span><br><span class="line">/v2/types/typedef</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h3 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h3><ul>
-<li>typename 全局唯一</li>
-</ul>
-<h2 id="可以维护元数据"><a href="#可以维护元数据" class="headerlink" title="可以维护元数据"></a>可以维护元数据</h2><h3 id="import-metadata"><a href="#import-metadata" class="headerlink" title="import metadata"></a>import metadata</h3><p>atlas 提供以下途径将元数据引入系统：</p>
-<ol>
-<li>REST API：atlas 提供 api 可以 bulk saveOrUpdate 某个 type 的元数据</li>
-<li>文件：atlas 可以上传文件，并 saveOrUpdate 文件中所定义的元模型、元数据等</li>
-<li>atlas hook：atlas 通过监听 kafka topic <code>ATLAS_HOOK</code> ，来实时引入数据源中的元数据。目前已提供 Apache Hive&#x2F;Apache HBase&#x2F;Apache Storm&#x2F;Apache Sqoop 的 hook<ol>
-<li>hive hook<ol>
-<li>可以 import hive databases &amp; tables 元数据</li>
-<li>可以监听以下类型的 hive 操作，capture 其中的元数据：<ol>
-<li>create database</li>
-<li>create table&#x2F;view, create table as select</li>
-<li>load, import, export</li>
-<li>DMLs (insert)</li>
-<li>alter database</li>
-<li>alter table (skewed table information, stored as, protection is not supported)</li>
-<li>alter view</li>
-</ol>
-</li>
-</ol>
-</li>
-<li>sqoop<ol>
-<li>目前仅支持监听 sqoop 的 hiveimport operation 完成后，capture 其中的元数据。</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-<h2 id="业务元数据"><a href="#业务元数据" class="headerlink" title="业务元数据"></a>业务元数据</h2><p>atlas 可以:</p>
-<ol>
-<li>定义业务元数据元模型规范业务元数据</li>
-<li>在技术元数据上，添加业务元数据，来实现关联</li>
-<li>支持按业务元数据检索</li>
-</ol>
-<h2 id="血缘"><a href="#血缘" class="headerlink" title="血缘"></a>血缘</h2><p>atlas 可以查询元数据血缘关系。应该是基于关系图实现。</p>
-<p>目前 hive 表可以支撑到 column 级别的血缘分析。</p>
-<h2 id="可以维护标签"><a href="#可以维护标签" class="headerlink" title="可以维护标签"></a>可以维护标签</h2><p>atlas 中的 classification 即标签，可以打在元数据、术语等地方。</p>
-<p>可以基于 classification 检索元数据。</p>
-<p>可以做 classification 的传播：</p>
-<ul>
-<li>基于继承关系链的传播</li>
-<li>基于血缘关系链的传播</li>
-</ul>
-<h3 id="Classification-vs-label"><a href="#Classification-vs-label" class="headerlink" title="Classification vs label"></a>Classification vs label</h3><p>Atlas 中的 classification 和 label 都是标签的概念，label 是轻量级、谁都可以加的简单标签，classification 则有更多的支持。</p>
-<p><a href="https://docs.cloudera.com/runtime/7.2.1/atlas-working-with-classifications/topics/atlas-working-with-classifications.html">atlas classification vs label</a></p>
-<h2 id="可以维护企业术语表"><a href="#可以维护企业术语表" class="headerlink" title="可以维护企业术语表"></a>可以维护企业术语表</h2><p>atlas 可以维护企业的术语，并将术语与元数据关联，支持按术语检索元数据，通过以下三个概念来实现细粒度的术语管理：</p>
-<ol>
-<li>glossary：术语表，最高级别，所有的术语都必须属于某个术语表</li>
-<li>category：术语分类，必须挂在某个 glossary。可以拥有 childCategories</li>
-<li>term：术语。必须挂在某个 glossary。可以挂在某个 category</li>
-</ol>
-<h2 id="Notifications"><a href="#Notifications" class="headerlink" title="Notifications"></a>Notifications</h2><p>atlas 通过 kafka 实现 hook，引入元数据；也通过 kafka 广播元数据修改，供消费者使用。</p>
-<ul>
-<li><p>notifications to atlas：<code>ATLAS_HOOK</code>. 目前已提供 Apache Hive&#x2F;Apache HBase&#x2F;Apache Storm&#x2F;Apache Sqoop 的 hook，来监听这些数据源的元数据</p>
-</li>
-<li><p>notifications from atlas: <code>ATLAS_ENTITIES</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 监听并发布以下事件的通知</span><br><span class="line">ENTITY_CREATE:         sent when an entity instance is created</span><br><span class="line">ENTITY_UPDATE:         sent when an entity instance is updated</span><br><span class="line">ENTITY_DELETE:         sent when an entity instance is deleted</span><br><span class="line">CLASSIFICATION_ADD:    sent when classifications are added to an entity instance</span><br><span class="line">CLASSIFICATION_UPDATE: sent when classifications of an entity instance are updated</span><br><span class="line">CLASSIFICATION_DELETE: sent when classifications are removed from an entity instance</span><br><span class="line"></span><br><span class="line"># notification data</span><br><span class="line">AtlasEntity  entity;</span><br><span class="line">OperationType operationType;</span><br><span class="line">List&lt;AtlasClassification&gt;  classifications</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="检索"><a href="#检索" class="headerlink" title="检索"></a>检索</h2><p>atlas 所有的元数据存储在图数据库 JanusGraph，而索引数据则存储在 index store（solr &#x2F; elasticsearch）来做全文检索</p>
-<p>atlas 支持以下检索方式：</p>
-<ol>
-<li>唯一定位元数据：通过 id</li>
-<li>basic 检索：基于 type、attributes、classifciation、terms 等 query parameter 做全文检索</li>
-<li>advance 检索：可以使用 dsl 语言做全文检索</li>
-</ol>
-<h2 id="高可用"><a href="#高可用" class="headerlink" title="高可用"></a>高可用</h2><ol>
-<li>基础设施高可用。<ol>
-<li>atlas 使用 JanusGraph 存储元数据，并将 HBase（默认，可采用其他数据库）作为 backing store。HBase 本身的高可用特性支撑了 metadata store 的高可用</li>
-<li>atlas 使用 solr &#x2F; elasticsearch 存储元数据索引。这些组件同样支持高可用</li>
-</ol>
-</li>
-<li>Web Service 高可用。<ol>
-<li>目前 atlas 的 web service 同一时间只能有一个 active instance 响应，以实现元数据维护、缓存等的一致性问题。高可用模式即有多个备用（passive）instances，当 active instance down 后，可以自动切换某个 passive instance，作为新的 active instance。</li>
-</ol>
-</li>
-</ol>
-<h2 id="访问控制"><a href="#访问控制" class="headerlink" title="访问控制"></a>访问控制</h2><p>atlas 支持非常细粒度的访问控制：</p>
-<ul>
-<li><p>元模型：基于某个元模型或某类元模型的访问控制。典型 example：</p>
-<blockquote>
-<ul>
-<li>Admin users can create&#x2F;update&#x2F;delete types of all categories</li>
-<li>Data stewards can create&#x2F;update&#x2F;delete classification types</li>
-<li>Healthcare data stewards can create&#x2F;update&#x2F;delete types having names start with “hc”</li>
-</ul>
-</blockquote>
-</li>
-<li><p>元数据：基于元模型、标签、元数据 id 的元数据访问控制。典型 example：</p>
-<blockquote>
-<ul>
-<li>Admin users can perform all entity operations on entities of all types</li>
-<li>Data stewards can perform all entity operations, except delete, on entities of all types</li>
-<li>Data quality admins can add&#x2F;update&#x2F;remove DATA_QUALITY classification</li>
-<li>Users in specific groups can read&#x2F;update entities with PII classification or its sub-classification</li>
-<li>Finance users can read&#x2F;update entities whose ID start with ‘finance’</li>
-</ul>
-</blockquote>
-</li>
-<li><p>admin 操作：可以控制 user&#x2F;group 来 import&#x2F;export entities</p>
-</li>
-</ul>
-<h2 id="UI"><a href="#UI" class="headerlink" title="UI"></a>UI</h2><p>有个 ui 可以管理元数据、标签、术语</p>
-<h1 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h1><ol>
-<li>web service 只有一个 active instance</li>
-<li>Typename 全局唯一</li>
-<li>ui 挺慢的</li>
-</ol>
-<h1 id="基于-atlas-我们可以做什么"><a href="#基于-atlas-我们可以做什么" class="headerlink" title="基于 atlas 我们可以做什么"></a>基于 atlas 我们可以做什么</h1><ol>
-<li>数据集发现<ol>
-<li>数据字典浏览和检索</li>
-</ol>
-</li>
-<li>数据集导入和导出<ol>
-<li>导出数据集，供系统之间交互使用</li>
-<li>导入数据集（数据标准、指标口径等）</li>
-</ol>
-</li>
-<li>标签管理：<ol>
-<li>维护用户画像标签 (增删改查)</li>
-<li>基于标签检索数据集</li>
-</ol>
-</li>
-<li>数据标准维护和浏览：（可以通过术语做？）<ol>
-<li>维护数据标准（增删改查）</li>
-<li>可以为数据标准加标签</li>
-</ol>
-</li>
-<li>指标和口径维护和浏览<ol>
-<li>维护指标口径（增删改查）</li>
-<li>可以为指标口径加标签</li>
-</ol>
-</li>
-<li>数据集 staticstics<ol>
-<li>数据接入和使用情况统计</li>
-</ol>
-</li>
-<li>辅助数据分析师生成分析：<ol>
-<li>通过关联技术元数据和业务元数据，当数据分析师按业务语言定义分析后，可以快速查找相关的表、字段等</li>
-</ol>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>big data</tag>
-        <tag>metadata</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>automatic drive</title>
-    <url>/2019/01/15/automatic-drive/</url>
-    <content><![CDATA[<p>reference:</p>
-<ul>
-<li><a href="https://zhuanlan.zhihu.com/p/29393415">coco</a>: one format for data labelling</li>
-</ul>
-<p><img src="https://upload-images.jianshu.io/upload_images/721960-5e6217ea2a76689a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="auto-drive system"></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/721960-6a7eac9f5586b04a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="labelling system"></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/721960-5e82ce0148c621a5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="training system.png"></p>
-]]></content>
-      <tags>
-        <tag>automatic drive</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>在 aws lambda 中应用 jersey</title>
     <url>/2018/06/27/aws-lambda-jersey/</url>
     <content><![CDATA[<p>使用 <a href="https://github.com/awslabs/aws-serverless-java-container">aws serverless java container</a> 实现。</p>
@@ -852,27 +852,6 @@
       <tags>
         <tag>aws</tag>
         <tag>aws lambda</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>bean validator</title>
-    <url>/2018/07/18/bean-validator/</url>
-    <content><![CDATA[<p>bean validator 主要是验证一个 bean 的各字段是否满足一些约束，例如 <code>@NotNull</code></p>
-<p>bean validation 有个规范 <a href="https://beanvalidation.org/2.0/">jsr 380</a>，里边定义了一堆 api。有很多规范的实现，最常用的是 <a href="http://hibernate.org/validator/">hibernate validator</a>，jersey 出的 <a href="https://jersey.github.io/documentation/latest/bean-validation.html">jersey-bean-validation</a> 也是基于 hibernate validator 做的。</p>
-<p>bean validator 一般是应用在 web 框架（如 spring、jersey）上，框架在反序列化 rest 请求到 bean 对象时，框架会调用 validator 根据 bean 对象的 annotation 对 bean 进行验证。</p>
-<p>这个过程也可以手动进行。可参考 <a href="http://hibernate.org/validator/documentation/getting-started/">hibernate validator: get started</a>。</p>
-<h1 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h1><figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line"><span class="comment">// jsr 380 api</span></span><br><span class="line">compile <span class="string">&quot;javax.validation:validation-api:2.0.1.Final&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// hibernate vaidator 实现</span></span><br><span class="line">testCompile <span class="string">&quot;org.hibernate.validator:hibernate-validator:6.0.10.Final&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// hibernate validator 依赖的 JSR 341 实现</span></span><br><span class="line">testCompile <span class="string">&quot;org.glassfish:javax.el:3.0.0&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="创建-bean，标明约束"><a href="#创建-bean，标明约束" class="headerlink" title="创建 bean，标明约束"></a>创建 bean，标明约束</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> org.hibernate.validator.referenceguide.chapter01;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.Min;</span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.NotNull;</span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.Size;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Car</span> &#123;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@NotNull</span></span><br><span class="line">   <span class="keyword">private</span> String manufacturer;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@NotNull</span></span><br><span class="line">   <span class="meta">@Size(min = 2, max = 14)</span></span><br><span class="line">   <span class="keyword">private</span> String licensePlate;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Min(2)</span></span><br><span class="line">   <span class="keyword">private</span> <span class="type">int</span> seatCount;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">public</span> <span class="title function_">Car</span><span class="params">(String manufacturer, String licencePlate, <span class="type">int</span> seatCount)</span>&#123;</span><br><span class="line">      <span class="built_in">this</span>.manufacturer = manufacturer;</span><br><span class="line">      <span class="built_in">this</span>.licensePlate = licencePlate;</span><br><span class="line">      <span class="built_in">this</span>.seatCount = seatCount;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h1><ol>
-<li>利用 <code>Validation</code> 获取默认的 <code>ValidatorFactory</code>：<code>Validation.buildDefaultValidatorFactory()</code>；</li>
-<li>从 <code>ValidatorFacotry</code> 获取 <code>Validator</code>：<code>factory.getValidator()</code></li>
-<li>利用 <code>Validator</code> 验证 bean</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> org.hibernate.validator.referenceguide.chapter01;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"><span class="keyword">import</span> javax.validation.ConstraintViolation;</span><br><span class="line"><span class="keyword">import</span> javax.validation.Validation;</span><br><span class="line"><span class="keyword">import</span> javax.validation.Validator;</span><br><span class="line"><span class="keyword">import</span> javax.validation.ValidatorFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.BeforeClass;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.junit.Assert.assertEquals;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CarTest</span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Validator validator;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@BeforeClass</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">setUp</span><span class="params">()</span> &#123;</span><br><span class="line">      <span class="type">ValidatorFactory</span> <span class="variable">factory</span> <span class="operator">=</span> Validation.buildDefaultValidatorFactory();</span><br><span class="line">      validator = factory.getValidator();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">manufacturerIsNull</span><span class="params">()</span> &#123;</span><br><span class="line">      <span class="type">Car</span> <span class="variable">car</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Car</span>( <span class="literal">null</span>, <span class="string">&quot;DD-AB-123&quot;</span>, <span class="number">4</span> );</span><br><span class="line"></span><br><span class="line">      Set&lt;ConstraintViolation&lt;Car&gt;&gt; constraintViolations =</span><br><span class="line">      validator.validate( car );</span><br><span class="line"></span><br><span class="line">      assertEquals( <span class="number">1</span>, constraintViolations.size() );</span><br><span class="line">      assertEquals(</span><br><span class="line">         <span class="string">&quot;may not be null&quot;</span>,</span><br><span class="line">         constraintViolations.iterator().next().getMessage()</span><br><span class="line">      );</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">licensePlateTooShort</span><span class="params">()</span> &#123;</span><br><span class="line">      <span class="type">Car</span> <span class="variable">car</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Car</span>( <span class="string">&quot;Morris&quot;</span>, <span class="string">&quot;D&quot;</span>, <span class="number">4</span> );</span><br><span class="line"></span><br><span class="line">      Set&lt;ConstraintViolation&lt;Car&gt;&gt; constraintViolations =</span><br><span class="line">      validator.validate( car );</span><br><span class="line"></span><br><span class="line">      assertEquals( <span class="number">1</span>, constraintViolations.size() );</span><br><span class="line">      assertEquals(</span><br><span class="line">         <span class="string">&quot;size must be between 2 and 14&quot;</span>,</span><br><span class="line">         constraintViolations.iterator().next().getMessage()</span><br><span class="line">      );</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">seatCountTooLow</span><span class="params">()</span> &#123;</span><br><span class="line">      <span class="type">Car</span> <span class="variable">car</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Car</span>( <span class="string">&quot;Morris&quot;</span>, <span class="string">&quot;DD-AB-123&quot;</span>, <span class="number">1</span> );</span><br><span class="line"></span><br><span class="line">      Set&lt;ConstraintViolation&lt;Car&gt;&gt; constraintViolations =</span><br><span class="line">      validator.validate( car );</span><br><span class="line"></span><br><span class="line">      assertEquals( <span class="number">1</span>, constraintViolations.size() );</span><br><span class="line">      assertEquals(</span><br><span class="line">         <span class="string">&quot;must be greater than or equal to 2&quot;</span>,</span><br><span class="line">         constraintViolations.iterator().next().getMessage()</span><br><span class="line">      );</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">carIsValid</span><span class="params">()</span> &#123;</span><br><span class="line">      <span class="type">Car</span> <span class="variable">car</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Car</span>( <span class="string">&quot;Morris&quot;</span>, <span class="string">&quot;DD-AB-123&quot;</span>, <span class="number">2</span> );</span><br><span class="line"></span><br><span class="line">      Set&lt;ConstraintViolation&lt;Car&gt;&gt; constraintViolations =</span><br><span class="line">      validator.validate( car );</span><br><span class="line"></span><br><span class="line">      assertEquals( <span class="number">0</span>, constraintViolations.size() );</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <tags>
-        <tag>rest</tag>
       </tags>
   </entry>
   <entry>
@@ -1026,6 +1005,27 @@ Maybe there’re also specific cloud, like financial cloud (maybe more secure an
         <tag>big data</tag>
         <tag>certificate</tag>
         <tag>cloud computing</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>bean validator</title>
+    <url>/2018/07/18/bean-validator/</url>
+    <content><![CDATA[<p>bean validator 主要是验证一个 bean 的各字段是否满足一些约束，例如 <code>@NotNull</code></p>
+<p>bean validation 有个规范 <a href="https://beanvalidation.org/2.0/">jsr 380</a>，里边定义了一堆 api。有很多规范的实现，最常用的是 <a href="http://hibernate.org/validator/">hibernate validator</a>，jersey 出的 <a href="https://jersey.github.io/documentation/latest/bean-validation.html">jersey-bean-validation</a> 也是基于 hibernate validator 做的。</p>
+<p>bean validator 一般是应用在 web 框架（如 spring、jersey）上，框架在反序列化 rest 请求到 bean 对象时，框架会调用 validator 根据 bean 对象的 annotation 对 bean 进行验证。</p>
+<p>这个过程也可以手动进行。可参考 <a href="http://hibernate.org/validator/documentation/getting-started/">hibernate validator: get started</a>。</p>
+<h1 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h1><figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line"><span class="comment">// jsr 380 api</span></span><br><span class="line">compile <span class="string">&quot;javax.validation:validation-api:2.0.1.Final&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// hibernate vaidator 实现</span></span><br><span class="line">testCompile <span class="string">&quot;org.hibernate.validator:hibernate-validator:6.0.10.Final&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// hibernate validator 依赖的 JSR 341 实现</span></span><br><span class="line">testCompile <span class="string">&quot;org.glassfish:javax.el:3.0.0&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="创建-bean，标明约束"><a href="#创建-bean，标明约束" class="headerlink" title="创建 bean，标明约束"></a>创建 bean，标明约束</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> org.hibernate.validator.referenceguide.chapter01;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.Min;</span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.NotNull;</span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.Size;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Car</span> &#123;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@NotNull</span></span><br><span class="line">   <span class="keyword">private</span> String manufacturer;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@NotNull</span></span><br><span class="line">   <span class="meta">@Size(min = 2, max = 14)</span></span><br><span class="line">   <span class="keyword">private</span> String licensePlate;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Min(2)</span></span><br><span class="line">   <span class="keyword">private</span> <span class="type">int</span> seatCount;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">public</span> <span class="title function_">Car</span><span class="params">(String manufacturer, String licencePlate, <span class="type">int</span> seatCount)</span>&#123;</span><br><span class="line">      <span class="built_in">this</span>.manufacturer = manufacturer;</span><br><span class="line">      <span class="built_in">this</span>.licensePlate = licencePlate;</span><br><span class="line">      <span class="built_in">this</span>.seatCount = seatCount;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h1><ol>
+<li>利用 <code>Validation</code> 获取默认的 <code>ValidatorFactory</code>：<code>Validation.buildDefaultValidatorFactory()</code>；</li>
+<li>从 <code>ValidatorFacotry</code> 获取 <code>Validator</code>：<code>factory.getValidator()</code></li>
+<li>利用 <code>Validator</code> 验证 bean</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> org.hibernate.validator.referenceguide.chapter01;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"><span class="keyword">import</span> javax.validation.ConstraintViolation;</span><br><span class="line"><span class="keyword">import</span> javax.validation.Validation;</span><br><span class="line"><span class="keyword">import</span> javax.validation.Validator;</span><br><span class="line"><span class="keyword">import</span> javax.validation.ValidatorFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.BeforeClass;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.junit.Assert.assertEquals;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CarTest</span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Validator validator;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@BeforeClass</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">setUp</span><span class="params">()</span> &#123;</span><br><span class="line">      <span class="type">ValidatorFactory</span> <span class="variable">factory</span> <span class="operator">=</span> Validation.buildDefaultValidatorFactory();</span><br><span class="line">      validator = factory.getValidator();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">manufacturerIsNull</span><span class="params">()</span> &#123;</span><br><span class="line">      <span class="type">Car</span> <span class="variable">car</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Car</span>( <span class="literal">null</span>, <span class="string">&quot;DD-AB-123&quot;</span>, <span class="number">4</span> );</span><br><span class="line"></span><br><span class="line">      Set&lt;ConstraintViolation&lt;Car&gt;&gt; constraintViolations =</span><br><span class="line">      validator.validate( car );</span><br><span class="line"></span><br><span class="line">      assertEquals( <span class="number">1</span>, constraintViolations.size() );</span><br><span class="line">      assertEquals(</span><br><span class="line">         <span class="string">&quot;may not be null&quot;</span>,</span><br><span class="line">         constraintViolations.iterator().next().getMessage()</span><br><span class="line">      );</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">licensePlateTooShort</span><span class="params">()</span> &#123;</span><br><span class="line">      <span class="type">Car</span> <span class="variable">car</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Car</span>( <span class="string">&quot;Morris&quot;</span>, <span class="string">&quot;D&quot;</span>, <span class="number">4</span> );</span><br><span class="line"></span><br><span class="line">      Set&lt;ConstraintViolation&lt;Car&gt;&gt; constraintViolations =</span><br><span class="line">      validator.validate( car );</span><br><span class="line"></span><br><span class="line">      assertEquals( <span class="number">1</span>, constraintViolations.size() );</span><br><span class="line">      assertEquals(</span><br><span class="line">         <span class="string">&quot;size must be between 2 and 14&quot;</span>,</span><br><span class="line">         constraintViolations.iterator().next().getMessage()</span><br><span class="line">      );</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">seatCountTooLow</span><span class="params">()</span> &#123;</span><br><span class="line">      <span class="type">Car</span> <span class="variable">car</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Car</span>( <span class="string">&quot;Morris&quot;</span>, <span class="string">&quot;DD-AB-123&quot;</span>, <span class="number">1</span> );</span><br><span class="line"></span><br><span class="line">      Set&lt;ConstraintViolation&lt;Car&gt;&gt; constraintViolations =</span><br><span class="line">      validator.validate( car );</span><br><span class="line"></span><br><span class="line">      assertEquals( <span class="number">1</span>, constraintViolations.size() );</span><br><span class="line">      assertEquals(</span><br><span class="line">         <span class="string">&quot;must be greater than or equal to 2&quot;</span>,</span><br><span class="line">         constraintViolations.iterator().next().getMessage()</span><br><span class="line">      );</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">carIsValid</span><span class="params">()</span> &#123;</span><br><span class="line">      <span class="type">Car</span> <span class="variable">car</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Car</span>( <span class="string">&quot;Morris&quot;</span>, <span class="string">&quot;DD-AB-123&quot;</span>, <span class="number">2</span> );</span><br><span class="line"></span><br><span class="line">      Set&lt;ConstraintViolation&lt;Car&gt;&gt; constraintViolations =</span><br><span class="line">      validator.validate( car );</span><br><span class="line"></span><br><span class="line">      assertEquals( <span class="number">0</span>, constraintViolations.size() );</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>rest</tag>
       </tags>
   </entry>
   <entry>
@@ -1211,23 +1211,6 @@ Maybe there’re also specific cloud, like financial cloud (maybe more secure an
 ]]></content>
   </entry>
   <entry>
-    <title>duplicate rows in postgresql</title>
-    <url>/2018/11/06/duplicate-rows-in-postgresql/</url>
-    <content><![CDATA[<p>参见 <a href="https://blog.theodo.fr/2018/01/search-destroy-duplicate-rows-postgresql/">Search and destroy duplicate rows in PostgreSQL</a></p>
-<h1 id="Find-duplicates"><a href="#Find-duplicates" class="headerlink" title="Find duplicates"></a>Find duplicates</h1><h2 id="using-group"><a href="#using-group" class="headerlink" title="using group"></a>using group</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">  firstname,</span><br><span class="line">  lastname,</span><br><span class="line">  <span class="built_in">count</span>(<span class="operator">*</span>)</span><br><span class="line"><span class="keyword">FROM</span> people</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span></span><br><span class="line">  firstname,</span><br><span class="line">  lastname</span><br><span class="line"><span class="keyword">HAVING</span> <span class="built_in">count</span>(<span class="operator">*</span>) <span class="operator">&gt;</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
-
-<h2 id="using-partition"><a href="#using-partition" class="headerlink" title="using partition"></a>using partition</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span></span><br><span class="line">  (<span class="keyword">SELECT</span> <span class="operator">*</span>, <span class="built_in">count</span>(<span class="operator">*</span>)</span><br><span class="line">  <span class="keyword">OVER</span></span><br><span class="line">    (<span class="keyword">PARTITION</span> <span class="keyword">BY</span></span><br><span class="line">      firstname,</span><br><span class="line">      lastname</span><br><span class="line">    ) <span class="keyword">AS</span> count</span><br><span class="line">  <span class="keyword">FROM</span> people) tableWithCount</span><br><span class="line">  <span class="keyword">WHERE</span> tableWithCount.count <span class="operator">&gt;</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Using-not-strict-distinct"><a href="#Using-not-strict-distinct" class="headerlink" title="Using not strict distinct"></a>Using not strict distinct</h2><p>利用 not strict distinct <code>DISTINCT ON</code> 找到唯一的那些条，剩余的就是重复的，可以修改或删除</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> people <span class="keyword">WHERE</span> people.id <span class="keyword">NOT</span> <span class="keyword">IN</span> </span><br><span class="line">(<span class="keyword">SELECT</span> id <span class="keyword">FROM</span> (</span><br><span class="line">    <span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> <span class="keyword">ON</span> (firstname, lastname) <span class="operator">*</span></span><br><span class="line">  <span class="keyword">FROM</span> people));</span><br><span class="line">  </span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> more readable code</span><br><span class="line"><span class="keyword">WITH</span> <span class="keyword">unique</span> <span class="keyword">AS</span></span><br><span class="line">    (<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> <span class="keyword">ON</span> (firstname, lastname) <span class="operator">*</span> <span class="keyword">FROM</span> people)</span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> people <span class="keyword">WHERE</span> people.id <span class="keyword">NOT</span> <span class="keyword">IN</span> (<span class="keyword">SELECT</span> id <span class="keyword">FROM</span> <span class="keyword">unique</span>);</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>sql</tag>
-        <tag>postgres</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>data lake</title>
     <url>/2020/11/09/data-lake/</url>
     <content><![CDATA[<h1 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h1><p><a href="https://zhuanlan.zhihu.com/p/91165577">数据湖</a></p>
@@ -1318,30 +1301,20 @@ Maybe there’re also specific cloud, like financial cloud (maybe more secure an
       </tags>
   </entry>
   <entry>
-    <title>构建</title>
-    <url>/2018/08/16/gradle-build/</url>
-    <content><![CDATA[<h1 id="Problems"><a href="#Problems" class="headerlink" title="Problems?"></a>Problems?</h1><ol>
-<li>manifest 是干什么用的？</li>
-<li>代码运行时，如何找到 dependency 的包</li>
-<li>java -jar 时，classpath 指定？</li>
-</ol>
-<h1 id="classpath"><a href="#classpath" class="headerlink" title="classpath"></a>classpath</h1><p>classpath 指定的是 java 类所在的目录（包括当前项目的类、依赖的类等）。应该是当打 jar 包的时候，默认会加上当前目录(.)到 classpath，这样就包含了 jar 内部的类？</p>
-<h1 id="Thin-jar"><a href="#Thin-jar" class="headerlink" title="Thin jar"></a>Thin jar</h1><p><a href="https://github.com/cuzfrog/gradle-lean">gradle lean</a></p>
-<p>This plugin depends on <code>JavaPlugin</code> and <code>ApplicationPlugin</code>.</p>
-<ul>
-<li>for <code>installDist</code>, jars under <code>install/$PROJECT_NAME$/lib/</code></li>
-<li>for <code>distZip</code>, jars under <code>/lib/</code> inside package</li>
-</ul>
-<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id <span class="string">&#x27;java&#x27;</span></span><br><span class="line">    <span class="comment">// Apply the application plugin to add support for building a CLI application.</span></span><br><span class="line">    id <span class="string">&#x27;application&#x27;</span></span><br><span class="line"></span><br><span class="line">    id <span class="string">&#x27;scala&#x27;</span></span><br><span class="line"></span><br><span class="line">    id <span class="string">&#x27;com.github.maiflai.scalatest&#x27;</span> version <span class="string">&#x27;0.26&#x27;</span></span><br><span class="line"></span><br><span class="line">    id <span class="string">&quot;com.github.gradle-lean&quot;</span> version <span class="string">&quot;0.1.2&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <title>duplicate rows in postgresql</title>
+    <url>/2018/11/06/duplicate-rows-in-postgresql/</url>
+    <content><![CDATA[<p>参见 <a href="https://blog.theodo.fr/2018/01/search-destroy-duplicate-rows-postgresql/">Search and destroy duplicate rows in PostgreSQL</a></p>
+<h1 id="Find-duplicates"><a href="#Find-duplicates" class="headerlink" title="Find duplicates"></a>Find duplicates</h1><h2 id="using-group"><a href="#using-group" class="headerlink" title="using group"></a>using group</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">  firstname,</span><br><span class="line">  lastname,</span><br><span class="line">  <span class="built_in">count</span>(<span class="operator">*</span>)</span><br><span class="line"><span class="keyword">FROM</span> people</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span></span><br><span class="line">  firstname,</span><br><span class="line">  lastname</span><br><span class="line"><span class="keyword">HAVING</span> <span class="built_in">count</span>(<span class="operator">*</span>) <span class="operator">&gt;</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
 
-<h1 id="implementation-vs-compile-vs-api"><a href="#implementation-vs-compile-vs-api" class="headerlink" title="implementation vs compile vs api"></a>implementation vs compile vs api</h1><p><a href="https://stackoverflow.com/questions/44493378/whats-the-difference-between-implementation-and-compile-in-gradle">stackoverflow</a></p>
-<h1 id="Dependency-Conflict"><a href="#Dependency-Conflict" class="headerlink" title="Dependency Conflict"></a>Dependency Conflict</h1><h2 id="force-some-edition"><a href="#force-some-edition" class="headerlink" title="force some edition"></a>force some edition</h2><figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">configurations.all &#123;</span><br><span class="line">    resolutionStrategy &#123;</span><br><span class="line">        force <span class="string">&#x27;com.fasterxml.jackson.module:jackson-module-scala_2.11:2.10.3&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="using-partition"><a href="#using-partition" class="headerlink" title="using partition"></a>using partition</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span></span><br><span class="line">  (<span class="keyword">SELECT</span> <span class="operator">*</span>, <span class="built_in">count</span>(<span class="operator">*</span>)</span><br><span class="line">  <span class="keyword">OVER</span></span><br><span class="line">    (<span class="keyword">PARTITION</span> <span class="keyword">BY</span></span><br><span class="line">      firstname,</span><br><span class="line">      lastname</span><br><span class="line">    ) <span class="keyword">AS</span> count</span><br><span class="line">  <span class="keyword">FROM</span> people) tableWithCount</span><br><span class="line">  <span class="keyword">WHERE</span> tableWithCount.count <span class="operator">&gt;</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Using-not-strict-distinct"><a href="#Using-not-strict-distinct" class="headerlink" title="Using not strict distinct"></a>Using not strict distinct</h2><p>利用 not strict distinct <code>DISTINCT ON</code> 找到唯一的那些条，剩余的就是重复的，可以修改或删除</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> people <span class="keyword">WHERE</span> people.id <span class="keyword">NOT</span> <span class="keyword">IN</span> </span><br><span class="line">(<span class="keyword">SELECT</span> id <span class="keyword">FROM</span> (</span><br><span class="line">    <span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> <span class="keyword">ON</span> (firstname, lastname) <span class="operator">*</span></span><br><span class="line">  <span class="keyword">FROM</span> people));</span><br><span class="line">  </span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> more readable code</span><br><span class="line"><span class="keyword">WITH</span> <span class="keyword">unique</span> <span class="keyword">AS</span></span><br><span class="line">    (<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> <span class="keyword">ON</span> (firstname, lastname) <span class="operator">*</span> <span class="keyword">FROM</span> people)</span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> people <span class="keyword">WHERE</span> people.id <span class="keyword">NOT</span> <span class="keyword">IN</span> (<span class="keyword">SELECT</span> id <span class="keyword">FROM</span> <span class="keyword">unique</span>);</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <tags>
-        <tag>gradle</tag>
-        <tag>build</tag>
-        <tag>java</tag>
+        <tag>sql</tag>
+        <tag>postgres</tag>
       </tags>
   </entry>
   <entry>
@@ -1481,6 +1454,33 @@ Maybe there’re also specific cloud, like financial cloud (maybe more secure an
 ]]></content>
       <tags>
         <tag>tool</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>构建</title>
+    <url>/2018/08/16/gradle-build/</url>
+    <content><![CDATA[<h1 id="Problems"><a href="#Problems" class="headerlink" title="Problems?"></a>Problems?</h1><ol>
+<li>manifest 是干什么用的？</li>
+<li>代码运行时，如何找到 dependency 的包</li>
+<li>java -jar 时，classpath 指定？</li>
+</ol>
+<h1 id="classpath"><a href="#classpath" class="headerlink" title="classpath"></a>classpath</h1><p>classpath 指定的是 java 类所在的目录（包括当前项目的类、依赖的类等）。应该是当打 jar 包的时候，默认会加上当前目录(.)到 classpath，这样就包含了 jar 内部的类？</p>
+<h1 id="Thin-jar"><a href="#Thin-jar" class="headerlink" title="Thin jar"></a>Thin jar</h1><p><a href="https://github.com/cuzfrog/gradle-lean">gradle lean</a></p>
+<p>This plugin depends on <code>JavaPlugin</code> and <code>ApplicationPlugin</code>.</p>
+<ul>
+<li>for <code>installDist</code>, jars under <code>install/$PROJECT_NAME$/lib/</code></li>
+<li>for <code>distZip</code>, jars under <code>/lib/</code> inside package</li>
+</ul>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id <span class="string">&#x27;java&#x27;</span></span><br><span class="line">    <span class="comment">// Apply the application plugin to add support for building a CLI application.</span></span><br><span class="line">    id <span class="string">&#x27;application&#x27;</span></span><br><span class="line"></span><br><span class="line">    id <span class="string">&#x27;scala&#x27;</span></span><br><span class="line"></span><br><span class="line">    id <span class="string">&#x27;com.github.maiflai.scalatest&#x27;</span> version <span class="string">&#x27;0.26&#x27;</span></span><br><span class="line"></span><br><span class="line">    id <span class="string">&quot;com.github.gradle-lean&quot;</span> version <span class="string">&quot;0.1.2&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="implementation-vs-compile-vs-api"><a href="#implementation-vs-compile-vs-api" class="headerlink" title="implementation vs compile vs api"></a>implementation vs compile vs api</h1><p><a href="https://stackoverflow.com/questions/44493378/whats-the-difference-between-implementation-and-compile-in-gradle">stackoverflow</a></p>
+<h1 id="Dependency-Conflict"><a href="#Dependency-Conflict" class="headerlink" title="Dependency Conflict"></a>Dependency Conflict</h1><h2 id="force-some-edition"><a href="#force-some-edition" class="headerlink" title="force some edition"></a>force some edition</h2><figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">configurations.all &#123;</span><br><span class="line">    resolutionStrategy &#123;</span><br><span class="line">        force <span class="string">&#x27;com.fasterxml.jackson.module:jackson-module-scala_2.11:2.10.3&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>gradle</tag>
+        <tag>build</tag>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -2348,77 +2348,6 @@ Maybe there’re also specific cloud, like financial cloud (maybe more secure an
       </tags>
   </entry>
   <entry>
-    <title>linux commands</title>
-    <url>/2019/01/23/linux-command/</url>
-    <content><![CDATA[<h1 id="chmod-chown"><a href="#chmod-chown" class="headerlink" title="chmod, chown"></a>chmod, chown</h1><p><a href="https://www.linux.com/learn/understanding-linux-file-permissions">understanding linux file permissions</a></p>
-<p>File permissions are defined by <strong>permission group</strong> and <strong>permission type</strong></p>
-<ol>
-<li>permission group<ul>
-<li>owner(u)</li>
-<li>group(g)</li>
-<li>all other users(a)</li>
-</ul>
-</li>
-<li>permission type<ul>
-<li>read (r - 4)</li>
-<li>write(w - 2)</li>
-<li>execute(x - 1)</li>
-</ul>
-</li>
-</ol>
-<h2 id="permission-presentation"><a href="#permission-presentation" class="headerlink" title="permission presentation"></a>permission presentation</h2><p>The permission in the command line is displayed as <em><strong>_rwxrwxrwx 1 owner:group</strong></em></p>
-<ul>
-<li>the first character (underscore <strong>_</strong>  here) is the <strong>special permission flag</strong> that can vary.</li>
-<li>the following three groups of <em><strong>rwx</strong></em> represent <strong>permission of owner, group and all other users</strong> respectively. If the owner and all users has no read permission, it is <em><strong>__wxrwx_wx</strong></em></li>
-<li>follwing that grouping since the integer displays <strong>the number of hardlinks to the file</strong></li>
-<li>the last piece is the owner and group assignment.</li>
-</ul>
-<h3 id="special-permission-flag"><a href="#special-permission-flag" class="headerlink" title="special permission flag"></a>special permission flag</h3><p>The special permission flag can be:</p>
-<ul>
-<li><strong>_</strong>: no special permissions</li>
-<li><em><strong>d</strong></em>: directory</li>
-<li><em><strong>l</strong></em>: the file or dir is a symbolic link</li>
-<li><em><strong>s</strong></em>: This indicated the setuid&#x2F;setgid permissions. This is not set displayed in the special permission part of the permissions display, but is represented as a <strong>s</strong> in the read portion of the owner or group permissions.</li>
-<li><em><strong>t</strong></em>: This indicates the sticky bit permissions. This is not set displayed in the special permission part of the permissions display, but is represented as a <strong>t</strong> in the executable portion of the all users permissions</li>
-</ul>
-<h2 id="permission-modification"><a href="#permission-modification" class="headerlink" title="permission modification"></a>permission modification</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># grant read and write permissions to the user and group</span></span><br><span class="line">$ <span class="built_in">chmod</span> ug+rw file1</span><br><span class="line"></span><br><span class="line"><span class="comment"># remove read and write permissions to the user and group</span></span><br><span class="line">$ <span class="built_in">chmod</span> ug-rw file1</span><br><span class="line"></span><br><span class="line"><span class="comment"># set permission using binary references (owner: rwx = 4+2+1, group: rx = 4+1, all users: rx = 4+1)</span></span><br><span class="line">$ <span class="built_in">chmod</span> 755 file1</span><br><span class="line"></span><br><span class="line"><span class="comment"># change the file permission recursively in the file/dir instead of just the files themselves</span></span><br><span class="line">$ <span class="built_in">chmod</span> -R 755 dir1</span><br></pre></td></tr></table></figure>
-
-<h2 id="change-owner-group-assignments"><a href="#change-owner-group-assignments" class="headerlink" title="change owner:group assignments"></a>change owner:group assignments</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># change the owner of file1 to user1 and group to family</span></span><br><span class="line">$ <span class="built_in">chown</span> user1:family file1</span><br></pre></td></tr></table></figure>
-
-<h1 id="find"><a href="#find" class="headerlink" title="find"></a>find</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># find all xml files from the current dir</span></span><br><span class="line">$ find ./* -name <span class="string">&#x27;*.xml&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>To find all files modified in the last 24 hours (last full day) in a particular specific directory and its sub-directories:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ find /directory_path -mtime -1 -<span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
-
-<p>Should be to your liking</p>
-<p>The <code>-</code> before <code>1</code> is important - it means anything changed one day or less ago. A <code>+</code> before <code>1</code> would instead mean anything changed at least one day ago, while having nothing before the <code>1</code> would have meant it was changed exacted one day ago, no more, no less.</p>
-<p>Another, more humane way:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">find /&lt;directory&gt; -newermt <span class="string">&quot;-24 hours&quot;</span> -<span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
-
-<p>or:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">find /&lt;directory&gt; -newermt <span class="string">&quot;1 day ago&quot;</span> -<span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
-
-<p>or:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">find /&lt;directory&gt; -newermt <span class="string">&quot;yesterday&quot;</span> -<span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h1><p>找到文件并删除</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find /home/raven -name abc.txt | xargs rm -rf</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">不使用 xargs</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h1 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># list file with creation date and sort by it</span></span><br><span class="line">$ <span class="built_in">ls</span> -lct</span><br></pre></td></tr></table></figure>
-
-<h1 id="du"><a href="#du" class="headerlink" title="du"></a>du</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">du</span> -sh -- * | <span class="built_in">sort</span> -hr</span><br></pre></td></tr></table></figure>
-
-<h1 id="List-users"><a href="#List-users" class="headerlink" title="List users"></a>List users</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> /etc/passwd | <span class="built_in">cut</span> -d: -f1</span><br></pre></td></tr></table></figure>
-
-<h1 id="pbcopy"><a href="#pbcopy" class="headerlink" title="pbcopy"></a>pbcopy</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># copy file content to clipboard</span></span><br><span class="line">$ pbcopy &lt; test.txt</span><br></pre></td></tr></table></figure>
-
-<h1 id="dstat"><a href="#dstat" class="headerlink" title="dstat"></a>dstat</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ dstat -t -a --tcp --output network.log</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>k8s general</title>
     <url>/2019/03/01/k8s/</url>
     <content><![CDATA[<p><a href="https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/">k8s</a> is a platform to manage containerized workloads and services.</p>
@@ -2533,6 +2462,77 @@ Maybe there’re also specific cloud, like financial cloud (maybe more secure an
       </tags>
   </entry>
   <entry>
+    <title>linux commands</title>
+    <url>/2019/01/23/linux-command/</url>
+    <content><![CDATA[<h1 id="chmod-chown"><a href="#chmod-chown" class="headerlink" title="chmod, chown"></a>chmod, chown</h1><p><a href="https://www.linux.com/learn/understanding-linux-file-permissions">understanding linux file permissions</a></p>
+<p>File permissions are defined by <strong>permission group</strong> and <strong>permission type</strong></p>
+<ol>
+<li>permission group<ul>
+<li>owner(u)</li>
+<li>group(g)</li>
+<li>all other users(a)</li>
+</ul>
+</li>
+<li>permission type<ul>
+<li>read (r - 4)</li>
+<li>write(w - 2)</li>
+<li>execute(x - 1)</li>
+</ul>
+</li>
+</ol>
+<h2 id="permission-presentation"><a href="#permission-presentation" class="headerlink" title="permission presentation"></a>permission presentation</h2><p>The permission in the command line is displayed as <em><strong>_rwxrwxrwx 1 owner:group</strong></em></p>
+<ul>
+<li>the first character (underscore <strong>_</strong>  here) is the <strong>special permission flag</strong> that can vary.</li>
+<li>the following three groups of <em><strong>rwx</strong></em> represent <strong>permission of owner, group and all other users</strong> respectively. If the owner and all users has no read permission, it is <em><strong>__wxrwx_wx</strong></em></li>
+<li>follwing that grouping since the integer displays <strong>the number of hardlinks to the file</strong></li>
+<li>the last piece is the owner and group assignment.</li>
+</ul>
+<h3 id="special-permission-flag"><a href="#special-permission-flag" class="headerlink" title="special permission flag"></a>special permission flag</h3><p>The special permission flag can be:</p>
+<ul>
+<li><strong>_</strong>: no special permissions</li>
+<li><em><strong>d</strong></em>: directory</li>
+<li><em><strong>l</strong></em>: the file or dir is a symbolic link</li>
+<li><em><strong>s</strong></em>: This indicated the setuid&#x2F;setgid permissions. This is not set displayed in the special permission part of the permissions display, but is represented as a <strong>s</strong> in the read portion of the owner or group permissions.</li>
+<li><em><strong>t</strong></em>: This indicates the sticky bit permissions. This is not set displayed in the special permission part of the permissions display, but is represented as a <strong>t</strong> in the executable portion of the all users permissions</li>
+</ul>
+<h2 id="permission-modification"><a href="#permission-modification" class="headerlink" title="permission modification"></a>permission modification</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># grant read and write permissions to the user and group</span></span><br><span class="line">$ <span class="built_in">chmod</span> ug+rw file1</span><br><span class="line"></span><br><span class="line"><span class="comment"># remove read and write permissions to the user and group</span></span><br><span class="line">$ <span class="built_in">chmod</span> ug-rw file1</span><br><span class="line"></span><br><span class="line"><span class="comment"># set permission using binary references (owner: rwx = 4+2+1, group: rx = 4+1, all users: rx = 4+1)</span></span><br><span class="line">$ <span class="built_in">chmod</span> 755 file1</span><br><span class="line"></span><br><span class="line"><span class="comment"># change the file permission recursively in the file/dir instead of just the files themselves</span></span><br><span class="line">$ <span class="built_in">chmod</span> -R 755 dir1</span><br></pre></td></tr></table></figure>
+
+<h2 id="change-owner-group-assignments"><a href="#change-owner-group-assignments" class="headerlink" title="change owner:group assignments"></a>change owner:group assignments</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># change the owner of file1 to user1 and group to family</span></span><br><span class="line">$ <span class="built_in">chown</span> user1:family file1</span><br></pre></td></tr></table></figure>
+
+<h1 id="find"><a href="#find" class="headerlink" title="find"></a>find</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># find all xml files from the current dir</span></span><br><span class="line">$ find ./* -name <span class="string">&#x27;*.xml&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>To find all files modified in the last 24 hours (last full day) in a particular specific directory and its sub-directories:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ find /directory_path -mtime -1 -<span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
+
+<p>Should be to your liking</p>
+<p>The <code>-</code> before <code>1</code> is important - it means anything changed one day or less ago. A <code>+</code> before <code>1</code> would instead mean anything changed at least one day ago, while having nothing before the <code>1</code> would have meant it was changed exacted one day ago, no more, no less.</p>
+<p>Another, more humane way:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">find /&lt;directory&gt; -newermt <span class="string">&quot;-24 hours&quot;</span> -<span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
+
+<p>or:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">find /&lt;directory&gt; -newermt <span class="string">&quot;1 day ago&quot;</span> -<span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
+
+<p>or:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">find /&lt;directory&gt; -newermt <span class="string">&quot;yesterday&quot;</span> -<span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h1><p>找到文件并删除</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find /home/raven -name abc.txt | xargs rm -rf</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">不使用 xargs</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># list file with creation date and sort by it</span></span><br><span class="line">$ <span class="built_in">ls</span> -lct</span><br></pre></td></tr></table></figure>
+
+<h1 id="du"><a href="#du" class="headerlink" title="du"></a>du</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">du</span> -sh -- * | <span class="built_in">sort</span> -hr</span><br></pre></td></tr></table></figure>
+
+<h1 id="List-users"><a href="#List-users" class="headerlink" title="List users"></a>List users</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> /etc/passwd | <span class="built_in">cut</span> -d: -f1</span><br></pre></td></tr></table></figure>
+
+<h1 id="pbcopy"><a href="#pbcopy" class="headerlink" title="pbcopy"></a>pbcopy</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># copy file content to clipboard</span></span><br><span class="line">$ pbcopy &lt; test.txt</span><br></pre></td></tr></table></figure>
+
+<h1 id="dstat"><a href="#dstat" class="headerlink" title="dstat"></a>dstat</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ dstat -t -a --tcp --output network.log</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>lombok</title>
     <url>/2019/01/17/lombok/</url>
     <content><![CDATA[<p><a href="https://projectlombok.org/">lombok</a> is a library to help your <strong>write java cleaner and more efficiently</strong>. It’s plugged into the editor and build tool, which works <strong>at compile time</strong>. </p>
@@ -2555,6 +2555,68 @@ Maybe there’re also specific cloud, like financial cloud (maybe more secure an
 ]]></content>
       <tags>
         <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mime type</title>
+    <url>/2018/07/26/mime-type/</url>
+    <content><![CDATA[<p>[MIME 类型](MIME 类型) 是用一种标准化的方式来表示文档的性质和格式。浏览器一般通过 MIME 类型（而不是文档扩展名）来确定如何处理文档。因此服务器传输数据时，必须设置正确的 MIME 类型。</p>
+<h1 id="通用结构"><a href="#通用结构" class="headerlink" title="通用结构"></a>通用结构</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">type/subtype</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>不允许空格</li>
+<li>大小写不敏感，一般都是小写</li>
+</ol>
+<h1 id="独立类型"><a href="#独立类型" class="headerlink" title="独立类型"></a>独立类型</h1><p>type 可以是独立类型，表示文件的分类，可以是如下值：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>描述</th>
+<th>典型示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>text</code></td>
+<td>表明文件是普通文本，理论上是可读的语言</td>
+<td><code>text/plain</code>, <code>text/html</code>, <code>text/css, text/javascript</code></td>
+</tr>
+<tr>
+<td><code>image</code></td>
+<td>表明是某种图像。不包括视频，但是动态图（比如动态gif）也使用image类型</td>
+<td><code>image/gif</code>, <code>image/png</code>, <code>image/jpeg</code>, <code>image/bmp</code>, <code>image/webp</code></td>
+</tr>
+<tr>
+<td><code>audio</code></td>
+<td>表明是某种音频文件</td>
+<td><code>audio/midi</code>, <code>audio/mpeg, audio/webm, audio/ogg, audio/wav</code></td>
+</tr>
+<tr>
+<td><code>video</code></td>
+<td>表明是某种视频文件</td>
+<td><code>video/webm</code>, <code>video/ogg</code></td>
+</tr>
+<tr>
+<td><code>application</code></td>
+<td>表明是某种二进制数据</td>
+<td><code>application/octet-stream</code>, <code>application/pkcs12</code>, <code>application/vnd.mspowerpoint</code>, <code>application/xhtml+xml</code>, <code>application/xml</code>,  <code>application/pdf,``application/json</code></td>
+</tr>
+</tbody></table>
+<p>一般是文本，但是具体类型不确定时，就用 <code>test/plain</code>；是二进制数据，而类型不确定时，用 <code>application/octet-stream</code></p>
+<h2 id="application-x2F-octet-stream"><a href="#application-x2F-octet-stream" class="headerlink" title="application&#x2F;octet-stream"></a>application&#x2F;octet-stream</h2><p>这是应用程序文件的默认值。意思是 <em>未知的应用程序文件 ，</em>浏览器一般不会自动执行或询问执行。浏览器会将它作为附件来处理，附件类型等信息通过HTTP头<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Disposition"><code>Content-Disposition</code></a> 设置。</p>
+<h1 id="Multipart-类型"><a href="#Multipart-类型" class="headerlink" title="Multipart 类型"></a>Multipart 类型</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">multipart/form-data</span><br><span class="line">multipart/byteranges</span><br></pre></td></tr></table></figure>
+
+<p> 顾名思义，这是复合文件的一种表现形式，即传递过来的数据有多重类型。典型的如果表单数据可能有 string、文件、视频、音频等。</p>
+<p>它由边界线（一个由<code>&#39;--&#39;</code>开始的字符串）划分出的不同部分组成。每一部分有自己的实体，以及自己的 HTTP 请求头，<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Disposition"><code>Content-Disposition</code></a>和 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Type"><code>Content-Type</code></a> 用于文件上传领域，最常用的 (<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Length"><code>Content-Length</code></a> 因为边界线作为分隔符而被忽略）。</p>
+<p>例如，如下表单:</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;http://localhost:8000/&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;myTextField&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">name</span>=<span class="string">&quot;myCheckBox&quot;</span>&gt;</span>Check<span class="tag">&lt;/<span class="name">input</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;myFile&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span>&gt;</span>Send the file<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>请求是：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: localhost:8000</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:50.0) Gecko/20100101 Firefox/50.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line">Accept-Language: en-US,en;q=0.5</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Content-Type: multipart/form-data; boundary=---------------------------8721656041911415653955004498</span><br><span class="line">Content-Length: 465</span><br><span class="line"></span><br><span class="line">-----------------------------8721656041911415653955004498</span><br><span class="line">Content-Disposition: form-data; name=&quot;myTextField&quot;</span><br><span class="line"></span><br><span class="line">Test</span><br><span class="line">-----------------------------8721656041911415653955004498</span><br><span class="line">Content-Disposition: form-data; name=&quot;myCheckBox&quot;</span><br><span class="line"></span><br><span class="line">on</span><br><span class="line">-----------------------------8721656041911415653955004498</span><br><span class="line">Content-Disposition: form-data; name=&quot;myFile&quot;; filename=&quot;test.txt&quot;</span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">Simple file.</span><br><span class="line">-----------------------------8721656041911415653955004498--</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>rest</tag>
       </tags>
   </entry>
   <entry>
@@ -2710,68 +2772,6 @@ Maybe there’re also specific cloud, like financial cloud (maybe more secure an
 ]]></content>
       <tags>
         <tag>network</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>mime type</title>
-    <url>/2018/07/26/mime-type/</url>
-    <content><![CDATA[<p>[MIME 类型](MIME 类型) 是用一种标准化的方式来表示文档的性质和格式。浏览器一般通过 MIME 类型（而不是文档扩展名）来确定如何处理文档。因此服务器传输数据时，必须设置正确的 MIME 类型。</p>
-<h1 id="通用结构"><a href="#通用结构" class="headerlink" title="通用结构"></a>通用结构</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">type/subtype</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>不允许空格</li>
-<li>大小写不敏感，一般都是小写</li>
-</ol>
-<h1 id="独立类型"><a href="#独立类型" class="headerlink" title="独立类型"></a>独立类型</h1><p>type 可以是独立类型，表示文件的分类，可以是如下值：</p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>描述</th>
-<th>典型示例</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>text</code></td>
-<td>表明文件是普通文本，理论上是可读的语言</td>
-<td><code>text/plain</code>, <code>text/html</code>, <code>text/css, text/javascript</code></td>
-</tr>
-<tr>
-<td><code>image</code></td>
-<td>表明是某种图像。不包括视频，但是动态图（比如动态gif）也使用image类型</td>
-<td><code>image/gif</code>, <code>image/png</code>, <code>image/jpeg</code>, <code>image/bmp</code>, <code>image/webp</code></td>
-</tr>
-<tr>
-<td><code>audio</code></td>
-<td>表明是某种音频文件</td>
-<td><code>audio/midi</code>, <code>audio/mpeg, audio/webm, audio/ogg, audio/wav</code></td>
-</tr>
-<tr>
-<td><code>video</code></td>
-<td>表明是某种视频文件</td>
-<td><code>video/webm</code>, <code>video/ogg</code></td>
-</tr>
-<tr>
-<td><code>application</code></td>
-<td>表明是某种二进制数据</td>
-<td><code>application/octet-stream</code>, <code>application/pkcs12</code>, <code>application/vnd.mspowerpoint</code>, <code>application/xhtml+xml</code>, <code>application/xml</code>,  <code>application/pdf,``application/json</code></td>
-</tr>
-</tbody></table>
-<p>一般是文本，但是具体类型不确定时，就用 <code>test/plain</code>；是二进制数据，而类型不确定时，用 <code>application/octet-stream</code></p>
-<h2 id="application-x2F-octet-stream"><a href="#application-x2F-octet-stream" class="headerlink" title="application&#x2F;octet-stream"></a>application&#x2F;octet-stream</h2><p>这是应用程序文件的默认值。意思是 <em>未知的应用程序文件 ，</em>浏览器一般不会自动执行或询问执行。浏览器会将它作为附件来处理，附件类型等信息通过HTTP头<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Disposition"><code>Content-Disposition</code></a> 设置。</p>
-<h1 id="Multipart-类型"><a href="#Multipart-类型" class="headerlink" title="Multipart 类型"></a>Multipart 类型</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">multipart/form-data</span><br><span class="line">multipart/byteranges</span><br></pre></td></tr></table></figure>
-
-<p> 顾名思义，这是复合文件的一种表现形式，即传递过来的数据有多重类型。典型的如果表单数据可能有 string、文件、视频、音频等。</p>
-<p>它由边界线（一个由<code>&#39;--&#39;</code>开始的字符串）划分出的不同部分组成。每一部分有自己的实体，以及自己的 HTTP 请求头，<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Disposition"><code>Content-Disposition</code></a>和 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Type"><code>Content-Type</code></a> 用于文件上传领域，最常用的 (<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Length"><code>Content-Length</code></a> 因为边界线作为分隔符而被忽略）。</p>
-<p>例如，如下表单:</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;http://localhost:8000/&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;myTextField&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">name</span>=<span class="string">&quot;myCheckBox&quot;</span>&gt;</span>Check<span class="tag">&lt;/<span class="name">input</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;myFile&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span>&gt;</span>Send the file<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>请求是：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: localhost:8000</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:50.0) Gecko/20100101 Firefox/50.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line">Accept-Language: en-US,en;q=0.5</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Content-Type: multipart/form-data; boundary=---------------------------8721656041911415653955004498</span><br><span class="line">Content-Length: 465</span><br><span class="line"></span><br><span class="line">-----------------------------8721656041911415653955004498</span><br><span class="line">Content-Disposition: form-data; name=&quot;myTextField&quot;</span><br><span class="line"></span><br><span class="line">Test</span><br><span class="line">-----------------------------8721656041911415653955004498</span><br><span class="line">Content-Disposition: form-data; name=&quot;myCheckBox&quot;</span><br><span class="line"></span><br><span class="line">on</span><br><span class="line">-----------------------------8721656041911415653955004498</span><br><span class="line">Content-Disposition: form-data; name=&quot;myFile&quot;; filename=&quot;test.txt&quot;</span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">Simple file.</span><br><span class="line">-----------------------------8721656041911415653955004498--</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>rest</tag>
       </tags>
   </entry>
   <entry>
@@ -2952,6 +2952,52 @@ Maybe there’re also specific cloud, like financial cloud (maybe more secure an
       <tags>
         <tag>bigdata</tag>
         <tag>distributed processing</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python subprocess</title>
+    <url>/2018/09/03/python-subprocess/</url>
+    <content><![CDATA[<p>Synchronous vs multiprocessing vs multithreading vs async</p>
+<p>Concurrency vs Parralism.</p>
+<p>asyncio &amp; threading can run multiple I&#x2F;O operations at the same time.</p>
+<p>Async runs one block of code at a time while threading just one line of code at a time. With async, we have better control of when the execution is given to other block of code but we have to release the execution ourselves.</p>
+<ul>
+<li><strong>IO bound problems</strong>: use async if your libraries support it and if not, use threading.</li>
+<li><strong>CPU bound problems</strong>: use multi-processing.</li>
+<li><strong>None above is a problem:</strong> you are probably just fine with synchronous code. You may still want to use async to have the feeling of responsiveness in case your code interacts with a user.</li>
+</ul>
+<p>Reference: </p>
+<ul>
+<li><a href="http://www.cnblogs.com/vamei/archive/2012/09/23/2698014.html">blog: subprocess</a></li>
+</ul>
+<p>subprocess.call()<br>父进程等待子进程完成<br>返回退出信息(returncode，相当于exit code，见<a href="http://www.cnblogs.com/vamei/archive/2012/09/20/2694466.html">Linux进程基础</a>)</p>
+<p>subprocess.check_call()</p>
+<p>父进程等待子进程完成</p>
+<p>返回0</p>
+<p>检查退出信息，如果returncode不为0，则举出错误subprocess.CalledProcessError，该对象包含有returncode属性，可用try…except…来检查(见<a href="http://www.cnblogs.com/vamei/archive/2012/07/10/2582787.html">Python错误处理</a>)。</p>
+<p>subprocess.check_output()</p>
+<p>父进程等待子进程完成</p>
+<p>返回子进程向标准输出的输出结果</p>
+<p>检查退出信息，如果returncode不为0，则举出错误subprocess.CalledProcessError，该对象包含有returncode属性和output属性，output属性为标准输出的输出结果，可用try…except…来检查。</p>
+<ul>
+<li><a href="https://docs.python.org/3.7/library/subprocess.html">official doc: subprocess</a></li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">subprocess.run(args, *, stdin=<span class="literal">None</span>, <span class="built_in">input</span>=<span class="literal">None</span>, stdout=<span class="literal">None</span>, stderr=<span class="literal">None</span>, capture_output=<span class="literal">False</span>, shell=<span class="literal">False</span>, cwd=<span class="literal">None</span>, timeout=<span class="literal">None</span>, check=<span class="literal">False</span>, encoding=<span class="literal">None</span>, errors=<span class="literal">None</span>, text=<span class="literal">None</span>, env=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a href="https://docs.python.org/3.7/library/subprocess.html">config env in subprojcess</a></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">new_env = os.environ.copy()</span><br><span class="line">new_env[&#x27;MEGAVARIABLE&#x27;] = &#x27;MEGAVALUE&#x27;</span><br><span class="line">subprocess.Popen(&#x27;path&#x27;, env=new_env)</span><br></pre></td></tr></table></figure>
+
+<p>an example to use subprojcess:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">                subprocess.check_output([<span class="string">&#x27;java&#x27;</span>,</span><br><span class="line">                                         <span class="string">&#x27;-DCOMMAND=&#x27;</span> + command,</span><br><span class="line">                                         <span class="string">&#x27;-DTENANT_ID=&#x27;</span> + tenant_id,</span><br><span class="line">                                         <span class="string">&#x27;-DMODEL_ID=&#x27;</span> + model_id,</span><br><span class="line">                                         <span class="string">&#x27;-jar&#x27;</span>, <span class="string">&#x27;xxx.jar&#x27;</span>,</span><br><span class="line">                                         ])</span><br><span class="line">            <span class="keyword">except</span> subprocess.CalledProcessError <span class="keyword">as</span> e:</span><br><span class="line">                db_util.reopx_solver - <span class="number">1.0</span> - SNAPSHOT - <span class="built_in">all</span>.jarport_status(tenant_id, model_id=model_id,</span><br><span class="line">                                                                           msg=<span class="string">f&#x27;Failed runner for &quot;<span class="subst">&#123;command&#125;</span>&quot;...&#x27;</span>)</span><br><span class="line">                logger.exception(<span class="string">&#x27;Could not start solver jar: &#x27;</span>, e.output)</span><br><span class="line">                <span class="keyword">raise</span> OPXException(<span class="string">f&#x27;Could not start runner for &quot;<span class="subst">&#123;command&#125;</span>&quot;.&#x27;</span>, e.stderr)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>the jar must be in the same directory as parent process dir</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>python</tag>
       </tags>
   </entry>
   <entry>
@@ -3257,95 +3303,6 @@ Maybe there’re also specific cloud, like financial cloud (maybe more secure an
       </tags>
   </entry>
   <entry>
-    <title>responsive-web-design</title>
-    <url>/2018/12/13/responsive-web-design/</url>
-    <content><![CDATA[<p>自适应一般是设定基准值，宽、高、字体大小都指定为基准值的百分比。当基准值改变时，页面元素、宽高也会按比例变化。</p>
-<h1 id="自适应宽度"><a href="#自适应宽度" class="headerlink" title="自适应宽度"></a>自适应宽度</h1><h2 id="不使用绝对宽度"><a href="#不使用绝对宽度" class="headerlink" title="不使用绝对宽度"></a>不使用绝对宽度</h2><p>网页宽度默认等于屏幕宽度。所以大部分时候只要不适用绝对宽度即可实现自适应宽度：</p>
-<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">body</span>: &#123;</span><br><span class="line">	<span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">	<span class="comment">// or width: auto;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>如果元素是图片，也可以使用 <code>max-width</code> 属性，参见<a href="https://www.w3schools.com/css/css_rwd_images.asp">responsive web design: image</a></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">img &#123;</span><br><span class="line">  max-width: 100%;</span><br><span class="line">  height: auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用-media"><a href="#使用-media" class="headerlink" title="使用 media"></a>使用 media</h2><p>这适用于需要针对不同的屏幕，显示不同的排版。利用 <a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/@media"><code>@media</code></a> 的 css 规则，可实现根据一个或多个基于设备类型、具体特点和环境的媒体查询来应用样式。</p>
-<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Media query */</span></span><br><span class="line"><span class="keyword">@media</span> screen <span class="keyword">and</span> (<span class="attribute">min-width</span>: <span class="number">900px</span>) &#123;</span><br><span class="line">  <span class="selector-tag">article</span> &#123;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">1rem</span> <span class="number">3rem</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Nested media query */</span></span><br><span class="line"><span class="keyword">@supports</span> (<span class="attribute">display</span>: flex) &#123;</span><br><span class="line">  <span class="keyword">@media</span> screen <span class="keyword">and</span> (<span class="attribute">min-width</span>: <span class="number">900px</span>) &#123;</span><br><span class="line">    <span class="selector-tag">article</span> &#123;</span><br><span class="line">      <span class="attribute">display</span>: flex;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="css-规则"><a href="#css-规则" class="headerlink" title="css 规则"></a>css 规则</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/At-rule">css 规则</a> 相当于给 css 增加的函数。原本 css 只是简单的 json 对象，现在希望 css 更多样化、更容易维护，所以增加了 css 规则。</p>
-<p><code>@media</code> 这种属于条件规则组，即接收两个参数，第一个参数是个 bool 条件，第二个参数是执行的语句。仅当条件为 true 时，其后的语句才会执行。</p>
-<h1 id="自适应高度"><a href="#自适应高度" class="headerlink" title="自适应高度"></a>自适应高度</h1><p>同样的，要使得高度自适应，也必须指定一个基准值。但不同于宽度（默认是屏幕宽度），高度通常是不固定的，要确定基准值也就麻烦些。</p>
-<h2 id="父容器的高度可确定"><a href="#父容器的高度可确定" class="headerlink" title="父容器的高度可确定"></a>父容器的高度可确定</h2><blockquote>
-<p>For the height of a div to be responsive, it must be inside a parent element with a defined height to derive it’s relative height from.</p>
-</blockquote>
-<p>如果父容器的高度可确定，则同上，采用百分比即可实现自适应。</p>
-<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line">parent: &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">    </span><br><span class="line">    child: &#123;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">80%</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="根据宽度变化，同比例改变高度"><a href="#根据宽度变化，同比例改变高度" class="headerlink" title="根据宽度变化，同比例改变高度"></a>根据宽度变化，同比例改变高度</h2><p>页面宽度的自适应容易实现，可以基于宽度的变化，同比例更改高度。</p>
-<h3 id="利用-padding"><a href="#利用-padding" class="headerlink" title="利用 padding"></a>利用 <code>padding</code></h3><p>参见<a href="https://stackoverflow.com/questions/11535827/responsive-height-proportional-to-width">responsive height proportional to width</a>，设定 <code>height</code> 为 0，<code>padding</code> 为百分比</p>
-<blockquote>
-<p>In all browsers, when padding is specified in %, it’s calculated relative to the parent element’s width. </p>
-</blockquote>
-<p>Html:</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content&quot;</span>&gt;</span></span><br><span class="line">    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;wrapper&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content2&quot;</span>&gt;</span></span><br><span class="line">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>Css:</p>
-<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.content</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding-bottom</span>: <span class="number">30%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#7ad</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.wrapper</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">padding-bottom</span>: <span class="number">30%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#7ad</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.wrapper</span> <span class="selector-class">.content2</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#7da</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="利用-viewport-units"><a href="#利用-viewport-units" class="headerlink" title="利用 viewport units"></a>利用 viewport units</h3><p>新版本的浏览器支持 <a href="https://caniuse.com/#feat=viewport-units">viewport units</a>，eg.</p>
-<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="attribute">width</span>: <span class="number">100vw</span>;</span><br><span class="line"><span class="attribute">height</span>: <span class="number">30vw</span>; <span class="comment">/* 30% of width */</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="使用-media-1"><a href="#使用-media-1" class="headerlink" title="使用 media"></a>使用 media</h2><p>同宽度，指定不同 media 情况下，高度显示不同。</p>
-]]></content>
-      <tags>
-        <tag>js</tag>
-        <tag>css</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>python subprocess</title>
-    <url>/2018/09/03/python-subprocess/</url>
-    <content><![CDATA[<p>Synchronous vs multiprocessing vs multithreading vs async</p>
-<p>Concurrency vs Parralism.</p>
-<p>asyncio &amp; threading can run multiple I&#x2F;O operations at the same time.</p>
-<p>Async runs one block of code at a time while threading just one line of code at a time. With async, we have better control of when the execution is given to other block of code but we have to release the execution ourselves.</p>
-<ul>
-<li><strong>IO bound problems</strong>: use async if your libraries support it and if not, use threading.</li>
-<li><strong>CPU bound problems</strong>: use multi-processing.</li>
-<li><strong>None above is a problem:</strong> you are probably just fine with synchronous code. You may still want to use async to have the feeling of responsiveness in case your code interacts with a user.</li>
-</ul>
-<p>Reference: </p>
-<ul>
-<li><a href="http://www.cnblogs.com/vamei/archive/2012/09/23/2698014.html">blog: subprocess</a></li>
-</ul>
-<p>subprocess.call()<br>父进程等待子进程完成<br>返回退出信息(returncode，相当于exit code，见<a href="http://www.cnblogs.com/vamei/archive/2012/09/20/2694466.html">Linux进程基础</a>)</p>
-<p>subprocess.check_call()</p>
-<p>父进程等待子进程完成</p>
-<p>返回0</p>
-<p>检查退出信息，如果returncode不为0，则举出错误subprocess.CalledProcessError，该对象包含有returncode属性，可用try…except…来检查(见<a href="http://www.cnblogs.com/vamei/archive/2012/07/10/2582787.html">Python错误处理</a>)。</p>
-<p>subprocess.check_output()</p>
-<p>父进程等待子进程完成</p>
-<p>返回子进程向标准输出的输出结果</p>
-<p>检查退出信息，如果returncode不为0，则举出错误subprocess.CalledProcessError，该对象包含有returncode属性和output属性，output属性为标准输出的输出结果，可用try…except…来检查。</p>
-<ul>
-<li><a href="https://docs.python.org/3.7/library/subprocess.html">official doc: subprocess</a></li>
-</ul>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">subprocess.run(args, *, stdin=<span class="literal">None</span>, <span class="built_in">input</span>=<span class="literal">None</span>, stdout=<span class="literal">None</span>, stderr=<span class="literal">None</span>, capture_output=<span class="literal">False</span>, shell=<span class="literal">False</span>, cwd=<span class="literal">None</span>, timeout=<span class="literal">None</span>, check=<span class="literal">False</span>, encoding=<span class="literal">None</span>, errors=<span class="literal">None</span>, text=<span class="literal">None</span>, env=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><a href="https://docs.python.org/3.7/library/subprocess.html">config env in subprojcess</a></li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">new_env = os.environ.copy()</span><br><span class="line">new_env[&#x27;MEGAVARIABLE&#x27;] = &#x27;MEGAVALUE&#x27;</span><br><span class="line">subprocess.Popen(&#x27;path&#x27;, env=new_env)</span><br></pre></td></tr></table></figure>
-
-<p>an example to use subprojcess:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">                subprocess.check_output([<span class="string">&#x27;java&#x27;</span>,</span><br><span class="line">                                         <span class="string">&#x27;-DCOMMAND=&#x27;</span> + command,</span><br><span class="line">                                         <span class="string">&#x27;-DTENANT_ID=&#x27;</span> + tenant_id,</span><br><span class="line">                                         <span class="string">&#x27;-DMODEL_ID=&#x27;</span> + model_id,</span><br><span class="line">                                         <span class="string">&#x27;-jar&#x27;</span>, <span class="string">&#x27;xxx.jar&#x27;</span>,</span><br><span class="line">                                         ])</span><br><span class="line">            <span class="keyword">except</span> subprocess.CalledProcessError <span class="keyword">as</span> e:</span><br><span class="line">                db_util.reopx_solver - <span class="number">1.0</span> - SNAPSHOT - <span class="built_in">all</span>.jarport_status(tenant_id, model_id=model_id,</span><br><span class="line">                                                                           msg=<span class="string">f&#x27;Failed runner for &quot;<span class="subst">&#123;command&#125;</span>&quot;...&#x27;</span>)</span><br><span class="line">                logger.exception(<span class="string">&#x27;Could not start solver jar: &#x27;</span>, e.output)</span><br><span class="line">                <span class="keyword">raise</span> OPXException(<span class="string">f&#x27;Could not start runner for &quot;<span class="subst">&#123;command&#125;</span>&quot;.&#x27;</span>, e.stderr)</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>the jar must be in the same directory as parent process dir</p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>react setState 的坑</title>
     <url>/2018/06/05/react-set-state/</url>
     <content><![CDATA[<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p><code>setState</code> 是更新 <code>state</code> 的 API，进而会引发组件的重新渲染。然而在使用过程中发现有些坑(参见 <a href="https://doc.react-china.org/docs/state-and-lifecycle.html#%E6%AD%A3%E7%A1%AE%E5%9C%B0%E4%BD%BF%E7%94%A8%E7%8A%B6%E6%80%81">react 正确使用状态</a>)：</p>
@@ -3506,6 +3463,49 @@ Maybe there’re also specific cloud, like financial cloud (maybe more secure an
 ]]></content>
       <tags>
         <tag>react</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>responsive-web-design</title>
+    <url>/2018/12/13/responsive-web-design/</url>
+    <content><![CDATA[<p>自适应一般是设定基准值，宽、高、字体大小都指定为基准值的百分比。当基准值改变时，页面元素、宽高也会按比例变化。</p>
+<h1 id="自适应宽度"><a href="#自适应宽度" class="headerlink" title="自适应宽度"></a>自适应宽度</h1><h2 id="不使用绝对宽度"><a href="#不使用绝对宽度" class="headerlink" title="不使用绝对宽度"></a>不使用绝对宽度</h2><p>网页宽度默认等于屏幕宽度。所以大部分时候只要不适用绝对宽度即可实现自适应宽度：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">body</span>: &#123;</span><br><span class="line">	<span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">	<span class="comment">// or width: auto;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果元素是图片，也可以使用 <code>max-width</code> 属性，参见<a href="https://www.w3schools.com/css/css_rwd_images.asp">responsive web design: image</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">img &#123;</span><br><span class="line">  max-width: 100%;</span><br><span class="line">  height: auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-media"><a href="#使用-media" class="headerlink" title="使用 media"></a>使用 media</h2><p>这适用于需要针对不同的屏幕，显示不同的排版。利用 <a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/@media"><code>@media</code></a> 的 css 规则，可实现根据一个或多个基于设备类型、具体特点和环境的媒体查询来应用样式。</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Media query */</span></span><br><span class="line"><span class="keyword">@media</span> screen <span class="keyword">and</span> (<span class="attribute">min-width</span>: <span class="number">900px</span>) &#123;</span><br><span class="line">  <span class="selector-tag">article</span> &#123;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">1rem</span> <span class="number">3rem</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Nested media query */</span></span><br><span class="line"><span class="keyword">@supports</span> (<span class="attribute">display</span>: flex) &#123;</span><br><span class="line">  <span class="keyword">@media</span> screen <span class="keyword">and</span> (<span class="attribute">min-width</span>: <span class="number">900px</span>) &#123;</span><br><span class="line">    <span class="selector-tag">article</span> &#123;</span><br><span class="line">      <span class="attribute">display</span>: flex;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="css-规则"><a href="#css-规则" class="headerlink" title="css 规则"></a>css 规则</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/At-rule">css 规则</a> 相当于给 css 增加的函数。原本 css 只是简单的 json 对象，现在希望 css 更多样化、更容易维护，所以增加了 css 规则。</p>
+<p><code>@media</code> 这种属于条件规则组，即接收两个参数，第一个参数是个 bool 条件，第二个参数是执行的语句。仅当条件为 true 时，其后的语句才会执行。</p>
+<h1 id="自适应高度"><a href="#自适应高度" class="headerlink" title="自适应高度"></a>自适应高度</h1><p>同样的，要使得高度自适应，也必须指定一个基准值。但不同于宽度（默认是屏幕宽度），高度通常是不固定的，要确定基准值也就麻烦些。</p>
+<h2 id="父容器的高度可确定"><a href="#父容器的高度可确定" class="headerlink" title="父容器的高度可确定"></a>父容器的高度可确定</h2><blockquote>
+<p>For the height of a div to be responsive, it must be inside a parent element with a defined height to derive it’s relative height from.</p>
+</blockquote>
+<p>如果父容器的高度可确定，则同上，采用百分比即可实现自适应。</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line">parent: &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">    </span><br><span class="line">    child: &#123;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">80%</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="根据宽度变化，同比例改变高度"><a href="#根据宽度变化，同比例改变高度" class="headerlink" title="根据宽度变化，同比例改变高度"></a>根据宽度变化，同比例改变高度</h2><p>页面宽度的自适应容易实现，可以基于宽度的变化，同比例更改高度。</p>
+<h3 id="利用-padding"><a href="#利用-padding" class="headerlink" title="利用 padding"></a>利用 <code>padding</code></h3><p>参见<a href="https://stackoverflow.com/questions/11535827/responsive-height-proportional-to-width">responsive height proportional to width</a>，设定 <code>height</code> 为 0，<code>padding</code> 为百分比</p>
+<blockquote>
+<p>In all browsers, when padding is specified in %, it’s calculated relative to the parent element’s width. </p>
+</blockquote>
+<p>Html:</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content&quot;</span>&gt;</span></span><br><span class="line">    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;wrapper&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content2&quot;</span>&gt;</span></span><br><span class="line">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>Css:</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.content</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding-bottom</span>: <span class="number">30%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#7ad</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.wrapper</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">padding-bottom</span>: <span class="number">30%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#7ad</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.wrapper</span> <span class="selector-class">.content2</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#7da</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="利用-viewport-units"><a href="#利用-viewport-units" class="headerlink" title="利用 viewport units"></a>利用 viewport units</h3><p>新版本的浏览器支持 <a href="https://caniuse.com/#feat=viewport-units">viewport units</a>，eg.</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="attribute">width</span>: <span class="number">100vw</span>;</span><br><span class="line"><span class="attribute">height</span>: <span class="number">30vw</span>; <span class="comment">/* 30% of width */</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-media-1"><a href="#使用-media-1" class="headerlink" title="使用 media"></a>使用 media</h2><p>同宽度，指定不同 media 情况下，高度显示不同。</p>
+]]></content>
+      <tags>
+        <tag>js</tag>
+        <tag>css</tag>
       </tags>
   </entry>
   <entry>
@@ -3864,6 +3864,70 @@ Maybe there’re also specific cloud, like financial cloud (maybe more secure an
       </tags>
   </entry>
   <entry>
+    <title>sqoop</title>
+    <url>/2020/11/10/sqoop/</url>
+    <content><![CDATA[<h1 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h1><p>Sqoop: sq are the first two of “sql”, oop are the last three of “hadoop”. It <strong>transfers bulk data between hdfs and relational database servers</strong>. It supports:</p>
+<ul>
+<li>Full Load</li>
+<li>Incremental Load</li>
+<li>Parallel Import&#x2F;Export (throught mapper jobs)</li>
+<li>Compression</li>
+<li>Kerberos Security Integration</li>
+<li>Data  loading directly to HIVE</li>
+</ul>
+<blockquote>
+<p>Sqoop cannot import .csv files into hdfs&#x2F;hive. It only support databases &#x2F; mainframe datasets import.</p>
+</blockquote>
+<h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><p>Sqoop provides CLI, thus you can use a simple command to conduct import&#x2F;export.</p>
+<p>The import&#x2F;export are executes in fact through map tasks.</p>
+<p><img src="/images/sqoop-20201110134912159.png" alt="sqoop-20201110134912159.png"></p>
+<p>When Import from DB:</p>
+<ul>
+<li>it split to some map tasks. And each map task will connect to DB, and fetch some rows&#x2F;tables, and write it to a file into HDFS</li>
+</ul>
+<p>When export to DB:</p>
+<ul>
+<li>it also split to some map tasks. And each map task will fetch a HDFS file, and write each record in the file as a row by specified delimiter to some table.</li>
+</ul>
+<p><img src="/images/sqoop-20201110135220097.png" alt="sqoop-20201110135220097.png"></p>
+<h1 id="Sqoop-v-s-Spark-jdbc"><a href="#Sqoop-v-s-Spark-jdbc" class="headerlink" title="Sqoop v.s. Spark jdbc"></a>Sqoop v.s. Spark jdbc</h1><p>sqoop uses mapreduce technique, while spark is a revolutionary engine to replace mapreduce technique with its in-memory execution and DAG smartness. Thus Spark jdbc is way faster than sqoop.</p>
+<ol>
+<li>You can combine all the read, transform and write operations into one script&#x2F;program instead of reading it separately through SQOOP in one script and then doing transformation and write in another.</li>
+<li>You can define a new split column on the fly (using functions like ORA_HASH) if you want the data to be partitioned in a proper way.</li>
+<li>You can control the number of connection to the database. Increasing the number of connection will surely speed up your data import.</li>
+</ol>
+<h1 id="Common-Commands"><a href="#Common-Commands" class="headerlink" title="Common Commands"></a>Common Commands</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$  sqoop import \</span><br><span class="line">	--connect jdbc:mysql://&lt;ipaddress&gt;/&lt;database name&gt;</span><br><span class="line">	--table &lt;my_table name&gt;</span><br><span class="line">	--username &lt;username_for_my_sql&gt; --password &lt;password&gt;</span><br><span class="line">  --target-dir &lt;target <span class="built_in">dir</span> <span class="keyword">in</span> HDFS <span class="built_in">where</span> data needs to be imported&gt;</span><br><span class="line">  </span><br><span class="line">$  sqoop <span class="built_in">export</span> \</span><br><span class="line">	--connect jdbc:mysql://&lt;ipaddress&gt;/&lt;database name&gt;</span><br><span class="line">	--table &lt;my_table name&gt;</span><br><span class="line">	--username &lt;username_for_my_sql&gt; --password &lt;password&gt;</span><br><span class="line">  --export-dir &lt;target <span class="built_in">dir</span> <span class="keyword">in</span> HDFS <span class="built_in">where</span> data needs to be exported&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Incremental-Import"><a href="#Incremental-Import" class="headerlink" title="Incremental Import"></a>Incremental Import</h1><p>增量导入时，sqoop 需要识别到增量数据，有三种方法：</p>
+<ol>
+<li>根据自增字段识别新数据（append 模式）：可以直接识别新数据并导入到 hive 中</li>
+<li>根据修改时间识别新数据（lastmodified 模式）：要求这个字段会随数据的改变而改变，但是似乎只能导入到 hdfs 中，不能直接导入到 hive 中。导入时，可以通过制定<code>--merge-key id</code> 来按 id 字段进行合并，或者之后通过 <code>sqoop merge</code> 功能单独运行</li>
+<li>根据 where 或 query 识别新数据：可能之后只能通过 <code>sqoop merge</code> 来 merge 数据</li>
+</ol>
+<blockquote>
+<p>目前 <strong>sqoop 导入时不能识别删除数据</strong>，都需要通过其他方式来解决（对比数据，或者数据上有 delete 标识符时，通过 <a href="https://docs.cloudera.com/HDPDocuments/HDP2/HDP-2.6.5/bk_data-access/content/incrementally-updating-hive-table-with-sqoop-and-ext-table.html">Incrementally Updating a Table</a> 来实现）</p>
+</blockquote>
+<h2 id="append-模式"><a href="#append-模式" class="headerlink" title="append 模式"></a>append 模式</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql://192.168.33.2:3306/doit_mall \</span><br><span class="line">--username root \</span><br><span class="line">--password root \</span><br><span class="line">--table oms_order \</span><br><span class="line">--target-dir  /tmp/query  \</span><br><span class="line">--hive-import \</span><br><span class="line">--hive-table doit12.oms_order \</span><br><span class="line">--as-textfile \</span><br><span class="line">--fields-terminated-by <span class="string">&#x27;,&#x27;</span> \</span><br><span class="line">--compress   \</span><br><span class="line">--compression-codec gzip \</span><br><span class="line">--split-by <span class="built_in">id</span> \</span><br><span class="line">--null-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--null-non-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--incremental append \	<span class="comment"># append 模式</span></span><br><span class="line">--check-column <span class="built_in">id</span> \			<span class="comment"># 自增字段</span></span><br><span class="line">--last-value 22 \				<span class="comment"># 自增字段的 last value</span></span><br><span class="line">-m 2 </span><br></pre></td></tr></table></figure>
+
+<h2 id="lastmodified-模式"><a href="#lastmodified-模式" class="headerlink" title="lastmodified 模式"></a>lastmodified 模式</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql://192.168.33.2:3306/dicts \</span><br><span class="line">--username root \</span><br><span class="line">--password root \</span><br><span class="line">--table doit_stu \</span><br><span class="line">--target-dir  /doit_stu/2020-02-09  \</span><br><span class="line">--as-textfile \</span><br><span class="line">--fields-terminated-by <span class="string">&#x27;,&#x27;</span> \</span><br><span class="line">--split-by <span class="built_in">id</span> \</span><br><span class="line">--null-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--null-non-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--incremental lastmodified \		<span class="comment"># lastmodified 模式</span></span><br><span class="line">--check-column update_time \		<span class="comment"># 时间字段</span></span><br><span class="line">--last-value <span class="string">&#x27;2020-02-09 23:59:59&#x27;</span> \	<span class="comment"># 上一次获取的数据时间</span></span><br><span class="line">--fields-terminated-by <span class="string">&#x27;,&#x27;</span> \</span><br><span class="line">--merge-key <span class="built_in">id</span> \					<span class="comment">#按照id字段进行合并</span></span><br><span class="line">-m 1 </span><br></pre></td></tr></table></figure>
+
+<h2 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h2><p>这里写的都是全量导入 hive。如果要增量，只能先导入到 hdfs，然后再做 merge</p>
+<h3 id="–where"><a href="#–where" class="headerlink" title="–where"></a>–where</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql://192.168.33.2:3306/doit_mall \</span><br><span class="line">--username root \</span><br><span class="line">--password root \</span><br><span class="line">--table oms_order \</span><br><span class="line">--hive-import \</span><br><span class="line">--hive-table doit12.oms_order \</span><br><span class="line">--delete-target-dir \</span><br><span class="line">--as-textfile \</span><br><span class="line">--fields-terminated-by <span class="string">&#x27;,&#x27;</span> \</span><br><span class="line">--compress   \</span><br><span class="line">--compression-codec gzip \</span><br><span class="line">--split-by <span class="built_in">id</span> \</span><br><span class="line">-m 2   \</span><br><span class="line">--null-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--null-non-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--<span class="built_in">where</span> <span class="string">&quot;delivery_company is null&quot;</span> \	<span class="comment"># filter condition</span></span><br><span class="line">--hive-overwrite</span><br></pre></td></tr></table></figure>
+
+<h3 id="–query"><a href="#–query" class="headerlink" title="–query"></a>–query</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql://192.168.33.2:3306/doit_mall \</span><br><span class="line">--username root \</span><br><span class="line">--password root \</span><br><span class="line">--target-dir  /tmp/query  \		<span class="comment"># sqoop 导入数据到 hive，本质就是先将数据导入到 hdfs，然后再去 hive 数据库创建元数据。这里需要手动指定中间临时目标目录（不太清楚为啥）</span></span><br><span class="line">--hive-import \</span><br><span class="line">--hive-table doit12.oms_order \</span><br><span class="line">--delete-target-dir \</span><br><span class="line">--as-textfile \</span><br><span class="line">--fields-terminated-by <span class="string">&#x27;,&#x27;</span> \</span><br><span class="line">--compress   \</span><br><span class="line">--compression-codec gzip \</span><br><span class="line">--split-by <span class="built_in">id</span> \</span><br><span class="line">--null-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--null-non-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--hive-overwrite \</span><br><span class="line">--query <span class="string">&quot;select id,member_id,order_sn,total_amount,pay_amount,status from oms_order where status=4 and \$CONDITIONS&quot;</span>  \			<span class="comment"># 查询语句，也支持复杂查询</span></span><br><span class="line">-m 2</span><br></pre></td></tr></table></figure>
+
+<h1 id="运行-sqoop-action"><a href="#运行-sqoop-action" class="headerlink" title="运行 sqoop action"></a>运行 sqoop action</h1><p>在数据接入时，特别是连接数据库增量导入数据时，这种周期性任务的执行，有很多种方式：</p>
+<ol>
+<li>写一个 long running 脚本，不断执行增量 import</li>
+<li><a href="https://www.cnblogs.com/xing901022/p/6091306.html">采用 Oozie 等调度工具来运行</a></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>big data</tag>
+        <tag>hadoop</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>test principles</title>
     <url>/2018/10/12/test-principles/</url>
     <content><![CDATA[<p><a href="https://www.petrikainulainen.net/programming/unit-testing/3-reasons-why-we-should-not-use-inheritance-in-our-tests/">three reasons why we should not use inheritance in tests</a></p>
@@ -3978,70 +4042,6 @@ Maybe there’re also specific cloud, like financial cloud (maybe more secure an
         <tag>hadoop</tag>
         <tag>distributed computing</tag>
         <tag>resource manager</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>sqoop</title>
-    <url>/2020/11/10/sqoop/</url>
-    <content><![CDATA[<h1 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h1><p>Sqoop: sq are the first two of “sql”, oop are the last three of “hadoop”. It <strong>transfers bulk data between hdfs and relational database servers</strong>. It supports:</p>
-<ul>
-<li>Full Load</li>
-<li>Incremental Load</li>
-<li>Parallel Import&#x2F;Export (throught mapper jobs)</li>
-<li>Compression</li>
-<li>Kerberos Security Integration</li>
-<li>Data  loading directly to HIVE</li>
-</ul>
-<blockquote>
-<p>Sqoop cannot import .csv files into hdfs&#x2F;hive. It only support databases &#x2F; mainframe datasets import.</p>
-</blockquote>
-<h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><p>Sqoop provides CLI, thus you can use a simple command to conduct import&#x2F;export.</p>
-<p>The import&#x2F;export are executes in fact through map tasks.</p>
-<p><img src="/images/sqoop-20201110134912159.png" alt="sqoop-20201110134912159.png"></p>
-<p>When Import from DB:</p>
-<ul>
-<li>it split to some map tasks. And each map task will connect to DB, and fetch some rows&#x2F;tables, and write it to a file into HDFS</li>
-</ul>
-<p>When export to DB:</p>
-<ul>
-<li>it also split to some map tasks. And each map task will fetch a HDFS file, and write each record in the file as a row by specified delimiter to some table.</li>
-</ul>
-<p><img src="/images/sqoop-20201110135220097.png" alt="sqoop-20201110135220097.png"></p>
-<h1 id="Sqoop-v-s-Spark-jdbc"><a href="#Sqoop-v-s-Spark-jdbc" class="headerlink" title="Sqoop v.s. Spark jdbc"></a>Sqoop v.s. Spark jdbc</h1><p>sqoop uses mapreduce technique, while spark is a revolutionary engine to replace mapreduce technique with its in-memory execution and DAG smartness. Thus Spark jdbc is way faster than sqoop.</p>
-<ol>
-<li>You can combine all the read, transform and write operations into one script&#x2F;program instead of reading it separately through SQOOP in one script and then doing transformation and write in another.</li>
-<li>You can define a new split column on the fly (using functions like ORA_HASH) if you want the data to be partitioned in a proper way.</li>
-<li>You can control the number of connection to the database. Increasing the number of connection will surely speed up your data import.</li>
-</ol>
-<h1 id="Common-Commands"><a href="#Common-Commands" class="headerlink" title="Common Commands"></a>Common Commands</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$  sqoop import \</span><br><span class="line">	--connect jdbc:mysql://&lt;ipaddress&gt;/&lt;database name&gt;</span><br><span class="line">	--table &lt;my_table name&gt;</span><br><span class="line">	--username &lt;username_for_my_sql&gt; --password &lt;password&gt;</span><br><span class="line">  --target-dir &lt;target <span class="built_in">dir</span> <span class="keyword">in</span> HDFS <span class="built_in">where</span> data needs to be imported&gt;</span><br><span class="line">  </span><br><span class="line">$  sqoop <span class="built_in">export</span> \</span><br><span class="line">	--connect jdbc:mysql://&lt;ipaddress&gt;/&lt;database name&gt;</span><br><span class="line">	--table &lt;my_table name&gt;</span><br><span class="line">	--username &lt;username_for_my_sql&gt; --password &lt;password&gt;</span><br><span class="line">  --export-dir &lt;target <span class="built_in">dir</span> <span class="keyword">in</span> HDFS <span class="built_in">where</span> data needs to be exported&gt;</span><br></pre></td></tr></table></figure>
-
-<h1 id="Incremental-Import"><a href="#Incremental-Import" class="headerlink" title="Incremental Import"></a>Incremental Import</h1><p>增量导入时，sqoop 需要识别到增量数据，有三种方法：</p>
-<ol>
-<li>根据自增字段识别新数据（append 模式）：可以直接识别新数据并导入到 hive 中</li>
-<li>根据修改时间识别新数据（lastmodified 模式）：要求这个字段会随数据的改变而改变，但是似乎只能导入到 hdfs 中，不能直接导入到 hive 中。导入时，可以通过制定<code>--merge-key id</code> 来按 id 字段进行合并，或者之后通过 <code>sqoop merge</code> 功能单独运行</li>
-<li>根据 where 或 query 识别新数据：可能之后只能通过 <code>sqoop merge</code> 来 merge 数据</li>
-</ol>
-<blockquote>
-<p>目前 <strong>sqoop 导入时不能识别删除数据</strong>，都需要通过其他方式来解决（对比数据，或者数据上有 delete 标识符时，通过 <a href="https://docs.cloudera.com/HDPDocuments/HDP2/HDP-2.6.5/bk_data-access/content/incrementally-updating-hive-table-with-sqoop-and-ext-table.html">Incrementally Updating a Table</a> 来实现）</p>
-</blockquote>
-<h2 id="append-模式"><a href="#append-模式" class="headerlink" title="append 模式"></a>append 模式</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql://192.168.33.2:3306/doit_mall \</span><br><span class="line">--username root \</span><br><span class="line">--password root \</span><br><span class="line">--table oms_order \</span><br><span class="line">--target-dir  /tmp/query  \</span><br><span class="line">--hive-import \</span><br><span class="line">--hive-table doit12.oms_order \</span><br><span class="line">--as-textfile \</span><br><span class="line">--fields-terminated-by <span class="string">&#x27;,&#x27;</span> \</span><br><span class="line">--compress   \</span><br><span class="line">--compression-codec gzip \</span><br><span class="line">--split-by <span class="built_in">id</span> \</span><br><span class="line">--null-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--null-non-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--incremental append \	<span class="comment"># append 模式</span></span><br><span class="line">--check-column <span class="built_in">id</span> \			<span class="comment"># 自增字段</span></span><br><span class="line">--last-value 22 \				<span class="comment"># 自增字段的 last value</span></span><br><span class="line">-m 2 </span><br></pre></td></tr></table></figure>
-
-<h2 id="lastmodified-模式"><a href="#lastmodified-模式" class="headerlink" title="lastmodified 模式"></a>lastmodified 模式</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql://192.168.33.2:3306/dicts \</span><br><span class="line">--username root \</span><br><span class="line">--password root \</span><br><span class="line">--table doit_stu \</span><br><span class="line">--target-dir  /doit_stu/2020-02-09  \</span><br><span class="line">--as-textfile \</span><br><span class="line">--fields-terminated-by <span class="string">&#x27;,&#x27;</span> \</span><br><span class="line">--split-by <span class="built_in">id</span> \</span><br><span class="line">--null-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--null-non-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--incremental lastmodified \		<span class="comment"># lastmodified 模式</span></span><br><span class="line">--check-column update_time \		<span class="comment"># 时间字段</span></span><br><span class="line">--last-value <span class="string">&#x27;2020-02-09 23:59:59&#x27;</span> \	<span class="comment"># 上一次获取的数据时间</span></span><br><span class="line">--fields-terminated-by <span class="string">&#x27;,&#x27;</span> \</span><br><span class="line">--merge-key <span class="built_in">id</span> \					<span class="comment">#按照id字段进行合并</span></span><br><span class="line">-m 1 </span><br></pre></td></tr></table></figure>
-
-<h2 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h2><p>这里写的都是全量导入 hive。如果要增量，只能先导入到 hdfs，然后再做 merge</p>
-<h3 id="–where"><a href="#–where" class="headerlink" title="–where"></a>–where</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql://192.168.33.2:3306/doit_mall \</span><br><span class="line">--username root \</span><br><span class="line">--password root \</span><br><span class="line">--table oms_order \</span><br><span class="line">--hive-import \</span><br><span class="line">--hive-table doit12.oms_order \</span><br><span class="line">--delete-target-dir \</span><br><span class="line">--as-textfile \</span><br><span class="line">--fields-terminated-by <span class="string">&#x27;,&#x27;</span> \</span><br><span class="line">--compress   \</span><br><span class="line">--compression-codec gzip \</span><br><span class="line">--split-by <span class="built_in">id</span> \</span><br><span class="line">-m 2   \</span><br><span class="line">--null-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--null-non-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--<span class="built_in">where</span> <span class="string">&quot;delivery_company is null&quot;</span> \	<span class="comment"># filter condition</span></span><br><span class="line">--hive-overwrite</span><br></pre></td></tr></table></figure>
-
-<h3 id="–query"><a href="#–query" class="headerlink" title="–query"></a>–query</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql://192.168.33.2:3306/doit_mall \</span><br><span class="line">--username root \</span><br><span class="line">--password root \</span><br><span class="line">--target-dir  /tmp/query  \		<span class="comment"># sqoop 导入数据到 hive，本质就是先将数据导入到 hdfs，然后再去 hive 数据库创建元数据。这里需要手动指定中间临时目标目录（不太清楚为啥）</span></span><br><span class="line">--hive-import \</span><br><span class="line">--hive-table doit12.oms_order \</span><br><span class="line">--delete-target-dir \</span><br><span class="line">--as-textfile \</span><br><span class="line">--fields-terminated-by <span class="string">&#x27;,&#x27;</span> \</span><br><span class="line">--compress   \</span><br><span class="line">--compression-codec gzip \</span><br><span class="line">--split-by <span class="built_in">id</span> \</span><br><span class="line">--null-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--null-non-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--hive-overwrite \</span><br><span class="line">--query <span class="string">&quot;select id,member_id,order_sn,total_amount,pay_amount,status from oms_order where status=4 and \$CONDITIONS&quot;</span>  \			<span class="comment"># 查询语句，也支持复杂查询</span></span><br><span class="line">-m 2</span><br></pre></td></tr></table></figure>
-
-<h1 id="运行-sqoop-action"><a href="#运行-sqoop-action" class="headerlink" title="运行 sqoop action"></a>运行 sqoop action</h1><p>在数据接入时，特别是连接数据库增量导入数据时，这种周期性任务的执行，有很多种方式：</p>
-<ol>
-<li>写一个 long running 脚本，不断执行增量 import</li>
-<li><a href="https://www.cnblogs.com/xing901022/p/6091306.html">采用 Oozie 等调度工具来运行</a></li>
-</ol>
-]]></content>
-      <tags>
-        <tag>big data</tag>
-        <tag>hadoop</tag>
       </tags>
   </entry>
   <entry>
