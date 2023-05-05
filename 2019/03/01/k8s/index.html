@@ -1,16 +1,429 @@
-{% extends '_layout.njk' %}
-{% import '_macro/sidebar.njk' as sidebar_template with context %}
+<!DOCTYPE html>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block class %}post posts-expand{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block content %}
 
-  {{ partial('_macro/post.njk', {post: page}) }}
 
-{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-{% block sidebar %}
-  {{ sidebar_template.render(page.toc.enable) }}
-{% endblock %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="k8s is a platform to manage containerized workloads and services. Conceptskubernetes Objects Kubernetes abstract a desired state of cluster as objects. an object configuration includes: spec: describe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="k8s general">
+<meta property="og:url" content="http://yoursite.com/2019/03/01/k8s/index.html">
+<meta property="og:site_name" content="Cherish&#39;s Blog">
+<meta property="og:description" content="k8s is a platform to manage containerized workloads and services. Conceptskubernetes Objects Kubernetes abstract a desired state of cluster as objects. an object configuration includes: spec: describe">
+<meta property="og:locale">
+<meta property="og:image" content="https://d33wubrfki0l68.cloudfront.net/e351b830334b8622a700a8da6568cb081c464a9b/13020/images/docs/services-userspace-overview.svg">
+<meta property="article:published_time" content="2019-03-01T07:41:12.000Z">
+<meta property="article:modified_time" content="2022-10-22T06:22:52.345Z">
+<meta property="article:author" content="Cherish">
+<meta property="article:tag" content="container">
+<meta property="article:tag" content="k8s">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://d33wubrfki0l68.cloudfront.net/e351b830334b8622a700a8da6568cb081c464a9b/13020/images/docs/services-userspace-overview.svg">
+
+
+<link rel="canonical" href="http://yoursite.com/2019/03/01/k8s/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"Chinese","comments":true,"permalink":"http://yoursite.com/2019/03/01/k8s/","path":"2019/03/01/k8s/","title":"k8s general"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>k8s general | Cherish's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cherish's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Concepts"><span class="nav-number">1.</span> <span class="nav-text">Concepts</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#kubernetes-Objects"><span class="nav-number">1.1.</span> <span class="nav-text">kubernetes Objects</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Workloads"><span class="nav-number">1.1.1.</span> <span class="nav-text">Workloads</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#POD"><span class="nav-number">1.1.2.</span> <span class="nav-text">POD</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Pod-lifecycle"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">Pod lifecycle</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Controllers"><span class="nav-number">1.1.3.</span> <span class="nav-text">Controllers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Service"><span class="nav-number">1.1.4.</span> <span class="nav-text">Service</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kubernetes-control-plane"><span class="nav-number">1.2.</span> <span class="nav-text">kubernetes control plane</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#kubernetes-api"><span class="nav-number">2.</span> <span class="nav-text">kubernetes api</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Access-services-on-cluster"><span class="nav-number">3.</span> <span class="nav-text">Access services on cluster</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#In-pod-access"><span class="nav-number">3.1.</span> <span class="nav-text">In-pod access</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#In-cluster-access"><span class="nav-number">3.2.</span> <span class="nav-text">In-cluster access</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cluster-ip-port"><span class="nav-number">3.2.0.1.</span> <span class="nav-text">cluster-ip:port</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#servicename-namespacename"><span class="nav-number">3.2.0.2.</span> <span class="nav-text">servicename.namespacename</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#environement-viaribles"><span class="nav-number">3.2.0.2.1.</span> <span class="nav-text">environement viaribles</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DNS"><span class="nav-number">3.2.0.2.2.</span> <span class="nav-text">DNS</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#between-cluster-access"><span class="nav-number">3.3.</span> <span class="nav-text">between-cluster access</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cherish</p>
+  <div class="site-description" itemprop="description">从心所欲不逾矩</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="Chinese">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/01/k8s/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="k8s general | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          k8s general
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-03-01 15:41:12" itemprop="dateCreated datePublished" datetime="2019-03-01T15:41:12+08:00">2019-03-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a href="https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/" target="_blank" rel="noopener">k8s</a> is a platform to manage containerized workloads and services.</p>
+<h1 id="Concepts"><a href="#Concepts" class="headerlink" title="Concepts"></a>Concepts</h1><h2 id="kubernetes-Objects"><a href="#kubernetes-Objects" class="headerlink" title="kubernetes Objects"></a>kubernetes Objects</h2><ol>
+<li>Kubernetes abstract <strong>a desired state of cluster</strong> as objects.</li>
+<li>an object configuration includes:<ol>
+<li>spec: describe the desired state<ol>
+<li>apiVersion: the api version of kubernetes</li>
+<li>metadata: the name &amp; namespace</li>
+<li>spec: the desired state definition.</li>
+</ol>
+</li>
+<li>status: describe the actual state of the object</li>
+</ol>
+</li>
+<li>cluster state (<a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/" target="_blank" rel="noopener">understanding kubernetes objects</a>):<ol>
+<li>what containerized applications are running and where they’re running</li>
+<li>how many resources (disk, network, etc.) are attached to the the container</li>
+<li>the policies around how the application behaves, such as restart policies, fault-tolerance, etc.</li>
+</ol>
+</li>
+</ol>
+<h3 id="Workloads"><a href="#Workloads" class="headerlink" title="Workloads"></a>Workloads</h3><p>Objects that set deployment rules of pods.</p>
+<p>All controllers are workloads.</p>
+<h3 id="POD"><a href="#POD" class="headerlink" title="POD"></a>POD</h3><p><a href="https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/" target="_blank" rel="noopener">pod</a> is <strong>a minimize runnable object</strong> in k8s object model.</p>
+<p>A Pod encapsulates an application <em>container</em> (or, in some cases, multiple containers), <em>storage resources</em>, <em>a unique network IP</em>, and <em>options that govern how the container(s) should run.</em></p>
+<p>It represents <strong>a single instances of application</strong>.</p>
+<p>There’re two common use cases:</p>
+<ul>
+<li><strong>Pods that run a single container</strong>, which is the most case. So often pod is a synomynous with container.</li>
+<li><strong>Pods that run multiple containers that need to work together.</strong> All the containers in a pod share the storage &amp; network, which means they use the same ip and same storage volume.</li>
+</ul>
+<h4 id="Pod-lifecycle"><a href="#Pod-lifecycle" class="headerlink" title="Pod lifecycle"></a>Pod lifecycle</h4><p><strong>A pod doesn’t self-heal &amp; self-scale</strong>. It’s just a running instance. It stopped &amp; deleted when the process is finished, or the node is failed, or the resource is exhaused… Controllers (eg. deployment, statefulSet…) instead can create and manage multiple pods.</p>
+<p>Pod restarting is different from container restarting. <strong>Pod provides the env for containers: os, storage, network…</strong></p>
+<h3 id="Controllers"><a href="#Controllers" class="headerlink" title="Controllers"></a>Controllers</h3><p>Controllers (eg. deployment, statefulSet…) instead can create and manage multiple pods.</p>
+<h3 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h3><p>Service is an <strong>abstraction</strong> which defines <strong>a logical set of pods</strong>, and <strong>a policy by which to access the pods</strong>.</p>
+<p>It enables <strong>the decoupling of access &amp; the real pods</strong>, which means you can access by service name/ip rather than the pod ip, while <strong>pod ip is not stable</strong>.</p>
+<blockquote>
+<p>Q: How does k8s get all pod endpoints by service?</p>
+<p>A: By <code>LabelSelector</code>. You can define labels for each pod. And we define <code>LabelSelector</code> in service, so that k8s can search pod node by label first, and then using the <code>targetPort</code> to locate the pod on node.</p>
+</blockquote>
+<h2 id="kubernetes-control-plane"><a href="#kubernetes-control-plane" class="headerlink" title="kubernetes control plane"></a>kubernetes control plane</h2><ol>
+<li>the control plane <strong>manage the cluster state to match the desired state of objects</strong></li>
+<li>the control plane consists of a collection of processes for the above intention.<ol>
+<li>kubernetes master:<ol>
+<li>is responsible for the maintaining the desired state.</li>
+<li>“master” in fact refers to three processes: <a href="https://kubernetes.io/docs/admin/kube-apiserver/" target="_blank" rel="noopener">kube-apiserver</a>, <a href="https://kubernetes.io/docs/admin/kube-controller-manager/" target="_blank" rel="noopener">kube-controller-manager</a> and <a href="https://kubernetes.io/docs/admin/kube-scheduler/" target="_blank" rel="noopener">kube-scheduler</a>.</li>
+<li>these three processes are typically run on single node in the cluster. This node is called “master”, too. The master can also be replicated for avaibility and redundancy.</li>
+</ol>
+</li>
+<li>kubernetes nodes:<ol>
+<li>the nodes to run applications.</li>
+<li>there’re two process in each node:<ol>
+<li>kubelet: communicate with the master</li>
+<li>kube-proxy: a network proxy.</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="kubernetes-api"><a href="#kubernetes-api" class="headerlink" title="kubernetes api"></a>kubernetes api</h1><p>The <strong>api</strong> communicates with master to operate on kubernetes objects.</p>
+<p><strong>kubectl</strong> is a cli to implement the above intention. It in fact calls the api internally.</p>
+<p>All kinds of <strong>sdk</strong> (java, python…) encapsulate the api, too.</p>
+<p>There are two kinds of api groups:</p>
+<ol>
+<li>core groups: the original k8s api</li>
+<li>other groups: other api to extend the core group, like you may want to abstract more objects?</li>
+</ol>
+<h1 id="Access-services-on-cluster"><a href="#Access-services-on-cluster" class="headerlink" title="Access services on cluster"></a>Access services on cluster</h1><p>There are several levels.</p>
+<p>ip:</p>
+<ul>
+<li>pod ip: </li>
+<li>cluster ip: the virtual ip for a service</li>
+<li>node ip</li>
+</ul>
+<h2 id="In-pod-access"><a href="#In-pod-access" class="headerlink" title="In-pod access"></a>In-pod access</h2><p><strong>Each pod has a unique IP</strong>.  And all <strong>containers in a pod share the ip</strong>, which means that they can access each other by <code>localhost</code></p>
+<h2 id="In-cluster-access"><a href="#In-cluster-access" class="headerlink" title="In-cluster access"></a>In-cluster access</h2><p>By default, a service can be accessed by other pods in the same cluster, through:</p>
+<h4 id="cluster-ip-port"><a href="#cluster-ip-port" class="headerlink" title="cluster-ip:port"></a>cluster-ip:port</h4><ul>
+<li>cluster ip is the virtual ip of a service</li>
+<li>port is is the node port of the service.</li>
+</ul>
+<p>Every node on k8s has a <code>kube-proxy</code>. It installs iptable rules which keep a simple record of (servicename:clusterip:serviceport).</p>
+<p>In some node:</p>
+<ol>
+<li>call cluster-ip:port————— <strong>In a pod</strong></li>
+<li>the kube-proxy search the iptable, and get some info.———— <strong>pod =&gt; kube-proxy of node where the pod resides.</strong></li>
+<li>the kube-proxy using the info to ask master for the real endpoints.—— <strong>kube-proxy of node =&gt; master kube-api</strong></li>
+<li>the kube-proxy chooses a endpoint by <code>SessionAffinity</code> defined in service (round-robin by default) —— <strong>in kube-proxy</strong></li>
+<li>the kube-proxy redirect request to <code>pod-ip:podPort</code> —— <strong>kube-proxy =&gt; pod endpoint</strong></li>
+</ol>
+<p>kube-proxy: enables the Kubernetes service abstraction by maintaining network rules on the host and performing connection forwarding</p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/e351b830334b8622a700a8da6568cb081c464a9b/13020/images/docs/services-userspace-overview.svg" alt="proxy-mode:user space"></p>
+<h4 id="servicename-namespacename"><a href="#servicename-namespacename" class="headerlink" title="servicename.namespacename"></a>servicename.namespacename</h4><p>When accessing by service name, there’re two ways:</p>
+<h5 id="environement-viaribles"><a href="#environement-viaribles" class="headerlink" title="environement viaribles"></a>environement viaribles</h5><p>when create a service, k8s will create some env for each serivce, e.g. <code>{SVCNAME_CAPTIPAL}_SERVICE_HOST</code>. So the kube-proxy in fact gets the service cluster ip from these envs first. When a pod calls a service, t<strong>he service must be created before the pod</strong> so that the envs are created.</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># the cluster ip</span></span><br><span class="line"><span class="attr">REDIS_MASTER_SERVICE_HOST</span>=<span class="string">10.0.0.11</span></span><br><span class="line"><span class="attr">REDIS_MASTER_SERVICE_PORT</span>=<span class="string">6379</span></span><br><span class="line"><span class="attr">REDIS_MASTER_PORT</span>=<span class="string">tcp://10.0.0.11:6379</span></span><br><span class="line"><span class="attr">REDIS_MASTER_PORT_6379_TCP</span>=<span class="string">tcp://10.0.0.11:6379</span></span><br><span class="line"><span class="attr">REDIS_MASTER_PORT_6379_TCP_PROTO</span>=<span class="string">tcp</span></span><br><span class="line"><span class="attr">REDIS_MASTER_PORT_6379_TCP_PORT</span>=<span class="string">6379</span></span><br><span class="line"><span class="attr">REDIS_MASTER_PORT_6379_TCP_ADDR</span>=<span class="string">10.0.0.11</span></span><br></pre></td></tr></table></figure>
+<h5 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a><a href="https://kubernetes.io/docs/concepts/services-networking/service/#dns" target="_blank" rel="noopener">DNS</a></h5><p>It’s an add-on k8s object, which can be chosed to add to the cluster.</p>
+<p>It’s an in-cluster dns, which serves DNS records for Kubernetes services.</p>
+<p>It watches the k8s api for new services and create <strong>DNS SVC records</strong> for each.</p>
+<p>Containers started by Kubernetes automatically include this DNS server in their DNS searches.</p>
+<h2 id="between-cluster-access"><a href="#between-cluster-access" class="headerlink" title="between-cluster access"></a>between-cluster access</h2><ol>
+<li>NodePort: expose nodeIP</li>
+<li>LoadBalancer: expose loadbalancer ip</li>
+<li>Ingress: expose loadbalancer &amp; path</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/container/" rel="tag"># container</a>
+              <a href="/tags/k8s/" rel="tag"># k8s</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/03/01/obs/" rel="prev" title="obs">
+                  <i class="fa fa-chevron-left"></i> obs
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/03/26/python-basic/" rel="next" title="python basic">
+                  python basic <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cherish</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">269k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:04</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

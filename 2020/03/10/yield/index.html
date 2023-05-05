@@ -1,16 +1,342 @@
-{% extends '_layout.njk' %}
-{% import '_macro/sidebar.njk' as sidebar_template with context %}
+<!DOCTYPE html>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block class %}post posts-expand{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block content %}
 
-  {{ partial('_macro/post.njk', {post: page}) }}
 
-{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-{% block sidebar %}
-  {{ sidebar_template.render(page.toc.enable) }}
-{% endblock %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="yield is a contextual keywords. When it shows in a statement, it means the method or get accessor in which it appears is an iterator. Thus it provides a simple way to define an iterator, rather than a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c# contextual keywords: yield">
+<meta property="og:url" content="http://yoursite.com/2020/03/10/yield/index.html">
+<meta property="og:site_name" content="Cherish&#39;s Blog">
+<meta property="og:description" content="yield is a contextual keywords. When it shows in a statement, it means the method or get accessor in which it appears is an iterator. Thus it provides a simple way to define an iterator, rather than a">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-03-10T03:19:31.000Z">
+<meta property="article:modified_time" content="2022-10-22T06:22:52.356Z">
+<meta property="article:author" content="Cherish">
+<meta property="article:tag" content="c#">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yoursite.com/2020/03/10/yield/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"Chinese","comments":true,"permalink":"http://yoursite.com/2020/03/10/yield/","path":"2020/03/10/yield/","title":"c# contextual keywords: yield"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>c# contextual keywords: yield | Cherish's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cherish's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Grammar"><span class="nav-number">1.</span> <span class="nav-text">Grammar</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Q-amp-A"><span class="nav-number">2.</span> <span class="nav-text">Q &amp; A</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#What%E2%80%99s-an-iterator"><span class="nav-number">2.0.1.</span> <span class="nav-text">What’s an iterator?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#what-does-yield-means-in-this-iterator"><span class="nav-number">2.0.2.</span> <span class="nav-text">what does yield means in this iterator?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#when-does-the-iterator-stopped"><span class="nav-number">2.0.3.</span> <span class="nav-text">when does the iterator stopped?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#what%E2%80%99s-the-requirements-to-define-such-iterator"><span class="nav-number">2.0.4.</span> <span class="nav-text">what’s the requirements to define such iterator?</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#examples"><span class="nav-number"></span> <span class="nav-text">examples</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#yield-in-method"><span class="nav-number">0.1.</span> <span class="nav-text">yield in method</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yield-in-get-accessor"><span class="nav-number">0.2.</span> <span class="nav-text">yield in get accessor</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cherish</p>
+  <div class="site-description" itemprop="description">从心所欲不逾矩</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="Chinese">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/10/yield/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="c# contextual keywords: yield | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          c# contextual keywords: yield
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-03-10 11:19:31" itemprop="dateCreated datePublished" datetime="2020-03-10T11:19:31+08:00">2020-03-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/yield" target="_blank" rel="noopener">yield</a> is a contextual keywords. When it shows in a statement, it means the method or get accessor in which it appears is an iterator. Thus it provides a simple way to define an iterator, rather than a class that implements <code>IEnumerable</code> or <code>IEnumerator</code>.</p>
+<blockquote>
+<p>When you use the <code>yield</code> <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/#contextual-keywords" target="_blank" rel="noopener">contextual keyword</a> in a statement, you indicate that the method, operator, or <code>get</code> accessor in which it appears is an iterator. Using <code>yield</code> to define an iterator removes the need for an explicit extra class (the class that holds the state for an enumeration, see <a href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerator-1" target="_blank" rel="noopener">IEnumerator</a> for an example) when you implement the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.ienumerable" target="_blank" rel="noopener">IEnumerable</a> and <a href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.ienumerator" target="_blank" rel="noopener">IEnumerator</a> pattern for a custom collection type.</p>
+</blockquote>
+<h2 id="Grammar"><a href="#Grammar" class="headerlink" title="Grammar"></a>Grammar</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yield return expression;	&#x2F;&#x2F; return an element in the iterator</span><br><span class="line">yield break;	&#x2F;&#x2F; end the iterator</span><br></pre></td></tr></table></figure>
+<h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q &amp; A"></a>Q &amp; A</h2><h4 id="What’s-an-iterator"><a href="#What’s-an-iterator" class="headerlink" title="What’s an iterator?"></a>What’s an iterator?</h4><p>An iterator means that it can be looped in <code>foreach</code> or LINQ query. In this case, it means the method or get accessor containing <code>yield</code> can be consumed by <code>foreach</code> or LINQ query.</p>
+<h4 id="what-does-yield-means-in-this-iterator"><a href="#what-does-yield-means-in-this-iterator" class="headerlink" title="what does yield means in this iterator?"></a>what does <code>yield</code> means in this iterator?</h4><p>The <code>yield return</code> will return an element in the iterator. During the loop, the iterator use <code>MoveNext</code> to get i (take <a href="#yield-in-method">power method</a> as an example), and the <code>MoveNext</code> stop at the next <code>yield return</code> expression, and the <code>Current</code> property of the iterator is updated as this value, too.</p>
+<h4 id="when-does-the-iterator-stopped"><a href="#when-does-the-iterator-stopped" class="headerlink" title="when does the iterator stopped?"></a>when does the iterator stopped?</h4><ul>
+<li>when there’s <code>yield break</code></li>
+<li>when the method body is end</li>
+</ul>
+<h4 id="what’s-the-requirements-to-define-such-iterator"><a href="#what’s-the-requirements-to-define-such-iterator" class="headerlink" title="what’s the requirements to define such iterator?"></a>what’s the requirements to define such iterator?</h4><ul>
+<li>The return type must be <a href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.ienumerable" target="_blank" rel="noopener">IEnumerable</a>, <a href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1" target="_blank" rel="noopener">IEnumerable</a>, <a href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.ienumerator" target="_blank" rel="noopener">IEnumerator</a>, or <a href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerator-1" target="_blank" rel="noopener">IEnumerator</a>.</li>
+<li>The declaration can’t have any <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/in-parameter-modifier" target="_blank" rel="noopener">in</a> <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/ref" target="_blank" rel="noopener">ref</a> or <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/out-parameter-modifier" target="_blank" rel="noopener">out</a> parameters.</li>
+<li>Don’t use <code>yield</code> in <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/lambda-expressions" target="_blank" rel="noopener">Lambda expressions</a> and <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/delegate-operator" target="_blank" rel="noopener">anonymous methods</a>.</li>
+<li>Don’t use <code>yield</code> in methods that contain unsafe blocks. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/unsafe" target="_blank" rel="noopener">unsafe</a>.</li>
+<li>Don’t use <code>yield return</code> in a try-catch block. A <code>yield return</code> statement can be located in the try block of a try-finally statement.</li>
+<li><code>yield break</code> can be located in a try block or a catch block but not a finally block</li>
+</ul>
+<h1 id="examples"><a href="#examples" class="headerlink" title="examples"></a>examples</h1><h3 id="yield-in-method"><a href="#yield-in-method" class="headerlink" title="yield in method"></a>yield in method<a name = 'yield-in-method' /></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">static void Main(string[] args)</span><br><span class="line">&#123;</span><br><span class="line">  	var powers &#x3D; Power(2, 10);	&#x2F;&#x2F; won&#39;t execute the body of Power</span><br><span class="line">    foreach (var i in powers)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine($&quot;&#123;i&#125; &quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; yield in method &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">public static IEnumerable&lt;int&gt; Power(int number, int exponent)</span><br><span class="line">&#123;</span><br><span class="line">    int result &#x3D; 1;</span><br><span class="line">    for (int i &#x3D; 0; i &lt; exponent; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        result &#x3D; result * number;</span><br><span class="line">        yield return result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="yield-in-get-accessor"><a href="#yield-in-get-accessor" class="headerlink" title="yield in get accessor"></a>yield in get accessor<a name = 'yield-in-get-accessor' /></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">static void Main(string[] args)</span><br><span class="line">&#123;</span><br><span class="line">    foreach (var i in new Galaxies().AllGalaxies)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine($&quot;&#123;i.Name&#125;, &#123;i.Age&#125;&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Galaxies</span><br><span class="line">&#123;</span><br><span class="line">  &#x2F;&#x2F; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; yield in get accessor &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">    public IEnumerable&lt;Galaxy&gt; AllGalaxies</span><br><span class="line">    &#123;</span><br><span class="line">        get</span><br><span class="line">        &#123;</span><br><span class="line">            yield return new Galaxy(&quot;The milky way&quot;, 1000);</span><br><span class="line">            yield return new Galaxy(&quot;Tadpole&quot;, 1000);</span><br><span class="line">            yield return new Galaxy(&quot;Andromeda&quot;, 1000);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Galaxy</span><br><span class="line">&#123;</span><br><span class="line">    public string Name &#123; get; &#125;</span><br><span class="line">    public int Age &#123; get; &#125;</span><br><span class="line"></span><br><span class="line">    public Galaxy(string name, int age)</span><br><span class="line">    &#123;</span><br><span class="line">        Name &#x3D; name;</span><br><span class="line">        Age &#x3D; age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/c/" rel="tag"># c#</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/01/17/FluentValidator/" rel="prev" title="FluentValidator">
+                  <i class="fa fa-chevron-left"></i> FluentValidator
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/04/27/502-vs-504/" rel="next" title="nginx 502 vs 504">
+                  nginx 502 vs 504 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cherish</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">269k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:04</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

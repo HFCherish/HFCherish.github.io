@@ -1,16 +1,354 @@
-{% extends '_layout.njk' %}
-{% import '_macro/sidebar.njk' as sidebar_template with context %}
+<!DOCTYPE html>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block class %}post posts-expand{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block content %}
 
-  {{ partial('_macro/post.njk', {post: page}) }}
 
-{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-{% block sidebar %}
-  {{ sidebar_template.render(page.toc.enable) }}
-{% endblock %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="traditional authentication传统认证使用  session:  client 发送 username、password 给 server server 查数据库，检查信息，是否正确。正确就把用户登录信息(即用户状态)写到 session 里（即服务器内存中），并将 sessionId 返回给 client。 client 在请求 api 时，在 cookie 中传递 ses">
+<meta property="og:type" content="article">
+<meta property="og:title" content="oauth">
+<meta property="og:url" content="http://yoursite.com/2018/07/27/oauth/index.html">
+<meta property="og:site_name" content="Cherish&#39;s Blog">
+<meta property="og:description" content="traditional authentication传统认证使用  session:  client 发送 username、password 给 server server 查数据库，检查信息，是否正确。正确就把用户登录信息(即用户状态)写到 session 里（即服务器内存中），并将 sessionId 返回给 client。 client 在请求 api 时，在 cookie 中传递 ses">
+<meta property="og:locale">
+<meta property="og:image" content="https://camo.githubusercontent.com/f6ea1099ada7ec855919d6e483d0d903f1cc96ca/68747470733a2f2f636d732d6173736574732e74757473706c75732e636f6d2f75706c6f6164732f75736572732f3438372f706f7374732f32323534332f696d6167652f747261646974696f6e616c2d61757468656e7469636174696f6e2d73797374656d2d706e672e706e67">
+<meta property="og:image" content="https://docs.oracle.com/cd/E74890_01/books/RestAPI/images/OAuth2leg_V.gif">
+<meta property="article:published_time" content="2018-07-27T07:24:55.000Z">
+<meta property="article:modified_time" content="2022-10-22T06:22:52.348Z">
+<meta property="article:author" content="Cherish">
+<meta property="article:tag" content="security">
+<meta property="article:tag" content="oauth">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://camo.githubusercontent.com/f6ea1099ada7ec855919d6e483d0d903f1cc96ca/68747470733a2f2f636d732d6173736574732e74757473706c75732e636f6d2f75706c6f6164732f75736572732f3438372f706f7374732f32323534332f696d6167652f747261646974696f6e616c2d61757468656e7469636174696f6e2d73797374656d2d706e672e706e67">
+
+
+<link rel="canonical" href="http://yoursite.com/2018/07/27/oauth/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"Chinese","comments":true,"permalink":"http://yoursite.com/2018/07/27/oauth/","path":"2018/07/27/oauth/","title":"oauth"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>oauth | Cherish's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cherish's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#traditional-authentication"><span class="nav-number">1.</span> <span class="nav-text">traditional authentication</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#oauth"><span class="nav-number">2.</span> <span class="nav-text">oauth</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Auth0"><span class="nav-number">3.</span> <span class="nav-text">Auth0</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cherish</p>
+  <div class="site-description" itemprop="description">从心所欲不逾矩</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="Chinese">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/27/oauth/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="oauth | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          oauth
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-27 15:24:55" itemprop="dateCreated datePublished" datetime="2018-07-27T15:24:55+08:00">2018-07-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="traditional-authentication"><a href="#traditional-authentication" class="headerlink" title="traditional authentication"></a>traditional authentication</h1><p>传统认证使用  session:</p>
+<ol>
+<li>client 发送 username、password 给 server</li>
+<li>server 查数据库，检查信息，是否正确。正确就把用户登录信息(即用户状态)写到 session 里（即服务器内存中），并将 sessionId 返回给 client。</li>
+<li>client 在请求 api 时，在 cookie 中传递 sessionId。server 端根据 sessionId 获取用户登录信息，如果已认证，返回正常响应；反之，401</li>
+</ol>
+<p><img src="https://camo.githubusercontent.com/f6ea1099ada7ec855919d6e483d0d903f1cc96ca/68747470733a2f2f636d732d6173736574732e74757473706c75732e636f6d2f75706c6f6164732f75736572732f3438372f706f7374732f32323534332f696d6167652f747261646974696f6e616c2d61757468656e7469636174696f6e2d73797374656d2d706e672e706e67" alt="auth image"></p>
+<p>这种方式有个缺陷：如果做分布式服务部署，那么需要每个服务器都要同步相同的登录信息，这不是一个好的方式。所以一般 rest 微服务都要求的是 stateless，即 server 端不保存任何用户信息，请求中包含所有需要的信息。</p>
+<h1 id="oauth"><a href="#oauth" class="headerlink" title="oauth"></a>oauth</h1><p><a href="https://zh.wikipedia.org/wiki/%E5%BC%80%E6%94%BE%E6%8E%88%E6%9D%83" target="_blank" rel="noopener">oauth</a> 是一个开放标准，允许用户让第三方应用访问该用户在某一网站上存储的私密的资源（如照片，视频，联系人列表），而无需将用户名和<a href="https://zh.wikipedia.org/wiki/%E5%AF%86%E7%A0%81" target="_blank" rel="noopener">密码</a>提供给第三方应用。</p>
+<p>OAuth允许用户提供一个 <a href="https://zh.wikipedia.org/w/index.php?title=%E4%BB%A4%E7%89%8C&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener">令牌</a>，而不是用户名和密码来访问他们存放在特定服务提供者的数据。每一个令牌授权一个特定的网站（例如，视频编辑网站)在特定的时段（例如，接下来的2小时内）内访问特定的资源（例如仅仅是某一相册中的视频）。这样，OAuth让用户可以授权第三方网站访问他们存储在另外服务提供者的某些特定信息，而非所有内容。</p>
+<p> 其令牌可以是 JWT 或其他形式。</p>
+<p><img src="https://docs.oracle.com/cd/E74890_01/books/RestAPI/images/OAuth2leg_V.gif" alt="oauth"></p>
+<p>ref: <a href="https://my.oschina.net/eyes4/blog/639970" target="_blank" rel="noopener">oauth 2.0 的用途</a></p>
+<h1 id="Auth0"><a href="#Auth0" class="headerlink" title="Auth0"></a>Auth0</h1><p><a href="https://auth0.com/" target="_blank" rel="noopener">autho0</a> 实现了<a href="https://auth0.com/docs/protocols" target="_blank" rel="noopener">很多开放标准</a>，包括 oauth。(<a href="https://www.youtube.com/watch?v=QsMK3d3LxYQ" target="_blank" rel="noopener">学习视频</a>)</p>
+<ol>
+<li>要使用 Auth0，首先需要创建一个 App（被称作 client），其中定义了 clientId、domain name、callbackUrl、secret 等。</li>
+<li>前端交互：<ol>
+<li>当访问某个页面时，查看 localstorage，看用户是否登录；</li>
+<li>如果未登录，利用 Auth0 sdk 或 api 登录认证（提供前边 App 中的 clientId、secret 等信息），认证通过将认证信息（token 等）存入 localstorage，并跳转到 callback url</li>
+<li>如果登录，直接访问</li>
+</ol>
+</li>
+<li>后端交互：<ol>
+<li>前端携带 token 访问 API</li>
+<li>server 利用 Auth0 sdk 或 api 验证 token 的有效性；认证通过返回资源，否则 401</li>
+</ol>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/security/" rel="tag"># security</a>
+              <a href="/tags/oauth/" rel="tag"># oauth</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/07/27/asure-storage/" rel="prev" title="asure storage">
+                  <i class="fa fa-chevron-left"></i> asure storage
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/08/10/mybatis-%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" rel="next" title="mybatis 工作原理">
+                  mybatis 工作原理 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cherish</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">269k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:04</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

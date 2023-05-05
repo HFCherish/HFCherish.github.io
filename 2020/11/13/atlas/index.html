@@ -1,16 +1,492 @@
-{% extends '_layout.njk' %}
-{% import '_macro/sidebar.njk' as sidebar_template with context %}
+<!DOCTYPE html>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block class %}post posts-expand{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block content %}
 
-  {{ partial('_macro/post.njk', {post: page}) }}
 
-{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-{% block sidebar %}
-  {{ sidebar_template.render(page.toc.enable) }}
-{% endblock %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Architecture Installinstall steps Access Apache Atlas UI using a browser: http:&#x2F;&#x2F;localhost:21000  You can also access the rest api http:&#x2F;&#x2F;localhost:21000&#x2F;api&#x2F;atlas&#x2F;v2 默认的用户名密码是 (admin, admin) Atlas Fe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="atlas">
+<meta property="og:url" content="http://yoursite.com/2020/11/13/atlas/index.html">
+<meta property="og:site_name" content="Cherish&#39;s Blog">
+<meta property="og:description" content="Architecture Installinstall steps Access Apache Atlas UI using a browser: http:&#x2F;&#x2F;localhost:21000  You can also access the rest api http:&#x2F;&#x2F;localhost:21000&#x2F;api&#x2F;atlas&#x2F;v2 默认的用户名密码是 (admin, admin) Atlas Fe">
+<meta property="og:locale">
+<meta property="og:image" content="http://atlas.apache.org/public/images/twiki/architecture.png">
+<meta property="article:published_time" content="2020-11-13T02:04:33.000Z">
+<meta property="article:modified_time" content="2022-10-22T06:22:52.322Z">
+<meta property="article:author" content="Cherish">
+<meta property="article:tag" content="big data">
+<meta property="article:tag" content="metadata">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://atlas.apache.org/public/images/twiki/architecture.png">
+
+
+<link rel="canonical" href="http://yoursite.com/2020/11/13/atlas/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"Chinese","comments":true,"permalink":"http://yoursite.com/2020/11/13/atlas/","path":"2020/11/13/atlas/","title":"atlas"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>atlas | Cherish's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cherish's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Architecture"><span class="nav-number">1.</span> <span class="nav-text">Architecture</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Install"><span class="nav-number">2.</span> <span class="nav-text">Install</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Atlas-Features"><span class="nav-number">3.</span> <span class="nav-text">Atlas Features</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E5%85%83%E6%A8%A1%E5%9E%8B%EF%BC%8C%E8%A7%84%E8%8C%83%E5%85%83%E6%95%B0%E6%8D%AE"><span class="nav-number">3.1.</span> <span class="nav-text">定义元模型，规范元数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%A6%E6%9D%9F"><span class="nav-number">3.1.1.</span> <span class="nav-text">约束</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E4%BB%A5%E7%BB%B4%E6%8A%A4%E5%85%83%E6%95%B0%E6%8D%AE"><span class="nav-number">3.2.</span> <span class="nav-text">可以维护元数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#import-metadata"><span class="nav-number">3.2.1.</span> <span class="nav-text">import metadata</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%9A%E5%8A%A1%E5%85%83%E6%95%B0%E6%8D%AE"><span class="nav-number">3.3.</span> <span class="nav-text">业务元数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%80%E7%BC%98"><span class="nav-number">3.4.</span> <span class="nav-text">血缘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E4%BB%A5%E7%BB%B4%E6%8A%A4%E6%A0%87%E7%AD%BE"><span class="nav-number">3.5.</span> <span class="nav-text">可以维护标签</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Classification-vs-label"><span class="nav-number">3.5.1.</span> <span class="nav-text">Classification vs label</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E4%BB%A5%E7%BB%B4%E6%8A%A4%E4%BC%81%E4%B8%9A%E6%9C%AF%E8%AF%AD%E8%A1%A8"><span class="nav-number">3.6.</span> <span class="nav-text">可以维护企业术语表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Notifications"><span class="nav-number">3.7.</span> <span class="nav-text">Notifications</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A3%80%E7%B4%A2"><span class="nav-number">3.8.</span> <span class="nav-text">检索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E5%8F%AF%E7%94%A8"><span class="nav-number">3.9.</span> <span class="nav-text">高可用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="nav-number">3.10.</span> <span class="nav-text">访问控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UI"><span class="nav-number">3.11.</span> <span class="nav-text">UI</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%99%90%E5%88%B6"><span class="nav-number">4.</span> <span class="nav-text">限制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E-atlas-%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BB%80%E4%B9%88"><span class="nav-number">5.</span> <span class="nav-text">基于 atlas 我们可以做什么</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cherish</p>
+  <div class="site-description" itemprop="description">从心所欲不逾矩</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="Chinese">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/13/atlas/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="atlas | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          atlas
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-11-13 10:04:33" itemprop="dateCreated datePublished" datetime="2020-11-13T10:04:33+08:00">2020-11-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><p><img src="http://atlas.apache.org/public/images/twiki/architecture.png" alt="img"></p>
+<h1 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h1><p><a href="https://atlas.apache.org/2.0.0/InstallationSteps.html" target="_blank" rel="noopener">install steps</a></p>
+<p>Access Apache Atlas UI using a browser: <a href="http://localhost:21000/" target="_blank" rel="noopener">http://localhost:21000</a> </p>
+<p>You can also access the rest api <code>http://localhost:21000/api/atlas/v2</code></p>
+<p>默认的用户名密码是 (admin, admin)</p>
+<h1 id="Atlas-Features"><a href="#Atlas-Features" class="headerlink" title="Atlas Features"></a>Atlas Features</h1><h2 id="定义元模型，规范元数据"><a href="#定义元模型，规范元数据" class="headerlink" title="定义元模型，规范元数据"></a>定义元模型，规范元数据</h2><p>atlas 可以维护（增删改查） metadata types，支持</p>
+<ul>
+<li>创建多种类型的 metadata types<ul>
+<li>businessmetadatadef：业务元数据的元模型</li>
+<li>classificationdef：标签数据的元模型</li>
+<li>entitydef：一般元数据的元模型</li>
+<li>enumdef</li>
+<li>relationshipdef：关系元数据的元模型</li>
+<li>structdef</li>
+</ul>
+</li>
+<li>元模型支持定义属性约束、索引、唯一性等</li>
+<li>按 id/typename/query 来检索</li>
+</ul>
+<blockquote>
+<p><a href="http://atlas.apache.org/api/v2/resource_TypesREST.html#resource_TypesREST_createAtlasTypeDefs_POST" target="_blank" rel="noopener">相关 API 定义</a></p>
+<p><a href="http://atlas.apache.org/api/v2/json_AtlasTypesDef.html" target="_blank" rel="noopener">typedef request schema object</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># DELETE&#x2F;GET&#x2F;POST&#x2F;PUT</span><br><span class="line">&#x2F;v2&#x2F;types&#x2F;typedef</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h3><ul>
+<li>typename 全局唯一</li>
+</ul>
+<h2 id="可以维护元数据"><a href="#可以维护元数据" class="headerlink" title="可以维护元数据"></a>可以维护元数据</h2><h3 id="import-metadata"><a href="#import-metadata" class="headerlink" title="import metadata"></a>import metadata</h3><p>atlas 提供以下途径将元数据引入系统：</p>
+<ol>
+<li>REST API：atlas 提供 api 可以 bulk saveOrUpdate 某个 type 的元数据</li>
+<li>文件：atlas 可以上传文件，并 saveOrUpdate 文件中所定义的元模型、元数据等</li>
+<li>atlas hook：atlas 通过监听 kafka topic <code>ATLAS_HOOK</code> ，来实时引入数据源中的元数据。目前已提供 Apache Hive/Apache HBase/Apache Storm/Apache Sqoop 的 hook<ol>
+<li>hive hook<ol>
+<li>可以 import hive databases &amp; tables 元数据</li>
+<li>可以监听以下类型的 hive 操作，capture 其中的元数据：<ol>
+<li>create database</li>
+<li>create table/view, create table as select</li>
+<li>load, import, export</li>
+<li>DMLs (insert)</li>
+<li>alter database</li>
+<li>alter table (skewed table information, stored as, protection is not supported)</li>
+<li>alter view</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>sqoop<ol>
+<li>目前仅支持监听 sqoop 的 hiveimport operation 完成后，capture 其中的元数据。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="业务元数据"><a href="#业务元数据" class="headerlink" title="业务元数据"></a>业务元数据</h2><p>atlas 可以:</p>
+<ol>
+<li>定义业务元数据元模型规范业务元数据</li>
+<li>在技术元数据上，添加业务元数据，来实现关联</li>
+<li>支持按业务元数据检索</li>
+</ol>
+<h2 id="血缘"><a href="#血缘" class="headerlink" title="血缘"></a>血缘</h2><p>atlas 可以查询元数据血缘关系。应该是基于关系图实现。</p>
+<p>目前 hive 表可以支撑到 column 级别的血缘分析。</p>
+<h2 id="可以维护标签"><a href="#可以维护标签" class="headerlink" title="可以维护标签"></a>可以维护标签</h2><p>atlas 中的 classification 即标签，可以打在元数据、术语等地方。</p>
+<p>可以基于 classification 检索元数据。</p>
+<p>可以做 classification 的传播：</p>
+<ul>
+<li>基于继承关系链的传播</li>
+<li>基于血缘关系链的传播</li>
+</ul>
+<h3 id="Classification-vs-label"><a href="#Classification-vs-label" class="headerlink" title="Classification vs label"></a>Classification vs label</h3><p>Atlas 中的 classification 和 label 都是标签的概念，label 是轻量级、谁都可以加的简单标签，classification 则有更多的支持。</p>
+<p><a href="https://docs.cloudera.com/runtime/7.2.1/atlas-working-with-classifications/topics/atlas-working-with-classifications.html" target="_blank" rel="noopener">atlas classification vs label</a></p>
+<h2 id="可以维护企业术语表"><a href="#可以维护企业术语表" class="headerlink" title="可以维护企业术语表"></a>可以维护企业术语表</h2><p>atlas 可以维护企业的术语，并将术语与元数据关联，支持按术语检索元数据，通过以下三个概念来实现细粒度的术语管理：</p>
+<ol>
+<li>glossary：术语表，最高级别，所有的术语都必须属于某个术语表</li>
+<li>category：术语分类，必须挂在某个 glossary。可以拥有 childCategories</li>
+<li>term：术语。必须挂在某个 glossary。可以挂在某个 category</li>
+</ol>
+<h2 id="Notifications"><a href="#Notifications" class="headerlink" title="Notifications"></a>Notifications</h2><p>atlas 通过 kafka 实现 hook，引入元数据；也通过 kafka 广播元数据修改，供消费者使用。</p>
+<ul>
+<li><p>notifications to atlas：<code>ATLAS_HOOK</code>. 目前已提供 Apache Hive/Apache HBase/Apache Storm/Apache Sqoop 的 hook，来监听这些数据源的元数据</p>
+</li>
+<li><p>notifications from atlas: <code>ATLAS_ENTITIES</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 监听并发布以下事件的通知</span><br><span class="line">ENTITY_CREATE:         sent when an entity instance is created</span><br><span class="line">ENTITY_UPDATE:         sent when an entity instance is updated</span><br><span class="line">ENTITY_DELETE:         sent when an entity instance is deleted</span><br><span class="line">CLASSIFICATION_ADD:    sent when classifications are added to an entity instance</span><br><span class="line">CLASSIFICATION_UPDATE: sent when classifications of an entity instance are updated</span><br><span class="line">CLASSIFICATION_DELETE: sent when classifications are removed from an entity instance</span><br><span class="line"></span><br><span class="line"># notification data</span><br><span class="line">AtlasEntity  entity;</span><br><span class="line">OperationType operationType;</span><br><span class="line">List&lt;AtlasClassification&gt;  classifications</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="检索"><a href="#检索" class="headerlink" title="检索"></a>检索</h2><p>atlas 所有的元数据存储在图数据库 JanusGraph，而索引数据则存储在 index store（solr / elasticsearch）来做全文检索</p>
+<p>atlas 支持以下检索方式：</p>
+<ol>
+<li>唯一定位元数据：通过 id</li>
+<li>basic 检索：基于 type、attributes、classifciation、terms 等 query parameter 做全文检索</li>
+<li>advance 检索：可以使用 dsl 语言做全文检索</li>
+</ol>
+<h2 id="高可用"><a href="#高可用" class="headerlink" title="高可用"></a>高可用</h2><ol>
+<li>基础设施高可用。<ol>
+<li>atlas 使用 JanusGraph 存储元数据，并将 HBase（默认，可采用其他数据库）作为 backing store。HBase 本身的高可用特性支撑了 metadata store 的高可用</li>
+<li>atlas 使用 solr / elasticsearch 存储元数据索引。这些组件同样支持高可用</li>
+</ol>
+</li>
+<li>Web Service 高可用。<ol>
+<li>目前 atlas 的 web service 同一时间只能有一个 active instance 响应，以实现元数据维护、缓存等的一致性问题。高可用模式即有多个备用（passive）instances，当 active instance down 后，可以自动切换某个 passive instance，作为新的 active instance。</li>
+</ol>
+</li>
+</ol>
+<h2 id="访问控制"><a href="#访问控制" class="headerlink" title="访问控制"></a>访问控制</h2><p>atlas 支持非常细粒度的访问控制：</p>
+<ul>
+<li><p>元模型：基于某个元模型或某类元模型的访问控制。典型 example：</p>
+<blockquote>
+<ul>
+<li>Admin users can create/update/delete types of all categories</li>
+<li>Data stewards can create/update/delete classification types</li>
+<li>Healthcare data stewards can create/update/delete types having names start with “hc”</li>
+</ul>
+</blockquote>
+</li>
+<li><p>元数据：基于元模型、标签、元数据 id 的元数据访问控制。典型 example：</p>
+<blockquote>
+<ul>
+<li>Admin users can perform all entity operations on entities of all types</li>
+<li>Data stewards can perform all entity operations, except delete, on entities of all types</li>
+<li>Data quality admins can add/update/remove DATA_QUALITY classification</li>
+<li>Users in specific groups can read/update entities with PII classification or its sub-classification</li>
+<li>Finance users can read/update entities whose ID start with ‘finance’</li>
+</ul>
+</blockquote>
+</li>
+<li><p>admin 操作：可以控制 user/group 来 import/export entities</p>
+</li>
+</ul>
+<h2 id="UI"><a href="#UI" class="headerlink" title="UI"></a>UI</h2><p>有个 ui 可以管理元数据、标签、术语</p>
+<h1 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h1><ol>
+<li>web service 只有一个 active instance</li>
+<li>Typename 全局唯一</li>
+<li>ui 挺慢的</li>
+</ol>
+<h1 id="基于-atlas-我们可以做什么"><a href="#基于-atlas-我们可以做什么" class="headerlink" title="基于 atlas 我们可以做什么"></a>基于 atlas 我们可以做什么</h1><ol>
+<li>数据集发现<ol>
+<li>数据字典浏览和检索</li>
+</ol>
+</li>
+<li>数据集导入和导出<ol>
+<li>导出数据集，供系统之间交互使用</li>
+<li>导入数据集（数据标准、指标口径等）</li>
+</ol>
+</li>
+<li>标签管理：<ol>
+<li>维护用户画像标签 (增删改查)</li>
+<li>基于标签检索数据集</li>
+</ol>
+</li>
+<li>数据标准维护和浏览：（可以通过术语做？）<ol>
+<li>维护数据标准（增删改查）</li>
+<li>可以为数据标准加标签</li>
+</ol>
+</li>
+<li>指标和口径维护和浏览<ol>
+<li>维护指标口径（增删改查）</li>
+<li>可以为指标口径加标签</li>
+</ol>
+</li>
+<li>数据集 staticstics<ol>
+<li>数据接入和使用情况统计</li>
+</ol>
+</li>
+<li>辅助数据分析师生成分析：<ol>
+<li>通过关联技术元数据和业务元数据，当数据分析师按业务语言定义分析后，可以快速查找相关的表、字段等</li>
+</ol>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/big-data/" rel="tag"># big data</a>
+              <a href="/tags/metadata/" rel="tag"># metadata</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/11/11/import-data-to-hive/" rel="prev" title="数据导入 hive">
+                  <i class="fa fa-chevron-left"></i> 数据导入 hive
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/11/23/ambari-install-offline/" rel="next" title="HDP install (offline using ambari)">
+                  HDP install (offline using ambari) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cherish</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">269k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:04</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

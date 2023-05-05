@@ -1,20 +1,1411 @@
-{% extends '_layout.njk' %}
-{% import '_macro/sidebar.njk' as sidebar_template with context %}
+<!DOCTYPE html>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
 
-{% block title %}{{ title }}{% if theme.index_with_subtitle and subtitle %} - {{ subtitle }}{% endif %}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block class %}index posts-expand{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block content %}
 
-  {%- for post in page.posts.toArray() %}
-    {{ partial('_macro/post.njk', {post: post, is_index: true}) }}
-  {%- endfor %}
 
-  {%- include '_partials/pagination.njk' -%}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-{% endblock %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-{% block sidebar %}
-  {{ sidebar_template.render(false) }}
-{% endblock %}
+    <meta name="description" content="从心所欲不逾矩">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cherish&#39;s Blog">
+<meta property="og:url" content="http://yoursite.com/page/5/index.html">
+<meta property="og:site_name" content="Cherish&#39;s Blog">
+<meta property="og:description" content="从心所欲不逾矩">
+<meta property="og:locale">
+<meta property="article:author" content="Cherish">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yoursite.com/page/5/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"Chinese","comments":"","permalink":"","path":"page/5/index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Cherish's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Cherish's Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cherish</p>
+  <div class="site-description" itemprop="description">从心所欲不逾矩</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/03/python-subprocess/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/09/03/python-subprocess/" class="post-title-link" itemprop="url">python subprocess</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-09-03 14:06:24" itemprop="dateCreated datePublished" datetime="2018-09-03T14:06:24+08:00">2018-09-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-27 17:08:25" itemprop="dateModified" datetime="2022-10-27T17:08:25+08:00">2022-10-27</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Synchronous vs multiprocessing vs multithreading vs async</p>
+<p>Concurrency vs Parralism.</p>
+<p>asyncio &amp; threading can run multiple I/O operations at the same time.</p>
+<p>Async runs one block of code at a time while threading just one line of code at a time. With async, we have better control of when the execution is given to other block of code but we have to release the execution ourselves.</p>
+<ul>
+<li><strong>IO bound problems</strong>: use async if your libraries support it and if not, use threading.</li>
+<li><strong>CPU bound problems</strong>: use multi-processing.</li>
+<li><strong>None above is a problem:</strong> you are probably just fine with synchronous code. You may still want to use async to have the feeling of responsiveness in case your code interacts with a user.</li>
+</ul>
+<p>Reference: </p>
+<ul>
+<li><a href="http://www.cnblogs.com/vamei/archive/2012/09/23/2698014.html" target="_blank" rel="noopener">blog: subprocess</a></li>
+</ul>
+<p>subprocess.call()<br>父进程等待子进程完成<br>返回退出信息(returncode，相当于exit code，见<a href="http://www.cnblogs.com/vamei/archive/2012/09/20/2694466.html" target="_blank" rel="noopener">Linux进程基础</a>)</p>
+<p>subprocess.check_call()</p>
+<p>父进程等待子进程完成</p>
+<p>返回0</p>
+<p>检查退出信息，如果returncode不为0，则举出错误subprocess.CalledProcessError，该对象包含有returncode属性，可用try…except…来检查(见<a href="http://www.cnblogs.com/vamei/archive/2012/07/10/2582787.html" target="_blank" rel="noopener">Python错误处理</a>)。</p>
+<p>subprocess.check_output()</p>
+<p>父进程等待子进程完成</p>
+<p>返回子进程向标准输出的输出结果</p>
+<p>检查退出信息，如果returncode不为0，则举出错误subprocess.CalledProcessError，该对象包含有returncode属性和output属性，output属性为标准输出的输出结果，可用try…except…来检查。</p>
+<ul>
+<li><a href="https://docs.python.org/3.7/library/subprocess.html" target="_blank" rel="noopener">official doc: subprocess</a></li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">subprocess.run(args, *, stdin=<span class="literal">None</span>, input=<span class="literal">None</span>, stdout=<span class="literal">None</span>, stderr=<span class="literal">None</span>, capture_output=<span class="literal">False</span>, shell=<span class="literal">False</span>, cwd=<span class="literal">None</span>, timeout=<span class="literal">None</span>, check=<span class="literal">False</span>, encoding=<span class="literal">None</span>, errors=<span class="literal">None</span>, text=<span class="literal">None</span>, env=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://docs.python.org/3.7/library/subprocess.html" target="_blank" rel="noopener">config env in subprojcess</a></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">new_env &#x3D; os.environ.copy()</span><br><span class="line">new_env[&#39;MEGAVARIABLE&#39;] &#x3D; &#39;MEGAVALUE&#39;</span><br><span class="line">subprocess.Popen(&#39;path&#39;, env&#x3D;new_env)</span><br></pre></td></tr></table></figure>
+<p>an example to use subprojcess:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">                subprocess.check_output([<span class="string">'java'</span>,</span><br><span class="line">                                         <span class="string">'-DCOMMAND='</span> + command,</span><br><span class="line">                                         <span class="string">'-DTENANT_ID='</span> + tenant_id,</span><br><span class="line">                                         <span class="string">'-DMODEL_ID='</span> + model_id,</span><br><span class="line">                                         <span class="string">'-jar'</span>, <span class="string">'xxx.jar'</span>,</span><br><span class="line">                                         ])</span><br><span class="line">            <span class="keyword">except</span> subprocess.CalledProcessError <span class="keyword">as</span> e:</span><br><span class="line">                db_util.reopx_solver - <span class="number">1.0</span> - SNAPSHOT - all.jarport_status(tenant_id, model_id=model_id,</span><br><span class="line">                                                                           msg=<span class="string">f'Failed runner for "<span class="subst">&#123;command&#125;</span>"...'</span>)</span><br><span class="line">                logger.exception(<span class="string">'Could not start solver jar: '</span>, e.output)</span><br><span class="line">                <span class="keyword">raise</span> OPXException(<span class="string">f'Could not start runner for "<span class="subst">&#123;command&#125;</span>".'</span>, e.stderr)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>the jar must be in the same directory as parent process dir</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/17/guice/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/08/17/guice/" class="post-title-link" itemprop="url">guice</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-08-17 16:53:25" itemprop="dateCreated datePublished" datetime="2018-08-17T16:53:25+08:00">2018-08-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a href="https://gist.github.com/virasak/3798194" target="_blank" rel="noopener">TEST with GUICE</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/16/gradle-build/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/08/16/gradle-build/" class="post-title-link" itemprop="url">构建</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-08-16 11:26:13" itemprop="dateCreated datePublished" datetime="2018-08-16T11:26:13+08:00">2018-08-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Problems"><a href="#Problems" class="headerlink" title="Problems?"></a>Problems?</h1><ol>
+<li>manifest 是干什么用的？</li>
+<li>代码运行时，如何找到 dependency 的包</li>
+<li>java -jar 时，classpath 指定？</li>
+</ol>
+<h1 id="classpath"><a href="#classpath" class="headerlink" title="classpath"></a>classpath</h1><p>classpath 指定的是 java 类所在的目录（包括当前项目的类、依赖的类等）。应该是当打 jar 包的时候，默认会加上当前目录(.)到 classpath，这样就包含了 jar 内部的类？</p>
+<h1 id="Thin-jar"><a href="#Thin-jar" class="headerlink" title="Thin jar"></a>Thin jar</h1><p><a href="https://github.com/cuzfrog/gradle-lean" target="_blank" rel="noopener">gradle lean</a></p>
+<p>This plugin depends on <code>JavaPlugin</code> and <code>ApplicationPlugin</code>.</p>
+<ul>
+<li>for <code>installDist</code>, jars under <code>install/$PROJECT_NAME$/lib/</code></li>
+<li>for <code>distZip</code>, jars under <code>/lib/</code> inside package</li>
+</ul>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id <span class="string">'java'</span></span><br><span class="line">    <span class="comment">// Apply the application plugin to add support for building a CLI application.</span></span><br><span class="line">    id <span class="string">'application'</span></span><br><span class="line"></span><br><span class="line">    id <span class="string">'scala'</span></span><br><span class="line"></span><br><span class="line">    id <span class="string">'com.github.maiflai.scalatest'</span> version <span class="string">'0.26'</span></span><br><span class="line"></span><br><span class="line">    id <span class="string">"com.github.gradle-lean"</span> version <span class="string">"0.1.2"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="implementation-vs-compile-vs-api"><a href="#implementation-vs-compile-vs-api" class="headerlink" title="implementation vs compile vs api"></a>implementation vs compile vs api</h1><p><a href="https://stackoverflow.com/questions/44493378/whats-the-difference-between-implementation-and-compile-in-gradle" target="_blank" rel="noopener">stackoverflow</a></p>
+<h1 id="Dependency-Conflict"><a href="#Dependency-Conflict" class="headerlink" title="Dependency Conflict"></a>Dependency Conflict</h1><h2 id="force-some-edition"><a href="#force-some-edition" class="headerlink" title="force some edition"></a>force some edition</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">configurations.all &#123;</span><br><span class="line">    resolutionStrategy &#123;</span><br><span class="line">        force <span class="string">'com.fasterxml.jackson.module:jackson-module-scala_2.11:2.10.3'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/14/java-application-using-third-party-lib/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/08/14/java-application-using-third-party-lib/" class="post-title-link" itemprop="url">java.lang.UnsatisfiedLinkError: no xxx in java.library.path</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-08-14 10:07:06" itemprop="dateCreated datePublished" datetime="2018-08-14T10:07:06+08:00">2018-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><ol>
+<li>项目需要引入 local 第三方包</li>
+<li>该第三方包只有 window/linux license，而开发在 macos</li>
+<li>开发时，通过 gradle dependency <code>compile files(&#39;path/to/thejar.jar&#39;)</code> 来引入包</li>
+</ol>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>运行时，报错误 <code>java.lang.UnsatisfiedLinkError: no thejar in java.library.path</code></p>
+<h1 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h1><p>引入 <code>.dll</code> 或 <code>.so</code> 失败造成。</p>
+<h1 id="solution"><a href="#solution" class="headerlink" title="solution"></a>solution</h1><ol>
+<li>把 thejar 加入到 path 中 ————— not work</li>
+<li>加入 path，并 loadLibrary ——————— not work</li>
+<li>should work（配置 .dll 或 .so 路径）：<ol>
+<li>配置 PATH</li>
+<li>或 jar 包启动时，设置 ‘-Djava.library.path’</li>
+</ol>
+</li>
+</ol>
+<p>有关 <code>PATH</code>, <code>-classpath</code>, <code>java.library.path</code> 的区别，再 google。java 在使用这三个 path 时：</p>
+<ol>
+<li><code>PATH</code>：用来寻找 <code>java</code>, <code>javac</code> 等 command 并执行</li>
+<li><code>classpath</code>：jvm 在执行时用来寻找 java class。classpath 一般指向 jar 包的位置，即 jdk 的 lib 目录</li>
+<li><code>java.library.path</code>: 指向非 java 类包的位置，如 .dll, .so 等。在 java <code>System.loadLibrary()</code> 时从这找</li>
+</ol>
+<p><code>java.library.path</code> 的设定可参照 <a href="https://stackoverflow.com/questions/1403788/java-lang-unsatisfiedlinkerror-no-dll-in-java-library-path" target="_blank" rel="noopener">stackoverflow</a></p>
+<ul>
+<li><code>java -jar xxx.jar -Djava.library.path=xxx</code></li>
+<li>Set PATH</li>
+<li>Set programmatically (NOT RECOMMENDED, may cause unpredictable result):</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">System.setProperty(<span class="string">"java.library.path"</span>, path);</span><br><span class="line"><span class="comment">//set sys_paths to null</span></span><br><span class="line">final Field sysPathsField = ClassLoader.class.getDeclaredField("sys_paths");</span><br><span class="line">sysPathsField.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">sysPathsField.set(<span class="keyword">null</span>, <span class="keyword">null</span>);</span><br></pre></td></tr></table></figure>
+<p>linux 下可通过 <code>LD_LIBRARY_PATH</code> 设置 <code>java.library.path</code>。windows 下似乎是通过 <code>PATH</code> 设定（待确定）</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/10/mybatis-%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/08/10/mybatis-%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">mybatis 工作原理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-08-10 09:58:24" itemprop="dateCreated datePublished" datetime="2018-08-10T09:58:24+08:00">2018-08-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="几个核心类"><a href="#几个核心类" class="headerlink" title="几个核心类"></a>几个核心类</h1><p>参见:</p>
+<ul>
+<li><a href="http://www.mybatis.org/mybatis-3/zh/java-api.html" target="_blank" rel="noopener">java api</a></li>
+<li><a href="http://www.mybatis.org/mybatis-3/zh/getting-started.html" target="_blank" rel="noopener">入门 - 介绍核心使用组件和最佳实践</a></li>
+</ul>
+<h2 id="SqlSessionFactory"><a href="#SqlSessionFactory" class="headerlink" title="SqlSessionFactory"></a>SqlSessionFactory</h2><p>mybatis 应用以一个 sqlSessionFactory 实例为核心，即一个应用中有一个<strong>单例</strong> <code>SqlSessionFactory</code>，所以数据库 session 都从这里获得。</p>
+<p><code>SqlSessionFactory</code> 可以通过 <code>SqlSessionFactoryBuilder</code> 获得，builder 负责从 xml 配置或 java configuration 类获得。xml (或相应的 java configuration 类) 配置了 datasource（数据库连接信息）、mappers 等信息</p>
+<h2 id="SqlSessionFactoryBuilder"><a href="#SqlSessionFactoryBuilder" class="headerlink" title="SqlSessionFactoryBuilder"></a>SqlSessionFactoryBuilder</h2><p>它主要就是用来获取 <code>SqlSessionFactory</code>，可以从 xml 或 Java Configuration 类加载配置并构建。提供如下几种方式来获取（参见<a href="http://www.mybatis.org/mybatis-3/zh/java-api.html" target="_blank" rel="noopener">java api</a>）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从 xml 获取，其中配置了 environment，datasource，mappers  </span></span><br><span class="line"><span class="function">SqlSessionFactory <span class="title">build</span><span class="params">(InputStream inputStream)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从 xml 获取，但当 xml 配置了多个 env 中的 datasource 等时，通过 env 指定加载的环境</span></span><br><span class="line"><span class="function">SqlSessionFactory <span class="title">build</span><span class="params">(InputStream inputStream, String environment)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从 xml 获取，但可以指定其中使用到的 properties(详见下文的解释)</span></span><br><span class="line"><span class="function">SqlSessionFactory <span class="title">build</span><span class="params">(InputStream inputStream, Properties properties)</span></span>;</span><br><span class="line">    </span><br><span class="line"><span class="comment">// 从 xml 获取，并指定 env 和使用的 props</span></span><br><span class="line"><span class="function">SqlSessionFactory <span class="title">build</span><span class="params">(InputStream inputStream, String env, Properties props)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从 Java Configuration 获取</span></span><br><span class="line"><span class="function">SqlSessionFactory <span class="title">build</span><span class="params">(Configuration config)</span></span></span><br></pre></td></tr></table></figure>
+<p><code>SqlSessionFactoryBuilder</code> 只是为了创建 <code>SqlSessionFactory</code>，创建完成就可以丢弃 builder 了。所以一般它的生命周期是方法级，是其中的一个局部变量</p>
+<h3 id="使用-xml"><a href="#使用-xml" class="headerlink" title="使用 xml"></a>使用 xml</h3><p><strong>先配置一个 <code>config.xml</code>：</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">configuration</span></span></span><br><span class="line"><span class="meta">  <span class="meta-keyword">PUBLIC</span> <span class="meta-string">"-//mybatis.org//DTD Config 3.0//EN"</span></span></span><br><span class="line"><span class="meta">  <span class="meta-string">"http://mybatis.org/dtd/mybatis-3-config.dtd"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">environments</span> <span class="attr">default</span>=<span class="string">"development"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">environment</span> <span class="attr">id</span>=<span class="string">"development"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">transactionManager</span> <span class="attr">type</span>=<span class="string">"JDBC"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dataSource</span> <span class="attr">type</span>=<span class="string">"POOLED"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driver"</span> <span class="attr">value</span>=<span class="string">"$&#123;driver&#125;"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"$&#123;url&#125;"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"$&#123;username&#125;"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"$&#123;password&#125;"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dataSource</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">environment</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">environments</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">mappers</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mapper</span> <span class="attr">resource</span>=<span class="string">"org/mybatis/example/BlogMapper.xml"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">mappers</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>上边的配置中，<code>environments</code> 配置的是各个环境下的数据库配置。每个环境下，都可以配置 TransactionManager、datasource 等，连接数据库、包括操作数据库的 driver 等信息都是在这里配置的)。</p>
+<p><code>${driver}</code> 这种写法是用的 property。property 可以直接在这个 xml 中配置（使用 <code>&lt;properties&gt;</code> 标签），也是 java 中的 <code>System.getProperties()</code> 中的 property，还可以是在 <code>SqlSessionBuilder</code> 中传递的 <code>props</code> 参数。</p>
+<p><strong>构建 <code>SqlSessionFactory</code>：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String resource = <span class="string">"org/mybatis/example/mybatis-config.xml"</span>;</span><br><span class="line">InputStream inputStream = Resources.getResourceAsStream(resource);</span><br><span class="line">SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(inputStream);</span><br></pre></td></tr></table></figure>
+<h3 id="使用-java-Configuration-类"><a href="#使用-java-Configuration-类" class="headerlink" title="使用 java Configuration 类"></a>使用 java Configuration 类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">DataSource dataSource = BlogDataSourceFactory.getBlogDataSource();</span><br><span class="line">TransactionFactory transactionFactory = <span class="keyword">new</span> JdbcTransactionFactory();</span><br><span class="line">Environment environment = <span class="keyword">new</span> Environment(<span class="string">"development"</span>, transactionFactory, dataSource);</span><br><span class="line">Configuration configuration = <span class="keyword">new</span> Configuration(environment);</span><br><span class="line">configuration.addMapper(BlogMapper<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(configuration);</span><br></pre></td></tr></table></figure>
+<h2 id="SqlSession"><a href="#SqlSession" class="headerlink" title="SqlSession"></a>SqlSession</h2><p><code>SqlSession</code> 是执行 sql 命令的接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SqlSession session = sqlSessionFactory.openSession();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  BlogMapper mapper = session.getMapper(BlogMapper<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">  Blog blog = mapper.selectBlog(<span class="number">101</span>);</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">  session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>SqlSession</code> 可以执行所有的 sql 命令、做事务提交、回滚、获取 Mapper 实例等，非常强大。<code>SqlSession</code> 也是方法作用域级别的，并且必须被正确关闭：</p>
+<blockquote>
+<p>每个线程都应该有它自己的 SqlSession 实例。SqlSession 的实例不是线程安全的，因此是不能被共享的，所以它的最佳的作用域是请求或方法作用域。<strong>绝对不能将 SqlSession 实例的引用放在一个类的静态域，甚至一个类的实例变量也不行。</strong>也绝不能将 SqlSession 实例的引用放在任何类型的管理作用域中，比如 Servlet 架构中的 HttpSession。如果你现在正在使用一种 Web 框架，要考虑 SqlSession 放在一个和 HTTP 请求对象相似的作用域中。换句话说，每次收到的 HTTP 请求，就可以打开一个 SqlSession，返回一个响应，就关闭它。这个关闭操作是很重要的，你应该把这个关闭操作放到 finally 块中以确保每次都能执行关闭。下面的示例就是一个确保 SqlSession 关闭的标准模式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SqlSession session = sqlSessionFactory.openSession();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="comment">// do work</span></span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">  session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="Mapper"><a href="#Mapper" class="headerlink" title="Mapper"></a>Mapper</h2><p><code>Mapper</code> 是资源和数据库实例的映射，提供了相关操作来做转换。可以用两种方式写：xml 或 annotation。</p>
+<p>mapper 实例从 <code>SqlSession</code> 获得，所以生命周期和 SqlSession 相同。</p>
+<h3 id="xml"><a href="#xml" class="headerlink" title="xml"></a>xml</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">mapper</span></span></span><br><span class="line"><span class="meta">  <span class="meta-keyword">PUBLIC</span> <span class="meta-string">"-//mybatis.org//DTD Mapper 3.0//EN"</span></span></span><br><span class="line"><span class="meta">  <span class="meta-string">"http://mybatis.org/dtd/mybatis-3-mapper.dtd"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"org.mybatis.example.BlogMapper"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectBlog"</span> <span class="attr">resultType</span>=<span class="string">"Blog"</span>&gt;</span></span><br><span class="line">    select * from Blog where id = #&#123;id&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>访问：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Blog blog = (Blog) session.selectOne(<span class="string">"org.mybatis.example.BlogMapper.selectBlog"</span>, <span class="number">101</span>);</span><br></pre></td></tr></table></figure>
+<p>当然，我们希望通过 java 接口来调用这些方法，所以可以写相应的 <code>mapper</code> 接口 ，只要保证 <code>namespace</code> 是一致的即可。<code>namespace</code> 是实现接口绑定的方式。mybatis 基于命名空间的命名解析规则如下：</p>
+<blockquote>
+<ul>
+<li>完全限定名（比如“com.mypackage.MyMapper.selectAllThings”）将被直接查找并且找到即用。</li>
+<li>短名称（比如“selectAllThings”）如果全局唯一也可以作为一个单独的引用。如果不唯一，有两个或两个以上的相同名称（比如“com.foo.selectAllThings ”和“com.bar.selectAllThings”），那么使用时就会收到错误报告说短名称是不唯一的，这种情况下就必须使用完全限定名。</li>
+</ul>
+</blockquote>
+<p>一旦绑定了接口，就可以用如下方式访问 mapper 方法了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">BlogMapper mapper = session.getMapper(BlogMapper<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">Blog blog = mapper.selectBlog(<span class="number">101</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="annotation"><a href="#annotation" class="headerlink" title="annotation"></a>annotation</h3><p>也可以不依赖于 xml，直接在 mapper 接口上通过 annotation 定义 sql：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.mybatis.example;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BlogMapper</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Select</span>(<span class="string">"SELECT * FROM blog WHERE id = #&#123;id&#125;"</span>)</span><br><span class="line">  <span class="function">Blog <span class="title">selectBlog</span><span class="params">(<span class="keyword">int</span> id)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>annotation 可能更简洁一些，但是 mybatis 目前还是 xml 更强大。大家可以依据需求自由的在两种方式之间切换，mybatis 会自己检测。</p>
+<blockquote>
+<p>由于 Java 注解的一些限制加之某些 MyBatis 映射的复杂性，XML 映射对于大多数高级映射（比如：嵌套 Join 映射）来说仍然是必须的。有鉴于此，如果存在一个对等的 XML 配置文件的话，MyBatis 会自动查找并加载它（这种情况下， BlogMapper.xml 将会基于类路径和 BlogMapper.class 的类名被加载进来）</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/27/oauth/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/07/27/oauth/" class="post-title-link" itemprop="url">oauth</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-27 15:24:55" itemprop="dateCreated datePublished" datetime="2018-07-27T15:24:55+08:00">2018-07-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="traditional-authentication"><a href="#traditional-authentication" class="headerlink" title="traditional authentication"></a>traditional authentication</h1><p>传统认证使用  session:</p>
+<ol>
+<li>client 发送 username、password 给 server</li>
+<li>server 查数据库，检查信息，是否正确。正确就把用户登录信息(即用户状态)写到 session 里（即服务器内存中），并将 sessionId 返回给 client。</li>
+<li>client 在请求 api 时，在 cookie 中传递 sessionId。server 端根据 sessionId 获取用户登录信息，如果已认证，返回正常响应；反之，401</li>
+</ol>
+<p><img src="https://camo.githubusercontent.com/f6ea1099ada7ec855919d6e483d0d903f1cc96ca/68747470733a2f2f636d732d6173736574732e74757473706c75732e636f6d2f75706c6f6164732f75736572732f3438372f706f7374732f32323534332f696d6167652f747261646974696f6e616c2d61757468656e7469636174696f6e2d73797374656d2d706e672e706e67" alt="auth image"></p>
+<p>这种方式有个缺陷：如果做分布式服务部署，那么需要每个服务器都要同步相同的登录信息，这不是一个好的方式。所以一般 rest 微服务都要求的是 stateless，即 server 端不保存任何用户信息，请求中包含所有需要的信息。</p>
+<h1 id="oauth"><a href="#oauth" class="headerlink" title="oauth"></a>oauth</h1><p><a href="https://zh.wikipedia.org/wiki/%E5%BC%80%E6%94%BE%E6%8E%88%E6%9D%83" target="_blank" rel="noopener">oauth</a> 是一个开放标准，允许用户让第三方应用访问该用户在某一网站上存储的私密的资源（如照片，视频，联系人列表），而无需将用户名和<a href="https://zh.wikipedia.org/wiki/%E5%AF%86%E7%A0%81" target="_blank" rel="noopener">密码</a>提供给第三方应用。</p>
+<p>OAuth允许用户提供一个 <a href="https://zh.wikipedia.org/w/index.php?title=%E4%BB%A4%E7%89%8C&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener">令牌</a>，而不是用户名和密码来访问他们存放在特定服务提供者的数据。每一个令牌授权一个特定的网站（例如，视频编辑网站)在特定的时段（例如，接下来的2小时内）内访问特定的资源（例如仅仅是某一相册中的视频）。这样，OAuth让用户可以授权第三方网站访问他们存储在另外服务提供者的某些特定信息，而非所有内容。</p>
+<p> 其令牌可以是 JWT 或其他形式。</p>
+<p><img src="https://docs.oracle.com/cd/E74890_01/books/RestAPI/images/OAuth2leg_V.gif" alt="oauth"></p>
+<p>ref: <a href="https://my.oschina.net/eyes4/blog/639970" target="_blank" rel="noopener">oauth 2.0 的用途</a></p>
+<h1 id="Auth0"><a href="#Auth0" class="headerlink" title="Auth0"></a>Auth0</h1><p><a href="https://auth0.com/" target="_blank" rel="noopener">autho0</a> 实现了<a href="https://auth0.com/docs/protocols" target="_blank" rel="noopener">很多开放标准</a>，包括 oauth。(<a href="https://www.youtube.com/watch?v=QsMK3d3LxYQ" target="_blank" rel="noopener">学习视频</a>)</p>
+<ol>
+<li>要使用 Auth0，首先需要创建一个 App（被称作 client），其中定义了 clientId、domain name、callbackUrl、secret 等。</li>
+<li>前端交互：<ol>
+<li>当访问某个页面时，查看 localstorage，看用户是否登录；</li>
+<li>如果未登录，利用 Auth0 sdk 或 api 登录认证（提供前边 App 中的 clientId、secret 等信息），认证通过将认证信息（token 等）存入 localstorage，并跳转到 callback url</li>
+<li>如果登录，直接访问</li>
+</ol>
+</li>
+<li>后端交互：<ol>
+<li>前端携带 token 访问 API</li>
+<li>server 利用 Auth0 sdk 或 api 验证 token 的有效性；认证通过返回资源，否则 401</li>
+</ol>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/27/asure-storage/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/07/27/asure-storage/" class="post-title-link" itemprop="url">asure storage</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-27 11:09:53" itemprop="dateCreated datePublished" datetime="2018-07-27T11:09:53+08:00">2018-07-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>asure storage 提供四种存储支持（<a href="https://www.youtube.com/watch?v=y6bIUHtdp6Y" target="_blank" rel="noopener">asure storage overview (youtube)</a>）：</p>
+<ul>
+<li><a href="https://azure.microsoft.com/zh-cn/services/storage/blobs/" target="_blank" rel="noopener">blob</a> (binary large object)：二进制数据存储。有两种：page blog（只能新增/删除/向已有数据附加数据，不能修改数据）；block blog（可以更新）</li>
+<li><a href="https://azure.microsoft.com/zh-cn/services/storage/tables/" target="_blank" rel="noopener">table</a>：存储表格（nosql）</li>
+<li><a href="https://azure.microsoft.com/zh-cn/services/storage/queues/" target="_blank" rel="noopener">queue</a>：有库，有 rest api</li>
+<li><a href="https://azure.microsoft.com/en-us/services/storage/files/" target="_blank" rel="noopener">files</a>：好像主要用在文件共享的时候，就是类似于 windows server 上的文件共享（<a href="https://zh.wikipedia.org/wiki/%E4%BC%BA%E6%9C%8D%E5%99%A8%E8%A8%8A%E6%81%AF%E5%8D%80%E5%A1%8A" target="_blank" rel="noopener">smb(server message block)</a>），实现和使用方式都和 windows server 的文件共享一样。所以需要支持例如按 /servername/filename 等方式来 share 和 使用文件。它是构建于 blob 之上的。</li>
+</ul>
+<h1 id="几个概念"><a href="#几个概念" class="headerlink" title="几个概念"></a>几个概念</h1><h2 id="Storage-Accout"><a href="#Storage-Accout" class="headerlink" title="Storage Accout"></a>Storage Accout</h2><p>storage 的所有存储都必须在一个 storage account 内发生。这有点类似于一个 database。</p>
+<p>安全也是在这里实现：</p>
+<ol>
+<li><strong><em>key</em></strong>：创建 account 时，就会生成俩 key，primary key 就是你用来登录访问数据的 key。不过这种方式对于有 client 时不太方便，因为可能不能 share key</li>
+<li><strong><em>saas token</em></strong>：就是可以登录认证获得 token，然后拿 token 访问数据。</li>
+</ol>
+<h2 id="数据容器-数据"><a href="#数据容器-数据" class="headerlink" title="数据容器 + 数据"></a>数据容器 + 数据</h2><p>在每个 storage account 里，你可以创建上述四种类型的存储容器，去存放数据。</p>
+<ul>
+<li>Blob： 在 storage account 里可以创建 <strong><em>blob container</em></strong>，在 <strong><em>blog container</em></strong> 中存放 <strong><em>blob</em></strong></li>
+<li>table：在 storage account 里创建 <strong><em>table</em></strong>，在 <strong><em>table</em></strong> 中存放 <strong><em>data entity</em></strong></li>
+<li>queue：在 storage account 里创建 <strong><em>queue</em></strong>，在 <strong><em>queue</em></strong> 中存放 <strong><em>message</em></strong></li>
+<li>file：在 storage account 里创建 <strong><em>asure files</em></strong> (类似于 <a href="https://zh.wikipedia.org/wiki/%E4%BC%BA%E6%9C%8D%E5%99%A8%E8%A8%8A%E6%81%AF%E5%8D%80%E5%A1%8A" target="_blank" rel="noopener">smb(server message block)</a>)??? 感觉应该也是先创建一个 files container，再创建一个个的 asure file（即 smb）</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/26/mime-type/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/07/26/mime-type/" class="post-title-link" itemprop="url">mime type</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-26 17:52:01" itemprop="dateCreated datePublished" datetime="2018-07-26T17:52:01+08:00">2018-07-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a href="MIME 类型">MIME 类型</a> 是用一种标准化的方式来表示文档的性质和格式。浏览器一般通过 MIME 类型（而不是文档扩展名）来确定如何处理文档。因此服务器传输数据时，必须设置正确的 MIME 类型。</p>
+<h1 id="通用结构"><a href="#通用结构" class="headerlink" title="通用结构"></a>通用结构</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type&#x2F;subtype</span><br></pre></td></tr></table></figure>
+<ol>
+<li>不允许空格</li>
+<li>大小写不敏感，一般都是小写</li>
+</ol>
+<h1 id="独立类型"><a href="#独立类型" class="headerlink" title="独立类型"></a>独立类型</h1><p>type 可以是独立类型，表示文件的分类，可以是如下值：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>描述</th>
+<th>典型示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>text</code></td>
+<td>表明文件是普通文本，理论上是可读的语言</td>
+<td><code>text/plain</code>, <code>text/html</code>, <code>text/css, text/javascript</code></td>
+</tr>
+<tr>
+<td><code>image</code></td>
+<td>表明是某种图像。不包括视频，但是动态图（比如动态gif）也使用image类型</td>
+<td><code>image/gif</code>, <code>image/png</code>, <code>image/jpeg</code>, <code>image/bmp</code>, <code>image/webp</code></td>
+</tr>
+<tr>
+<td><code>audio</code></td>
+<td>表明是某种音频文件</td>
+<td><code>audio/midi</code>, <code>audio/mpeg, audio/webm, audio/ogg, audio/wav</code></td>
+</tr>
+<tr>
+<td><code>video</code></td>
+<td>表明是某种视频文件</td>
+<td><code>video/webm</code>, <code>video/ogg</code></td>
+</tr>
+<tr>
+<td><code>application</code></td>
+<td>表明是某种二进制数据</td>
+<td><code>application/octet-stream</code>, <code>application/pkcs12</code>, <code>application/vnd.mspowerpoint</code>, <code>application/xhtml+xml</code>, <code>application/xml</code>,  <code>application/pdf,`</code>application/json`</td>
+</tr>
+</tbody>
+</table>
+<p>一般是文本，但是具体类型不确定时，就用 <code>test/plain</code>；是二进制数据，而类型不确定时，用 <code>application/octet-stream</code></p>
+<h2 id="application-octet-stream"><a href="#application-octet-stream" class="headerlink" title="application/octet-stream"></a>application/octet-stream</h2><p>这是应用程序文件的默认值。意思是 <em>未知的应用程序文件 ，</em>浏览器一般不会自动执行或询问执行。浏览器会将它作为附件来处理，附件类型等信息通过HTTP头<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Disposition" target="_blank" rel="noopener"><code>Content-Disposition</code></a> 设置。</p>
+<h1 id="Multipart-类型"><a href="#Multipart-类型" class="headerlink" title="Multipart 类型"></a>Multipart 类型</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">multipart&#x2F;form-data</span><br><span class="line">multipart&#x2F;byteranges</span><br></pre></td></tr></table></figure>
+<p> 顾名思义，这是复合文件的一种表现形式，即传递过来的数据有多重类型。典型的如果表单数据可能有 string、文件、视频、音频等。</p>
+<p>它由边界线（一个由<code>&#39;--&#39;</code>开始的字符串）划分出的不同部分组成。每一部分有自己的实体，以及自己的 HTTP 请求头，<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Disposition" target="_blank" rel="noopener"><code>Content-Disposition</code></a>和 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Type" target="_blank" rel="noopener"><code>Content-Type</code></a> 用于文件上传领域，最常用的 (<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Length" target="_blank" rel="noopener"><code>Content-Length</code></a> 因为边界线作为分隔符而被忽略）。</p>
+<p>例如，如下表单:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"http://localhost:8000/"</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"myTextField"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">name</span>=<span class="string">"myCheckBox"</span>&gt;</span>Check<span class="tag">&lt;/<span class="name">input</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">"myFile"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span>&gt;</span>Send the file<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>请求是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">POST &#x2F; HTTP&#x2F;1.1</span><br><span class="line">Host: localhost:8000</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10.9; rv:50.0) Gecko&#x2F;20100101 Firefox&#x2F;50.0</span><br><span class="line">Accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,*&#x2F;*;q&#x3D;0.8</span><br><span class="line">Accept-Language: en-US,en;q&#x3D;0.5</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Content-Type: multipart&#x2F;form-data; boundary&#x3D;---------------------------8721656041911415653955004498</span><br><span class="line">Content-Length: 465</span><br><span class="line"></span><br><span class="line">-----------------------------8721656041911415653955004498</span><br><span class="line">Content-Disposition: form-data; name&#x3D;&quot;myTextField&quot;</span><br><span class="line"></span><br><span class="line">Test</span><br><span class="line">-----------------------------8721656041911415653955004498</span><br><span class="line">Content-Disposition: form-data; name&#x3D;&quot;myCheckBox&quot;</span><br><span class="line"></span><br><span class="line">on</span><br><span class="line">-----------------------------8721656041911415653955004498</span><br><span class="line">Content-Disposition: form-data; name&#x3D;&quot;myFile&quot;; filename&#x3D;&quot;test.txt&quot;</span><br><span class="line">Content-Type: text&#x2F;plain</span><br><span class="line"></span><br><span class="line">Simple file.</span><br><span class="line">-----------------------------8721656041911415653955004498--</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/26/code-license/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/07/26/code-license/" class="post-title-link" itemprop="url">code license</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-26 09:47:13" itemprop="dateCreated datePublished" datetime="2018-07-26T09:47:13+08:00">2018-07-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>license 是软件的授权许可。</p>
+<p>对于开源软件来说，虽然别人可以用，但是用的时候希望别人遵循一些要求，比如，使用时必须标明原作者是谁、可以做怎样的修改、软件被用作不正规用途原作者是否要负责……这些其实就是一个协议。</p>
+<p>对于作者来说，自己为开源代码写符合法律条规的繁冗的 license 太麻烦，所以就可以采用广为流传的开源协议（eg. MIT, CC…），在 license 文件中标明 “Licnse under the MIT license”</p>
+<h1 id="快速选择"><a href="#快速选择" class="headerlink" title="快速选择"></a>快速选择</h1><p>详细的协议选择可以从 github <a href="https://choosealicense.com/" target="_blank" rel="noopener">choose license</a> 项目中选。下边列些常用的（参见 <a href="https://www.cnblogs.com/Wayou/p/how_to_choose_a_license.html" target="_blank" rel="noopener">如何为你的代码选择一个开源协议</a>）</p>
+<h2 id="MIT-协议"><a href="#MIT-协议" class="headerlink" title="MIT 协议"></a>MIT 协议</h2><p>宽松但覆盖一般要点。此协议允许别人以任何方式使用你的代码同时署名原作者，但原作者不承担代码使用后的风险，当然也没有技术支持的义务。jQuery和Rails就是MIT协议</p>
+<h2 id="apache-协议"><a href="#apache-协议" class="headerlink" title="apache 协议"></a>apache 协议</h2><p>作品涉及到专利，可以考虑这个。也比较宽松，但考虑了专利，简单指明了作品归属者对用户专利上的一些授权（我的理解是软件作品中含有专利，但它授权你可以免费使用）。Apache服务器，SVN还有NuGet等是使用的Apache协议。</p>
+<h2 id="GPL"><a href="#GPL" class="headerlink" title="GPL"></a>GPL</h2><p>对作品的传播和修改有约束的，可以使用这个。GPL（<a href="http://choosealicense.com/licenses/gpl-v2" target="_blank" rel="noopener">V2</a>或<a href="http://choosealicense.com/licenses/gpl-v3" target="_blank" rel="noopener">V3</a>）是一种版本自由的协议（可以参照copy right来理解，后者是版本保留，那copyleft便是版权自由，或者无版权，但无版权不代表你可以不遵守软件中声明的协议）。此协议要求代码分发者或者以此代码为基础开发出来的衍生作品需要以同样的协议来发布。此协议的版本3与版本2相近，只是多3中加了条对于不支持修改后代码运行的硬件的限制（没太明白此句话的内涵）。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/25/java-api-for-excel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/07/25/java-api-for-excel/" class="post-title-link" itemprop="url">java api lib for excel</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-25 10:37:45" itemprop="dateCreated datePublished" datetime="2018-07-25T10:37:45+08:00">2018-07-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="可选-lib"><a href="#可选-lib" class="headerlink" title="可选 lib"></a>可选 lib</h1><ul>
+<li><a href="http://poi.apache.org/components/document/index.html" target="_blank" rel="noopener">apache POI</a>：java 中最大众的 ，支持 <code>xls</code>、<code>xlsx</code>，提供接口来创建、读写 excel文件。</li>
+<li><a href="http://www.openoffice.org/download/sdk/" target="_blank" rel="noopener">apache openOffice uno</a>：</li>
+<li><del><a href="http://www.openoffice.org/download/sdk/" target="_blank" rel="noopener">JExcel app</a></del>：这个功能强大，什么都可以做，但是可能收费，而且仅基于 windows + installed excel</li>
+<li><del><a href="http://jexcelapi.sourceforge.net/" target="_blank" rel="noopener">JExcelAPI</a></del>：轻量更易用，但似乎仅支持 <code>xls</code>，而且不支持复杂的 range、formular 计算操作。</li>
+<li><a href="https://www.teamdev.com/jexcel" target="_blank" rel="noopener">javascript 版本的 JExcel</a></li>
+<li><del><a href="https://www.docx4java.org/trac/docx4j" target="_blank" rel="noopener">docx4j</a></del>：其中 <a href="https://github.com/plutext/docx4j/tree/master/src/samples/xlsx4j/org/xlsx4j/samples" target="_blank" rel="noopener">xlsx4j</a> 是处理 excel 的，不过看起来功能比较简单。</li>
+<li><a href="https://msdn.microsoft.com/zh-cn/vba/vba-excel" target="_blank" rel="noopener">microsoft excel VBA</a>：vba 是微软写的操作 office 软件的语言。所以可以利用这个 vba 写代码……</li>
+</ul>
+<p>ref doc:</p>
+<ul>
+<li><a href="http://www.baeldung.com/java-microsoft-excel" target="_blank" rel="noopener">baeldung example for apache POI &amp; JExcelAPI</a></li>
+<li><a href="https://www.mkyong.com/java/jexcel-api-reading-and-writing-excel-file-in-java/" target="_blank" rel="noopener">Mkyong example for JExcelAPI</a></li>
+</ul>
+<h1 id="核心操作支持"><a href="#核心操作支持" class="headerlink" title="核心操作支持"></a>核心操作支持</h1><table>
+<thead>
+<tr>
+<th>lib</th>
+<th>apache poi</th>
+<th>apache openoffice</th>
+<th>JExcelAPI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>read/create excel file</td>
+<td>✔️</td>
+<td>可以</td>
+<td>✔️</td>
+</tr>
+<tr>
+<td>read/write excel cells</td>
+<td>1. 获取 sheet，遍历 row，遍历 row cells；</td>
+<td>可以</td>
+<td>1. 获取 sheet，可以根据 cell 行列数获取（<code>getCell(rowIndex, columnIndex)</code>）</td>
+</tr>
+<tr>
+<td>compute formula for cells</td>
+<td>可以（用 formular evaluator，参见<a href="https://stackoverflow.com/questions/5937373/using-apache-poi-hssf-how-can-i-refresh-all-formula-cells-at-once" target="_blank" rel="noopener">stackoverflow</a>）</td>
+<td>可以(calculateAll())</td>
+<td>可能可以</td>
+</tr>
+<tr>
+<td>write/read named cells of file</td>
+<td>可以（<code>workBook.getNamedAt(&quot;name&quot;)</code>，参见 <a href="https://stackoverflow.com/questions/33183144/apache-poi-update-cells-in-a-named-range" target="_blank" rel="noopener">stackoverflow</a>, <a href="https://poi.apache.org/components/spreadsheet/quick-guide.html#NamedRanges" target="_blank" rel="noopener">官方文档</a>）</td>
+<td>可以（<code>namedRange</code>)</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>pros</td>
+<td>1. 使用广泛；2. 文档清晰；3. 支持很多复杂需求</td>
+<td>1. 似乎功能比 poi 更简易，也更丰富些；2. 可以同时操作 openoffice 和 microoffice；3. 语言支持多，只要使用相应语言的 binding 就可以</td>
+<td>1. 简单轻量；2. 接口友好</td>
+</tr>
+<tr>
+<td>cons</td>
+<td>接口不是很友好，访问起来比较麻烦</td>
+<td>1. 文档乱七八糟；2. 采用 uno，领域对象不太一致；3. 必须要安装 openoffice</td>
+<td>1. 功能太简单，复杂需求实现不了</td>
+</tr>
+</tbody>
+</table>
+<h1 id="核心操作-example（POI）"><a href="#核心操作-example（POI）" class="headerlink" title="核心操作 example（POI）"></a>核心操作 example（POI）</h1><p><a href="https://poi.apache.org/components/spreadsheet/quick-guide.html#NamedRanges" target="_blank" rel="noopener">quick guide</a></p>
+<p><a href="https://github.com/HFCherish/learning-common/blob/master/common-excel/src/test/java/learning/common/excel/utils/XLSXTest.java" target="_blank" rel="noopener">源代码</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//        load excel</span></span><br><span class="line">XSSFWorkbook workbook = <span class="keyword">new</span> XSSFWorkbook(getFile(<span class="string">"test.xlsx"</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        get sheet by name</span></span><br><span class="line">String sheetName = <span class="string">"Product Mix"</span>;</span><br><span class="line">XSSFSheet sheet = workbook.getSheet(sheetName);</span><br><span class="line">assertThat(sheet.getSheetName(), is(sheetName));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        get cell by coordinate</span></span><br><span class="line">XSSFCell tvsetNumber = getCell(sheet, <span class="string">"D4"</span>);</span><br><span class="line">assertThat(tvsetNumber.getNumericCellValue(), closeTo(<span class="number">100</span>, <span class="number">0.1</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        get formula cell by coordinate</span></span><br><span class="line">XSSFCell total = getCell(sheet, <span class="string">"D13"</span>);</span><br><span class="line">assertThat(total.getNumericCellValue(), closeTo(<span class="number">16000</span>, <span class="number">0.1</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        change cell value</span></span><br><span class="line">tvsetNumber.setCellValue(<span class="number">200</span>);</span><br><span class="line">assertThat(tvsetNumber.getNumericCellValue(), closeTo(<span class="number">200</span>, <span class="number">0.1</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        refresh formulas</span></span><br><span class="line">XSSFFormulaEvaluator.evaluateAllFormulaCells(workbook);</span><br><span class="line">assertThat(total.getNumericCellValue(), closeTo(<span class="number">23500</span>, <span class="number">0.1</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        write back to file</span></span><br><span class="line">workbook.write(<span class="keyword">new</span> FileOutputStream(getFile(<span class="string">"update.xlsx"</span>)));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        check data updated</span></span><br><span class="line">XSSFWorkbook updateWorkBook = <span class="keyword">new</span> XSSFWorkbook(getFile(<span class="string">"update.xlsx"</span>));</span><br><span class="line">assertThat(getCell(updateWorkBook.getSheet(sheetName), <span class="string">"D4"</span>).getNumericCellValue(), closeTo(<span class="number">200</span>, <span class="number">0.1</span>));</span><br><span class="line">assertThat(getCell(updateWorkBook.getSheet(sheetName), <span class="string">"D13"</span>).getNumericCellValue(), closeTo(<span class="number">23500</span>, <span class="number">0.1</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//		  get cell by name</span></span><br><span class="line">XSSFName test_name = workbook.getName(<span class="string">"test_cell_name"</span>);</span><br><span class="line">AreaReference areaReference = <span class="keyword">new</span> AreaReference(test_name.getRefersToFormula(), SpreadsheetVersion.EXCEL2007);</span><br><span class="line"></span><br><span class="line">CellReference firstCell = areaReference.getFirstCell();</span><br><span class="line">XSSFSheet sheet = workbook.getSheet(firstCell.getSheetName());</span><br><span class="line">XSSFRow row = sheet.getRow(firstCell.getRow());</span><br><span class="line">XSSFCell cell = row.getCell(firstCell.getCol());</span><br><span class="line"></span><br><span class="line"><span class="comment">// get cell function</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> XSSFCell <span class="title">getCell</span><span class="params">(XSSFSheet sheet, String cellCoordinate)</span> </span>&#123;</span><br><span class="line">    CellReference d4 = <span class="keyword">new</span> CellReference(cellCoordinate);</span><br><span class="line">    XSSFRow row = sheet.getRow(d4.getRow());</span><br><span class="line">    <span class="keyword">return</span> row.getCell(d4.getCol());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="其他操作（POI）"><a href="#其他操作（POI）" class="headerlink" title="其他操作（POI）"></a>其他操作（POI）</h1><h2 id="copy-sheet"><a href="#copy-sheet" class="headerlink" title="copy sheet"></a>copy sheet</h2><h2 id="xlsm-to-xlsx"><a href="#xlsm-to-xlsx" class="headerlink" title="xlsm to xlsx"></a>xlsm to xlsx</h2>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/6/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cherish</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">269k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:04</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,16 +1,376 @@
-{% extends '_layout.njk' %}
-{% import '_macro/sidebar.njk' as sidebar_template with context %}
+<!DOCTYPE html>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block class %}post posts-expand{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block content %}
 
-  {{ partial('_macro/post.njk', {post: page}) }}
 
-{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-{% block sidebar %}
-  {{ sidebar_template.render(page.toc.enable) }}
-{% endblock %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="ConceptSqoop: sq are the first two of “sql”, oop are the last three of “hadoop”. It transfers bulk data between hdfs and relational database servers. It supports:  Full Load Incremental Load Parallel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sqoop">
+<meta property="og:url" content="http://yoursite.com/2020/11/10/sqoop/index.html">
+<meta property="og:site_name" content="Cherish&#39;s Blog">
+<meta property="og:description" content="ConceptSqoop: sq are the first two of “sql”, oop are the last three of “hadoop”. It transfers bulk data between hdfs and relational database servers. It supports:  Full Load Incremental Load Parallel">
+<meta property="og:locale">
+<meta property="og:image" content="http://yoursite.com/images/sqoop-20201110134912159.png">
+<meta property="og:image" content="http://yoursite.com/images/sqoop-20201110135220097.png">
+<meta property="article:published_time" content="2020-11-10T05:39:30.000Z">
+<meta property="article:modified_time" content="2022-10-22T06:22:52.354Z">
+<meta property="article:author" content="Cherish">
+<meta property="article:tag" content="hadoop">
+<meta property="article:tag" content="big data">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/sqoop-20201110134912159.png">
+
+
+<link rel="canonical" href="http://yoursite.com/2020/11/10/sqoop/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"Chinese","comments":true,"permalink":"http://yoursite.com/2020/11/10/sqoop/","path":"2020/11/10/sqoop/","title":"sqoop"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>sqoop | Cherish's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cherish's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Concept"><span class="nav-number">1.</span> <span class="nav-text">Concept</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Architecture"><span class="nav-number">2.</span> <span class="nav-text">Architecture</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Sqoop-v-s-Spark-jdbc"><span class="nav-number">3.</span> <span class="nav-text">Sqoop v.s. Spark jdbc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Common-Commands"><span class="nav-number">4.</span> <span class="nav-text">Common Commands</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Incremental-Import"><span class="nav-number">5.</span> <span class="nav-text">Incremental Import</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#append-%E6%A8%A1%E5%BC%8F"><span class="nav-number">5.1.</span> <span class="nav-text">append 模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lastmodified-%E6%A8%A1%E5%BC%8F"><span class="nav-number">5.2.</span> <span class="nav-text">lastmodified 模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.3.</span> <span class="nav-text">条件查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%93where"><span class="nav-number">5.3.1.</span> <span class="nav-text">–where</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%93query"><span class="nav-number">5.3.2.</span> <span class="nav-text">–query</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C-sqoop-action"><span class="nav-number">6.</span> <span class="nav-text">运行 sqoop action</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cherish</p>
+  <div class="site-description" itemprop="description">从心所欲不逾矩</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="Chinese">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/10/sqoop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="sqoop | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          sqoop
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-11-10 13:39:30" itemprop="dateCreated datePublished" datetime="2020-11-10T13:39:30+08:00">2020-11-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h1><p>Sqoop: sq are the first two of “sql”, oop are the last three of “hadoop”. It <strong>transfers bulk data between hdfs and relational database servers</strong>. It supports:</p>
+<ul>
+<li>Full Load</li>
+<li>Incremental Load</li>
+<li>Parallel Import/Export (throught mapper jobs)</li>
+<li>Compression</li>
+<li>Kerberos Security Integration</li>
+<li>Data  loading directly to HIVE</li>
+</ul>
+<blockquote>
+<p>Sqoop cannot import .csv files into hdfs/hive. It only support databases / mainframe datasets import.</p>
+</blockquote>
+<h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><p>Sqoop provides CLI, thus you can use a simple command to conduct import/export.</p>
+<p>The import/export are executes in fact through map tasks.</p>
+<p><img src="/images/sqoop-20201110134912159.png" alt="sqoop-20201110134912159.png"></p>
+<p>When Import from DB:</p>
+<ul>
+<li>it split to some map tasks. And each map task will connect to DB, and fetch some rows/tables, and write it to a file into HDFS</li>
+</ul>
+<p>When export to DB:</p>
+<ul>
+<li>it also split to some map tasks. And each map task will fetch a HDFS file, and write each record in the file as a row by specified delimiter to some table.</li>
+</ul>
+<p><img src="/images/sqoop-20201110135220097.png" alt="sqoop-20201110135220097.png"></p>
+<h1 id="Sqoop-v-s-Spark-jdbc"><a href="#Sqoop-v-s-Spark-jdbc" class="headerlink" title="Sqoop v.s. Spark jdbc"></a>Sqoop v.s. Spark jdbc</h1><p>sqoop uses mapreduce technique, while spark is a revolutionary engine to replace mapreduce technique with its in-memory execution and DAG smartness. Thus Spark jdbc is way faster than sqoop.</p>
+<ol>
+<li>You can combine all the read, transform and write operations into one script/program instead of reading it separately through SQOOP in one script and then doing transformation and write in another.</li>
+<li>You can define a new split column on the fly (using functions like ORA_HASH) if you want the data to be partitioned in a proper way.</li>
+<li>You can control the number of connection to the database. Increasing the number of connection will surely speed up your data import.</li>
+</ol>
+<h1 id="Common-Commands"><a href="#Common-Commands" class="headerlink" title="Common Commands"></a>Common Commands</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$  sqoop import \</span><br><span class="line">	--connect jdbc:mysql://&lt;ipaddress&gt;/&lt;database name&gt;</span><br><span class="line">	--table &lt;my_table name&gt;</span><br><span class="line">	--username &lt;username_for_my_sql&gt; --password &lt;password&gt;</span><br><span class="line">  --target-dir &lt;target dir <span class="keyword">in</span> HDFS <span class="built_in">where</span> data needs to be imported&gt;</span><br><span class="line">  </span><br><span class="line">$  sqoop <span class="built_in">export</span> \</span><br><span class="line">	--connect jdbc:mysql://&lt;ipaddress&gt;/&lt;database name&gt;</span><br><span class="line">	--table &lt;my_table name&gt;</span><br><span class="line">	--username &lt;username_for_my_sql&gt; --password &lt;password&gt;</span><br><span class="line">  --<span class="built_in">export</span>-dir &lt;target dir <span class="keyword">in</span> HDFS <span class="built_in">where</span> data needs to be exported&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="Incremental-Import"><a href="#Incremental-Import" class="headerlink" title="Incremental Import"></a>Incremental Import</h1><p>增量导入时，sqoop 需要识别到增量数据，有三种方法：</p>
+<ol>
+<li>根据自增字段识别新数据（append 模式）：可以直接识别新数据并导入到 hive 中</li>
+<li>根据修改时间识别新数据（lastmodified 模式）：要求这个字段会随数据的改变而改变，但是似乎只能导入到 hdfs 中，不能直接导入到 hive 中。导入时，可以通过制定<code>--merge-key id</code> 来按 id 字段进行合并，或者之后通过 <code>sqoop merge</code> 功能单独运行</li>
+<li>根据 where 或 query 识别新数据：可能之后只能通过 <code>sqoop merge</code> 来 merge 数据</li>
+</ol>
+<blockquote>
+<p>目前 <strong>sqoop 导入时不能识别删除数据</strong>，都需要通过其他方式来解决（对比数据，或者数据上有 delete 标识符时，通过 <a href="https://docs.cloudera.com/HDPDocuments/HDP2/HDP-2.6.5/bk_data-access/content/incrementally-updating-hive-table-with-sqoop-and-ext-table.html" target="_blank" rel="noopener">Incrementally Updating a Table</a> 来实现）</p>
+</blockquote>
+<h2 id="append-模式"><a href="#append-模式" class="headerlink" title="append 模式"></a>append 模式</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql://192.168.33.2:3306/doit_mall \</span><br><span class="line">--username root \</span><br><span class="line">--password root \</span><br><span class="line">--table oms_order \</span><br><span class="line">--target-dir  /tmp/query  \</span><br><span class="line">--hive-import \</span><br><span class="line">--hive-table doit12.oms_order \</span><br><span class="line">--as-textfile \</span><br><span class="line">--fields-terminated-by <span class="string">','</span> \</span><br><span class="line">--compress   \</span><br><span class="line">--compression-codec gzip \</span><br><span class="line">--split-by id \</span><br><span class="line">--null-string <span class="string">'\\N'</span> \</span><br><span class="line">--null-non-string <span class="string">'\\N'</span> \</span><br><span class="line">--incremental append \	<span class="comment"># append 模式</span></span><br><span class="line">--check-column id \			<span class="comment"># 自增字段</span></span><br><span class="line">--last-value 22 \				<span class="comment"># 自增字段的 last value</span></span><br><span class="line">-m 2</span><br></pre></td></tr></table></figure>
+<h2 id="lastmodified-模式"><a href="#lastmodified-模式" class="headerlink" title="lastmodified 模式"></a>lastmodified 模式</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql://192.168.33.2:3306/dicts \</span><br><span class="line">--username root \</span><br><span class="line">--password root \</span><br><span class="line">--table doit_stu \</span><br><span class="line">--target-dir  /doit_stu/2020-02-09  \</span><br><span class="line">--as-textfile \</span><br><span class="line">--fields-terminated-by <span class="string">','</span> \</span><br><span class="line">--split-by id \</span><br><span class="line">--null-string <span class="string">'\\N'</span> \</span><br><span class="line">--null-non-string <span class="string">'\\N'</span> \</span><br><span class="line">--incremental lastmodified \		<span class="comment"># lastmodified 模式</span></span><br><span class="line">--check-column update_time \		<span class="comment"># 时间字段</span></span><br><span class="line">--last-value <span class="string">'2020-02-09 23:59:59'</span> \	<span class="comment"># 上一次获取的数据时间</span></span><br><span class="line">--fields-terminated-by <span class="string">','</span> \</span><br><span class="line">--merge-key id \					<span class="comment">#按照id字段进行合并</span></span><br><span class="line">-m 1</span><br></pre></td></tr></table></figure>
+<h2 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h2><p>这里写的都是全量导入 hive。如果要增量，只能先导入到 hdfs，然后再做 merge</p>
+<h3 id="–where"><a href="#–where" class="headerlink" title="–where"></a>–where</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql://192.168.33.2:3306/doit_mall \</span><br><span class="line">--username root \</span><br><span class="line">--password root \</span><br><span class="line">--table oms_order \</span><br><span class="line">--hive-import \</span><br><span class="line">--hive-table doit12.oms_order \</span><br><span class="line">--delete-target-dir \</span><br><span class="line">--as-textfile \</span><br><span class="line">--fields-terminated-by <span class="string">','</span> \</span><br><span class="line">--compress   \</span><br><span class="line">--compression-codec gzip \</span><br><span class="line">--split-by id \</span><br><span class="line">-m 2   \</span><br><span class="line">--null-string <span class="string">'\\N'</span> \</span><br><span class="line">--null-non-string <span class="string">'\\N'</span> \</span><br><span class="line">--<span class="built_in">where</span> <span class="string">"delivery_company is null"</span> \	<span class="comment"># filter condition</span></span><br><span class="line">--hive-overwrite</span><br></pre></td></tr></table></figure>
+<h3 id="–query"><a href="#–query" class="headerlink" title="–query"></a>–query</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql://192.168.33.2:3306/doit_mall \</span><br><span class="line">--username root \</span><br><span class="line">--password root \</span><br><span class="line">--target-dir  /tmp/query  \		<span class="comment"># sqoop 导入数据到 hive，本质就是先将数据导入到 hdfs，然后再去 hive 数据库创建元数据。这里需要手动指定中间临时目标目录（不太清楚为啥）</span></span><br><span class="line">--hive-import \</span><br><span class="line">--hive-table doit12.oms_order \</span><br><span class="line">--delete-target-dir \</span><br><span class="line">--as-textfile \</span><br><span class="line">--fields-terminated-by <span class="string">','</span> \</span><br><span class="line">--compress   \</span><br><span class="line">--compression-codec gzip \</span><br><span class="line">--split-by id \</span><br><span class="line">--null-string <span class="string">'\\N'</span> \</span><br><span class="line">--null-non-string <span class="string">'\\N'</span> \</span><br><span class="line">--hive-overwrite \</span><br><span class="line">--query <span class="string">"select id,member_id,order_sn,total_amount,pay_amount,status from oms_order where status=4 and \$CONDITIONS"</span>  \			<span class="comment"># 查询语句，也支持复杂查询</span></span><br><span class="line">-m 2</span><br></pre></td></tr></table></figure>
+<h1 id="运行-sqoop-action"><a href="#运行-sqoop-action" class="headerlink" title="运行 sqoop action"></a>运行 sqoop action</h1><p>在数据接入时，特别是连接数据库增量导入数据时，这种周期性任务的执行，有很多种方式：</p>
+<ol>
+<li>写一个 long running 脚本，不断执行增量 import</li>
+<li><a href="https://www.cnblogs.com/xing901022/p/6091306.html" target="_blank" rel="noopener">采用 Oozie 等调度工具来运行</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/hadoop/" rel="tag"># hadoop</a>
+              <a href="/tags/big-data/" rel="tag"># big data</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/11/10/MPP/" rel="prev" title="MPP (Massively Parallel Processing)">
+                  <i class="fa fa-chevron-left"></i> MPP (Massively Parallel Processing)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/11/11/import-data-to-hive/" rel="next" title="数据导入 hive">
+                  数据导入 hive <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cherish</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">269k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:04</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

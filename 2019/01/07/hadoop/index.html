@@ -1,16 +1,382 @@
-{% extends '_layout.njk' %}
-{% import '_macro/sidebar.njk' as sidebar_template with context %}
+<!DOCTYPE html>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block class %}post posts-expand{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block content %}
 
-  {{ partial('_macro/post.njk', {post: page}) }}
 
-{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-{% block sidebar %}
-  {{ sidebar_template.render(page.toc.enable) }}
-{% endblock %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Hadoop is a framework of distributed storage &amp; computing.  distributed storage: hadoop use HDFS to save large amount of data in cluster. distributed computing: hadoop use map-reduce framework to c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hadoop">
+<meta property="og:url" content="http://yoursite.com/2019/01/07/hadoop/index.html">
+<meta property="og:site_name" content="Cherish&#39;s Blog">
+<meta property="og:description" content="Hadoop is a framework of distributed storage &amp; computing.  distributed storage: hadoop use HDFS to save large amount of data in cluster. distributed computing: hadoop use map-reduce framework to c">
+<meta property="og:locale">
+<meta property="og:image" content="http://yoursite.com/images/hadoop-20201026164010368.png">
+<meta property="og:image" content="http://yoursite.com/images/hadoop-20201026164402103.png">
+<meta property="og:image" content="http://yoursite.com/images/hadoop-20201026164147039.png">
+<meta property="og:image" content="http://yoursite.com/images/hadoop-20201026164613209.png">
+<meta property="og:image" content="http://yoursite.com/images/hadoop-20201026165814244.png">
+<meta property="og:image" content="http://yoursite.com/images/hadoop-20201026170521244.png">
+<meta property="og:image" content="http://yoursite.com/images/hadoop-20201026171217319.png">
+<meta property="article:published_time" content="2019-01-07T06:46:44.000Z">
+<meta property="article:modified_time" content="2022-10-22T06:22:52.336Z">
+<meta property="article:author" content="Cherish">
+<meta property="article:tag" content="hadoop">
+<meta property="article:tag" content="big data">
+<meta property="article:tag" content="distributed storage">
+<meta property="article:tag" content="distributed computing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/hadoop-20201026164010368.png">
+
+
+<link rel="canonical" href="http://yoursite.com/2019/01/07/hadoop/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"Chinese","comments":true,"permalink":"http://yoursite.com/2019/01/07/hadoop/","path":"2019/01/07/hadoop/","title":"hadoop"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>hadoop | Cherish's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cherish's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Architecture"><span class="nav-number">1.</span> <span class="nav-text">Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cluster-architecture"><span class="nav-number">1.1.</span> <span class="nav-text">cluster architecture</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#request-processing"><span class="nav-number">1.2.</span> <span class="nav-text">request processing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fault-Tolerance"><span class="nav-number">1.3.</span> <span class="nav-text">Fault Tolerance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#High-Availability"><span class="nav-number">1.4.</span> <span class="nav-text">High Availability</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Name-Node-Failure"><span class="nav-number">1.4.1.</span> <span class="nav-text">Name Node Failure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Name-Node-Reboot"><span class="nav-number">1.4.2.</span> <span class="nav-text">Name Node Reboot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#install-hadoop-on-mac"><span class="nav-number">1.4.3.</span> <span class="nav-text">install hadoop on mac</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#start-hadoop-locally"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">start hadoop locally</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cherish</p>
+  <div class="site-description" itemprop="description">从心所欲不逾矩</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="Chinese">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/07/hadoop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="hadoop | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          hadoop
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-07 14:46:44" itemprop="dateCreated datePublished" datetime="2019-01-07T14:46:44+08:00">2019-01-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Hadoop is a framework of distributed storage &amp; computing.</p>
+<ul>
+<li><strong>distributed storage</strong>: hadoop use <strong>HDFS</strong> to save large amount of data in cluster.</li>
+<li><strong>distributed computing</strong>: hadoop use <strong>map-reduce</strong> framework to conduct fast data analysis (query &amp; writing) over data in HDFS.</li>
+<li><strong>resource manager &amp; job schedular</strong>: hadoop use <strong>yarn</strong> to manage/allocate cluster resources (memory, cpu, etc.) and to schedule  and moniter job executing.</li>
+</ul>
+<h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><h2 id="cluster-architecture"><a href="#cluster-architecture" class="headerlink" title="cluster architecture"></a>cluster architecture</h2><p><img src="/images/hadoop-20201026164010368.png" alt="image-20201026164010368"></p>
+<p><img src="/images/hadoop-20201026164402103.png" alt="image-20201026164402103"></p>
+<h2 id="request-processing"><a href="#request-processing" class="headerlink" title="request processing"></a>request processing</h2><p><img src="/images/hadoop-20201026164147039.png" alt="image-20201026164147039"></p>
+<h2 id="Fault-Tolerance"><a href="#Fault-Tolerance" class="headerlink" title="Fault Tolerance"></a>Fault Tolerance</h2><p>Use <strong>rack aware</strong> so that your replicas will be saved into different racks, which can solve the rack failure issue.</p>
+<p>Each data node will send heartbeat and block report to the namenode. Thus when data node fails, the name node knows it and will re-replicated to 3.</p>
+<p><img src="/images/hadoop-20201026164613209.png" alt="image-20201026164613209"></p>
+<h2 id="High-Availability"><a href="#High-Availability" class="headerlink" title="High Availability"></a>High Availability</h2><p><strong>High Availability: Percentage of Uptime of the system</strong>. Fault Tolerance, on the other hand, mainly focus on the data loss / system un-recovered damage tolerance. For example, a name-node failure can be processed by reboot from the aspect of fault-tolerance, while there must be a <strong>quick</strong> working solution from the aspect of high availability.</p>
+<h3 id="Name-Node-Failure"><a href="#Name-Node-Failure" class="headerlink" title="Name Node Failure"></a>Name Node Failure</h3><p>For a name node failure, we want to switch to a standby name node with all the informations quickly. How?</p>
+<p>A name node saves the file namespaces in memory, besides, it also saved editlog for each change into the disk. A name node failure will lose the in-memory fsImage, but we can reproduce the fsImage from the editlogs</p>
+<p><img src="/images/hadoop-20201026165814244.png" alt="y"></p>
+<p>A common solution is to use QJM to save the editlogs. And the standby name node will read from the editlogs to rebuild the fsImage. Besides, there’s  two failover controllers on each name node and a zookeeper. ZooKeeper keeps a lock, and both name nodes are requesting the lock. When the active name node fails, it lost the lock, and the standby nn will acquire the lock.</p>
+<p><img src="/images/hadoop-20201026170521244.png" alt="image-20201026170521244"></p>
+<h3 id="Name-Node-Reboot"><a href="#Name-Node-Reboot" class="headerlink" title="Name Node Reboot"></a>Name Node Reboot</h3><p>What if you just want to reboot the name node, and since the fsImage is in memory, it will be gone at once and it takes a long time to rebuild from the editlogs?</p>
+<p>The main issue here is that the fsImage is in memory. Thus to reboot quickly, we need to save the fsImage into disk. The secondary name node is for this. It periodically merge the old fsImage with the editlogs, and replace the old fsImage in the disk, and then truncate the logs.</p>
+<p>Secondary Name Node is not necessary. If needed, you can build it on the standby nn.</p>
+<p><img src="/images/hadoop-20201026171217319.png" alt="image-20201026171217319"></p>
+<h3 id="install-hadoop-on-mac"><a href="#install-hadoop-on-mac" class="headerlink" title="install hadoop on mac"></a><a href="http://www.cnblogs.com/micrari/p/5716851.html" target="_blank" rel="noopener">install hadoop on mac</a></h3><p>see <a href="http://kontext.tech/docs/DataAndBusinessIntelligence/p/default-ports-used-by-hadoop-services-hdfs-mapreduce-yarn" target="_blank" rel="noopener">default ports used by hadoop services 3.1.0</a></p>
+<blockquote>
+<p>when config password-free login by ssh, it may only work when generate key into id_rsa/id_dsa. The other user defind key file name won’t work.</p>
+</blockquote>
+<ul>
+<li><strong>access hdfs</strong></li>
+</ul>
+<p><a href="https://ambari.apache.org/1.2.3/installing-hadoop-using-ambari/content/reference_chap2_1.html" target="_blank" rel="noopener">hdfs default ports</a> are changed. see <a href="https://issues.apache.org/jira/browse/HDFS-9427" target="_blank" rel="noopener">hdfs issue</a>, or check the <code>dfs.namenode.http-address</code> property in <a href="https://hadoop.apache.org/docs/r3.2.0/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml" target="_blank" rel="noopener">hdfs-default.xml</a> for the newest setting.</p>
+<blockquote>
+<p>Namenode ports: 50470 –&gt; 9871, 50070 –&gt; 9870, 8020 –&gt; 9820<br>Secondary NN ports: 50091 –&gt; 9869, 50090 –&gt; 9868<br>Datanode ports: 50020 –&gt; 9867, 50010 –&gt; 9866, 50475 –&gt; 9865, 50075 – &gt;9864</p>
+</blockquote>
+<p>When running the example, it seems that jar can only search files. Thus you need to ensure there’s no sub-dirs in search dir.</p>
+<ul>
+<li><strong>access yarn</strong></li>
+</ul>
+<p>Access resource manager through <code>localhost:8088</code>. Or check the property <code>yarn.resourcemanager.webapp.address</code> in  <a href="https://hadoop.apache.org/docs/r3.2.0/hadoop-yarn/hadoop-yarn-common/yarn-default.xml" target="_blank" rel="noopener">yarn-default.xml</a> for the newest configuration</p>
+<h4 id="start-hadoop-locally"><a href="#start-hadoop-locally" class="headerlink" title="start hadoop locally"></a>start hadoop locally</h4><p><a href="https://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html" target="_blank" rel="noopener">map reduce</a> is a framework to write applications which process vast amounts of data in-parallel on large clusters. </p>
+<p>A map-reduce job usually splits the input data into independent chunks, and <strong>map</strong> in a parallel manner. Then the frameworks sorts the output and then <strong>reduce</strong> to the integrate output.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># initialize the namenode</span></span><br><span class="line">$ hdfs namenode -format</span><br><span class="line"><span class="comment"># start namenode and datanode daemon (access namenode at localhost:9870)</span></span><br><span class="line">$ start-dfs.sh</span><br><span class="line"><span class="comment"># start ResourceManager &amp; NodeManager daemon (access yarn at localhost:8088)</span></span><br><span class="line">$ start-yarn.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># stop namenode and datanode daemon</span></span><br><span class="line">$ stop-dfs.sh</span><br><span class="line"><span class="comment"># stop ResourceManager &amp; NodeManager daemon</span></span><br><span class="line">$ stop-yarn.sh</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Note:</p>
+<p>The <code>hdfs namenode -format</code> command must be executed everytime you restarted your computer. And it’s initialized again. Need to figure out other ways to avoid this.</p>
+</blockquote>
+<p>There are other commands used to start these daemon:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># deprecated to use the above</span></span><br><span class="line">$ start-all.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># used on specific node (eg. when a new node is added into the cluster, execute on that node)</span></span><br><span class="line">$ hadoop-daemon.sh start datanode/namenode</span><br><span class="line">$ yarn-daemon.sh start resourcemanager</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/hadoop/" rel="tag"># hadoop</a>
+              <a href="/tags/big-data/" rel="tag"># big data</a>
+              <a href="/tags/distributed-storage/" rel="tag"># distributed storage</a>
+              <a href="/tags/distributed-computing/" rel="tag"># distributed computing</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/01/07/hdfs/" rel="prev" title="hdfs">
+                  <i class="fa fa-chevron-left"></i> hdfs
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/01/09/yarn/" rel="next" title="yarn">
+                  yarn <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cherish</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">269k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:04</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,16 +1,413 @@
-{% extends '_layout.njk' %}
-{% import '_macro/sidebar.njk' as sidebar_template with context %}
+<!DOCTYPE html>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block class %}post posts-expand{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block content %}
 
-  {{ partial('_macro/post.njk', {post: page}) }}
 
-{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-{% block sidebar %}
-  {{ sidebar_template.render(page.toc.enable) }}
-{% endblock %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="ftp .csv 文件导入可以先将文件弄到 HDFS，然后创建&#x2F;更新 hive 表来关联到 HDFS 文件。 将文件弄到 HDFS有以下一些方法：  ftp -&gt; local -&gt; hdfs: 将文件先下载到本地，再通过 hdfs 命令拷贝到 hdfs 中 ftp -&gt; hdfs: 直接连接 FTP，将文件拷到 hdfs 中，省却本地拷贝 已有的数据采集工具：使用实时数据流处理系">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据导入 hive">
+<meta property="og:url" content="http://yoursite.com/2020/11/11/import-data-to-hive/index.html">
+<meta property="og:site_name" content="Cherish&#39;s Blog">
+<meta property="og:description" content="ftp .csv 文件导入可以先将文件弄到 HDFS，然后创建&#x2F;更新 hive 表来关联到 HDFS 文件。 将文件弄到 HDFS有以下一些方法：  ftp -&gt; local -&gt; hdfs: 将文件先下载到本地，再通过 hdfs 命令拷贝到 hdfs 中 ftp -&gt; hdfs: 直接连接 FTP，将文件拷到 hdfs 中，省却本地拷贝 已有的数据采集工具：使用实时数据流处理系">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-11-11T03:58:27.000Z">
+<meta property="article:modified_time" content="2022-10-22T06:22:52.337Z">
+<meta property="article:author" content="Cherish">
+<meta property="article:tag" content="hadoop">
+<meta property="article:tag" content="big data">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yoursite.com/2020/11/11/import-data-to-hive/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"Chinese","comments":true,"permalink":"http://yoursite.com/2020/11/11/import-data-to-hive/","path":"2020/11/11/import-data-to-hive/","title":"数据导入 hive"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>数据导入 hive | Cherish's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cherish's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ftp-csv-%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5"><span class="nav-number">1.</span> <span class="nav-text">ftp .csv 文件导入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81ftp-gt-local-gt-hdfs"><span class="nav-number">1.1.</span> <span class="nav-text">一、ftp -&gt; local -&gt;hdfs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81ftp-gt-hdfs"><span class="nav-number">1.2.</span> <span class="nav-text">二、ftp -&gt; hdfs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%B7%B2%E6%9C%89%E7%9A%84%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86%E5%B7%A5%E5%85%B7"><span class="nav-number">1.3.</span> <span class="nav-text">三、已有的数据采集工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5"><span class="nav-number">1.3.1.</span> <span class="nav-text">文件导入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%95%B0%E6%8D%AE%E6%BA%90%EF%BC%88%E9%9D%9E-FTP-%E6%96%87%E4%BB%B6%EF%BC%89"><span class="nav-number">1.3.2.</span> <span class="nav-text">其他数据源（非 FTP 文件）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5%E9%9C%80%E8%A6%81%E5%85%B3%E6%B3%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">数据导入需要关注的问题</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cherish</p>
+  <div class="site-description" itemprop="description">从心所欲不逾矩</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="Chinese">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/11/import-data-to-hive/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="数据导入 hive | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据导入 hive
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-11-11 11:58:27" itemprop="dateCreated datePublished" datetime="2020-11-11T11:58:27+08:00">2020-11-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="ftp-csv-文件导入"><a href="#ftp-csv-文件导入" class="headerlink" title="ftp .csv 文件导入"></a>ftp .csv 文件导入</h1><p>可以先将文件弄到 HDFS，然后创建/更新 hive 表来关联到 HDFS 文件。</p>
+<p>将文件弄到 HDFS有以下一些方法：</p>
+<ol>
+<li><strong>ftp -&gt; local -&gt; hdfs:</strong> 将文件先下载到本地，再通过 hdfs 命令拷贝到 hdfs 中</li>
+<li><strong>ftp -&gt; hdfs</strong>: 直接连接 FTP，将文件拷到 hdfs 中，省却本地拷贝</li>
+<li><strong>已有的数据采集工具</strong>：使用实时数据流处理系统，来实现不同系统之间的流通</li>
+</ol>
+<h2 id="一、ftp-gt-local-gt-hdfs"><a href="#一、ftp-gt-local-gt-hdfs" class="headerlink" title="一、ftp -&gt; local -&gt;hdfs"></a>一、ftp -&gt; local -&gt;hdfs</h2><p>几种方案：</p>
+<ol>
+<li><p><code>hadoop fs -get ftp://uid:password@server_url/file_path temp_file | hadoop fs -moveFromLocal tmp_file hadoop_path/dest_file</code> </p>
+</li>
+<li><p>参照<a href="https://community.cloudera.com/t5/Support-Questions/How-read-ftp-server-files-and-load-into-hdfs-in-incremental/m-p/223519/highlight/true#M185384" target="_blank" rel="noopener">这个实现</a>用 python 包从 ftp 中读，然后用 hdfs 命令写到 hdfs</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> urllib.request <span class="keyword">import</span> urlopen</span><br><span class="line"><span class="keyword">from</span> hdfs <span class="keyword">import</span> InsecureClient</span><br><span class="line"></span><br><span class="line"><span class="comment"># You can also use KerberosClient or custom client</span></span><br><span class="line">namenode_address = <span class="string">'your namenode address'</span></span><br><span class="line">webhdfs_port = <span class="string">'your webhdfs port'</span> <span class="comment"># default for Hadoop 2: 50070, Hadoop 3: 9870</span></span><br><span class="line">user = <span class="string">'your user name'</span></span><br><span class="line">client = InsecureClient(<span class="string">'http://'</span> + namenode_address + <span class="string">':'</span> + webhdfs_port, user=user)</span><br><span class="line"></span><br><span class="line">ftp_address = <span class="string">'your ftp address'</span></span><br><span class="line">hdfs_path = <span class="string">'where you want to write'</span></span><br><span class="line"><span class="keyword">with</span> urlopen(ftp_address) <span class="keyword">as</span> response:</span><br><span class="line">    content = response.read()</span><br><span class="line">    <span class="comment"># You can also use append=True</span></span><br><span class="line">    <span class="comment"># Further reference: https://hdfscli.readthedocs.io/en/latest/api.html#hdfs.client.Client.write</span></span><br><span class="line">    <span class="keyword">with</span> client.write(hdfs_path) <span class="keyword">as</span> writer:</span><br><span class="line">        writer.write(content</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>参考 <a href="https://blog.csdn.net/yiluohan0307/article/details/79364525" target="_blank" rel="noopener">ftp 提取文件到 hdfs</a></p>
+</li>
+</ol>
+<h2 id="二、ftp-gt-hdfs"><a href="#二、ftp-gt-hdfs" class="headerlink" title="二、ftp -&gt; hdfs"></a>二、ftp -&gt; hdfs</h2><p>几种方案：(参考 <a href="https://blog.csdn.net/yiluohan0307/article/details/79364525" target="_blank" rel="noopener">ftp 提取文件到 hdfs</a>)</p>
+<ol>
+<li><p>用 <a href="http://hadoop101.blogspot.com/?view=classic" target="_blank" rel="noopener">FTP To HDFS</a> 连接 ftp，把文件直接放到 hdfs</p>
+</li>
+<li><p>HDFS dfs -cp: 简单快速，但不显示进度，适用于小文件</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hdfs dfs –cp [ftp://username:password@hostname/ftp_path] [hdfs:///hdfs_path]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Hadoop distcp: 分布式提取，快，能显示拷贝进度，不支持流式写入（即拷贝的文件不能有其他程序在写入），适合大量文件或大文件的拷贝</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hadoop distcp [ftp://username:password@hostname/ftp_path] [hdfs:///hdfs_path]</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="三、已有的数据采集工具"><a href="#三、已有的数据采集工具" class="headerlink" title="三、已有的数据采集工具"></a>三、已有的数据采集工具</h2><h3 id="文件导入"><a href="#文件导入" class="headerlink" title="文件导入"></a>文件导入</h3><ol>
+<li><p><a href="https://nifichina.github.io/general/GettingStarted.html#%E6%9C%89%E5%93%AA%E4%BA%9B%E7%B1%BB%E5%88%AB%E7%9A%84%E5%A4%84%E7%90%86%E5%99%A8" target="_blank" rel="noopener">apache NiFi</a> 来实现不同系统之间的流通，似乎拷贝完，会直接删除 ftp 上的文件</p>
+</li>
+<li><p>Apache Flume是一个分布式、可靠、高可用的日志收集系统，支持各种各样的数据来源。基于流式数据，适用于日志和事件类型的数据收集，重构后的Flume-NG版本中一个agent（数据传输流程）中的source（源）和sink（目标）之间通过channel进行链接，同一个源可以配置多个channel。多个agent还可以进行链接组合共同完成数据收集任务，使用起来非常灵活。</p>
+<p><a href="https://blog.csdn.net/qq_39160721/article/details/80255588" target="_blank" rel="noopener">flume 采集 ftp 文件 上传到 hadoop</a> 使用 <a href="https://flume.apache.org/releases/content/1.9.0/FlumeUserGuide.html#spooling-directory-source" target="_blank" rel="noopener">spooldir source</a>（不确定是不是能用）, 也可以使用第三方 source 组件 <a href="https://github.com/keedio/flume-ftp-source" target="_blank" rel="noopener">flume-ftp-source</a></p>
+<blockquote>
+<p>Flume 也支持 sql source 的流式导入（使用 <a href="https://github.com/keedio/flume-ng-sql-source" target="_blank" rel="noopener">flume-ng-sql-source</a> 插件），并提供对数据进行简单处理，并写到各数据接收方的能力。因此它的实时性更好。</p>
+</blockquote>
+</li>
+<li><p>DataX：阿里的开源框架，本身社区不太活跃，但有很多 fork 再改的，似乎架构不错</p>
+</li>
+<li><p>Gobllin: Gobblin是用来整合各种数据源的通用型ETL框架，Gobblin的接口封装和概念抽象做的很好，作为一个ETL框架使用者，我们只需要实现我们自己的Source，Extractor，Conventer类，再加上一些数据源和目的地址之类的配置文件提交给Gobblin就行了。Gobblin相对于其他解决方案具有普遍性、高度可扩展性、可操作性。</p>
+</li>
+<li><p>kettle：一款开源的ETL工具</p>
+</li>
+</ol>
+<h3 id="其他数据源（非-FTP-文件）"><a href="#其他数据源（非-FTP-文件）" class="headerlink" title="其他数据源（非 FTP 文件）"></a>其他数据源（非 FTP 文件）</h3><ol>
+<li>Apache Sqoop：RDBMS <--> HDFS</li>
+<li>Aegisthus：针对 Cassandra 数据源</li>
+<li>mongo-hadoop：针对 mongodb 数据源</li>
+</ol>
+<h1 id="数据导入需要关注的问题"><a href="#数据导入需要关注的问题" class="headerlink" title="数据导入需要关注的问题"></a>数据导入需要关注的问题</h1><ol>
+<li><strong>数据源都有哪些？</strong><ol>
+<li>结构化（sql）、半结构化（json, xml…)、非结构化（video、image、file…)</li>
+<li>日志数据（csv)、业务数据</li>
+</ol>
+</li>
+<li><strong>是否可以直接连接数据库？</strong><ol>
+<li>针对关系型数据，如果可连接数据库，可以通过 sqoop 导入数据到 hive<ol>
+<li>增量式导入？？</li>
+</ol>
+</li>
+<li>针对关系型数据，如果不能连接数据库：<ol>
+<li><strong>是否可以默认周期性导出符合特定标准的 .csv 文件？</strong><ol>
+<li>如果数据库导出 dump 文件，再将 dump 文件导入到 hadoop，则比较麻烦，以 oracle 为例，可能需要使用 COPYToBDA 来创建 hive table <a href="https://weidongzhou.wordpress.com/2016/11/12/data-query-between-bda-and-exadata-part-4-query-oracle-dump-file-on-bda-using-copy2bda/" target="_blank" rel="noopener">Query Oracle Dump File on BDA Using Copy2BDA</a> ，或者将 dump 文件先导入到一个 temp oracle 数据库中，再用 sqoop 导入到 hive</li>
+<li>如果数据库周期性导出 .csv 文件，将这些 .csv 文件使用上述工具（flume 等）导入到 hive，需要关注增量式导出和导入<ol>
+<li>增量式导出：文件的组织结构、命名规范 ，.csv 内 record 要求包含 modified date, delete date（在增量式导入时，需要基于这些时间来合并表）</li>
+<li>增量式导入：将新增的 .csv 文件作为 hive external table，然后通过中间 view 来合并基表和incremental 表，并更新基表、清空 incremental 表。<a href="https://docs.cloudera.com/HDPDocuments/HDP2/HDP-2.6.5/bk_data-access/content/incrementally-updating-hive-table-with-sqoop-and-ext-table.html" target="_blank" rel="noopener">Incrementally Updating a Table</a></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>导入周期和实时性需求<ol>
+<li><strong>哪些需要每天批量导入、哪些需要流式实时导入</strong></li>
+<li><strong>哪些需要全量导入、哪些需要增量式导入？</strong></li>
+</ol>
+</li>
+<li><strong>如何实现增量式导入？删除的数据是否有删除标识（软删除）？</strong><ol>
+<li>如果用 sqoop，参考 <a href="https://hfcherish.github.io/2020/11/10/sqoop/" target="_blank" rel="noopener">sqoop 增量导入</a>，不支持对删除数据的处理</li>
+<li>如果用 flume<ol>
+<li>如果是 sql source，使用 <a href="https://github.com/keedio/flume-ng-sql-source" target="_blank" rel="noopener">flume-ng-sql-source</a>, 对于 mysql 可以通过 query <code>agent.sources.sqlSource.custom.query</code> 来获取增量 source</li>
+<li>如果是文件导入，则需要通过 <a href="https://docs.cloudera.com/HDPDocuments/HDP2/HDP-2.6.5/bk_data-access/content/incrementally-updating-hive-table-with-sqoop-and-ext-table.html" target="_blank" rel="noopener">Incrementally Updating a Table</a> 来合并表</li>
+</ol>
+</li>
+<li>Spark SQL</li>
+</ol>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/hadoop/" rel="tag"># hadoop</a>
+              <a href="/tags/big-data/" rel="tag"># big data</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/11/10/sqoop/" rel="prev" title="sqoop">
+                  <i class="fa fa-chevron-left"></i> sqoop
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/11/13/atlas/" rel="next" title="atlas">
+                  atlas <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cherish</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">269k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:04</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

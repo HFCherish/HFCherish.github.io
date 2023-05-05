@@ -1,20 +1,644 @@
-{% extends '_layout.njk' %}
-{% import '_macro/sidebar.njk' as sidebar_template with context %}
+<!DOCTYPE html>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
 
-{% block title %}{{ title }}{% if theme.index_with_subtitle and subtitle %} - {{ subtitle }}{% endif %}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block class %}index posts-expand{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block content %}
 
-  {%- for post in page.posts.toArray() %}
-    {{ partial('_macro/post.njk', {post: post, is_index: true}) }}
-  {%- endfor %}
 
-  {%- include '_partials/pagination.njk' -%}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-{% endblock %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-{% block sidebar %}
-  {{ sidebar_template.render(false) }}
-{% endblock %}
+    <meta name="description" content="从心所欲不逾矩">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cherish&#39;s Blog">
+<meta property="og:url" content="http://yoursite.com/page/7/index.html">
+<meta property="og:site_name" content="Cherish&#39;s Blog">
+<meta property="og:description" content="从心所欲不逾矩">
+<meta property="og:locale">
+<meta property="article:author" content="Cherish">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yoursite.com/page/7/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"Chinese","comments":"","permalink":"","path":"page/7/index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Cherish's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Cherish's Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cherish</p>
+  <div class="site-description" itemprop="description">从心所欲不逾矩</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/31/javascript-destructuring-assignment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/05/31/javascript-destructuring-assignment/" class="post-title-link" itemprop="url">javascript 解构语法</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-05-31 11:24:20" itemprop="dateCreated datePublished" datetime="2018-05-31T11:24:20+08:00">2018-05-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>具体可参见 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment" target="_blank" rel="noopener">mdn javascript 解构语法</a>. 这里简单总结一下。</p>
+<h1 id="解构是做什么的"><a href="#解构是做什么的" class="headerlink" title="解构是做什么的"></a>解构是做什么的</h1><p>解构就是一种方便变量赋值的语法，由编译器完成真正的变量赋值</p>
+<h1 id="数组解构"><a href="#数组解构" class="headerlink" title="数组解构"></a>数组解构</h1><ul>
+<li><strong>将数组元素赋值给变量</strong></li>
+<li><strong>赋值依据是元素顺序</strong></li>
+<li>指定变量名时，可以提供默认值，以避免 <code>undefined</code> 赋值</li>
+<li>支持忽略一些元素（添加 <code>,</code> ，但不提供变量名）</li>
+<li>支持     <code>rest</code> 数组赋值</li>
+</ul>
+<p>eg.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基本赋值</span></span><br><span class="line"><span class="keyword">var</span> a, b, rest;</span><br><span class="line">[a, b] = [<span class="number">10</span>, <span class="number">20</span>];</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 10</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 20</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认值</span></span><br><span class="line"><span class="keyword">var</span> a, b;</span><br><span class="line"></span><br><span class="line">[a=<span class="number">5</span>, b=<span class="number">7</span>] = [<span class="number">1</span>];</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 7</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 忽略某些元素</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> [a, , b] = f();</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 3</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// rest 赋值</span></span><br><span class="line">[a, b, ...rest] = [<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>];</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 10</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 20</span></span><br><span class="line"><span class="built_in">console</span>.log(rest); <span class="comment">// [30, 40, 50]</span></span><br></pre></td></tr></table></figure>
+<h1 id="对象解构"><a href="#对象解构" class="headerlink" title="对象解构"></a>对象解构</h1><p>和数组解构差不多：</p>
+<ul>
+<li><strong>将对象属性赋值给变量</strong></li>
+<li><strong>赋值依据是属性名称</strong></li>
+<li>指定属性名时，可以给默认值，避免 <code>undefined</code> 赋值</li>
+<li>变量名称默认是属性名，也可以自定义，通过 <code>propertyName: customName</code> 方式定义</li>
+<li>支持 <code>rest</code> 对象赋值（在 proposal 中）</li>
+</ul>
+<p>eg.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基本赋值</span></span><br><span class="line">(&#123; a, b &#125; = &#123; <span class="attr">a</span>: <span class="number">10</span>, <span class="attr">b</span>: <span class="number">20</span> &#125;);</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 10</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 20</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认值</span></span><br><span class="line"><span class="keyword">var</span> &#123;a = <span class="number">10</span>, b = <span class="number">5</span>&#125; = &#123;<span class="attr">a</span>: <span class="number">3</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 3</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 5</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 自定义变量名 + 默认值</span></span><br><span class="line"><span class="keyword">var</span> o = &#123;<span class="attr">p</span>: <span class="number">42</span>, <span class="attr">q</span>: <span class="literal">true</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> &#123;<span class="attr">p</span>: foo, <span class="attr">q</span>: bar, <span class="attr">m</span>: other=<span class="string">'haha'</span>&#125; = o;</span><br><span class="line"> </span><br><span class="line"><span class="built_in">console</span>.log(foo); <span class="comment">// 42 </span></span><br><span class="line"><span class="built_in">console</span>.log(bar); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(other); <span class="comment">// haha</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// rest 赋值</span></span><br><span class="line"><span class="comment">// Stage 3 proposal</span></span><br><span class="line">(&#123;a, b, ...rest&#125; = &#123;<span class="attr">a</span>: <span class="number">10</span>, <span class="attr">b</span>: <span class="number">20</span>, <span class="attr">c</span>: <span class="number">30</span>, <span class="attr">d</span>: <span class="number">40</span>&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 10</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 20</span></span><br><span class="line"><span class="built_in">console</span>.log(rest); <span class="comment">//&#123;c: 30, d: 40&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 无声明赋值</span></span><br><span class="line"><span class="comment">// 相当于 var &#123;a,b&#125; = &#123;a:1, b:2&#125;;</span></span><br><span class="line"><span class="comment">// 括号去掉， &#123;a,b&#125; 是块代码，不是对象，所以不能去掉</span></span><br><span class="line"><span class="keyword">var</span> a, b;</span><br><span class="line"></span><br><span class="line">(&#123;a, b&#125; = &#123;<span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>&#125;);</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/29/redux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/05/29/redux/" class="post-title-link" itemprop="url">redux</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-05-29 10:46:35" itemprop="dateCreated datePublished" datetime="2018-05-29T10:46:35+08:00">2018-05-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="what’s-redux"><a href="#what’s-redux" class="headerlink" title="what’s redux"></a>what’s redux</h1><p><a href="https://cn.redux.js.org/" target="_blank" rel="noopener">redux 中文文档</a> 中的几个关键特性：</p>
+<ol>
+<li><strong>状态容器</strong>，提供<strong>可预测化</strong>的状态管理</li>
+<li>跨平台，客户端、服务端、原生应用都能用</li>
+<li>易于测试</li>
+<li>轻量，支持 react 等界面库</li>
+</ol>
+<p>其中第一点，讲明了 redux 的主要用途：<strong>状态容器</strong></p>
+<p>以 react 为例，页面是渲染状态树得到，有静态状态（<code>props</code>）、动态状态（<code>state</code>）。通过在代码中 <code>setState</code> 来修改状态树，状态自上而下传递到各个子组件，最终触发组件树的重新渲染。</p>
+<p>使用 redux，我们就将状态的定义和允许的迁移 function 挪出去，放到一个状态容器里，来有效管理组件的所有状态和状态迁移。此时 <code>component</code> 代码中就没有 <code>state</code>、<code>setState</code> 等定义了。</p>
+<h2 id="counter-without-redux"><a href="#counter-without-redux" class="headerlink" title="counter without redux"></a>counter without redux</h2><p>以计数器为例，不使用 redux，即直接在本地定义 <code>state</code>，并通过 <code>setState</code> 修改状态，以实现重现渲染。(<a href="https://github.com/HFCherish/react-learning/blob/master/redux/counter/src/Counter.js" target="_blank" rel="noopener">源代码</a>)</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123;Component&#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Counter</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  state = &#123;</span><br><span class="line">    value: <span class="number">0</span>,</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &#123;<span class="keyword">this</span>.state.value&#125;</span><br><span class="line">        &lt;button onClick=&#123;<span class="keyword">this</span>.increment&#125;&gt;+&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">        &lt;button onClick=&#123;this.decrement&#125;&gt;-&lt;/</span>button&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  decrement = () =&gt; &#123;</span></span><br><span class="line"><span class="regexp">    this.setState(&#123;</span></span><br><span class="line"><span class="regexp">      value: this.state.value - 1</span></span><br><span class="line"><span class="regexp">    &#125;);</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  increment = () =&gt; &#123;</span></span><br><span class="line"><span class="regexp">    this.setState(&#123;</span></span><br><span class="line"><span class="regexp">      value: this.state.value + 1</span></span><br><span class="line"><span class="regexp">    &#125;);</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="counter-with-redux"><a href="#counter-with-redux" class="headerlink" title="counter with redux"></a>counter with redux</h2><p>如果使用 redux，就是将原本的 <code>state</code> 存储到一个 <code>store</code> 中，通过 <code>dispatch</code> 一个 <code>action</code>(eg. <code>{type: &#39;INCREMENT&#39;}</code>)触发状态变化，<code>action</code> 如何改变 <code>state</code> 是由一个纯函数 <code>reducer</code> 定义的。（<a href="https://github.com/HFCherish/react-learning/blob/master/redux/counter/src/CounterWithRedux.js" target="_blank" rel="noopener">源代码</a>）</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// counter.js</span></span><br><span class="line"><span class="keyword">import</span> React, &#123;Component&#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Counter</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &#123;<span class="keyword">this</span>.props.store.getState()&#125;</span><br><span class="line">        &lt;button onClick=&#123;<span class="keyword">this</span>.increment&#125;&gt;+&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">        &lt;button onClick=&#123;this.decrement&#125;&gt;-&lt;/</span>button&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  decrement = () =&gt; &#123;</span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ 改变内部 state 惟一方法是 dispatch 一个 action。</span></span><br><span class="line"><span class="regexp">    this.props.store.dispatch(&#123;type: 'DECREMENT'&#125;);</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  increment = () =&gt; &#123;</span></span><br><span class="line"><span class="regexp">    this.props.store.dispatch(&#123;type: 'INCREMENT'&#125;);</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ reducer.js</span></span><br><span class="line"><span class="regexp">/</span>**</span><br><span class="line"> * 这是一个 reducer，形式为 (state, action) =&gt; state 的纯函数。</span><br><span class="line"> * 描述了 action 如何把 state 转变成下一个 state。</span><br><span class="line"> *<span class="regexp">/</span></span><br><span class="line"><span class="regexp">export default function counter(state = 0, action) &#123;</span></span><br><span class="line"><span class="regexp">  switch (action.type) &#123;</span></span><br><span class="line"><span class="regexp">    case 'INCREMENT':</span></span><br><span class="line"><span class="regexp">      return state + 1;</span></span><br><span class="line"><span class="regexp">    case 'DECREMENT':</span></span><br><span class="line"><span class="regexp">      return state - 1;</span></span><br><span class="line"><span class="regexp">    default:</span></span><br><span class="line"><span class="regexp">      return state;</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ index.js</span></span><br><span class="line"><span class="regexp">import React from 'react';</span></span><br><span class="line"><span class="regexp">import * as ReactDOM from "react-dom";</span></span><br><span class="line"><span class="regexp">import Counter from "./</span>Counter<span class="string">";</span></span><br><span class="line"><span class="string">import counter from "</span>./reducer<span class="string">";</span></span><br><span class="line"><span class="string">import &#123;createStore&#125; from 'redux';</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">const store = createStore(counter);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">const render = () =&gt; ReactDOM.render(</span></span><br><span class="line"><span class="string">  &lt;Counter store=&#123;store&#125;/&gt;,</span></span><br><span class="line"><span class="string">  document.getElementById('root')</span></span><br><span class="line"><span class="string">);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">render();</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">// store 的订阅接口，注册 listener（这里即 render）来订阅 store 的状态更新。</span></span><br><span class="line"><span class="string">store.subscribe(render);</span></span><br></pre></td></tr></table></figure>
+<h1 id="why-redux"><a href="#why-redux" class="headerlink" title="why redux"></a>why redux</h1><p>不使用 redux 时，</p>
+<ol>
+<li><strong>状态（model）、状态如何被改变（controller）、页面模板/html（view）是耦合在一块的。</strong><font color='gray'>（react 提供的就是一种界面库，render 函数其实写的就是页面模板，将 model 填充进去，渲染得到最后的 view）</font></li>
+<li><strong>组件之间强耦合，难以确定状态的改变是在哪里被谁触发，bug 追踪难。</strong></li>
+</ol>
+<p>使用 redux 后，</p>
+<ol>
+<li><strong>model 被抽出来了</strong>（即当前视图所对应的 model 对象），而且这个 model 对象不是一个贫血模型，它提供基本的 action 来保证 model 的完整性。</li>
+<li>由于状态的变更只能通过 <code>dispatch</code> 来触发，<strong>解耦了父子组件之间的状态变更传递</strong>，易于定位. （可以利用 <a href="http://cn.redux.js.org/docs/advanced/Middleware.html" target="_blank" rel="noopener">middleware</a> 记录 state 变更日志，即可实现 state 变化过程透明和可预测）</li>
+</ol>
+<h1 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h1><p>redux 是一个状态容器，它解决了： </p>
+<ul>
+<li>状态在哪：<code>createStore()</code></li>
+<li>状态是什么：<code>store.getState()</code></li>
+<li>状态怎么变： reducer，即 <code>(preState, action) =&gt; nextState</code> 函数</li>
+<li>触发状态变更：<code>store.dispatch(action)</code></li>
+<li>谁关心状态变化：<code>store.subscribe(callback)</code></li>
+</ul>
+<h2 id="reducer"><a href="#reducer" class="headerlink" title="reducer"></a><a href="http://cn.redux.js.org/docs/basics/Reducers.html" target="_blank" rel="noopener">reducer</a></h2><p>Reducers 指定了应用状态的变化如何响应 actions 并发送到 store 的，记住 <strong>actions 只是描述了有事情发生了</strong>这一事实，并没有描述应用如何更新 state。reducer 函数形式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(preState, action) &#x3D;&gt; nextState</span><br></pre></td></tr></table></figure>
+<p>因为 <code>state</code> 有很多属性，针对属性的处理也有很多，全放在一块就太大、难管理，所以可以拆 reducer（称为 slice reducer），再利用 <a href="http://cn.redux.js.org/docs/api/combineReducers.html" target="_blank" rel="noopener"><code>combineReducer</code></a> 组合。<font color='gray'>（redux 总是一个根，多个子：一个 store，多个子状态；一个根 reducer，多个 slice reducers）</font></p>
+<p>使用 <code>combineReducer</code> 后有两个问题：</p>
+<ol>
+<li>store state 和 slice reducer state 的关系？</li>
+<li>slice reducer 如何被调用执行？</li>
+</ol>
+<h3 id="store-state-和-slice-reducer-state-的关系？"><a href="#store-state-和-slice-reducer-state-的关系？" class="headerlink" title="store state 和 slice reducer state 的关系？"></a>store state 和 slice reducer state 的关系？</h3><p><a href="http://cn.redux.js.org/docs/api/combineReducers.html" target="_blank" rel="noopener">官方 API 描述</a></p>
+<blockquote>
+<p><strong><code>combineReducers()</code> 返回的 <code>state</code> 对象，会将传入的每个 reducer 返回的 <code>state</code> 按其传递给 <code>combineReducers()</code> 时对应的 key 进行命名，并将所有 slice reducer 返回的结果合并</strong> </p>
+</blockquote>
+<p>举例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> reducer1  = <span class="function">(<span class="params">state=<span class="string">'initA'</span>, action</span>) =&gt;</span> &#123;...&#125;</span><br><span class="line"><span class="keyword">const</span> reducer2  = <span class="function">(<span class="params">state=<span class="string">'initB'</span>, action</span>) =&gt;</span> &#123;...&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这里 `&#123;reducer1, reducer2&#125;` 使用的是 es2015 的 shorthand property names。</span></span><br><span class="line"><span class="comment">// 等价于 `&#123;reducer1: reducer1, reducer2: reducer2&#125;`</span></span><br><span class="line"><span class="keyword">const</span> store = createStore(combineReducer(&#123;reducer1, reducer2&#125;));</span><br><span class="line"><span class="built_in">console</span>.log(store.getState()); <span class="comment">//&#123;reducer1: 'initA', reducer2: 'initB'&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 也可以指定 key 名称</span></span><br><span class="line"><span class="keyword">const</span> store = createStore(combineReducer(&#123;<span class="attr">a</span>:reducer1, <span class="attr">b</span>:reducer2&#125;));</span><br><span class="line"><span class="built_in">console</span>.log(store.getState()); <span class="comment">//&#123;a: 'initA', b: 'initB'&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="slice-reducer-如何被调用执行？"><a href="#slice-reducer-如何被调用执行？" class="headerlink" title="slice reducer 如何被调用执行？"></a>slice reducer 如何被调用执行？</h3><p><a href="http://cn.redux.js.org/docs/api/combineReducers.html" target="_blank" rel="noopener">官方 API 描述</a></p>
+<blockquote>
+<p>返回值：<br>(Function)：<strong>一个调用 reducers 对象里所有 reducer 的 reducer，并且构造一个与 reducers 对象结构相同的 state 对象。</strong></p>
+</blockquote>
+<p>即 combinedReducer 会调用执行所有的 slice reducer，以实现分层处理</p>
+<h2 id="初始化-state"><a href="#初始化-state" class="headerlink" title="初始化 state"></a><a href="http://cn.redux.js.org/docs/recipes/reducers/InitializingState.html" target="_blank" rel="noopener">初始化 state</a></h2><p>有两种方式：</p>
+<ol>
+<li>使用 <code>createStore(reducers, [preloadedState], [enhancers])</code> 中的 <code>preloadedState</code></li>
+<li>使用 reducer 中的默认属性（<code>function someReducer(state={defaultValue}, action){}</code>）</li>
+</ol>
+<p>这其中有两条规则：</p>
+<ol>
+<li><strong>preloadedState 先于 reducer 去填充 state</strong></li>
+<li><strong>创建 store 后，redux 会 <code>dispatch</code> 一个虚拟的 <code>action</code> 到 reducer，以触发其中的默认值来填充 state。</strong></li>
+</ol>
+<h3 id="使用单一简单-reducer"><a href="#使用单一简单-reducer" class="headerlink" title="使用单一简单 reducer"></a>使用单一简单 reducer</h3><blockquote>
+<p><em>使用 <code>preloadedState</code> 后，单一 reducer 的默认 state 赋值<strong>会</strong>失效，因为流程是这样的：</em></p>
+</blockquote>
+<ol>
+<li>创建 store，并根据 <code>preloadedState</code> 填充 <code>state</code>；</li>
+<li><code>dispatch</code> 虚拟 <code>action</code> 来使用 reducer 默认值填充 <code>state</code>。而此时 <code>state</code> 已经不是 <code>undefind</code>，因此，这个默认值填充是无效的</li>
+</ol>
+<p>举一个例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// reducer</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">counterReducer</span>(<span class="params">state=<span class="number">0</span>, action</span>) </span>&#123;...&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 仅使用 reducer 初始化</span></span><br><span class="line"><span class="keyword">const</span> store = createStore(counterReducer);</span><br><span class="line"><span class="built_in">console</span>.log(store.getState()); <span class="comment">//0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 同时使用 preloadedState 和 reducer</span></span><br><span class="line"><span class="keyword">const</span> store = createStore(counterReducer, <span class="number">42</span>);</span><br><span class="line"><span class="built_in">console</span>.log(store.getState()); <span class="comment">//42</span></span><br></pre></td></tr></table></figure>
+<h3 id="使用-combineReducer"><a href="#使用-combineReducer" class="headerlink" title="使用 combineReducer()"></a>使用 <code>combineReducer()</code></h3><blockquote>
+<p><em>使用 <code>preloadedState</code> 后，使用了 <code>combineReducers</code> 的 reducer 默认 state 赋值<strong>可能会</strong>失效，因为流程是这样的：</em></p>
+</blockquote>
+<ol>
+<li>创建 store，并根据 <code>preloadedState</code> 填充 <code>state</code>；</li>
+<li><code>dispatch</code> 虚拟 <code>action</code> 来调用所有子 reducers，<ul>
+<li>如果 <code>preloadedState</code> 中定义了当前 <code>reducer</code> 的属性，则对当前 reducer，<code>state</code> 已经不是 <code>undefind</code>，此时默认值填充是无效的</li>
+<li>如果 <code>preloadedState</code> 中没有定义当前 <code>reducer</code> 的属性，则对当前 reducer，<code>state</code> 是 <code>undefind</code>，默认值填充有效</li>
+</ul>
+</li>
+</ol>
+<p>同样看一个例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// reducer</span></span><br><span class="line"><span class="keyword">const</span> reducer1  = <span class="function">(<span class="params">state=<span class="string">'initA'</span>, action</span>) =&gt;</span> &#123;...&#125;</span><br><span class="line"><span class="keyword">const</span> reducer2  = <span class="function">(<span class="params">state=<span class="string">'initB'</span>, action</span>) =&gt;</span> &#123;...&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> combinedReducer = combineReducers(&#123;<span class="attr">a</span>: reducer1, <span class="attr">b</span>: reducer2&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 仅使用 reducer 初始化</span></span><br><span class="line"><span class="keyword">const</span> store = createStore(combinedReducer);</span><br><span class="line"><span class="built_in">console</span>.log(store.getState()); <span class="comment">//&#123;a: 'initA', b: 'initB'&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 同时使用 preloadedState 和 reducer</span></span><br><span class="line"><span class="keyword">const</span> store = createStore(counterReducer, &#123;<span class="attr">a</span>: <span class="string">'initInPreload'</span>&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(store.getState()); <span class="comment">//&#123;a: 'initInPreload', b: 'initB'&#125;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><em>使用 <code>combineReducers</code> 时，<code>preloadedState</code> 必须包含 slice reducer 中的属性，与传入的 keys 保持同样的结构</em> (参见 <a href="http://cn.redux.js.org/docs/api/createStore.html" target="_blank" rel="noopener">createStore API 说明</a>)</p>
+</blockquote>
+<p>举例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> reducer1 = <span class="function">(<span class="params">state=<span class="string">'initA'</span>, action</span>) =&gt;</span> &#123;...&#125;</span><br><span class="line"><span class="keyword">const</span> combinedReducer = combineReducers(&#123;<span class="attr">a</span>: reducer1, <span class="attr">b</span>: reducer2&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 正确用法</span></span><br><span class="line"><span class="keyword">const</span> store = createStore(combinedReducer, &#123;<span class="attr">b</span>: <span class="string">'bala'</span>&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(store.getState()); <span class="comment">//&#123;a: 'initA', b: 'bala'&#125;;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 错误用法. 此时不会包含 c 属性。</span></span><br><span class="line"><span class="comment">// 因为所有的 state 都必须映射到 reducer 上，必须保持同样的结构，映射不到的就会被忽略</span></span><br><span class="line"><span class="keyword">const</span> store = createStore(combinedReducer, &#123;<span class="attr">c</span>: <span class="string">'bala'</span>&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(store.getState()); <span class="comment">//&#123;a: 'initA', b: 'initB'&#125;;</span></span><br></pre></td></tr></table></figure>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ul>
+<li><a href="http://redux.js.org/docs/basics/UsageWithReact.html" target="_blank" rel="noopener">usage with react</a></li>
+<li><a href="http://redux.js.org/docs/basics/UsageWithReact.html" target="_blank" rel="noopener">显示和容器组件</a></li>
+<li><a href="https://www.zhihu.com/question/41312576" target="_blank" rel="noopener">为什么用redux？原理？</a></li>
+<li><a href="https://github.com/jasonslyvia/a-cartoon-intro-to-redux-cn" target="_blank" rel="noopener">看漫画学redux</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/14/build-blog-using-hexo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/05/14/build-blog-using-hexo/" class="post-title-link" itemprop="url">使用 hexo + github 部署博客</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-05-14 19:19:44" itemprop="dateCreated datePublished" datetime="2018-05-14T19:19:44+08:00">2018-05-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="安装部署-hexo"><a href="#安装部署-hexo" class="headerlink" title="安装部署 hexo"></a>安装部署 <a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="noopener">hexo</a></h1><p>参考这个<a href="https://zhuanlan.zhihu.com/p/26625249" target="_blank" rel="noopener">知乎文章安装</a></p>
+<h2 id="1-准备-node、git"><a href="#1-准备-node、git" class="headerlink" title="1. 准备 node、git"></a>1. 准备 node、git</h2><h2 id="2-安装-hexo-cli"><a href="#2-安装-hexo-cli" class="headerlink" title="2. 安装 hexo-cli"></a>2. 安装 hexo-cli</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm i -g hexo-cli</span><br></pre></td></tr></table></figure>
+<h2 id="3-创建一个网站"><a href="#3-创建一个网站" class="headerlink" title="3. 创建一个网站"></a>3. 创建一个网站</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init xxx.github.io</span><br></pre></td></tr></table></figure>
+<h2 id="4-部署服务器"><a href="#4-部署服务器" class="headerlink" title="4. 部署服务器"></a>4. <a href="https://hexo.io/zh-cn/docs/deployment.html" target="_blank" rel="noopener">部署服务器</a></h2><p>这里选择部署到 git 上。</p>
+<ol>
+<li>首先安装 git deployer</li>
+<li>然后修改配置文件，选择部署方式为 git 并配置 repo。</li>
+<li>hexo 部署</li>
+<li>访问 <code>xxx.github.io</code> 即可</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br><span class="line">$ vi _config.yml</span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: &lt;repository url&gt;</span><br><span class="line">  branch: [branch]</span><br><span class="line">  message: [message]</span><br><span class="line"></span><br><span class="line">$ npm d</span><br></pre></td></tr></table></figure>
+<p>注意：</p>
+<blockquote>
+<ol>
+<li>可以选择同时部署到多个服务器。多写几个 ‘deploy’ 配置即可</li>
+<li>git 用户名、网站用户名（<code>xxx.github.io</code> 中的 <code>xxx</code>）必须相同。因为它相当于使用 github 服务器</li>
+</ol>
+</blockquote>
+<h1 id="设置-theme"><a href="#设置-theme" class="headerlink" title="设置 theme"></a>设置 theme</h1><p>在 <a href="https://hexo.io/themes/index.html" target="_blank" rel="noopener">官方 themes</a> 里挑。我比较喜欢以下几款：</p>
+<ol>
+<li>带目录结构的：<ol start="2">
+<li><a href="https://github.com/probberechts/hexo-theme-cactus/blob/master/README.md" target="_blank" rel="noopener">cactus</a>：英文的，有几种颜色可以选，带目录，可以配置搜索，简洁，这是<a href="https://probberechts.github.io/hexo-theme-cactus/cactus-white/public/archives/" target="_blank" rel="noopener">white 版本的</a></li>
+<li><a href="https://github.com/aircloud/hexo-theme-aircloud" target="_blank" rel="noopener">aircloud</a>：英文中文都 ok，有目录，还可以搜索</li>
+<li><a href="https://github.com/theme-next/hexo-theme-next" target="_blank" rel="noopener">next</a>：有目录，也有集成搜索的文档，这是一个 <a href="http://www.itfanr.cc/about/" target="_blank" rel="noopener">example</a>，参照 <a href="https://theme-next.iissnan.com/third-party-services.html" target="_blank" rel="noopener">第三方集成</a> 集成搜索等功能. next 优化配置可参考 <a href="http://www.vitah.net/posts/20f300cc/" target="_blank" rel="noopener">这篇文章</a></li>
+<li><a href="https://github.com/litten/hexo-theme-yilia" target="_blank" rel="noopener">yilia</a>：有目录，有搜索，<a href="http://litten.me/2017/12/29/diary-2017-1222-1229/" target="_blank" rel="noopener">owner 博客</a></li>
+</ol>
+</li>
+<li>没有目录，没有 tag<ol start="3">
+<li><a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank" rel="noopener">apollo</a>：<a href="http://pinggod.com/archives/" target="_blank" rel="noopener">blog</a> 是中文的，比较简单，颜色也好看</li>
+</ol>
+</li>
+</ol>
+<p>配置很简单，以 <a href="https://github.com/litten/hexo-theme-yilia" target="_blank" rel="noopener">yilia</a> 为例：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 找到 theme git，download 到 `themes` 文件夹下</span></span><br><span class="line">$ git <span class="built_in">clone</span> https://github.com/litten/hexo-theme-yilia.git themes/yilia</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 修改 hexo 根目录下的配置文件，指定使用该主题</span></span><br><span class="line">$ vi _config.yml</span><br><span class="line">theme: yilia</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. customize 主题配置. 可以修改 themes 中的 config，也可以直接在 hexo config 中修改</span></span><br><span class="line"><span class="comment">## 修改 themes 中的 _config.yml</span></span><br><span class="line">$ vi themes/yilia/_config.yml</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line"><span class="comment">## 修改 hexo config</span></span><br><span class="line">$ vi _config.yml</span><br><span class="line">theme_config:</span><br><span class="line">	...</span><br><span class="line">	...</span><br><span class="line">	...</span><br></pre></td></tr></table></figure>
+<h1 id="发表博客"><a href="#发表博客" class="headerlink" title="发表博客"></a>发表博客</h1><h2 id="1-创建博客"><a href="#1-创建博客" class="headerlink" title="1. 创建博客"></a>1. <a href="https://hexo.io/zh-cn/docs/commands.html#new" target="_blank" rel="noopener">创建博客</a></h2><p>利用命令创建一个博客，存放在 <code>source/_posts/</code> 下。然后可以编辑这个文件。刷新页面就可以看到博客有更新了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new titlename</span><br></pre></td></tr></table></figure>
+<p>也可以直接把 md 文件 copy 到 <code>source/_posts/</code> 下，可以添加 <a href="https://hexo.io/zh-cn/docs/front-matter.html" target="_blank" rel="noopener"><code>frong-matter</code></a> 指定 category、tag 等。</p>
+<h2 id="2-生成静态文件"><a href="#2-生成静态文件" class="headerlink" title="2. 生成静态文件"></a>2. <a href="https://hexo.io/zh-cn/docs/generating.html" target="_blank" rel="noopener">生成静态文件</a></h2><p><code>hexo g</code> 会根据 md 生成 html、css 等静态文件。文章写完后，利用这个命令生成静态文件，然后再 <code>hexo d</code> 部署即可。</p>
+<p>也可以使用下述命令（两个命令等价），指同时 <code>generate</code> + <code>deploy</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g -d</span><br><span class="line">$ hexo d -g</span><br></pre></td></tr></table></figure>
+<h3 id="hexo-clean"><a href="#hexo-clean" class="headerlink" title="hexo clean"></a>hexo clean</h3><p>有时可能需要使用 <a href="https://hexo.io/zh-cn/docs/commands.html#clean" target="_blank" rel="noopener"><code>hexo clean</code></a> 清除缓存文件 <code>db.json</code> 和已生成的静态文件 <code>public</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean</span><br></pre></td></tr></table></figure>
+<h3 id="启动本地服务器（调试用）"><a href="#启动本地服务器（调试用）" class="headerlink" title="启动本地服务器（调试用）"></a><a href="https://hexo.io/zh-cn/docs/commands.html#server" target="_blank" rel="noopener">启动本地服务器（调试用）</a></h3><p>博客编辑完成后，可以先本地启动 server，看一下效果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo s</span><br></pre></td></tr></table></figure>
+<p><code>-s</code> 参数指定仅仅启动静态模式，即创建博客后，必须要 <code>hexo g</code> 去生成 <code>index.html</code> 等（相当于发布），网站才会真正的更新。否则网站不会更新。这一般用于 <code>production mode</code></p>
+<p>一般编辑完文章后，可以先本地启动服务器，调试一下样式可不可以，然后再部署到服务器上</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cherish</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">269k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:04</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

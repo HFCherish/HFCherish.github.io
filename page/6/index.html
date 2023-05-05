@@ -1,20 +1,1317 @@
-{% extends '_layout.njk' %}
-{% import '_macro/sidebar.njk' as sidebar_template with context %}
+<!DOCTYPE html>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
 
-{% block title %}{{ title }}{% if theme.index_with_subtitle and subtitle %} - {{ subtitle }}{% endif %}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block class %}index posts-expand{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block content %}
 
-  {%- for post in page.posts.toArray() %}
-    {{ partial('_macro/post.njk', {post: post, is_index: true}) }}
-  {%- endfor %}
 
-  {%- include '_partials/pagination.njk' -%}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-{% endblock %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-{% block sidebar %}
-  {{ sidebar_template.render(false) }}
-{% endblock %}
+    <meta name="description" content="从心所欲不逾矩">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cherish&#39;s Blog">
+<meta property="og:url" content="http://yoursite.com/page/6/index.html">
+<meta property="og:site_name" content="Cherish&#39;s Blog">
+<meta property="og:description" content="从心所欲不逾矩">
+<meta property="og:locale">
+<meta property="article:author" content="Cherish">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yoursite.com/page/6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"Chinese","comments":"","permalink":"","path":"page/6/index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Cherish's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Cherish's Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cherish</p>
+  <div class="site-description" itemprop="description">从心所欲不逾矩</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/19/hikariCP-configuration/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/07/19/hikariCP-configuration/" class="post-title-link" itemprop="url">hikariCP configuration</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-19 10:56:58" itemprop="dateCreated datePublished" datetime="2018-07-19T10:56:58+08:00">2018-07-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a href="https://github.com/brettwooldridge/HikariCP" target="_blank" rel="noopener">hikariCP</a> 是一个轻量级的数据库连接池。引用 <a href="https://github.com/brettwooldridge/HikariCP" target="_blank" rel="noopener">数据库连接池性能对比</a> 的说法（我并没有测试过）：</p>
+<blockquote>
+<ol>
+<li>性能方面 hikariCP&gt;druid&gt;tomcat-jdbc&gt;dbcp&gt;c3p0 。hikariCP的高性能得益于最大限度的避免锁竞争。</li>
+<li>druid功能最为全面，sql拦截等功能，统计数据较为全面，具有良好的扩展性。</li>
+<li>综合性能，扩展性等方面，可考虑使用druid或者hikariCP连接池。</li>
+<li>可开启prepareStatement缓存，对性能会有大概20%的提升。</li>
+</ol>
+</blockquote>
+<p>在使用 spring jpa 时，默认使用的连接池是 hikariCP，所以最终采用了这个连接池。</p>
+<p>使用过程中出现了一些坑，总结一下。</p>
+<h1 id="java-sql-SQLTransientConnectionException"><a href="#java-sql-SQLTransientConnectionException" class="headerlink" title="java.sql.SQLTransientConnectionException"></a>java.sql.SQLTransientConnectionException</h1><p>仅使用默认配置，在运行所有测试时，会出现如下异常信息：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/721960-3c58b4722a0f8ab5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="sql exception.png"></p>
+<p>这是因为默认的连接池数量是 10，而并行运行测试时，连接池数量不够了。通过设置 <a href="https://github.com/brettwooldridge/HikariCP#frequently-used" target="_blank" rel="noopener"><code>maximumPoolSize</code></a> 解决。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">spring.datasource.hikari.maximum-pool-size:1000</span></span><br></pre></td></tr></table></figure>
+<h1 id="too-many-connections"><a href="#too-many-connections" class="headerlink" title="too many connections"></a>too many connections</h1><p>在进行上述设置后，启动应用，连接数据库，发现数据库无法连接，报 <code>too many connections</code>。</p>
+<h2 id="fixed-size-pool"><a href="#fixed-size-pool" class="headerlink" title="fixed-size pool"></a>fixed-size pool</h2><p>按 <a href="https://github.com/brettwooldridge/HikariCP/issues/657" target="_blank" rel="noopener">hikariCP owner 的解释</a>，这可能是因为当设置 <code>maximumPoolSize</code> 后，这就变成了 fix-size 的连接池了，即总是会占有 1000（上边的设置）个连接池。idle 连接不会被释放，因为释放了也要创建新的 idle 连接池来保证 fix-size。从而新的连接就无法建立了。</p>
+<blockquote>
+<p>When running as a fixed-size pool (default) the <code>idleTimeout</code> has no effect. Your example is a fixed-size pool – when <code>minimumIdle</code> is not defined it defaults to <code>maximumPoolSize</code>.</p>
+<p><code>idleTimeout</code> is meant to shrink the pool from <code>maximumPoolSize</code> down toward <code>minimumIdle</code> when connections are unused in the pool. However, when <code>minimumIdle</code> == <code>maximumPoolSize</code> then closing an “idle” connection makes no sense as it will be replaced immediately in the pool.</p>
+</blockquote>
+<p>所以配置 <code>minimumIdle</code> 可以解决上述问题。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">spring.datasource.hikari.maximum-pool-size:1000</span></span><br><span class="line"><span class="string">spring.datasource.hikari.miniumIdle:10</span></span><br></pre></td></tr></table></figure>
+<h2 id="wait-timeout-too-long"><a href="#wait-timeout-too-long" class="headerlink" title="wait-timeout too long"></a>wait-timeout too long</h2><p>有时就是因为 connection 一直没被释放，这可能是这是的 connection wait_timeout 太长了。参照 <a href="https://support.rackspace.com/how-to/how-to-change-the-mysql-timeout-on-a-server/" target="_blank" rel="noopener">change the mysql timeout on a server</a> 来了解 ‘wait_timeout’ 的设置。</p>
+<p>引用原文：</p>
+<blockquote>
+<p>Choose a reasonable <code>wait_timeout</code> value. Stateless PHP environments do well with a 60 second timeout or less. Stateful applications that use a connection pool (Java, .NET, etc.) will need to adjust <code>wait_timeout</code> to match their connection pool settings. The default 8 hours (<code>wait_timeout = 28800</code>) works well with properly configured connection pools.</p>
+<p>Configure the <code>wait_timeout</code> to be slightly longer than the application connection pool’s expected connection lifetime. This is a good safety check.</p>
+</blockquote>
+<p>在设置了合理的 mysql <code>wait_timeout</code> 后，同样也设置 hikariCP 的连接池空闲时间，参考<a href="https://github.com/brettwooldridge/HikariCP/wiki/FAQ#q-i-am-getting-a-commysqljdbcexceptionsjdbc4communicationsexception-communications-link-failure-exception-logged-in-the-isconnectionalive-method-of-hikaripool-in-my-logs-what-is-happening" target="_blank" rel="noopener">FAQ</a></p>
+<blockquote>
+<p>If you set the MySQL <code>wait_timeout = 28800</code> (seconds = 8 hours), you should set HikariCP <code>idleTimeout</code> and <code>maxLifetime</code> to the slightly shorter 28000000 (milliseconds = 7 hours 46 minutes).</p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">spring.datasource.hikari.maximum-pool-size:1000</span></span><br><span class="line"><span class="string">spring.datasource.hikari.miniumIdle:10</span></span><br><span class="line"><span class="string">spring.datasource.hikari.idleTimeout:28000000</span></span><br><span class="line"><span class="string">spring.datasource.hikari.maxLifetime:28000000</span></span><br></pre></td></tr></table></figure>
+<h1 id="性能优化配置"><a href="#性能优化配置" class="headerlink" title="性能优化配置"></a>性能优化配置</h1><p>按照前边的说法，合理启用 prepareStatement 缓存，可以大幅提升性能。官方推荐的配置可参考 <a href="https://github.com/brettwooldridge/HikariCP/wiki/MySQL-Configuration" target="_blank" rel="noopener">mysql configuration</a></p>
+<p>一个典型配置如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">jdbcUrl=jdbc:mysql://localhost:3306/simpsons</span></span><br><span class="line"><span class="string">user=test</span></span><br><span class="line"><span class="string">password=test</span></span><br><span class="line"><span class="string">dataSource.cachePrepStmts=true</span></span><br><span class="line"><span class="string">dataSource.prepStmtCacheSize=250</span></span><br><span class="line"><span class="string">dataSource.prepStmtCacheSqlLimit=2048</span></span><br><span class="line"><span class="string">dataSource.useServerPrepStmts=true</span></span><br><span class="line"><span class="string">dataSource.useLocalSessionState=true</span></span><br><span class="line"><span class="string">dataSource.rewriteBatchedStatements=true</span></span><br><span class="line"><span class="string">dataSource.cacheResultSetMetadata=true</span></span><br><span class="line"><span class="string">dataSource.cacheServerConfiguration=true</span></span><br><span class="line"><span class="string">dataSource.elideSetAutoCommits=true</span></span><br><span class="line"><span class="string">dataSource.maintainTimeStats=false</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/18/bean-validator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/07/18/bean-validator/" class="post-title-link" itemprop="url">bean validator</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-18 10:30:57" itemprop="dateCreated datePublished" datetime="2018-07-18T10:30:57+08:00">2018-07-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>bean validator 主要是验证一个 bean 的各字段是否满足一些约束，例如 <code>@NotNull</code></p>
+<p>bean validation 有个规范 <a href="https://beanvalidation.org/2.0/" target="_blank" rel="noopener">jsr 380</a>，里边定义了一堆 api。有很多规范的实现，最常用的是 <a href="http://hibernate.org/validator/" target="_blank" rel="noopener">hibernate validator</a>，jersey 出的 <a href="https://jersey.github.io/documentation/latest/bean-validation.html" target="_blank" rel="noopener">jersey-bean-validation</a> 也是基于 hibernate validator 做的。</p>
+<p>bean validator 一般是应用在 web 框架（如 spring、jersey）上，框架在反序列化 rest 请求到 bean 对象时，框架会调用 validator 根据 bean 对象的 annotation 对 bean 进行验证。</p>
+<p>这个过程也可以手动进行。可参考 <a href="http://hibernate.org/validator/documentation/getting-started/" target="_blank" rel="noopener">hibernate validator: get started</a>。</p>
+<h1 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h1><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// jsr 380 api</span></span><br><span class="line">compile <span class="string">"javax.validation:validation-api:2.0.1.Final"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// hibernate vaidator 实现</span></span><br><span class="line">testCompile <span class="string">"org.hibernate.validator:hibernate-validator:6.0.10.Final"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// hibernate validator 依赖的 JSR 341 实现</span></span><br><span class="line">testCompile <span class="string">"org.glassfish:javax.el:3.0.0"</span></span><br></pre></td></tr></table></figure>
+<h1 id="创建-bean，标明约束"><a href="#创建-bean，标明约束" class="headerlink" title="创建 bean，标明约束"></a>创建 bean，标明约束</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.hibernate.validator.referenceguide.chapter01;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.Min;</span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.NotNull;</span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.Size;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@NotNull</span></span><br><span class="line">   <span class="keyword">private</span> String manufacturer;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@NotNull</span></span><br><span class="line">   <span class="meta">@Size</span>(min = <span class="number">2</span>, max = <span class="number">14</span>)</span><br><span class="line">   <span class="keyword">private</span> String licensePlate;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Min</span>(<span class="number">2</span>)</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">int</span> seatCount;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="title">Car</span><span class="params">(String manufacturer, String licencePlate, <span class="keyword">int</span> seatCount)</span></span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.manufacturer = manufacturer;</span><br><span class="line">      <span class="keyword">this</span>.licensePlate = licencePlate;</span><br><span class="line">      <span class="keyword">this</span>.seatCount = seatCount;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h1><ol>
+<li>利用 <code>Validation</code> 获取默认的 <code>ValidatorFactory</code>：<code>Validation.buildDefaultValidatorFactory()</code>；</li>
+<li>从 <code>ValidatorFacotry</code> 获取 <code>Validator</code>：<code>factory.getValidator()</code></li>
+<li>利用 <code>Validator</code> 验证 bean</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.hibernate.validator.referenceguide.chapter01;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"><span class="keyword">import</span> javax.validation.ConstraintViolation;</span><br><span class="line"><span class="keyword">import</span> javax.validation.Validation;</span><br><span class="line"><span class="keyword">import</span> javax.validation.Validator;</span><br><span class="line"><span class="keyword">import</span> javax.validation.ValidatorFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.BeforeClass;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.junit.Assert.assertEquals;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CarTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Validator validator;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@BeforeClass</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setUp</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      ValidatorFactory factory = Validation.buildDefaultValidatorFactory();</span><br><span class="line">      validator = factory.getValidator();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">manufacturerIsNull</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      Car car = <span class="keyword">new</span> Car( <span class="keyword">null</span>, <span class="string">"DD-AB-123"</span>, <span class="number">4</span> );</span><br><span class="line"></span><br><span class="line">      Set&lt;ConstraintViolation&lt;Car&gt;&gt; constraintViolations =</span><br><span class="line">      validator.validate( car );</span><br><span class="line"></span><br><span class="line">      assertEquals( <span class="number">1</span>, constraintViolations.size() );</span><br><span class="line">      assertEquals(</span><br><span class="line">         <span class="string">"may not be null"</span>,</span><br><span class="line">         constraintViolations.iterator().next().getMessage()</span><br><span class="line">      );</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">licensePlateTooShort</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      Car car = <span class="keyword">new</span> Car( <span class="string">"Morris"</span>, <span class="string">"D"</span>, <span class="number">4</span> );</span><br><span class="line"></span><br><span class="line">      Set&lt;ConstraintViolation&lt;Car&gt;&gt; constraintViolations =</span><br><span class="line">      validator.validate( car );</span><br><span class="line"></span><br><span class="line">      assertEquals( <span class="number">1</span>, constraintViolations.size() );</span><br><span class="line">      assertEquals(</span><br><span class="line">         <span class="string">"size must be between 2 and 14"</span>,</span><br><span class="line">         constraintViolations.iterator().next().getMessage()</span><br><span class="line">      );</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">seatCountTooLow</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      Car car = <span class="keyword">new</span> Car( <span class="string">"Morris"</span>, <span class="string">"DD-AB-123"</span>, <span class="number">1</span> );</span><br><span class="line"></span><br><span class="line">      Set&lt;ConstraintViolation&lt;Car&gt;&gt; constraintViolations =</span><br><span class="line">      validator.validate( car );</span><br><span class="line"></span><br><span class="line">      assertEquals( <span class="number">1</span>, constraintViolations.size() );</span><br><span class="line">      assertEquals(</span><br><span class="line">         <span class="string">"must be greater than or equal to 2"</span>,</span><br><span class="line">         constraintViolations.iterator().next().getMessage()</span><br><span class="line">      );</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">carIsValid</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      Car car = <span class="keyword">new</span> Car( <span class="string">"Morris"</span>, <span class="string">"DD-AB-123"</span>, <span class="number">2</span> );</span><br><span class="line"></span><br><span class="line">      Set&lt;ConstraintViolation&lt;Car&gt;&gt; constraintViolations =</span><br><span class="line">      validator.validate( car );</span><br><span class="line"></span><br><span class="line">      assertEquals( <span class="number">0</span>, constraintViolations.size() );</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/14/java-reflection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/07/14/java-reflection/" class="post-title-link" itemprop="url">java reflection</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-14 22:37:43" itemprop="dateCreated datePublished" datetime="2018-07-14T22:37:43+08:00">2018-07-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h1><p>java 泛型存在类型擦除（参见 <a href="https://blog.csdn.net/briblue/article/details/76736356" target="_blank" rel="noopener">java 泛型</a>）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; l1 = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">List&lt;Integer&gt; l2 = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line"></span><br><span class="line">System.out.println(l1.getClass() == l2.getClass());	<span class="comment">// return true, 两个都是 List.class</span></span><br></pre></td></tr></table></figure>
+<h2 id="获取运行时泛型类型"><a href="#获取运行时泛型类型" class="headerlink" title="获取运行时泛型类型"></a>获取运行时泛型类型</h2><p>类型擦除使得根据类定义获取 runtime 泛型类型是不可能的，一般有几种方法(参见 <a href="https://stackoverflow.com/questions/3403909/get-generic-type-of-class-at-runtime" target="_blank" rel="noopener">stackoverflow</a>)：</p>
+<ol>
+<li>根据类对象实例获取，可参见 <a href="http://qussay.com/2013/09/28/handling-java-generic-types-with-reflection/#has_default_constructor" target="_blank" rel="noopener">handle java generic types with reflection</a><ul>
+<li>eg. <code>Class&lt;T&gt; tClass = (Class&lt;T&gt;) ReflectionUtil.getClass(ReflectionUtil.getParameterizedTypes(this)[0]);</code></li>
+</ul>
+</li>
+<li>从父类中获取（要求父类有相同的泛型参数）<ul>
+<li>eg. <code>Class&lt;T&gt; tClass = (Class&lt;T&gt;) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]</code></li>
+</ul>
+</li>
+<li>通过方法存储泛型类型为 field。但这意味着所有的 client 都必须要通过相应方法设置该 field</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过方法（constructor）存储泛型类型</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GenericClass</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">private</span> <span class="keyword">final</span> Class&lt;T&gt; type;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="title">GenericClass</span><span class="params">(Class&lt;T&gt; type)</span> </span>&#123;</span><br><span class="line">          <span class="keyword">this</span>.type = type;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> Class&lt;T&gt; <span class="title">getMyType</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="keyword">this</span>.type;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="获取一个带泛型信息的-class-变量"><a href="#获取一个带泛型信息的-class-变量" class="headerlink" title="获取一个带泛型信息的 class 变量"></a>获取一个带泛型信息的 class 变量</h2><p>例如当使用 <code>new ObjectMapper().readValue(string, someClass)</code>，而 someClass 是包含泛型参数的类型（eg. List<Integer>），如何获取这样的 class 变量？</p>
+<p>参见 <a href="https://stackoverflow.com/a/6349488/10003123" target="_blank" rel="noopener">stackOverflow</a>，总结如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.ObjectMapper;</span><br><span class="line">ObjectMapper mapper = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line"></span><br><span class="line"><span class="comment">// as Array</span></span><br><span class="line">MyClass[] myObjects = mapper.readValue(json, MyClass[]<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// as List</span></span><br><span class="line">List&lt;MyClass&gt; myObjects = mapper.readValue(jsonInput, <span class="keyword">new</span> TypeReference&lt;List&lt;MyClass&gt;&gt;()&#123;&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// as List (another more generic way)</span></span><br><span class="line">List&lt;MyClass&gt; myObjects = mapper.readValue(jsonInput, mapper.getTypeFactory().constructCollectionType(List<span class="class">.<span class="keyword">class</span>, <span class="title">MyClass</span>.<span class="title">class</span>))</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// as List (using TypeToken in Gson)</span></span><br><span class="line">Class&lt;List&lt;MyClass&gt;&gt; tClass = <span class="keyword">new</span> TypeToken&lt;List&lt;MyClass&gt;() &#123;</span><br><span class="line">        &#125;.getRawType();</span><br><span class="line">        </span><br><span class="line"><span class="comment">// use c</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/27/aws-lambda-jersey/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/06/27/aws-lambda-jersey/" class="post-title-link" itemprop="url">在 aws lambda 中应用 jersey</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-27 10:39:55" itemprop="dateCreated datePublished" datetime="2018-06-27T10:39:55+08:00">2018-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>使用 <a href="https://github.com/awslabs/aws-serverless-java-container" target="_blank" rel="noopener">aws serverless java container</a> 实现。</p>
+<h1 id="使用-aws-cli"><a href="#使用-aws-cli" class="headerlink" title="使用 aws cli"></a>使用 <a href="https://aws.amazon.com/cn/cli/" target="_blank" rel="noopener">aws cli</a></h1><h2 id="创建项目，配置-aws-cli"><a href="#创建项目，配置-aws-cli" class="headerlink" title="创建项目，配置 aws cli"></a>创建项目，配置 aws cli</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 利用原型创建项目</span></span><br><span class="line">$ mvn archetype:generate -DgroupId=my.service -DartifactId=my-service -Dversion=1.0-SNAPSHOT \</span><br><span class="line">       -DarchetypeGroupId=com.amazonaws.serverless.archetypes \</span><br><span class="line">       -DarchetypeArtifactId=aws-serverless-jersey-archetype \</span><br><span class="line">       -DarchetypeVersion=1.1.3</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 aws cli</span></span><br><span class="line">$ pip install awscli</span><br><span class="line"><span class="comment"># 配置 credentials</span></span><br><span class="line">$ aws configure</span><br><span class="line">AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE</span><br><span class="line">AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY</span><br><span class="line">Default region name [None]: us-west-2</span><br><span class="line">Default output format [None]: json</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 写代码，测试……</span></span><br></pre></td></tr></table></figure>
+<p>aws 安装之后一般要配置 credentials，详情可参见 <a href="https://docs.aws.amazon.com/zh_cn/cli/latest/userguide/cli-chap-getting-started.html" target="_blank" rel="noopener">aws cli 配置</a></p>
+<h2 id="打包部署"><a href="#打包部署" class="headerlink" title="打包部署"></a>打包部署</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># package</span></span><br><span class="line">$ mvn clean package</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 上传 package 到 s3（需要先创建 s3 bucket）</span></span><br><span class="line">$ aws s3 mb s3://BUCKET_NAME</span><br><span class="line">$ aws cloudformation package --template-file sam.yaml --output-template-file output-sam.yaml --s3-bucket &lt;YOUR S3 BUCKET NAME&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署到 aws lambda</span></span><br><span class="line">$ aws cloudformation deploy --template-file output-sam.yaml --stack-name your-stack-name --capabilities CAPABILITY_IAM</span><br></pre></td></tr></table></figure>
+<h2 id="查看部署结果"><a href="#查看部署结果" class="headerlink" title="查看部署结果"></a>查看部署结果</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可查看 stack 详情</span></span><br><span class="line">$ aws cloudformation describe-stacks --stack-name your-stack-name</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"Stacks"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"StackId"</span>: <span class="string">"arn:aws:cloudformation:us-west-2:xxxxxxxx:stack/ServerlessJerseyApi/xxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx"</span>, </span><br><span class="line">            <span class="string">"Description"</span>: <span class="string">"AWS Serverless Jersey API - learning.aws::aws-lambda-jersey"</span>, </span><br><span class="line">            <span class="string">"Tags"</span>: [], </span><br><span class="line">            <span class="string">"Outputs"</span>: [</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="string">"Description"</span>: <span class="string">"URL for application"</span>,</span><br><span class="line">                    <span class="string">"ExportName"</span>: <span class="string">"AwsLambdaJerseyApi"</span>,  </span><br><span class="line">                    <span class="string">"OutputKey"</span>: <span class="string">"AwsLambdaJerseyApi"</span>,</span><br><span class="line">                    <span class="string">"OutputValue"</span>: <span class="string">"https://xxxxxxx.execute-api.us-west-2.amazonaws.com/Prod/ping"</span></span><br><span class="line">                &#125;</span><br><span class="line">            ], </span><br><span class="line">            <span class="string">"CreationTime"</span>: <span class="string">"2016-12-13T22:59:31.552Z"</span>, </span><br><span class="line">            <span class="string">"Capabilities"</span>: [</span><br><span class="line">                <span class="string">"CAPABILITY_IAM"</span></span><br><span class="line">            ], </span><br><span class="line">            <span class="string">"StackName"</span>: <span class="string">"ServerlessJerseyApi"</span>, </span><br><span class="line">            <span class="string">"NotificationARNs"</span>: [], </span><br><span class="line">            <span class="string">"StackStatus"</span>: <span class="string">"UPDATE_COMPLETE"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据生成的链接访问 api</span></span><br><span class="line">$ curl https://xxxxxxx.execute-api.us-west-2.amazonaws.com/Prod/ping</span><br></pre></td></tr></table></figure>
+<h1 id="使用-sam-cli"><a href="#使用-sam-cli" class="headerlink" title="使用 sam-cli"></a>使用 <a href="https://github.com/awslabs/aws-sam-cli" target="_blank" rel="noopener">sam-cli</a></h1><p>aws-cli 只能部署到远端去查看运行效果。而 sam-cli 则可以本地 simulate 一个 lambda 环境，从而实现本地调试。</p>
+<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>aws-sam-cli 有个 <code>sam init --runtime java</code>，可以创建一个 sample 项目，但是目前支持的 template 并不包含 jersey 的。所以要创建项目还是通过 mvn archetype。</p>
+<p>（所有支持的 runtime 可以查看 <a href="https://github.com/awslabs/aws-sam-cli#project-status" target="_blank" rel="noopener">project status</a>）</p>
+<p>但是 <code>sam init</code> 创建了一个 <code>template.yaml</code>，这是之后所有 sam 命令的依据。这个文件会被翻译为 <code>mvn archetype</code> 创建的 <code>sam.yaml</code>。因为其后台是利用 <code>aws cli</code> 运行的。</p>
+<p>所以我们需要在 <code>mvn archetype</code> 创建了原型之后，手动依据 <code>sam.yaml</code> 创建 <code>template.yaml</code></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 利用原型创建项目，配置 aws-cli，同上</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 template.yaml</span></span><br><span class="line">$ cp sam.yaml template.yaml</span><br></pre></td></tr></table></figure>
+<h2 id="部署项目"><a href="#部署项目" class="headerlink" title="部署项目"></a>部署项目</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># package</span></span><br><span class="line">$ mvn clean package</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 本地测试运行</span></span><br><span class="line">$ sam <span class="built_in">local</span> start-api</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 上传 package 到 s3（需要先创建 s3 bucket）</span></span><br><span class="line">$ aws s3 mb s3://BUCKET_NAME</span><br><span class="line">$ sam package \</span><br><span class="line">    --template-file template.yaml \</span><br><span class="line">    --output-template-file packaged.yaml \</span><br><span class="line">    --s3-bucket YOUR_S3_BUCKET_NAME</span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署到 aws lambda</span></span><br><span class="line">$ sam deploy \</span><br><span class="line">    --template-file packaged.yaml \</span><br><span class="line">    --stack-name your-stack-name \</span><br><span class="line">    --capabilities CAPABILITY_IAM \</span><br><span class="line">    --parameter-overrides MyParameterSample=MySampleValue</span><br></pre></td></tr></table></figure>
+<p>如果在本地运行时，报错 <code>No class found....</code>，一般是因为 docker 的原因，我最后是通过重装 docker 解决的。由于 aws-sam-cli 使用 docker 去起一个 lambda 容器环境，所以可能是由于 credentials 等获取不到的原因？，总之可能会挂掉。可参见 <a href="https://github.com/docker/for-mac/issues/488" target="_blank" rel="noopener">stackoverflow ticket</a>，</p>
+<h2 id="查看部署结果-1"><a href="#查看部署结果-1" class="headerlink" title="查看部署结果"></a>查看部署结果</h2><p>这里跟上边是一样的，我们可以只看一部分</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可查看 stack 详情</span></span><br><span class="line">$ aws cloudformation describe-stacks \</span><br><span class="line">	--stack-name your-stack-name \</span><br><span class="line">	--query <span class="string">'Stacks[].Outputs'</span></span><br><span class="line">[</span><br><span class="line">	[</span><br><span class="line">	    &#123;</span><br><span class="line">	        <span class="string">"Description"</span>: <span class="string">"URL for application"</span>,</span><br><span class="line">	        <span class="string">"ExportName"</span>: <span class="string">"AwsLambdaJerseyApi"</span>,  </span><br><span class="line">	        <span class="string">"OutputKey"</span>: <span class="string">"AwsLambdaJerseyApi"</span>,</span><br><span class="line">	        <span class="string">"OutputValue"</span>: <span class="string">"https://xxxxxxx.execute-api.us-west-2.amazonaws.com/Prod/ping"</span></span><br><span class="line">	    &#125;</span><br><span class="line">	]</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据生成的链接访问 api</span></span><br><span class="line">$ curl https://xxxxxxx.execute-api.us-west-2.amazonaws.com/Prod/ping¡</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/21/js-global-namespace/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/06/21/js-global-namespace/" class="post-title-link" itemprop="url">js global namespace</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-21 12:27:25" itemprop="dateCreated datePublished" datetime="2018-06-21T12:27:25+08:00">2018-06-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ol>
+<li>最基本的js写法是：不管是要调用项目内或项目外的其他文件的方法，都是直接在当前文件中调用，然后在web文件（html）中利用 <code>&lt;script&gt;</code> 按依赖顺序引入所有的内部和外部文件。<ul>
+<li>即每个js中声明的变量都是全局变量。js采用{}来定义变量生命周期（或者说namespace），除了被｛｝所包围的其余变量都是全局变量。有个god object即window－－－全局对象，所有的变量、函数都是这个god object的member－－－全局变量。</li>
+<li>利用 <code>&lt;script&gt;</code> 引入所有js，效果类似于将所有文件的内容组装到一个大文件运行。因此声明顺序受依赖关系约束。</li>
+<li>即browser运行每个html时，它始终是将这个html中的所有script作为一个文件来运行。即browser是个解释执行器，它总是执行一个文件。而不同于后端（例如java 的jre）的编译运行，</li>
+</ul>
+</li>
+<li>前后端的区别：<ul>
+<li>browser是解释执行器，而js不提供import机制，所以只能人工解决依赖确定关系－－－需要提供一种机制来解决这中依赖确定关系</li>
+<li>后端执行是通过server来执行的，服务器会下载所需lib存放到服务器容器中，运行是直接从容器拿。而前端执行是通过browser来执行，每次执行js browser都需要下载依赖的各种js文件，然后将这些文件组合成一个来运行。当然有jquery之类的会利用缓存使得不需要每次执行都下载，然而这依然不是一个最佳解决方案－－－需要提供一种机制来解决依赖下载和组装。</li>
+</ul>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>前端</th>
+<th>后端</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>开发生命周期</td>
+<td>1. code<br> 2. 简单组合所有文件<br> 3. 解释一行为可执行码－－即时性<br> 4. 执行一行</td>
+<td>1. code（提供import）<br> 2. 编译：确定依赖关系，据此依次编译各个文件为汇编码／机器码（其中有预编译、预处理等步骤）<br> 3. 连接：将外部函数代码添加到上述文件中，组合成一个完整可执行文件。<br> 4. 运行整个文件</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/21/js-ecosystem-md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/06/21/js-ecosystem-md/" class="post-title-link" itemprop="url">js ecosystem</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-21 11:54:38" itemprop="dateCreated datePublished" datetime="2018-06-21T11:54:38+08:00">2018-06-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>我在学习 react，一直在使用 <a href="https://github.com/facebook/create-react-app" target="_blank" rel="noopener">create-react-app</a> 创建项目。create-react-app 其实包括两个核心：</p>
+<ul>
+<li><code>create-react-app</code>：主要提供了 command-line 工具，方便用户创建 react 项目</li>
+<li><code>react-scripts</code>：这才是核心。它封装了所有开发 react 项目的配置，使得用户可以零配置直接开始开发 react。用户基本不需要更新 <code>create-react-app</code>，因为它总是拉最新的 <code>react-scripts</code>，而 <code>react-scripts</code> 才是简化用户配置的核心。</li>
+</ul>
+<p>问题来了，我在写测试的时候发现，<code>react-scripts</code> 默认配置使用的是 jest，而且版本较低（可运行 <code>npm ls jest</code> 查看依赖树，结果如下图所示）。而我需要使用的 data-driven-test 依赖包 <code>jest-each</code> 是 jest 23.0.0 以后的版本才有的。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/721960-cc0aae2294d01d0a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="react-scripts-dependency.png"></p>
+<p>所以我需要在测试的时候不使用默认安装的 jest，</p>
+<p>读了一个 <a href="https://medium.com/@francesco.agnoletto/i-didnt-like-create-react-app-so-i-created-my-own-boilerplate-190a7dd5d74" target="_blank" rel="noopener">post: 自己写样板，不使用 create-react-app</a>，受它的启发要自己配置 react 项目，那么就有必要了解 js ecosystem 中的一些工程。</p>
+<h1 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a><a href="https://www.webpackjs.com/concepts/" target="_blank" rel="noopener">webpack</a></h1><p>一个开源的前端打包工具，支持用户进行模块化开发（即用户开发很多 module，然后不同的 mudule 之间可通过 import, export 进行相互引用）。原本 js 是不支持的，可参见 <a href="https://hfcherish.github.io/2018/06/21/js-global-namespace/" target="_blank" rel="noopener">js global namespace</a>。</p>
+<h1 id="ESLint"><a href="#ESLint" class="headerlink" title="ESLint"></a><a href="http://eslint.cn/docs/user-guide/configuring" target="_blank" rel="noopener">ESLint</a></h1><p>是一个 javascript 的语法检查器。类似于在 IDE 中写 java 时的即时编译检查。它是可以配置的，以完成你所需要的检查。</p>
+<h1 id="ECMAScript"><a href="#ECMAScript" class="headerlink" title="ECMAScript"></a><a href="https://zh.wikipedia.org/wiki/ECMAScript" target="_blank" rel="noopener">ECMAScript</a></h1><p><a href="https://huangxuan.me/2015/09/22/js-version/" target="_blank" rel="noopener">ES5, ES6, ES2016, ES.Next: What’s going on with JavaScript versioning?</a> 翻译的这个文章讲得很好，我直接引用原文：</p>
+<blockquote>
+<ul>
+<li><strong>ECMAScript</strong>：一个由 ECMA International 进行标准化，TC39 委员会进行监督的语言。通常用于指代标准本身。</li>
+<li><strong>JavaScript</strong>：ECMAScript 标准的各种实现的最常用称呼。这个术语并不局限于某个特定版本的 ECMAScript 规范，并且可能被用于任何不同程度的任意版本的 ECMAScript 的实现。</li>
+<li><strong>ECMAScript 5 (ES5)</strong>：ECMAScript 的第五版修订，于 2009 年完成标准化。这个规范在所有现代浏览器中都相当完全的实现了。</li>
+<li><strong>ECMAScript 6 (ES6) / ECMAScript 2015 (ES2015)</strong>：ECMAScript 的第六版修订，于 2015 年完成标准化。这个标准被部分实现于大部分现代浏览器。可以查阅这张兼容性表来查看不同浏览器和工具的实现情况。</li>
+<li><strong>ECMAScript 2016</strong>：预计的第七版 ECMAScript 修订，计划于明年夏季发布。这份规范具体将包含哪些特性还没有最终确定</li>
+<li><strong>ECMAScript Proposals</strong>：被考虑加入未来版本 ECMAScript 标准的特性与语法提案，他们需要经历五个阶段：Strawman（稻草人），Proposal（提议），Draft（草案），Candidate（候选）以及 Finished （完成）。</li>
+</ul>
+</blockquote>
+<p>blog 里也讲了 ecmascript 的历史。简答总结一下：</p>
+<ol>
+<li>很久以前（1996），网景浏览器把他们写的 javascript 交给 ECMA International（欧洲计算机制造协会）进行标准化</li>
+<li>ECMA 1，2，3 版本很快发布，而且被各大浏览器厂商支持</li>
+<li>ECMA 一直没有变化，各大浏览器厂商自行扩展（所以 javascript 其实是 ECMAScript 的实现和扩展）</li>
+<li>某一年，ECMA 4 出来，太激进，被废弃了（只有 Adobe 实现了）</li>
+<li>2009 年，ECMA 5（es5） 出来。但直到 2012 年才逐渐被公众接受</li>
+<li>2015 年，es6 出来。与此同时，相关委员会决定每年定义一次新标准，避免等待整个草案完成。因此 ES6 也被命名为 ECMAScript 2015</li>
+</ol>
+<p>一些资源：</p>
+<ul>
+<li>如果你还不熟悉 ES6，Babel 有一个<a href="https://babeljs.io/docs/learn-es2015/" target="_blank" rel="noopener">很不错的特性概览</a></li>
+<li>如果你希望深入 ES6，这里有两本很不错的书： Axel Rauschmayer 的 <a href="http://exploringjs.com/" target="_blank" rel="noopener">Exploring ES6</a>和 Nicholas Zakas 的 <a href="https://leanpub.com/understandinges6" target="_blank" rel="noopener">Understanding ECMAScript 6</a>。Axel 的博客 <a href="http://www.2ality.com/" target="_blank" rel="noopener">2ality</a> 也是很不错的 ES6 资源</li>
+</ul>
+<h1 id="babel"><a href="#babel" class="headerlink" title="babel"></a><a href="https://www.babeljs.cn/" target="_blank" rel="noopener">babel</a></h1><p>babel 是一个 javascript 编译器。其核心是一个语法转换器，能将使用 es6、flow、jsx 的代码转换为浏览器兼容的 javascript。所以这些项目 build 后其实是生成了浏览器兼容的 javascript。</p>
+<p>为啥会有这个，原因就是上边说的，新版本 js 出来了，但是大家还不支持。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/15/js-export/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/06/15/js-export/" class="post-title-link" itemprop="url">js export</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-15 18:17:19" itemprop="dateCreated datePublished" datetime="2018-06-15T18:17:19+08:00">2018-06-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/export" target="_blank" rel="noopener">export</a> 用于从 module 中导出函数、对象、原始值，在其他地方通过 <code>import</code> 使用这些函数、对象、原始值。</p>
+<p>有两种导出方式：命名导出（<code>export</code>），默认导出（<code>export default</code>）</p>
+<h1 id="1-命名导出"><a href="#1-命名导出" class="headerlink" title="1. 命名导出"></a>1. 命名导出</h1><p>就是导出 module 中有命名的函数、对象、原始值。相应的，import 时，必须使用相同的命名引入（当然可以使用 <code>import a as b from &#39;./module&#39;</code> 来修改名称）</p>
+<p>举例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义时导出</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> a = <span class="string">'a'</span>, b = <span class="string">'b'</span>; <span class="comment">// 适用于 var, let</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">a</span></span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义后导出</span></span><br><span class="line"><span class="keyword">const</span> a = <span class="string">'a'</span>, b = <span class="string">'b'</span>;</span><br><span class="line"><span class="keyword">export</span> &#123;a, b <span class="keyword">as</span> newB&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 导出其他模块的导出。</span></span><br><span class="line"><span class="comment">// 此时仅会导出 otherModule 的命名导出，所以这里最终导出的还是有命名的</span></span><br><span class="line"><span class="keyword">export</span> * <span class="keyword">from</span> <span class="string">'otherModule'</span>;</span><br><span class="line"><span class="keyword">export</span> &#123;a, b <span class="keyword">as</span> newB&#125; <span class="keyword">from</span> <span class="string">'otherModule'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果需要导出 otherModule 的默认导出，只能这样写：</span></span><br><span class="line"><span class="keyword">import</span> defaultExport <span class="keyword">from</span> <span class="string">'otherModule'</span>;</span><br><span class="line"><span class="keyword">export</span> [<span class="keyword">default</span>] defaultExport;</span><br></pre></td></tr></table></figure>
+<h1 id="2-默认导出"><a href="#2-默认导出" class="headerlink" title="2. 默认导出"></a>2. 默认导出</h1><p>默认导出（<code>export default</code>）的函数、类可以认为没有固定名称，即 import 时，可以用任何名称导入</p>
+<p>一个 module 中只能有一个默认导出。</p>
+<p><code>export default</code> 后不能跟 <code>const</code>, <code>let</code>, <code>var</code></p>
+<p>举例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 默认导出函数（定义时）</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"><span class="keyword">import</span> myname <span class="keyword">from</span> <span class="string">'module'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">funcName</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"><span class="keyword">import</span> funcNameMy <span class="keyword">from</span> <span class="string">'module2'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认导出类（定义时）</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">className</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认导出 expression</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> a = <span class="string">'a'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认导出（定义后）</span></span><br><span class="line"><span class="keyword">export</span> &#123;a <span class="keyword">as</span> <span class="keyword">default</span>, b, c <span class="keyword">as</span> newC&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/14/hexo-next/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/06/14/hexo-next/" class="post-title-link" itemprop="url">hexo+next 设置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-14 19:19:44" itemprop="dateCreated datePublished" datetime="2018-06-14T19:19:44+08:00">2018-06-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a href="https://hfcherish.github.io/2018/05/23/build-blog-using-hexo/" target="_blank" rel="noopener">使用 hexo + github 部署博客</a> 介绍了怎么部署自己的博客，然后就开始无休止的调整主题。</p>
+<p>我选定的主题是 <a href="https://github.com/theme-next/hexo-theme-next" target="_blank" rel="noopener">next</a>：有目录，也有集成搜索的文档，这是一个 <a href="http://www.itfanr.cc/about/" target="_blank" rel="noopener">example</a>，参照 <a href="https://theme-next.iissnan.com/third-party-services.html" target="_blank" rel="noopener">第三方集成</a> 集成搜索等功能. next 优化配置可参考 <a href="http://www.vitah.net/posts/20f300cc/" target="_blank" rel="noopener">这篇文章</a></p>
+<h1 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h1><p>我是采用两个配置文件的写法，即在 <code>source/_data/next.yml</code> 中写 next 相关的配置。</p>
+<h1 id="code-highlight-配置"><a href="#code-highlight-配置" class="headerlink" title="code highlight 配置"></a>code highlight 配置</h1><p>按照<a href="https://theme-next.iissnan.com/getting-started.html#theme-settings" target="_blank" rel="noopener">主题设定教程</a>，我设置的是 <code>scheme: Mist</code>。默认的代码 highlight 是用 <a href="https://github.com/chriskempson/tomorrow-theme" target="_blank" rel="noopener">tomorrow theme</a>，按照 <a href="https://theme-next.iissnan.com/theme-settings.html#syntax-highlight-scheme" target="_blank" rel="noopener">代码高亮设置教程</a>，可以有五种选项。但是很多 code grammar 高亮显示无效，比如 jsx。所以想换一个 highlight 主题。</p>
+<p>找了个 <a href="https://vxhly.github.io/2017/10/hexo-next-advanced-settings/" target="_blank" rel="noopener">code highlight theme 配置教程</a> ，开始动手。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/05/react-set-state/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/06/05/react-set-state/" class="post-title-link" itemprop="url">react setState 的坑</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-05 19:39:46" itemprop="dateCreated datePublished" datetime="2018-06-05T19:39:46+08:00">2018-06-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p><code>setState</code> 是更新 <code>state</code> 的 API，进而会引发组件的重新渲染。然而在使用过程中发现有些坑(参见 <a href="https://doc.react-china.org/docs/state-and-lifecycle.html#%E6%AD%A3%E7%A1%AE%E5%9C%B0%E4%BD%BF%E7%94%A8%E7%8A%B6%E6%80%81" target="_blank" rel="noopener">react 正确使用状态</a>)：</p>
+<blockquote>
+<ol>
+<li><strong><code>setState(obj)</code>一般情况下不会立即更新 <code>state</code> 的值；</strong></li>
+<li><strong>同一 cycle 的多次 <code>setState</code> 调用可能会合并（性能考虑）</strong></li>
+</ol>
+</blockquote>
+<p>对于第一点，引用下边的例子：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">incrementMultiple</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.setState(&#123;<span class="attr">count</span>: <span class="keyword">this</span>.state.count + <span class="number">1</span>&#125;);</span><br><span class="line">  <span class="keyword">this</span>.setState(&#123;<span class="attr">count</span>: <span class="keyword">this</span>.state.count + <span class="number">1</span>&#125;);</span><br><span class="line">  <span class="keyword">this</span>.setState(&#123;<span class="attr">count</span>: <span class="keyword">this</span>.state.count + <span class="number">1</span>&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码运行时，虽然是对 <code>state</code> 加了三次，但是每次加操作都是针对初始的 <code>state</code>，所以最终相当于仅加了一次。即上述代码等同于下边的代码：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.assign(</span><br><span class="line">  previousState,</span><br><span class="line">  &#123;<span class="attr">quantity</span>: state.quantity + <span class="number">1</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">quantity</span>: state.quantity + <span class="number">1</span>&#125;,</span><br><span class="line">  ...</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h1 id="为什么"><a href="#为什么" class="headerlink" title="为什么"></a>为什么</h1><h2 id="从-react-生命周期看-setState-生效时间"><a href="#从-react-生命周期看-setState-生效时间" class="headerlink" title="从 react 生命周期看 setState 生效时间"></a>从 react 生命周期看 setState 生效时间</h2><p>要理解其原因，我们要先看一下 <a href="https://github.com/superman66/Front-End-Blog/issues/2" target="_blank" rel="noopener">react 生命周期</a>：</p>
+<p><img src="https://cloud.githubusercontent.com/assets/12592949/24903814/1b2ff98c-1ee1-11e7-9f5a-59eb84171b53.png" alt="react 生命周期"></p>
+<p><code>setState</code> 引起状态更新涉及四个函数：</p>
+<ul>
+<li>shouldComponentUpdate（默认 true）</li>
+<li>componentWillUpdate</li>
+<li>render</li>
+<li>componentDidUpdate</li>
+</ul>
+<p><strong>但直到 <code>render</code> 被调用时，<code>state</code> 才被更新</strong>。</p>
+<p>（如果 <code>shouldComponentUpdate</code> 返回 <code>false</code>，则 <code>render</code> 不会被执行，但是 <code>state</code> 会被更新）</p>
+<p>因此多次调用 <code>setState</code> 时，不能依靠 <code>this.state</code> 来计算下一个 <code>state</code> 的值，因为 <code>this.state</code> 一直没更新。</p>
+<blockquote>
+<p>setState() does not always immediately update the component. It may batch or defer the update until later. This makes reading this.state right after calling setState() a potential pitfall.</p>
+</blockquote>
+<p>但是可以使用 setState(func) api 来解决上述问题</p>
+<h2 id="setState-api"><a href="#setState-api" class="headerlink" title="setState api"></a><a href="https://doc.react-china.org/docs/react-component.html#setstate" target="_blank" rel="noopener">setState api</a></h2><p><code>setState</code> api 如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setState(updater[, callback])</span><br></pre></td></tr></table></figure>
+<p>其中，<code>callback</code> 是在 <code>setState</code> 完成且组件 re-render 完成后执行（一般建议用 <code>componentDidUpdate</code> 来实现类似逻辑）。</p>
+<p>而 <code>updater</code> 可以是：</p>
+<ul>
+<li>obj：异步将 obj <strong>shallow merge</strong> 到旧 <code>state</code>，构建新 <code>state</code></li>
+<li>func：形式如下：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(prevState, props) =&gt; stateChange</span><br></pre></td></tr></table></figure>
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><p>上述例子做如下修改即可实现真正的累加：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">increment</span>(<span class="params">state</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;<span class="attr">count</span>: state.count + <span class="number">1</span>&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">incrementMultiple</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.setState(increment);</span><br><span class="line">  <span class="keyword">this</span>.setState(increment);</span><br><span class="line">  <span class="keyword">this</span>.setState(increment);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.jianshu.com/p/9278c4835c55" target="_blank" rel="noopener">更详细请点击参考这篇文章</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/31/javascript-spread-operator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/05/31/javascript-spread-operator/" class="post-title-link" itemprop="url">javascript 表达式和操作符</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-05-31 16:09:58" itemprop="dateCreated datePublished" datetime="2018-05-31T16:09:58+08:00">2018-05-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="扩展运算符"><a href="#扩展运算符" class="headerlink" title="... 扩展运算符"></a><code>...</code> 扩展运算符</h1><p><code>...obj</code> 是 js 的扩展运算符，可以将一个可迭代的对象在函数调用的位置展开成为多个参数,或者在数组字面量中展开成多个数组元素。(其他可参见<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators#Relational_operators" target="_blank" rel="noopener">运算符介绍</a>，<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators" target="_blank" rel="noopener">运算符和表达式清单 reference</a>)</p>
+<p>eg.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在数组字面量中展开</span></span><br><span class="line"><span class="comment">// 利用扩展运算符，实现了数组合并</span></span><br><span class="line"><span class="keyword">var</span> parts = [<span class="string">'shoulder'</span>, <span class="string">'knees'</span>];</span><br><span class="line"><span class="keyword">var</span> lyrics = [<span class="string">'head'</span>, ...parts, <span class="string">'and'</span>, <span class="string">'toes'</span>];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 在函数调用处展开</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">x, y, z</span>) </span>&#123; &#125;</span><br><span class="line"><span class="keyword">var</span> args = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line">f(...args);</span><br></pre></td></tr></table></figure>
+<h1 id="template-literals"><a href="#template-literals" class="headerlink" title=" template literals"></a><code></code> template literals</h1><p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals" target="_blank" rel="noopener">template literals</a></p>
+<p><a href="https://www.npmjs.com/package/sql-template-strings" target="_blank" rel="noopener">sql template strings</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/7/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cherish</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">269k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:04</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

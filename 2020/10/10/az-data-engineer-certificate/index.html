@@ -1,16 +1,465 @@
-{% extends '_layout.njk' %}
-{% import '_macro/sidebar.njk' as sidebar_template with context %}
+<!DOCTYPE html>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block class %}post posts-expand{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block content %}
 
-  {{ partial('_macro/post.njk', {post: page}) }}
 
-{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-{% block sidebar %}
-  {{ sidebar_template.render(page.toc.enable) }}
-{% endblock %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="learning paths On-premises Env vs Cloudlink The term total cost of ownership (TCO) describes the final cost of owning a given technology. In on-premises systems, TCO includes the following costs:  Har">
+<meta property="og:type" content="article">
+<meta property="og:title" content="az data engineer certificate">
+<meta property="og:url" content="http://yoursite.com/2020/10/10/az-data-engineer-certificate/index.html">
+<meta property="og:site_name" content="Cherish&#39;s Blog">
+<meta property="og:description" content="learning paths On-premises Env vs Cloudlink The term total cost of ownership (TCO) describes the final cost of owning a given technology. In on-premises systems, TCO includes the following costs:  Har">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-10-10T09:03:32.000Z">
+<meta property="article:modified_time" content="2022-10-22T06:22:52.330Z">
+<meta property="article:author" content="Cherish">
+<meta property="article:tag" content="big data">
+<meta property="article:tag" content="certificate">
+<meta property="article:tag" content="cloud computing">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yoursite.com/2020/10/10/az-data-engineer-certificate/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"Chinese","comments":true,"permalink":"http://yoursite.com/2020/10/10/az-data-engineer-certificate/","path":"2020/10/10/az-data-engineer-certificate/","title":"az data engineer certificate"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>az data engineer certificate | Cherish's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cherish's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#On-premises-Env-vs-Cloud"><span class="nav-number">1.</span> <span class="nav-text">On-premises Env vs Cloud</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Comment"><span class="nav-number">1.0.1.</span> <span class="nav-text">Comment</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-types"><span class="nav-number">2.</span> <span class="nav-text">Data types</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Azure-Storage"><span class="nav-number">2.1.</span> <span class="nav-text">Azure Storage</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tasks-of-an-Azure-data-engineer"><span class="nav-number">3.</span> <span class="nav-text">Tasks of an Azure data engineer:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Plan-the-data-storage-solution"><span class="nav-number">4.</span> <span class="nav-text">Plan the data storage solution</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Questions"><span class="nav-number"></span> <span class="nav-text">Questions</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Private-cloud-vs-Public-Cloud-vs-Specific-Cloud"><span class="nav-number">1.</span> <span class="nav-text">Private cloud vs Public Cloud vs Specific Cloud</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Points"><span class="nav-number">1.0.1.</span> <span class="nav-text">Points:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Azure-storage-account"><span class="nav-number">2.</span> <span class="nav-text">Azure storage account</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Column-database"><span class="nav-number">3.</span> <span class="nav-text">Column database</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ELT-vs-ELTL"><span class="nav-number">4.</span> <span class="nav-text">ELT vs ELTL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Types"><span class="nav-number">5.</span> <span class="nav-text">Data Types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Azure-SQL"><span class="nav-number">6.</span> <span class="nav-text">Azure SQL</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cherish</p>
+  <div class="site-description" itemprop="description">从心所欲不逾矩</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="Chinese">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/10/az-data-engineer-certificate/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="az data engineer certificate | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          az data engineer certificate
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-10-10 17:03:32" itemprop="dateCreated datePublished" datetime="2020-10-10T17:03:32+08:00">2020-10-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a href="https://docs.microsoft.com/zh-cn/learn/certifications/azure-data-engineer?tab=tab-learning-paths" target="_blank" rel="noopener">learning paths</a></p>
+<h2 id="On-premises-Env-vs-Cloud"><a href="#On-premises-Env-vs-Cloud" class="headerlink" title="On-premises Env vs Cloud"></a>On-premises Env vs Cloud</h2><p><a href="https://docs.microsoft.com/en-us/learn/modules/evolving-world-of-data/3-systems-on-premise-vs-cloud" target="_blank" rel="noopener">link</a></p>
+<p>The term <em>total cost of ownership</em> (TCO) describes the final cost of owning a given technology. In <strong>on-premises systems</strong>, TCO includes the following costs:</p>
+<ul>
+<li>Hardware</li>
+<li>Software licensing</li>
+<li>Labor (installation, upgrades, maintenance)</li>
+<li>Datacenter overhead (power, telecommunications, building, heating and cooling)</li>
+</ul>
+<p><strong>Cloud systems</strong> like Azure track costs by subscriptions. A subscription can be based on usage that’s measured in compute units, hours, or transactions. The cost includes hardware, software, disk storage, and labor. Because of economies of scale, an on-premises system can rarely compete with the cloud in terms of the measurement of the service usage.</p>
+<p>The cost of operating an on-premises server system rarely aligns with the actual usage of the system. In cloud systems, the cost usually aligns more closely with the actual usage.</p>
+<h4 id="Comment"><a href="#Comment" class="headerlink" title="Comment"></a>Comment</h4><blockquote>
+<p>However, many companies use the cloud still in a wasting way. The cost in cloud systems in fact rarely aligns with the actual usage, too.</p>
+<p>The main advantage of Cloud is that it can <strong>be charged on usage</strong>. Thus, this advantage only works when using the cloud by need. Otherwise, the cloud advantage evaporates, especially from the aspect of cost.</p>
+<p>The advantages of cloud:</p>
+<ol>
+<li>charge on usage</li>
+<li>enjoy the high quality and compresensive services of big company.</li>
+</ol>
+</blockquote>
+<h2 id="Data-types"><a href="#Data-types" class="headerlink" title="Data types"></a>Data types</h2><p><a href="https://docs.microsoft.com/en-us/learn/modules/survey-the-azure-data-platform/2-structured-vs-non-structured" target="_blank" rel="noopener">link</a></p>
+<p>For nonstructured Data, the data <strong>structure is defined only when the data is read</strong>. The difference in the definition point gives you flexibility to use the same source data for different outputs.</p>
+<blockquote>
+<p>JSON is in fact semistructured data.</p>
+</blockquote>
+<p>Examples of nonstructured data include binary, audio, and image files. </p>
+<p>NoSQL is in fact semistructured data. The open-source world offers four types of NoSQL databases:</p>
+<ol>
+<li><strong>Key-value store</strong>: Stores key-value pairs of data in a table structure.</li>
+<li><strong>Document database</strong>: Stores documents that are <strong>tagged with metadata</strong> to aid document searches.</li>
+<li><strong>Graph database</strong>: Finds relationships between data points by using a structure that’s composed of vertices and edges.</li>
+<li><strong>Column database</strong>: Stores data based on columns rather than rows. Columns can be defined at the query’s runtime, allowing flexibility in the data that’s returned performantly.</li>
+</ol>
+<h3 id="Azure-Storage"><a href="#Azure-Storage" class="headerlink" title="Azure Storage"></a>Azure Storage</h3><p><a href="https://docs.microsoft.com/en-us/learn/modules/survey-the-azure-data-platform/3-store-data-using-azure-store-account" target="_blank" rel="noopener">Azure Storage account</a> is the base storage type. It’s mainly used to store data but with poor or no query ability.</p>
+<p>Azure Storage offers four configuration options:</p>
+<ul>
+<li><strong>Azure Blob</strong>: A scalable object store for text and binary data. The cheapst choice to store bot not query data.</li>
+<li><strong>Azure Files</strong>: Managed file shares for cloud or on-premises deployments</li>
+<li><strong>Azure Queue</strong>: A messaging store for reliable messaging between application components</li>
+<li><strong>Azure Table</strong>: A NoSQL store for no-schema storage of structured data</li>
+</ul>
+<h2 id="Tasks-of-an-Azure-data-engineer"><a href="#Tasks-of-an-Azure-data-engineer" class="headerlink" title="Tasks of an Azure data engineer:"></a>Tasks of an Azure data engineer:</h2><p> <a href="https://docs.microsoft.com/en-us/learn/modules/data-engineering-processes/3-data-engineering-practices" target="_blank" rel="noopener">link</a></p>
+<p><a href="https://docs.microsoft.com/zh-cn/learn/modules/data-engineering-processes/4-architecturing-project" target="_blank" rel="noopener">example</a></p>
+<p><a href="https://docs.microsoft.com/en-us/learn/modules/data-engineering-processes/2-roles-and-responsibilities" target="_blank" rel="noopener">Data Engineer vs Data Scientist vs AI engineer</a>: Data engineer decide how to organized the data and pre-process the data. Data scientist use the result of Data engineer to create analysis model, and extract value. AI engineer use the existed model &amp; tools to process the data. AI engineer may need the help of Data engineer to store the result, and the help of Data analysis to generate new model.</p>
+<p>Here are some of the tasks of an Azure data engineer:</p>
+<ul>
+<li>Design and develop data storage and data processing solutions for the enterprise.</li>
+<li>Set up and deploy cloud-based data services such as blob services, databases, and analytics.</li>
+<li>Secure the platform and the stored data. Make sure only the necessary users can access the data.</li>
+<li>Ensure business continuity in uncommon conditions by using techniques for high availability and disaster recovery.</li>
+<li>Monitor to ensure that the systems run properly and are cost-effective.</li>
+</ul>
+<h2 id="Plan-the-data-storage-solution"><a href="#Plan-the-data-storage-solution" class="headerlink" title="Plan the data storage solution"></a>Plan the data storage solution</h2><p><a href="https://docs.microsoft.com/en-us/learn/modules/choose-storage-approach-in-azure/3-operations-and-latency" target="_blank" rel="noopener">Determine operational needs</a></p>
+<p>What are the main operations you’ll be completing on each data type, and what are the performance requirements?</p>
+<p>Ask yourself these questions:</p>
+<ul>
+<li>Will you be doing simple lookups using an ID?</li>
+<li>Do you need to query the database for one or more fields?</li>
+<li>How many create, update, and delete operations do you expect?</li>
+<li>Do you need to run complex analytical queries?</li>
+<li>How quickly do these operations need to complete?</li>
+</ul>
+<p><a href="https://docs.microsoft.com/en-us/learn/modules/choose-storage-approach-in-azure/5-choose-the-right-azure-service-for-your-data" target="_blank" rel="noopener">a storage solution example on the e-commerce system</a>: </p>
+<ul>
+<li><p>Product catalog data: cosmosDB</p>
+<ul>
+<li><p><strong>Data classification:</strong> Semi-structured because of the need to extend or modify the schema for new products</p>
+<p><strong>Operations:</strong></p>
+<ul>
+<li>Customers require a high number of read operations, with the ability to query on many fields within the database.</li>
+<li>The business requires a high number of write operations to track the constantly changing inventory.</li>
+</ul>
+<p><strong>Latency &amp; throughput:</strong> High throughput and low latency</p>
+<p><strong>Transactional support:</strong> Required</p>
+</li>
+</ul>
+</li>
+<li><p>Photos &amp; videos: azure blob (with azure CDN)</p>
+<ul>
+<li><p><strong>Data classification:</strong> Unstructured</p>
+<p><strong>Operations:</strong></p>
+<ul>
+<li>Only need to be retrieved by ID.</li>
+<li>Customers require a high number of read operations with low latency.</li>
+<li>Creates and updates will be somewhat infrequent and can have higher latency than read operations.</li>
+</ul>
+<p><strong>Latency &amp; throughput:</strong> Retrievals by ID need to support low latency and high throughput. Creates and updates can have higher latency than read operations.</p>
+<p><strong>Transactional support:</strong> Not required</p>
+</li>
+</ul>
+</li>
+<li><p>Buisiness Data: azure sql (with azure analysis services)</p>
+<ul>
+<li><p><strong>Data classification:</strong> Structured</p>
+<p><strong>Operations:</strong> Read-only, complex analytical queries across multiple databases</p>
+<p><strong>Latency &amp; throughput:</strong> Some latency in the results is expected based on the complex nature of the queries.</p>
+<p><strong>Transactional support:</strong> Required</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Questions"><a href="#Questions" class="headerlink" title="Questions"></a>Questions</h1><h2 id="Private-cloud-vs-Public-Cloud-vs-Specific-Cloud"><a href="#Private-cloud-vs-Public-Cloud-vs-Specific-Cloud" class="headerlink" title="Private cloud vs Public Cloud vs Specific Cloud"></a>Private cloud vs Public Cloud vs Specific Cloud</h2><ul>
+<li><p>[x] Are there still private cloud and public cloud??    ===&gt; yes</p>
+</li>
+<li><p>[ ] What’s the difference? The private cloud will have higher quality cloud? The so-called SLA of public cloud is in fact not assured??</p>
+</li>
+<li><p>[x] Maybe there’re also specific cloud, like financial cloud (maybe more secure and fast) ===&gt; yes</p>
+</li>
+</ul>
+<h4 id="Points"><a href="#Points" class="headerlink" title="Points:"></a>Points:</h4><blockquote>
+<ol>
+<li>There is specific cloud. Mayi has financial cloud.</li>
+<li>There are both public cloud &amp; private cloud, but they’re closely related. That is, they use the same cloud technology (images), but with different clusters &amp; differnt tariff.</li>
+</ol>
+</blockquote>
+<h2 id="Azure-storage-account"><a href="#Azure-storage-account" class="headerlink" title="Azure storage account"></a>Azure storage account</h2><ol>
+<li>how to configure to use different type?</li>
+<li>Why they’re all in storage account instead of as independant service??</li>
+<li>azure blob vs azure file storage</li>
+</ol>
+<h2 id="Column-database"><a href="#Column-database" class="headerlink" title="Column database"></a>Column database</h2><ol>
+<li>How the data is organized in the hardware?</li>
+<li>How should we save the data into column database?</li>
+<li>Wide Column Stores</li>
+<li>BigTable</li>
+</ol>
+<p>Cosmosdb(Cassendra) vs HBase: infrastructure, load-balance???</p>
+<p>Cassendra: Wide Column Stores</p>
+<h2 id="ELT-vs-ELTL"><a href="#ELT-vs-ELTL" class="headerlink" title="ELT vs ELTL"></a>ELT vs ELTL</h2><ul>
+<li style="list-style: none"><input type="checkbox"></input> In fact, often ELTL???</li>
+<li style="list-style: none"><input type="checkbox"></input> How is the data stored in T(transform)???</li>
+</ul>
+<h2 id="Data-Types"><a href="#Data-Types" class="headerlink" title="Data Types"></a>Data Types</h2><ul>
+<li style="list-style: none"><input type="checkbox"></input> what’s markup language???</li>
+<li style="list-style: none"><input type="checkbox"></input> why yaml is not markup language but json is???</li>
+</ul>
+<h2 id="Azure-SQL"><a href="#Azure-SQL" class="headerlink" title="Azure SQL"></a>Azure SQL</h2><ul>
+<li style="list-style: none"><input type="checkbox"></input> how azure sql support queries across multiple databases??</li>
+<li style="list-style: none"><input type="checkbox"></input> Why does azure sql data warehouse not support???</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/big-data/" rel="tag"># big data</a>
+              <a href="/tags/certificate/" rel="tag"># certificate</a>
+              <a href="/tags/cloud-computing/" rel="tag"># cloud computing</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/07/23/network/" rel="prev" title="network">
+                  <i class="fa fa-chevron-left"></i> network
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/11/09/data-lake/" rel="next" title="data lake">
+                  data lake <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cherish</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">269k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:04</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,16 +1,350 @@
-{% extends '_layout.njk' %}
-{% import '_macro/sidebar.njk' as sidebar_template with context %}
+<!DOCTYPE html>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block class %}post posts-expand{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block content %}
 
-  {{ partial('_macro/post.njk', {post: page}) }}
 
-{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-{% block sidebar %}
-  {{ sidebar_template.render(page.toc.enable) }}
-{% endblock %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="react 提倡组件化开发，以促进复用。react native 也一样是组件化开发思想。不同的是，react 中是使用原生的 html 组件作为基本组件（div、a…），而 react native 使用的是另一些原生组件。用户的自定义组件也是基于这些原生组件。 所以要用 react native，必须了解这些原生组件（就跟学 html 组件差不多） general props一些所有组件或大部">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react native components &amp; apis">
+<meta property="og:url" content="http://yoursite.com/2022/10/22/react-native-components-apis/index.html">
+<meta property="og:site_name" content="Cherish&#39;s Blog">
+<meta property="og:description" content="react 提倡组件化开发，以促进复用。react native 也一样是组件化开发思想。不同的是，react 中是使用原生的 html 组件作为基本组件（div、a…），而 react native 使用的是另一些原生组件。用户的自定义组件也是基于这些原生组件。 所以要用 react native，必须了解这些原生组件（就跟学 html 组件差不多） general props一些所有组件或大部">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-10-22T06:22:52.351Z">
+<meta property="article:modified_time" content="2022-10-22T06:22:52.352Z">
+<meta property="article:author" content="Cherish">
+<meta property="article:tag" content="react">
+<meta property="article:tag" content="react native">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yoursite.com/2022/10/22/react-native-components-apis/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"Chinese","comments":true,"permalink":"http://yoursite.com/2022/10/22/react-native-components-apis/","path":"2022/10/22/react-native-components-apis/","title":"react native components & apis"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>react native components & apis | Cherish's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cherish's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#general-props"><span class="nav-number">1.</span> <span class="nav-text">general props</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#style"><span class="nav-number">1.1.</span> <span class="nav-text">style</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E5%AE%BD%E5%BA%A6%E9%AB%98%E5%BA%A6"><span class="nav-number">1.1.1.</span> <span class="nav-text">组件宽度高度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flexbox-%E5%B8%83%E5%B1%80"><span class="nav-number">1.1.2.</span> <span class="nav-text">flexbox 布局</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6-components"><span class="nav-number">2.</span> <span class="nav-text">核心组件 components</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#View"><span class="nav-number">2.1.</span> <span class="nav-text">View</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Text"><span class="nav-number">2.2.</span> <span class="nav-text">Text</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TextInput"><span class="nav-number">2.3.</span> <span class="nav-text">TextInput</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Image"><span class="nav-number">2.4.</span> <span class="nav-text">Image</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SrollView"><span class="nav-number">2.5.</span> <span class="nav-text">SrollView</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#StyleSheet"><span class="nav-number">2.6.</span> <span class="nav-text">StyleSheet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FlatList"><span class="nav-number">2.7.</span> <span class="nav-text">FlatList</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SectionList"><span class="nav-number">2.8.</span> <span class="nav-text">SectionList</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#API"><span class="nav-number">3.</span> <span class="nav-text">API</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cherish</p>
+  <div class="site-description" itemprop="description">从心所欲不逾矩</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="Chinese">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/10/22/react-native-components-apis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="react native components & apis | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          react native components & apis
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-10-22 14:22:52" itemprop="dateCreated datePublished" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>react 提倡组件化开发，以促进复用。react native 也一样是组件化开发思想。不同的是，react 中是使用原生的 html 组件作为基本组件（div、a…），而 react native 使用的是另一些原生组件。用户的自定义组件也是基于这些原生组件。</p>
+<p>所以要用 react native，必须了解这些原生组件（就跟学 html 组件差不多）</p>
+<h1 id="general-props"><a href="#general-props" class="headerlink" title="general props"></a>general props</h1><p>一些所有组件或大部分组件都有的属性。</p>
+<h2 id="style"><a href="#style" class="headerlink" title="style"></a><a href="https://reactnative.cn/docs/0.51/style.html#content" target="_blank" rel="noopener">style</a></h2><p>所有的核心组件都接受名为 <code>style</code> 的属性（类似 html 标签中的 <code>html</code>）。这些样式名基本上是遵循了 web 上的 CSS 的命名，只是按照 JS 的语法要求使用了驼峰命名法，例如将 <code>background-color</code> 改为<code>backgroundColor</code>。</p>
+<p>实际开发中组件的样式会越来越复杂，我们建议使用StyleSheet.create来集中定义组件的样式。常见的做法是按顺序声明和使用 <code>style</code> 属性，以借鉴 CSS 中的“层叠”做法（即后声明的属性会覆盖先声明的同名属性）。比如像下面这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; AppRegistry, StyleSheet, Text, View &#125; <span class="keyword">from</span> <span class="string">'react-native'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">LotsOfStyles</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;View&gt;</span><br><span class="line">        &lt;Text style=&#123;styles.red&#125;&gt;just red&lt;<span class="regexp">/Text&gt;</span></span><br><span class="line"><span class="regexp">        &lt;Text style=&#123;styles.bigblue&#125;&gt;just bigblue&lt;/</span>Text&gt;</span><br><span class="line">        &lt;Text style=&#123;[styles.bigblue, styles.red]&#125;&gt;bigblue, then red&lt;<span class="regexp">/Text&gt;</span></span><br><span class="line"><span class="regexp">        &lt;Text style=&#123;[styles.red, styles.bigblue]&#125;&gt;red, then bigblue&lt;/</span>Text&gt;</span><br><span class="line">      &lt;<span class="regexp">/View&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">const styles = StyleSheet.create(&#123;</span></span><br><span class="line"><span class="regexp">  bigblue: &#123;</span></span><br><span class="line"><span class="regexp">    color: 'blue',</span></span><br><span class="line"><span class="regexp">    fontWeight: 'bold',</span></span><br><span class="line"><span class="regexp">    fontSize: 30,</span></span><br><span class="line"><span class="regexp">  &#125;,</span></span><br><span class="line"><span class="regexp">  red: &#123;</span></span><br><span class="line"><span class="regexp">    color: 'red',</span></span><br><span class="line"><span class="regexp">  &#125;,</span></span><br><span class="line"><span class="regexp">&#125;);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 注册应用(registerComponent)后才能正确渲染</span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 注意：只把应用作为一个整体注册一次，而不是每个组件/</span>模块都注册</span><br><span class="line">AppRegistry.registerComponent(<span class="string">'LotsOfStyles'</span>, () =&gt; LotsOfStyles);</span><br></pre></td></tr></table></figure>
+<h3 id="组件宽度高度"><a href="#组件宽度高度" class="headerlink" title="组件宽度高度"></a><a href="https://reactnative.cn/docs/0.51/height-and-width.html#content" target="_blank" rel="noopener">组件宽度高度</a></h3><p>有两种设定方法：</p>
+<p><strong>1. 指定宽高</strong></p>
+<p>最简单的给组件设定尺寸的方式就是在样式中指定固定的 <code>width</code>和 <code>height</code>。React Native中的尺寸都是无单位的，表示的是与设备像素密度无关的逻辑像素点。</p>
+<p><strong>2. 弹性宽高</strong></p>
+<p>在组件样式中使用 <code>flex</code> 可以使其在可利用的空间中动态地扩张或收缩。一般而言我们会使用 <code>flex:1</code> 来指定某个组件扩张以撑满所有剩余的空间。如果有多个并列的子组件使用了 <code>flex:1</code>，则这些子组件会平分父容器中剩余的空间。如果这些并列的子组件的 <code>flex</code> 值不一样，则谁的值更大，谁占据剩余空间的比例就更大（即占据剩余空间的比等于并列组件间 <code>flex</code> 值的比）。</p>
+<blockquote>
+<p>组件能够撑满剩余空间的前提是其父容器的尺寸不为零。如果父容器既没有固定的 <code>width</code> 和 <code>height</code>，也没有设定 <code>flex</code>，则父容器的尺寸为零。其子组件如果使用了 <code>flex</code>，也是无法显示的。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; AppRegistry, View &#125; <span class="keyword">from</span> <span class="string">'react-native'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">FlexDimensionsBasics</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      <span class="comment">// 试试去掉父View中的`flex: 1`。</span></span><br><span class="line">      <span class="comment">// 则父View不再具有尺寸，因此子组件也无法再撑开。</span></span><br><span class="line">      &lt;View style=&#123;&#123;<span class="attr">flex</span>: <span class="number">1</span>&#125;&#125;&gt;</span><br><span class="line">      <span class="comment">// 这里设定的是固定宽高</span></span><br><span class="line">        &lt;View style=&#123;&#123;<span class="attr">width</span>: <span class="number">50</span>, <span class="attr">height</span>: <span class="number">50</span>, <span class="attr">backgroundColor</span>: <span class="string">'powderblue'</span>&#125;&#125; /&gt;</span><br><span class="line">        <span class="comment">// 弹性宽高</span></span><br><span class="line">        &lt;View style=&#123;&#123;<span class="attr">flex</span>: <span class="number">2</span>, <span class="attr">backgroundColor</span>: <span class="string">'skyblue'</span>&#125;&#125; /&gt;</span><br><span class="line">        &lt;View style=&#123;&#123;<span class="attr">flex</span>: <span class="number">3</span>, <span class="attr">backgroundColor</span>: <span class="string">'steelblue'</span>&#125;&#125; /&gt;</span><br><span class="line">      &lt;<span class="regexp">/View&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">AppRegistry.registerComponent('AwesomeProject', () =&gt; FlexDimensionsBasics);</span></span><br></pre></td></tr></table></figure>
+<h3 id="flexbox-布局"><a href="#flexbox-布局" class="headerlink" title="flexbox 布局"></a><a href="https://reactnative.cn/docs/0.51/layout-with-flexbox.html#content" target="_blank" rel="noopener">flexbox 布局</a></h3><p>一般用以下三个属性就可以完成布局的要求了，完整的布局样式属性参照 <a href="https://reactnative.cn/docs/0.51/layout-props.html" target="_blank" rel="noopener">这篇文章</a>（也可以参考<a href="https://weibo.com/1712131295/CoRnElNkZ?ref=collection&amp;type=comment#_rnd1526464804589" target="_blank" rel="noopener">图解布局模式</a>）：</p>
+<ol>
+<li><code>flexDirection</code>: 定义布局主轴。<code>row</code>（水平轴）、<code>column</code>（default）</li>
+<li><code>justifyContent</code>: 定义主轴上元素排列的方式。<code>flex-start</code>、<code>center</code>、<code>flex-end</code>、<code>space-around</code>（元素在主轴上均匀分布）、<code>space-between</code>(元素间距均匀分布)</li>
+<li><code>alignItems</code>: 定义子元素在次轴（与主轴垂直）上的排列方式。<code>flex-start</code>、<code>flex-end</code>、<code>center</code>、<code>stretch</code>（要使 <code>stretch</code> 选项生效的话，子元素在次轴方向上不能有固定的尺寸）</li>
+</ol>
+<h1 id="核心组件-components"><a href="#核心组件-components" class="headerlink" title="核心组件 components"></a>核心组件 components</h1><p>react native 提供了很多内置的 components，社区也有很多开发者提供有很多实用的 components（可以直接从 npm 搜 <a href="https://www.npmjs.com/search?q=react-native&amp;page=1&amp;ranking=optimal" target="_blank" rel="noopener"><code>react native</code></a>，或者查看 <a href="http://www.awesome-react-native.com/#components" target="_blank" rel="noopener">awesome react native</a> 里总结的一些列表）</p>
+<p>大部分组件，最终都是基于下边这些基本组件写的。<a href="https://facebook.github.io/react-native/docs/components-and-apis.html#user-interface" target="_blank" rel="noopener">components &amp; apis</a> 总结了 basic components、用于 ui 渲染的、list 的、ios specific 的、android specific 的（学习这些相当于是学习 html 基本组件的过程）</p>
+<h2 id="View"><a href="#View" class="headerlink" title="View"></a><a href="https://reactnative.cn/docs/0.51/view.html#content" target="_blank" rel="noopener">View</a></h2><p>View 常用作其他组件的容器，来帮助控制布局和样式（类似于 div）</p>
+<h2 id="Text"><a href="#Text" class="headerlink" title="Text"></a><a href="https://reactnative.cn/docs/0.51/text.html#content" target="_blank" rel="noopener">Text</a></h2><p>写文本的</p>
+<h2 id="TextInput"><a href="#TextInput" class="headerlink" title="TextInput"></a><a href="https://reactnative.cn/docs/0.51/textinput.html#content" target="_blank" rel="noopener">TextInput</a></h2><p>是一个允许用户输入文本的基础组件</p>
+<h2 id="Image"><a href="#Image" class="headerlink" title="Image"></a><a href="https://reactnative.cn/docs/0.51/image.html#content" target="_blank" rel="noopener">Image</a></h2><p>放图片的</p>
+<h2 id="SrollView"><a href="#SrollView" class="headerlink" title="SrollView"></a><a href="https://reactnative.cn/docs/0.51/scrollview.html#content" target="_blank" rel="noopener">SrollView</a></h2><p><code>ScrollView</code> 是一个通用的可滚动的容器，你可以在其中放入多个组件和视图，而且这些组件并不需要是同类型的。<code>ScrollView</code> 不仅可以垂直滚动，还能水平滚动（通过 <code>horizontal</code> 属性来设置）。</p>
+<h2 id="StyleSheet"><a href="#StyleSheet" class="headerlink" title="StyleSheet"></a><a href="https://reactnative.cn/docs/0.51/stylesheet.html#content" target="_blank" rel="noopener">StyleSheet</a></h2><p>这其实是一个接口</p>
+<p>StyleSheet提供了一种类似CSS样式表的抽象</p>
+<h2 id="FlatList"><a href="#FlatList" class="headerlink" title="FlatList"></a><a href="https://reactnative.cn/docs/0.51/flatlist.html#content" target="_blank" rel="noopener">FlatList</a></h2><p>react native 有几种用于显示长列表的组件：<code>flatlist</code>、<code>sectionlist</code>、<code>scrollview</code> 等。</p>
+<p><code>FlatList</code> 组件用于显示一个垂直的滚动列表，其中的元素之间结构近似而仅数据不同，且元素个数可以增删。和 <code>ScrollView</code> 不同的是，<code>FlatList</code> 并不立即渲染所有元素，而是优先渲染屏幕上可见的元素。而那些已经渲染好了但移动到了屏幕之外的元素，则会从原生视图结构中移除（以提高性能）.</p>
+<p><code>FlatList</code> 组件必须的两个属性是 <code>data</code> 和 <code>renderItem</code>。<code>data</code> 是列表的数据源，而 <code>renderItem</code> 则从数据源中逐个解析数据，然后返回一个设定好格式的组件来渲染。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">FlatListBasics</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;View style=&#123;styles.container&#125;&gt;</span><br><span class="line">        &lt;FlatList</span><br><span class="line">          data=&#123;[</span><br><span class="line">            &#123;<span class="attr">key</span>: <span class="string">'Devin'</span>&#125;,</span><br><span class="line">            &#123;<span class="attr">key</span>: <span class="string">'Jackson'</span>&#125;,</span><br><span class="line">            &#123;<span class="attr">key</span>: <span class="string">'James'</span>&#125;,</span><br><span class="line">            &#123;<span class="attr">key</span>: <span class="string">'Joel'</span>&#125;,</span><br><span class="line">            &#123;<span class="attr">key</span>: <span class="string">'John'</span>&#125;,</span><br><span class="line">            &#123;<span class="attr">key</span>: <span class="string">'Jillian'</span>&#125;,</span><br><span class="line">            &#123;<span class="attr">key</span>: <span class="string">'Jimmy'</span>&#125;,</span><br><span class="line">            &#123;<span class="attr">key</span>: <span class="string">'Julie'</span>&#125;,</span><br><span class="line">          ]&#125;</span><br><span class="line">          renderItem=&#123;(&#123;item&#125;) =&gt; <span class="xml"><span class="tag">&lt;<span class="name">Text</span> <span class="attr">style</span>=<span class="string">&#123;styles.item&#125;</span>&gt;</span>&#123;item.key&#125;<span class="tag">&lt;/<span class="name">Text</span>&gt;</span></span>&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">      &lt;<span class="regexp">/View&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="SectionList"><a href="#SectionList" class="headerlink" title="SectionList"></a><a href="https://reactnative.cn/docs/0.51/sectionlist.html#content" target="_blank" rel="noopener">SectionList</a></h2><p>如果要渲染的是一组需要分组的数据，也许还带有分组标签的，那么 <code>SectionList</code> 将是个不错的选择</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;View style=&#123;styles.container&#125;&gt;</span><br><span class="line">        &lt;SectionList</span><br><span class="line">          sections=&#123;[</span><br><span class="line">            &#123;<span class="attr">title</span>: <span class="string">'D'</span>, <span class="attr">data</span>: [<span class="string">'Devin'</span>]&#125;,</span><br><span class="line">            &#123;<span class="attr">title</span>: <span class="string">'J'</span>, <span class="attr">data</span>: [<span class="string">'Jackson'</span>, <span class="string">'James'</span>, <span class="string">'Jillian'</span>, <span class="string">'Jimmy'</span>, <span class="string">'Joel'</span>, <span class="string">'John'</span>, <span class="string">'Julie'</span>]&#125;,</span><br><span class="line">          ]&#125;</span><br><span class="line">          renderItem=&#123;(&#123;item&#125;) =&gt; <span class="xml"><span class="tag">&lt;<span class="name">Text</span> <span class="attr">style</span>=<span class="string">&#123;styles.item&#125;</span>&gt;</span>&#123;item&#125;<span class="tag">&lt;/<span class="name">Text</span>&gt;</span></span>&#125;</span><br><span class="line">          renderSectionHeader=&#123;(&#123;section&#125;) =&gt; <span class="xml"><span class="tag">&lt;<span class="name">Text</span> <span class="attr">style</span>=<span class="string">&#123;styles.sectionHeader&#125;</span>&gt;</span>&#123;section.title&#125;<span class="tag">&lt;/<span class="name">Text</span>&gt;</span></span>&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">      &lt;<span class="regexp">/View&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br></pre></td></tr></table></figure>
+<h1 id="API"><a href="#API" class="headerlink" title="API"></a>API</h1><p>接口其实是仅提供接口功能的简单组件。这些组件可能没有渲染功能。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/react/" rel="tag"># react</a>
+              <a href="/tags/react-native/" rel="tag"># react native</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/10/22/java-stream-parallel/" rel="prev" title="java stream parallel 有时比 sequential 还慢？">
+                  <i class="fa fa-chevron-left"></i> java stream parallel 有时比 sequential 还慢？
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cherish</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">269k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:04</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,16 +1,362 @@
-{% extends '_layout.njk' %}
-{% import '_macro/sidebar.njk' as sidebar_template with context %}
+<!DOCTYPE html>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block class %}post posts-expand{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block content %}
 
-  {{ partial('_macro/post.njk', {post: page}) }}
 
-{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-{% block sidebar %}
-  {{ sidebar_template.render(page.toc.enable) }}
-{% endblock %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="问题setState 是更新 state 的 API，进而会引发组件的重新渲染。然而在使用过程中发现有些坑(参见 react 正确使用状态)：   setState(obj)一般情况下不会立即更新 state 的值； 同一 cycle 的多次 setState 调用可能会合并（性能考虑）   对于第一点，引用下边的例子： 12345function incrementMultiple() &amp;#12">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react setState 的坑">
+<meta property="og:url" content="http://yoursite.com/2018/06/05/react-set-state/index.html">
+<meta property="og:site_name" content="Cherish&#39;s Blog">
+<meta property="og:description" content="问题setState 是更新 state 的 API，进而会引发组件的重新渲染。然而在使用过程中发现有些坑(参见 react 正确使用状态)：   setState(obj)一般情况下不会立即更新 state 的值； 同一 cycle 的多次 setState 调用可能会合并（性能考虑）   对于第一点，引用下边的例子： 12345function incrementMultiple() &amp;#12">
+<meta property="og:locale">
+<meta property="og:image" content="https://cloud.githubusercontent.com/assets/12592949/24903814/1b2ff98c-1ee1-11e7-9f5a-59eb84171b53.png">
+<meta property="article:published_time" content="2018-06-05T11:39:46.000Z">
+<meta property="article:modified_time" content="2022-10-22T06:22:52.353Z">
+<meta property="article:author" content="Cherish">
+<meta property="article:tag" content="react">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cloud.githubusercontent.com/assets/12592949/24903814/1b2ff98c-1ee1-11e7-9f5a-59eb84171b53.png">
+
+
+<link rel="canonical" href="http://yoursite.com/2018/06/05/react-set-state/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"Chinese","comments":true,"permalink":"http://yoursite.com/2018/06/05/react-set-state/","path":"2018/06/05/react-set-state/","title":"react setState 的坑"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>react setState 的坑 | Cherish's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cherish's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88"><span class="nav-number">2.</span> <span class="nav-text">为什么</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E-react-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%9C%8B-setState-%E7%94%9F%E6%95%88%E6%97%B6%E9%97%B4"><span class="nav-number">2.1.</span> <span class="nav-text">从 react 生命周期看 setState 生效时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setState-api"><span class="nav-number">2.2.</span> <span class="nav-text">setState api</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">3.</span> <span class="nav-text">解决方案</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cherish</p>
+  <div class="site-description" itemprop="description">从心所欲不逾矩</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="Chinese">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/05/react-set-state/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="react setState 的坑 | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          react setState 的坑
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-05 19:39:46" itemprop="dateCreated datePublished" datetime="2018-06-05T19:39:46+08:00">2018-06-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p><code>setState</code> 是更新 <code>state</code> 的 API，进而会引发组件的重新渲染。然而在使用过程中发现有些坑(参见 <a href="https://doc.react-china.org/docs/state-and-lifecycle.html#%E6%AD%A3%E7%A1%AE%E5%9C%B0%E4%BD%BF%E7%94%A8%E7%8A%B6%E6%80%81" target="_blank" rel="noopener">react 正确使用状态</a>)：</p>
+<blockquote>
+<ol>
+<li><strong><code>setState(obj)</code>一般情况下不会立即更新 <code>state</code> 的值；</strong></li>
+<li><strong>同一 cycle 的多次 <code>setState</code> 调用可能会合并（性能考虑）</strong></li>
+</ol>
+</blockquote>
+<p>对于第一点，引用下边的例子：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">incrementMultiple</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.setState(&#123;<span class="attr">count</span>: <span class="keyword">this</span>.state.count + <span class="number">1</span>&#125;);</span><br><span class="line">  <span class="keyword">this</span>.setState(&#123;<span class="attr">count</span>: <span class="keyword">this</span>.state.count + <span class="number">1</span>&#125;);</span><br><span class="line">  <span class="keyword">this</span>.setState(&#123;<span class="attr">count</span>: <span class="keyword">this</span>.state.count + <span class="number">1</span>&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码运行时，虽然是对 <code>state</code> 加了三次，但是每次加操作都是针对初始的 <code>state</code>，所以最终相当于仅加了一次。即上述代码等同于下边的代码：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.assign(</span><br><span class="line">  previousState,</span><br><span class="line">  &#123;<span class="attr">quantity</span>: state.quantity + <span class="number">1</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">quantity</span>: state.quantity + <span class="number">1</span>&#125;,</span><br><span class="line">  ...</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h1 id="为什么"><a href="#为什么" class="headerlink" title="为什么"></a>为什么</h1><h2 id="从-react-生命周期看-setState-生效时间"><a href="#从-react-生命周期看-setState-生效时间" class="headerlink" title="从 react 生命周期看 setState 生效时间"></a>从 react 生命周期看 setState 生效时间</h2><p>要理解其原因，我们要先看一下 <a href="https://github.com/superman66/Front-End-Blog/issues/2" target="_blank" rel="noopener">react 生命周期</a>：</p>
+<p><img src="https://cloud.githubusercontent.com/assets/12592949/24903814/1b2ff98c-1ee1-11e7-9f5a-59eb84171b53.png" alt="react 生命周期"></p>
+<p><code>setState</code> 引起状态更新涉及四个函数：</p>
+<ul>
+<li>shouldComponentUpdate（默认 true）</li>
+<li>componentWillUpdate</li>
+<li>render</li>
+<li>componentDidUpdate</li>
+</ul>
+<p><strong>但直到 <code>render</code> 被调用时，<code>state</code> 才被更新</strong>。</p>
+<p>（如果 <code>shouldComponentUpdate</code> 返回 <code>false</code>，则 <code>render</code> 不会被执行，但是 <code>state</code> 会被更新）</p>
+<p>因此多次调用 <code>setState</code> 时，不能依靠 <code>this.state</code> 来计算下一个 <code>state</code> 的值，因为 <code>this.state</code> 一直没更新。</p>
+<blockquote>
+<p>setState() does not always immediately update the component. It may batch or defer the update until later. This makes reading this.state right after calling setState() a potential pitfall.</p>
+</blockquote>
+<p>但是可以使用 setState(func) api 来解决上述问题</p>
+<h2 id="setState-api"><a href="#setState-api" class="headerlink" title="setState api"></a><a href="https://doc.react-china.org/docs/react-component.html#setstate" target="_blank" rel="noopener">setState api</a></h2><p><code>setState</code> api 如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setState(updater[, callback])</span><br></pre></td></tr></table></figure>
+<p>其中，<code>callback</code> 是在 <code>setState</code> 完成且组件 re-render 完成后执行（一般建议用 <code>componentDidUpdate</code> 来实现类似逻辑）。</p>
+<p>而 <code>updater</code> 可以是：</p>
+<ul>
+<li>obj：异步将 obj <strong>shallow merge</strong> 到旧 <code>state</code>，构建新 <code>state</code></li>
+<li>func：形式如下：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(prevState, props) =&gt; stateChange</span><br></pre></td></tr></table></figure>
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><p>上述例子做如下修改即可实现真正的累加：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">increment</span>(<span class="params">state</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;<span class="attr">count</span>: state.count + <span class="number">1</span>&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">incrementMultiple</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.setState(increment);</span><br><span class="line">  <span class="keyword">this</span>.setState(increment);</span><br><span class="line">  <span class="keyword">this</span>.setState(increment);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.jianshu.com/p/9278c4835c55" target="_blank" rel="noopener">更详细请点击参考这篇文章</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/react/" rel="tag"># react</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/05/31/javascript-spread-operator/" rel="prev" title="javascript 表达式和操作符">
+                  <i class="fa fa-chevron-left"></i> javascript 表达式和操作符
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/06/14/hexo-next/" rel="next" title="hexo+next 设置">
+                  hexo+next 设置 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cherish</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">269k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:04</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

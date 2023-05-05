@@ -1,16 +1,441 @@
-{% extends '_layout.njk' %}
-{% import '_macro/sidebar.njk' as sidebar_template with context %}
+<!DOCTYPE html>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block class %}post posts-expand{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block content %}
 
-  {{ partial('_macro/post.njk', {post: page}) }}
 
-{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-{% block sidebar %}
-  {{ sidebar_template.render(page.toc.enable) }}
-{% endblock %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="设计收集一些在设计时可能会用到的比较好的网站  icons from the fontawesome: 各种各样的图标，很漂亮 ant design：里边有 UI 设计价值观及图标资源等，还有前端组件库  前端组件库组件库大合集 组件库大合集2 mac强迫症的Mac设置指南 terminal10 Must know terminal commands and tips for productivi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fantastic tools">
+<meta property="og:url" content="http://yoursite.com/2022/10/22/fantastic-tools/index.html">
+<meta property="og:site_name" content="Cherish&#39;s Blog">
+<meta property="og:description" content="设计收集一些在设计时可能会用到的比较好的网站  icons from the fontawesome: 各种各样的图标，很漂亮 ant design：里边有 UI 设计价值观及图标资源等，还有前端组件库  前端组件库组件库大合集 组件库大合集2 mac强迫症的Mac设置指南 terminal10 Must know terminal commands and tips for productivi">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-10-22T06:22:52.335Z">
+<meta property="article:modified_time" content="2022-10-22T06:22:52.335Z">
+<meta property="article:author" content="Cherish">
+<meta property="article:tag" content="tool">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yoursite.com/2022/10/22/fantastic-tools/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"Chinese","comments":true,"permalink":"http://yoursite.com/2022/10/22/fantastic-tools/","path":"2022/10/22/fantastic-tools/","title":"fantastic tools"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>fantastic tools | Cherish's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cherish's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E7%BB%84%E4%BB%B6%E5%BA%93"><span class="nav-number">1.1.</span> <span class="nav-text">前端组件库</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mac"><span class="nav-number">2.</span> <span class="nav-text">mac</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#terminal"><span class="nav-number">2.1.</span> <span class="nav-text">terminal</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#iterm2-oh-my-zsh-theme-%E9%85%8D%E7%BD%AE"><span class="nav-number">2.1.1.</span> <span class="nav-text">iterm2 + oh my zsh + theme 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iterm2-%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">2.1.2.</span> <span class="nav-text">iterm2 常用快捷键</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Git"><span class="nav-number">3.</span> <span class="nav-text">Git</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reading"><span class="nav-number">4.</span> <span class="nav-text">reading</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#music"><span class="nav-number">5.</span> <span class="nav-text">music</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#json"><span class="nav-number">6.</span> <span class="nav-text">json</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Editing"><span class="nav-number">7.</span> <span class="nav-text">Editing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Others"><span class="nav-number">8.</span> <span class="nav-text">Others</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%99%E5%9B%BE%E7%89%87%E5%8A%A0%E6%B0%B4%E5%8D%B0"><span class="nav-number">9.</span> <span class="nav-text">给图片加水印</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ImageMagick"><span class="nav-number">9.1.</span> <span class="nav-text">ImageMagick</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows"><span class="nav-number">10.</span> <span class="nav-text">Windows</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#terminal-1"><span class="nav-number">10.1.</span> <span class="nav-text">terminal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#copy"><span class="nav-number">10.2.</span> <span class="nav-text">copy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#search"><span class="nav-number">10.3.</span> <span class="nav-text">search</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cherish</p>
+  <div class="site-description" itemprop="description">从心所欲不逾矩</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="Chinese">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/10/22/fantastic-tools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="fantastic tools | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          fantastic tools
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-10-22 14:22:52" itemprop="dateCreated datePublished" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h1><p>收集一些在设计时可能会用到的比较好的网站</p>
+<ul>
+<li><a href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener">icons from the fontawesome</a>: 各种各样的图标，很漂亮</li>
+<li><a href="https://ant.design/docs/spec/introduce-cn" target="_blank" rel="noopener">ant design</a>：里边有 UI 设计价值观及图标资源等，还有前端组件库</li>
+</ul>
+<h2 id="前端组件库"><a href="#前端组件库" class="headerlink" title="前端组件库"></a>前端组件库</h2><p><a href="https://zhuanlan.zhihu.com/p/24650288" target="_blank" rel="noopener">组件库大合集</a></p>
+<p><a href="https://github.com/JingwenTian/awesome-frontend" target="_blank" rel="noopener">组件库大合集2</a></p>
+<h1 id="mac"><a href="#mac" class="headerlink" title="mac"></a>mac</h1><p><a href="https://insights.thoughtworks.cn/ocds-guide-to-setting-up-mac/" target="_blank" rel="noopener">强迫症的Mac设置指南</a></p>
+<h2 id="terminal"><a href="#terminal" class="headerlink" title="terminal"></a>terminal</h2><p><a href="10 Must know terminal commands and tips for productivity">10 Must know terminal commands and tips for productivity</a> 介绍了一些，简单罗列下：</p>
+<ol>
+<li><code>iterm2</code>：是一种 terminal，将其作为默认 terminal，可以方便的分屏等</li>
+<li><code>oh my zsh</code>：管理 zsh 配置的，使用 <code>~/.zshrc</code>，利用 <code>source ~/.zshrc</code> 可以是配置立马生效<ol>
+<li><a href="https://hustyichi.github.io/2018/09/19/oh-my-zsh/" target="_blank" rel="noopener">oh my zsh 插件</a></li>
+</ol>
+</li>
+<li><code>cat</code>：不打开文件的情况下查看内容</li>
+<li><code>imgcat</code>：同上，不过查看的是图片</li>
+<li><code>less [filename]</code>：同 <code>cat</code>，不过如果长文件，可以用这个，仅显示一部分</li>
+<li><code>pbcopy &lt; [filename]</code>：复制文件内容到 clipboard</li>
+<li><code>touch</code>：创建各种各样的文件，可以同时创建多个。eg. <code>touch index.html readme.md index.php</code></li>
+<li><code>lsof -i :[port]</code>：查看端口占用</li>
+<li><code>&amp;&amp;</code>：实现 command chaining，即同时写多个命令，依次执行。eg. <code>npm i &amp;&amp; npm start</code></li>
+<li><code>open .</code>：打开当前目录</li>
+</ol>
+<h3 id="iterm2-oh-my-zsh-theme-配置"><a href="#iterm2-oh-my-zsh-theme-配置" class="headerlink" title="iterm2 + oh my zsh + theme 配置"></a>iterm2 + oh my zsh + theme 配置</h3><ol>
+<li><a href="https://www.iterm2.com/" target="_blank" rel="noopener">download iterm2</a>，解压安装</li>
+<li>设置 iterm2 为默认 terminal：iterm2 -&gt; make iterm2 default Term</li>
+<li>安装 <a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="noopener">oh my zsh</a>: <ul>
+<li><code>sh -c &quot;$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)&quot;</code></li>
+</ul>
+</li>
+<li>配置主题和颜色<ol start="4">
+<li>主题，我选用默认的 robbyrussell。其他下载主题然后在 <code>~/.zshrc</code> 中配置 <code>ZSH_THEME</code></li>
+<li>颜色，下载 <a href="https://github.com/mbadolato/iTerm2-Color-Schemes" target="_blank" rel="noopener">iterm2 color schemes</a>，然后在 iterm2 perferences -&gt; profiles -&gt; colors -&gt; color presets -&gt; import -&gt; 从前边下载的库中选择自己喜欢的 scheme</li>
+</ol>
+</li>
+<li>配置高亮<ul>
+<li><code>brew install zsh-syntax-highlighting</code></li>
+<li>在 <code>~/.zshrc</code> 中添加：<code>source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh</code></li>
+<li>刷新配置使其生效：<code>source ~/.zshrc</code></li>
+</ul>
+</li>
+<li>显示快捷键配置<ul>
+<li>preferences -&gt; keys -&gt; hotKey -&gt; Show/Hide all… -&gt; 设置为 <code>⌘.</code></li>
+</ul>
+</li>
+<li>常用的配置：<ol>
+<li>配置新开重开使用之前的目录：preferences -&gt; profiles -&gt; general -&gt; working directory -&gt; reuse previous session’s directory</li>
+<li>配置快速切换 iterm 的快捷键：preferences -&gt; keys -&gt; hot key -&gt; show/hide all windows with a system-wide hotkey</li>
+<li>配置窗口透明度和默认启动大小：preferences -&gt; profiles -&gt; window</li>
+<li>配置 command line move-by-word, delete-by-word: preferences -&gt; profiles -&gt; keys (<a href="https://apple.stackexchange.com/questions/154292/iterm-going-one-word-backwards-and-forwards" target="_blank" rel="noopener">stackoverflow</a>)<ol>
+<li>向左移动 by word (⌥b)，向右移动 by word (⌥f)，删除右边 by word (⌥d)<ol>
+<li>Under Profile Shortcut Keys, click the + sign.</li>
+<li>Type your key shortcut (option-b, option-f, option-d, option-left, etc.)</li>
+<li>For Action, choose Send Escape Sequence.</li>
+<li>Write b, d or f in the input field.</li>
+</ol>
+</li>
+<li>删除左边 by word (⌥⌫)<ol>
+<li>preferences -&gt; profiles -&gt; keys -&gt; left option (⌥) key : Esc+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="iterm2-常用快捷键"><a href="#iterm2-常用快捷键" class="headerlink" title="iterm2 常用快捷键"></a>iterm2 常用快捷键</h3><ul>
+<li><code>⌘d</code>：横分屏</li>
+<li><code>⌘⇧d</code>：竖分屏</li>
+<li><code>⌘⌥ + direction</code>：navigate between panes</li>
+<li><code>⌘.</code>：show/hide iterm2</li>
+<li><code>⌘⇧↩︎</code>: 最大化当前 pane / 回复当前 pane</li>
+</ul>
+<h1 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h1><ul>
+<li><a href="https://github.com/newren/git-filter-repo" target="_blank" rel="noopener">git-fitler-repo</a></li>
+<li>常用的 git config 配置</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 ~/.zshrc 中添加 alias</span></span><br><span class="line">$ vi ~/.zshrc</span><br><span class="line"><span class="built_in">alias</span> g=<span class="string">"/usr/bin/git"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 .gitconfig 中添加 alias 配置</span></span><br><span class="line">$ vi ~/.gitconfig</span><br><span class="line">[user]</span><br><span class="line">        name = xxx</span><br><span class="line">        email = xxx@some.com</span><br><span class="line"></span><br><span class="line">[<span class="built_in">alias</span>]</span><br><span class="line">        a = add</span><br><span class="line">        aa = add .</span><br><span class="line">        b = branch</span><br><span class="line">        c = commit</span><br><span class="line">        cm = commit -m</span><br><span class="line">        ca = commit --amend</span><br><span class="line">        d = diff</span><br><span class="line">        l = <span class="built_in">log</span> --graph --pretty=format:<span class="string">'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset | %C(bold)%an'</span> --abbrev-commit --date=relative</span><br><span class="line">        o = checkout</span><br><span class="line">        pl = pull</span><br><span class="line">        pb = pull --rebase</span><br><span class="line">        ps = push</span><br><span class="line">        r = reset</span><br><span class="line">        st = status</span><br></pre></td></tr></table></figure>
+<h1 id="reading"><a href="#reading" class="headerlink" title="reading"></a>reading</h1><ul>
+<li><a href="http://www.shuwu.mobi/" target="_blank" rel="noopener">我的小书屋</a></li>
+<li><a href="http://readfree.me/" target="_blank" rel="noopener">readfree</a>：可以直接推送到 kindle，很方便</li>
+<li><a href="http://bulaoge.cn/" target="_blank" rel="noopener">不老歌</a>：写日记</li>
+<li><a href="https://www.baoshuu.com/" target="_blank" rel="noopener">宝书网</a></li>
+</ul>
+<h1 id="music"><a href="#music" class="headerlink" title="music"></a>music</h1><ul>
+<li><a href="https://www.sq688.com" target="_blank" rel="noopener">超高无损音乐下载</a></li>
+</ul>
+<h1 id="json"><a href="#json" class="headerlink" title="json"></a>json</h1><ul>
+<li><a href="https://jsonformatter.org/xml-viewer" target="_blank" rel="noopener">json formatter</a>: json、xml 等都支持，可以格式化，有 json tree，统计了节点数</li>
+<li><a href="https://jsoneditoronline.org/" target="_blank" rel="noopener">json editor online</a>: 界面简单，有 json tree，统计了 tree 节点数</li>
+<li><a href="http://jsonviewer.stack.hu/" target="_blank" rel="noopener">json viewer</a>: 功能精简，格式化 json，没有 tree</li>
+<li><a href="https://codebeautify.org/yaml-to-json-xml-csv" target="_blank" rel="noopener">yaml to json</a>: yaml 和 json 之间的转化</li>
+</ul>
+<h1 id="Editing"><a href="#Editing" class="headerlink" title="Editing"></a>Editing</h1><ul>
+<li>typora: markdown tool</li>
+<li><a href="https://github.com/Clipy/Clipy" target="_blank" rel="noopener">clipy</a>: free tool for pasting</li>
+</ul>
+<h1 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h1><ul>
+<li><a href="https://karabiner-elements.pqrs.org/" target="_blank" rel="noopener">karabiner</a>: 定义快捷键。可以将 caps 键重新映射，在自定义快捷键时避免冲突</li>
+<li><a href="https://github.com/fikovnik/ShiftIt" target="_blank" rel="noopener">shiftit</a>: 窗口 size &amp; location 定义。用 brew 安装 <code>brew cask install shiftit</code></li>
+<li>Eudic: 好用的词典，可以有一个简单悬浮窗口</li>
+<li>Alfred: easy used spotlight substitute to search in Mac</li>
+<li><a href="https://mediaatelier.com/CheatSheet/?lang=en" target="_blank" rel="noopener">cheatsheet</a>: 显示当前应用的快捷键。Just hold the ⌘-Key a bit longer to get a list of all active short cuts of the current application.</li>
+</ul>
+<h1 id="给图片加水印"><a href="#给图片加水印" class="headerlink" title="给图片加水印"></a>给图片加水印</h1><ul>
+<li>美图秀秀：批量添加水印，编辑水印位置、大小、透明度</li>
+<li><a href="https://jingyan.baidu.com/article/0eb457e555170643f1a90592.html" target="_blank" rel="noopener">Photoshop 批量添加水印</a></li>
+<li>免费软件：<ul>
+<li><a href="https://www.xnview.com/en/xnconvert/#downloads" target="_blank" rel="noopener">XnConvert</a>：<a href="https://uiiiuiii.com/software/202192.html" target="_blank" rel="noopener">使用 XnConvert 批量添加水印</a></li>
+<li><a href="https://imagemagick.org/index.php" target="_blank" rel="noopener">imagemagick</a>: 基于命令行的图形处理库（现有的图像处理软件大多都用到此库）</li>
+</ul>
+</li>
+<li><a href="https://sspai.com/post/53079" target="_blank" rel="noopener">6 个小工具，打造图片批处理工作流</a></li>
+</ul>
+<h2 id="ImageMagick"><a href="#ImageMagick" class="headerlink" title="ImageMagick"></a>ImageMagick</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装</span></span><br><span class="line">$ brew install imagemagick</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">cd</span> /images</span><br><span class="line"><span class="comment"># 获取图片基本信息</span></span><br><span class="line">$ identify a.jpg</span><br><span class="line"><span class="comment"># 转换图片格式</span></span><br><span class="line">$ magick a.jpg a.png</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 批量为图片添加水印</span></span><br><span class="line">  1 <span class="comment">#!/bin/bash</span></span><br><span class="line">  2</span><br><span class="line">  3 dir=<span class="variable">$1</span></span><br><span class="line">  4 mark=<span class="variable">$2</span></span><br><span class="line">  5</span><br><span class="line">  6 <span class="built_in">echo</span> <span class="string">"the images dir to process: <span class="variable">$dir</span>"</span></span><br><span class="line">  7 <span class="built_in">echo</span> <span class="string">"the mark location: <span class="variable">$mark</span>"</span></span><br><span class="line">  8</span><br><span class="line">  9 <span class="built_in">shopt</span> -s nullglob <span class="comment"># 如果不添加这个，当目录中没有 .png 类型的文件时，他会产生 "$dir"/*.png，那么后边就会报错</span></span><br><span class="line"> 10 <span class="keyword">for</span> each <span class="keyword">in</span> <span class="string">"<span class="variable">$dir</span>"</span>/&#123;*.jpg,*.jpeg,*.png&#125;</span><br><span class="line"> 11 <span class="keyword">do</span></span><br><span class="line"> 12         <span class="built_in">echo</span> <span class="string">"each is: <span class="variable">$each</span>"</span></span><br><span class="line"> 13         convert <span class="variable">$each</span> <span class="variable">$mark</span> -gravity southeast -geometry +5+20 -composite <span class="variable">$each</span></span><br><span class="line"> 14         convert <span class="variable">$each</span> <span class="variable">$mark</span> -gravity center -composite <span class="variable">$each</span></span><br><span class="line"> 15         convert <span class="variable">$each</span> <span class="variable">$mark</span> -gravity northwest -geometry +5+20 -composite <span class="variable">$each</span></span><br><span class="line"> 16         <span class="built_in">echo</span> <span class="string">"<span class="variable">$each</span>: done"</span></span><br><span class="line"> 17 <span class="keyword">done</span></span><br><span class="line"> 18 <span class="built_in">shopt</span> -u nullglob</span><br><span class="line"> 19 <span class="built_in">exit</span> 0</span><br></pre></td></tr></table></figure>
+<h1 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h1><h2 id="terminal-1"><a href="#terminal-1" class="headerlink" title="terminal"></a>terminal</h2><p><a href="https://p3terx.com/archives/the-strongest-terminal-solution-under-windows-10.html" target="_blank" rel="noopener">打造 Windows 10 下最强终端方案：WSL + Terminus + Oh My Zsh + The Fuck</a></p>
+<blockquote>
+<p>注意这里装的是 wsl1，可以改成 wsl2，参见<a href="https://docs.microsoft.com/en-us/windows/wsl/install" target="_blank" rel="noopener">install wsl</a></p>
+</blockquote>
+<h2 id="copy"><a href="#copy" class="headerlink" title="copy"></a>copy</h2><p>mac 下有免费的 clipy 来实现 copy history，windows 下有 <a href="https://copyq.readthedocs.io/en/latest/basic-usage.html" target="_blank" rel="noopener">copyq</a>（也可以用于 mac）</p>
+<p>copyq 在它的窗口里可以配置各种命令的快捷键（全局或程序内），包括显示和隐藏 copyq 窗口的</p>
+<h2 id="search"><a href="#search" class="headerlink" title="search"></a>search</h2><p>mac 下有 alfred 来搜索文件，windows 有一些替代的：</p>
+<ol>
+<li>listary：有免费版</li>
+<li>wox：开源</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tool/" rel="tag"># tool</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/02/24/clean-mac-other-storage/" rel="prev" title="clean mac other storage">
+                  <i class="fa fa-chevron-left"></i> clean mac other storage
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/10/22/java-stream-parallel/" rel="next" title="java stream parallel 有时比 sequential 还慢？">
+                  java stream parallel 有时比 sequential 还慢？ <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cherish</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">269k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:04</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

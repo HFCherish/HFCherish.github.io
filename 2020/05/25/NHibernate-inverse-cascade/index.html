@@ -1,16 +1,343 @@
-{% extends '_layout.njk' %}
-{% import '_macro/sidebar.njk' as sidebar_template with context %}
+<!DOCTYPE html>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block class %}post posts-expand{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block content %}
 
-  {{ partial('_macro/post.njk', {post: page}) }}
 
-{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-{% block sidebar %}
-  {{ sidebar_template.render(page.toc.enable) }}
-{% endblock %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="playing-nhibernate-inverse-and-cascade, nhibernate-inverse bidirectional associations In database, there may be biodirectional relationships, e.g. Parent has multiple child, and Child has a parent.123">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NHibernate: inverse, cascade">
+<meta property="og:url" content="http://yoursite.com/2020/05/25/NHibernate-inverse-cascade/index.html">
+<meta property="og:site_name" content="Cherish&#39;s Blog">
+<meta property="og:description" content="playing-nhibernate-inverse-and-cascade, nhibernate-inverse bidirectional associations In database, there may be biodirectional relationships, e.g. Parent has multiple child, and Child has a parent.123">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-05-25T03:38:17.000Z">
+<meta property="article:modified_time" content="2022-10-22T06:22:52.320Z">
+<meta property="article:author" content="Cherish">
+<meta property="article:tag" content="database">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yoursite.com/2020/05/25/NHibernate-inverse-cascade/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"Chinese","comments":true,"permalink":"http://yoursite.com/2020/05/25/NHibernate-inverse-cascade/","path":"2020/05/25/NHibernate-inverse-cascade/","title":"NHibernate: inverse, cascade"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>NHibernate: inverse, cascade | Cherish's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cherish's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Inverse"><span class="nav-number">1.</span> <span class="nav-text">Inverse</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cascade"><span class="nav-number">2.</span> <span class="nav-text">Cascade</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cherish</p>
+  <div class="site-description" itemprop="description">从心所欲不逾矩</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="Chinese">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/25/NHibernate-inverse-cascade/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="NHibernate: inverse, cascade | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NHibernate: inverse, cascade
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-05-25 11:38:17" itemprop="dateCreated datePublished" datetime="2020-05-25T11:38:17+08:00">2020-05-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a href="https://dzone.com/articles/playing-nhibernate-inverse-and" target="_blank" rel="noopener">playing-nhibernate-inverse-and-cascade</a>,</p>
+<p><a href="https://web.archive.org/web/20080415101633/http://simoes.org/docs/hibernate-2.1/155.html" target="_blank" rel="noopener">nhibernate-inverse</a></p>
+<p><a href="https://nhibernate.info/doc/nhibernate-reference/collections.html#collections-bidirectional" target="_blank" rel="noopener">bidirectional associations</a></p>
+<p>In database, there may be biodirectional relationships, e.g. Parent has multiple child, and Child has a parent.<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#### class definition</span></span><br><span class="line"><span class="attr">class Parent:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">String</span> <span class="string">id</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">IList&lt;Child&gt;</span> <span class="string">childs</span>	</span><br><span class="line"><span class="attr">class Child:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">String</span> <span class="string">id</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">Parent</span> <span class="string">parent</span></span><br><span class="line">	</span><br><span class="line"><span class="comment">#### db definition</span></span><br><span class="line"><span class="attr">table Parent:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">id</span></span><br><span class="line"><span class="attr">table Child:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">id</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">parentId</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Inverse"><a href="#Inverse" class="headerlink" title="Inverse"></a>Inverse</h2><p><code>Inverse</code> focus on the association. It defines which side is responsible of the association maintenance (create, update, delete), that is, the assignment of <code>parentId</code> column. It doesn’t care about the maintenance of associated objects which is what <code>cascade</code> cares).</p>
+<p>By default, <code>invert=false</code>, then the assignment of <code>parentId</code> is maintened when parent is created/updated/deleted. If we set <code>parent.child.inverse=true</code> and the <code>child.parent is not-null</code>, then the assignment of <code>parentId</code> is maintened when child is created/updated/deleted. </p>
+<blockquote>
+<p><code>many-to-one</code> is <strong>always</strong> <code>inverse=&quot;false&quot;</code> (the attribute does not exist), that is, it means nothing to set <code>child.parent.inverse=true</code></p>
+</blockquote>
+<h2 id="Cascade"><a href="#Cascade" class="headerlink" title="Cascade"></a>Cascade</h2><p><code>cascade</code> instead will focus on the associated objects. It defines if the current object is responsible of the maintenance of associated objects.</p>
+<p>By default, <code>cascade=None</code>, that is, when saving parent, the childs on parent won’t be saved cascadelly.</p>
+<p>See <a href="https://stackoverflow.com/questions/1994433/nhibernate-cascade" target="_blank" rel="noopener">cascade stackoverflow</a></p>
+<blockquote>
+<ul>
+<li>none - do not do any cascades, let users handle them by themselves.</li>
+<li>save-update - when the object is saved/updated, check the associations and save/update any object that requires it (including save/update the associations in many-to-many scenario).</li>
+<li>delete - when the object is deleted, delete all the objects in the association.</li>
+<li>delete-orphan - when the object is deleted, delete all the objects in the association. In addition, when an object is removed from the association and not associated with another object (orphaned), also delete it.</li>
+<li>all - when an object is save/update/delete, check the associations and save/update/delete all the objects found.</li>
+<li>all-delete-orphan - when an object is save/update/delete, check the associations and save/update/delete all the objects found. In additional to that, when an object is removed from the association and not associated with another object (orphaned), also delete it.</li>
+</ul>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/database/" rel="tag"># database</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/05/06/VPN/" rel="prev" title="VPN">
+                  <i class="fa fa-chevron-left"></i> VPN
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/05/27/MSSQL-multiple-cascade-paths/" rel="next" title="MSSQL: multiple cascade paths">
+                  MSSQL: multiple cascade paths <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cherish</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">269k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:04</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

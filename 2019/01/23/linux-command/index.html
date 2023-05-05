@@ -1,16 +1,372 @@
-{% extends '_layout.njk' %}
-{% import '_macro/sidebar.njk' as sidebar_template with context %}
+<!DOCTYPE html>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block class %}post posts-expand{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block content %}
 
-  {{ partial('_macro/post.njk', {post: page}) }}
 
-{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-{% block sidebar %}
-  {{ sidebar_template.render(page.toc.enable) }}
-{% endblock %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="chmod, chownunderstanding linux file permissions File permissions are defined by permission group and permission type  permission group owner(u) group(g) all other users(a)   permission type read (r -">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux commands">
+<meta property="og:url" content="http://yoursite.com/2019/01/23/linux-command/index.html">
+<meta property="og:site_name" content="Cherish&#39;s Blog">
+<meta property="og:description" content="chmod, chownunderstanding linux file permissions File permissions are defined by permission group and permission type  permission group owner(u) group(g) all other users(a)   permission type read (r -">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-01-23T07:32:13.000Z">
+<meta property="article:modified_time" content="2023-02-14T09:05:07.810Z">
+<meta property="article:author" content="Cherish">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yoursite.com/2019/01/23/linux-command/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"Chinese","comments":true,"permalink":"http://yoursite.com/2019/01/23/linux-command/","path":"2019/01/23/linux-command/","title":"linux commands"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>linux commands | Cherish's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cherish's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#chmod-chown"><span class="nav-number">1.</span> <span class="nav-text">chmod, chown</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#permission-presentation"><span class="nav-number">1.1.</span> <span class="nav-text">permission presentation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#special-permission-flag"><span class="nav-number">1.1.1.</span> <span class="nav-text">special permission flag</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#permission-modification"><span class="nav-number">1.2.</span> <span class="nav-text">permission modification</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#change-owner-group-assignments"><span class="nav-number">1.3.</span> <span class="nav-text">change owner:group assignments</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#find"><span class="nav-number">2.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#rm"><span class="nav-number">3.</span> <span class="nav-text">rm</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ls"><span class="nav-number">4.</span> <span class="nav-text">ls</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#du"><span class="nav-number">5.</span> <span class="nav-text">du</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#List-users"><span class="nav-number">6.</span> <span class="nav-text">List users</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pbcopy"><span class="nav-number">7.</span> <span class="nav-text">pbcopy</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dstat"><span class="nav-number">8.</span> <span class="nav-text">dstat</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cherish</p>
+  <div class="site-description" itemprop="description">从心所欲不逾矩</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="Chinese">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/23/linux-command/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="linux commands | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          linux commands
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-23 15:32:13" itemprop="dateCreated datePublished" datetime="2019-01-23T15:32:13+08:00">2019-01-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-02-14 17:05:07" itemprop="dateModified" datetime="2023-02-14T17:05:07+08:00">2023-02-14</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="chmod-chown"><a href="#chmod-chown" class="headerlink" title="chmod, chown"></a>chmod, chown</h1><p><a href="https://www.linux.com/learn/understanding-linux-file-permissions" target="_blank" rel="noopener">understanding linux file permissions</a></p>
+<p>File permissions are defined by <strong>permission group</strong> and <strong>permission type</strong></p>
+<ol>
+<li>permission group<ul>
+<li>owner(u)</li>
+<li>group(g)</li>
+<li>all other users(a)</li>
+</ul>
+</li>
+<li>permission type<ul>
+<li>read (r - 4)</li>
+<li>write(w - 2)</li>
+<li>execute(x - 1)</li>
+</ul>
+</li>
+</ol>
+<h2 id="permission-presentation"><a href="#permission-presentation" class="headerlink" title="permission presentation"></a>permission presentation</h2><p>The permission in the command line is displayed as <strong><em>_rwxrwxrwx 1 owner:group</em></strong></p>
+<ul>
+<li>the first character (underscore <strong>_</strong>  here) is the <strong>special permission flag</strong> that can vary.</li>
+<li>the following three groups of <strong><em>rwx</em></strong> represent <strong>permission of owner, group and all other users</strong> respectively. If the owner and all users has no read permission, it is <strong><em>__wxrwx_wx</em></strong></li>
+<li>follwing that grouping since the integer displays <strong>the number of hardlinks to the file</strong></li>
+<li>the last piece is the owner and group assignment.</li>
+</ul>
+<h3 id="special-permission-flag"><a href="#special-permission-flag" class="headerlink" title="special permission flag"></a>special permission flag</h3><p>The special permission flag can be:</p>
+<ul>
+<li><strong>_</strong>: no special permissions</li>
+<li><strong><em>d</em></strong>: directory</li>
+<li><strong><em>l</em></strong>: the file or dir is a symbolic link</li>
+<li><strong><em>s</em></strong>: This indicated the setuid/setgid permissions. This is not set displayed in the special permission part of the permissions display, but is represented as a <strong>s</strong> in the read portion of the owner or group permissions.</li>
+<li><strong><em>t</em></strong>: This indicates the sticky bit permissions. This is not set displayed in the special permission part of the permissions display, but is represented as a <strong>t</strong> in the executable portion of the all users permissions</li>
+</ul>
+<h2 id="permission-modification"><a href="#permission-modification" class="headerlink" title="permission modification"></a>permission modification</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># grant read and write permissions to the user and group</span></span><br><span class="line">$ chmod ug+rw file1</span><br><span class="line"></span><br><span class="line"><span class="comment"># remove read and write permissions to the user and group</span></span><br><span class="line">$ chmod ug-rw file1</span><br><span class="line"></span><br><span class="line"><span class="comment"># set permission using binary references (owner: rwx = 4+2+1, group: rx = 4+1, all users: rx = 4+1)</span></span><br><span class="line">$ chmod 755 file1</span><br><span class="line"></span><br><span class="line"><span class="comment"># change the file permission recursively in the file/dir instead of just the files themselves</span></span><br><span class="line">$ chmod -R 755 dir1</span><br></pre></td></tr></table></figure>
+<h2 id="change-owner-group-assignments"><a href="#change-owner-group-assignments" class="headerlink" title="change owner:group assignments"></a>change owner:group assignments</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># change the owner of file1 to user1 and group to family</span></span><br><span class="line">$ chown user1:family file1</span><br></pre></td></tr></table></figure>
+<h1 id="find"><a href="#find" class="headerlink" title="find"></a>find</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># find all xml files from the current dir</span></span><br><span class="line">$ find ./* -name <span class="string">'*.xml'</span></span><br></pre></td></tr></table></figure>
+<p>To find all files modified in the last 24 hours (last full day) in a particular specific directory and its sub-directories:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find /directory_path -mtime -1 -ls</span><br></pre></td></tr></table></figure>
+<p>Should be to your liking</p>
+<p>The <code>-</code> before <code>1</code> is important - it means anything changed one day or less ago. A <code>+</code> before <code>1</code> would instead mean anything changed at least one day ago, while having nothing before the <code>1</code> would have meant it was changed exacted one day ago, no more, no less.</p>
+<p>Another, more humane way:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /&lt;directory&gt; -newermt <span class="string">"-24 hours"</span> -ls</span><br></pre></td></tr></table></figure>
+<p>or:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /&lt;directory&gt; -newermt <span class="string">"1 day ago"</span> -ls</span><br></pre></td></tr></table></figure>
+<p>or:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /&lt;directory&gt; -newermt <span class="string">"yesterday"</span> -ls</span><br></pre></td></tr></table></figure>
+<h1 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h1><p>找到文件并删除</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">find /home/raven -name abc.txt | xargs rm -rf</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 不使用 xargs</span></span><br></pre></td></tr></table></figure>
+<h1 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># list file with creation date and sort by it</span></span><br><span class="line">$ ls -lct</span><br></pre></td></tr></table></figure>
+<h1 id="du"><a href="#du" class="headerlink" title="du"></a>du</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ du -sh -- * | sort -hr</span><br></pre></td></tr></table></figure>
+<h1 id="List-users"><a href="#List-users" class="headerlink" title="List users"></a>List users</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cat /etc/passwd | cut -d: -f1</span><br></pre></td></tr></table></figure>
+<h1 id="pbcopy"><a href="#pbcopy" class="headerlink" title="pbcopy"></a>pbcopy</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># copy file content to clipboard</span></span><br><span class="line">$ pbcopy &lt; test.txt</span><br></pre></td></tr></table></figure>
+<h1 id="dstat"><a href="#dstat" class="headerlink" title="dstat"></a>dstat</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ dstat -t -a --tcp --output network.log</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/01/17/lombok/" rel="prev" title="lombok">
+                  <i class="fa fa-chevron-left"></i> lombok
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/01/30/pipeline-process-beam/" rel="next" title="pipeline process: beam">
+                  pipeline process: beam <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cherish</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">269k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:04</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

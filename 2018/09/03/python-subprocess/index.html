@@ -1,16 +1,355 @@
-{% extends '_layout.njk' %}
-{% import '_macro/sidebar.njk' as sidebar_template with context %}
+<!DOCTYPE html>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block class %}post posts-expand{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block content %}
 
-  {{ partial('_macro/post.njk', {post: page}) }}
 
-{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-{% block sidebar %}
-  {{ sidebar_template.render(page.toc.enable) }}
-{% endblock %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Synchronous vs multiprocessing vs multithreading vs async Concurrency vs Parralism. asyncio &amp; threading can run multiple I&#x2F;O operations at the same time. Async runs one block of code at a time whi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python subprocess">
+<meta property="og:url" content="http://yoursite.com/2018/09/03/python-subprocess/index.html">
+<meta property="og:site_name" content="Cherish&#39;s Blog">
+<meta property="og:description" content="Synchronous vs multiprocessing vs multithreading vs async Concurrency vs Parralism. asyncio &amp; threading can run multiple I&#x2F;O operations at the same time. Async runs one block of code at a time whi">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-09-03T06:06:24.000Z">
+<meta property="article:modified_time" content="2022-10-27T09:08:25.977Z">
+<meta property="article:author" content="Cherish">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yoursite.com/2018/09/03/python-subprocess/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"Chinese","comments":true,"permalink":"http://yoursite.com/2018/09/03/python-subprocess/","path":"2018/09/03/python-subprocess/","title":"python subprocess"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>python subprocess | Cherish's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cherish's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cherish</p>
+  <div class="site-description" itemprop="description">从心所欲不逾矩</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="Chinese">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/03/python-subprocess/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="python subprocess | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          python subprocess
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-09-03 14:06:24" itemprop="dateCreated datePublished" datetime="2018-09-03T14:06:24+08:00">2018-09-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-27 17:08:25" itemprop="dateModified" datetime="2022-10-27T17:08:25+08:00">2022-10-27</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Synchronous vs multiprocessing vs multithreading vs async</p>
+<p>Concurrency vs Parralism.</p>
+<p>asyncio &amp; threading can run multiple I/O operations at the same time.</p>
+<p>Async runs one block of code at a time while threading just one line of code at a time. With async, we have better control of when the execution is given to other block of code but we have to release the execution ourselves.</p>
+<ul>
+<li><strong>IO bound problems</strong>: use async if your libraries support it and if not, use threading.</li>
+<li><strong>CPU bound problems</strong>: use multi-processing.</li>
+<li><strong>None above is a problem:</strong> you are probably just fine with synchronous code. You may still want to use async to have the feeling of responsiveness in case your code interacts with a user.</li>
+</ul>
+<p>Reference: </p>
+<ul>
+<li><a href="http://www.cnblogs.com/vamei/archive/2012/09/23/2698014.html" target="_blank" rel="noopener">blog: subprocess</a></li>
+</ul>
+<p>subprocess.call()<br>父进程等待子进程完成<br>返回退出信息(returncode，相当于exit code，见<a href="http://www.cnblogs.com/vamei/archive/2012/09/20/2694466.html" target="_blank" rel="noopener">Linux进程基础</a>)</p>
+<p>subprocess.check_call()</p>
+<p>父进程等待子进程完成</p>
+<p>返回0</p>
+<p>检查退出信息，如果returncode不为0，则举出错误subprocess.CalledProcessError，该对象包含有returncode属性，可用try…except…来检查(见<a href="http://www.cnblogs.com/vamei/archive/2012/07/10/2582787.html" target="_blank" rel="noopener">Python错误处理</a>)。</p>
+<p>subprocess.check_output()</p>
+<p>父进程等待子进程完成</p>
+<p>返回子进程向标准输出的输出结果</p>
+<p>检查退出信息，如果returncode不为0，则举出错误subprocess.CalledProcessError，该对象包含有returncode属性和output属性，output属性为标准输出的输出结果，可用try…except…来检查。</p>
+<ul>
+<li><a href="https://docs.python.org/3.7/library/subprocess.html" target="_blank" rel="noopener">official doc: subprocess</a></li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">subprocess.run(args, *, stdin=<span class="literal">None</span>, input=<span class="literal">None</span>, stdout=<span class="literal">None</span>, stderr=<span class="literal">None</span>, capture_output=<span class="literal">False</span>, shell=<span class="literal">False</span>, cwd=<span class="literal">None</span>, timeout=<span class="literal">None</span>, check=<span class="literal">False</span>, encoding=<span class="literal">None</span>, errors=<span class="literal">None</span>, text=<span class="literal">None</span>, env=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://docs.python.org/3.7/library/subprocess.html" target="_blank" rel="noopener">config env in subprojcess</a></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">new_env &#x3D; os.environ.copy()</span><br><span class="line">new_env[&#39;MEGAVARIABLE&#39;] &#x3D; &#39;MEGAVALUE&#39;</span><br><span class="line">subprocess.Popen(&#39;path&#39;, env&#x3D;new_env)</span><br></pre></td></tr></table></figure>
+<p>an example to use subprojcess:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">                subprocess.check_output([<span class="string">'java'</span>,</span><br><span class="line">                                         <span class="string">'-DCOMMAND='</span> + command,</span><br><span class="line">                                         <span class="string">'-DTENANT_ID='</span> + tenant_id,</span><br><span class="line">                                         <span class="string">'-DMODEL_ID='</span> + model_id,</span><br><span class="line">                                         <span class="string">'-jar'</span>, <span class="string">'xxx.jar'</span>,</span><br><span class="line">                                         ])</span><br><span class="line">            <span class="keyword">except</span> subprocess.CalledProcessError <span class="keyword">as</span> e:</span><br><span class="line">                db_util.reopx_solver - <span class="number">1.0</span> - SNAPSHOT - all.jarport_status(tenant_id, model_id=model_id,</span><br><span class="line">                                                                           msg=<span class="string">f'Failed runner for "<span class="subst">&#123;command&#125;</span>"...'</span>)</span><br><span class="line">                logger.exception(<span class="string">'Could not start solver jar: '</span>, e.output)</span><br><span class="line">                <span class="keyword">raise</span> OPXException(<span class="string">f'Could not start runner for "<span class="subst">&#123;command&#125;</span>".'</span>, e.stderr)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>the jar must be in the same directory as parent process dir</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/08/17/guice/" rel="prev" title="guice">
+                  <i class="fa fa-chevron-left"></i> guice
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/10/12/gradle-test-performance/" rel="next" title="gradle test performance">
+                  gradle test performance <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cherish</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">269k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:04</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

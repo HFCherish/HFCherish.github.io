@@ -1,16 +1,350 @@
-{% extends '_layout.njk' %}
-{% import '_macro/sidebar.njk' as sidebar_template with context %}
+<!DOCTYPE html>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block class %}post posts-expand{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block content %}
 
-  {{ partial('_macro/post.njk', {post: page}) }}
 
-{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-{% block sidebar %}
-  {{ sidebar_template.render(page.toc.enable) }}
-{% endblock %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="other storage 主要是存的系统的一些缓存、日志等数据。有时会占特别大空间，可以按下列步骤清理 1. 暂时关闭 SIP，以能查看和删除系统文件（解决 not permitted 问题） 以 recover mode 重启电脑：启动时，按 command + R 即可 选择 Utilities -&gt; Terminal 在 Terminal 中输入 csrutil disable 关闭">
+<meta property="og:type" content="article">
+<meta property="og:title" content="clean mac other storage">
+<meta property="og:url" content="http://yoursite.com/2021/02/24/clean-mac-other-storage/index.html">
+<meta property="og:site_name" content="Cherish&#39;s Blog">
+<meta property="og:description" content="other storage 主要是存的系统的一些缓存、日志等数据。有时会占特别大空间，可以按下列步骤清理 1. 暂时关闭 SIP，以能查看和删除系统文件（解决 not permitted 问题） 以 recover mode 重启电脑：启动时，按 command + R 即可 选择 Utilities -&gt; Terminal 在 Terminal 中输入 csrutil disable 关闭">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-02-24T11:43:25.000Z">
+<meta property="article:modified_time" content="2023-02-14T09:00:14.623Z">
+<meta property="article:author" content="Cherish">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yoursite.com/2021/02/24/clean-mac-other-storage/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"Chinese","comments":true,"permalink":"http://yoursite.com/2021/02/24/clean-mac-other-storage/","path":"2021/02/24/clean-mac-other-storage/","title":"clean mac other storage"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>clean mac other storage | Cherish's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cherish's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%9A%82%E6%97%B6%E5%85%B3%E9%97%AD-SIP%EF%BC%8C%E4%BB%A5%E8%83%BD%E6%9F%A5%E7%9C%8B%E5%92%8C%E5%88%A0%E9%99%A4%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6%EF%BC%88%E8%A7%A3%E5%86%B3-not-permitted-%E9%97%AE%E9%A2%98%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">1. 暂时关闭 SIP，以能查看和删除系统文件（解决 not permitted 问题）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%8C%89-size-%E6%9F%A5%E6%89%BE%E5%A4%A7%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">2. 按 size 查找大文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%B8%B8%E8%A7%81%E7%9A%84%E5%A4%A7%E6%96%87%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">3.  常见的大文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Libraray-Caches-%E5%92%8C-Library-Caches"><span class="nav-number">3.1.</span> <span class="nav-text">~&#x2F;Libraray&#x2F;Caches 和  &#x2F;Library&#x2F;Caches</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker"><span class="nav-number">3.2.</span> <span class="nav-text">docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Library-Updates"><span class="nav-number">3.3.</span> <span class="nav-text">&#x2F;Library&#x2F;Updates</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#private-var-tmp-WiFiDiagnostics"><span class="nav-number">3.4.</span> <span class="nav-text">&#x2F;private&#x2F;var&#x2F;tmp&#x2F;WiFiDiagnostics*</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cherish</p>
+  <div class="site-description" itemprop="description">从心所欲不逾矩</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="Chinese">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/02/24/clean-mac-other-storage/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="clean mac other storage | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          clean mac other storage
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-02-24 19:43:25" itemprop="dateCreated datePublished" datetime="2021-02-24T19:43:25+08:00">2021-02-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-02-14 17:00:14" itemprop="dateModified" datetime="2023-02-14T17:00:14+08:00">2023-02-14</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>other storage 主要是存的系统的一些缓存、日志等数据。有时会占特别大空间，可以按下列步骤清理</p>
+<h2 id="1-暂时关闭-SIP，以能查看和删除系统文件（解决-not-permitted-问题）"><a href="#1-暂时关闭-SIP，以能查看和删除系统文件（解决-not-permitted-问题）" class="headerlink" title="1. 暂时关闭 SIP，以能查看和删除系统文件（解决 not permitted 问题）"></a>1. 暂时关闭 SIP，以能查看和删除系统文件（解决 not permitted 问题）</h2><ol>
+<li>以 recover mode 重启电脑：启动时，按 command + R 即可</li>
+<li>选择 Utilities -&gt; Terminal</li>
+<li>在 Terminal 中输入 <code>csrutil disable</code> 关闭 SIP</li>
+<li>重启电脑</li>
+</ol>
+<p>在完成 clean 后，应该重复 1、2，并在 terminal 中输入 <code>csrutil enable</code> 来启动 SIP</p>
+<p>重启电脑后，可以通过 <code>csrutil status</code> 来查看 SIP 服务是否启动（清理完成后应该启动）</p>
+<h2 id="2-按-size-查找大文件"><a href="#2-按-size-查找大文件" class="headerlink" title="2. 按 size 查找大文件"></a>2. 按 size 查找大文件</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /</span><br><span class="line">$ sudo du -sh  -- *| sort -hr</span><br></pre></td></tr></table></figure>
+<h2 id="3-常见的大文件"><a href="#3-常见的大文件" class="headerlink" title="3.  常见的大文件"></a>3.  常见的大文件</h2><h3 id="Libraray-Caches-和-Library-Caches"><a href="#Libraray-Caches-和-Library-Caches" class="headerlink" title="~/Libraray/Caches 和  /Library/Caches"></a>~/Libraray/Caches 和  /Library/Caches</h3><p><code>~/Libraray</code> 和  <code>/Library</code> 下的 <code>Caches</code> 和 <code>logs</code> 等都是可以安全删除的。可以查看一下大小，把自己不用的 cache 删掉。</p>
+<p>当然也可以查看 <code>Library</code> 下的所有大文件，确认是否可以删除</p>
+<h3 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h3><p>Docker 的 images、volumes 等可能占很大空间，可以查看到 <code>~/Library/Containers/com.docker.docker</code> 文件夹的大小</p>
+<p><a href="https://docs.docker.com/docker-for-mac/space/" target="_blank" rel="noopener">docker space for mac</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/Library/Containers</span><br><span class="line">$ sudo du -sh  -- *| sort -hr</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 docker 的系统占用，这是清理后了，占用很小</span></span><br><span class="line">$ docker system df</span><br><span class="line">TYPE                TOTAL               ACTIVE              SIZE                RECLAIMABLE</span><br><span class="line">Images              1                   1                   100.8kB             0B (0%)</span><br><span class="line">Containers          1                   0                   0B                  0B</span><br><span class="line">Local Volumes       0                   0                   0B                  0B</span><br><span class="line">Build Cache         0                   0                   0B                  0B</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理磁盘，删除关闭的容器、无用的数据卷和网络，以及 dangling 镜像(即无 tag 的镜像)</span></span><br><span class="line">$ docker system prune</span><br><span class="line"><span class="comment"># 清理得更加彻底，可以将没有容器使用 Docker 镜像都删掉</span></span><br><span class="line">$ docker system prune -a</span><br><span class="line"><span class="comment"># 如果需要同时删除未被任何容器引用的数据卷需要显式的指定 --volumns 参数</span></span><br><span class="line">$ docker system prune --all --force --volumes</span><br><span class="line"><span class="comment"># 删除所有 dangling 数据卷(即无用的 volume)</span></span><br><span class="line">$ docker volume rm $(docker volume ls -qf dangling=<span class="literal">true</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 有时删完后，需要一段时间 reclaim space，可以使用以下命令，手动 trigger relamation</span></span><br><span class="line">$ docker run --privileged --pid=host docker/desktop-reclaim-space</span><br></pre></td></tr></table></figure>
+<h3 id="Library-Updates"><a href="#Library-Updates" class="headerlink" title="/Library/Updates"></a>/Library/Updates</h3><p>这里可能会有很多文件，都可以删。这里正常应该在执行 App Store 里的 Update 时，才会有文件，但不知道为啥，即使 App Store 没有 Update 也会有。</p>
+<p>如果这里有大文件，那么：</p>
+<ol>
+<li>先尝试去执行 App Store 里的 Update</li>
+<li>如果还有文件，可以删除文件夹里的所有文件（建议不要删那几个 <code>.plist</code> 文件），不要删除 <code>/Library/Updates</code> 文件夹本身，删除里边的内容</li>
+</ol>
+<h3 id="private-var-tmp-WiFiDiagnostics"><a href="#private-var-tmp-WiFiDiagnostics" class="headerlink" title="/private/var/tmp/WiFiDiagnostics*"></a>/private/var/tmp/WiFiDiagnostics*</h3><p><code>/private/var/tmp/</code> 里的文件删除的时候要小心些。</p>
+<p><code>WiFiDiagnostics</code> 是 wifi log，这些文件<strong>可以安全删除</strong></p>
+<p>但它可以用  <code>command+control+option+shift+w</code> 或 <code>command+control+option+shift+&gt;</code> 触发。如果你正好使用 karabiner 并且 remap 了 <code>command+control+option+shift</code>，在使用过程中可能正好和 +w 或 +&gt; 冲突了，那么每次都会启动 logging。所以需要修改配置。</p>
+<ol>
+<li>karabiner -&gt; Misc -&gt; Open config folder</li>
+<li>open karabiner.json，在其中加入下面的配置</li>
+</ol>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">"rules": [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">"description"</span>: <span class="string">"Disabling command+control+option+shift+w. This triggers wifi logging."</span>,</span><br><span class="line">        <span class="attr">"manipulators"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"from"</span>: &#123;</span><br><span class="line">                    <span class="attr">"key_code"</span>: <span class="string">"w"</span>,</span><br><span class="line">                    <span class="attr">"modifiers"</span>: &#123;</span><br><span class="line">                        <span class="attr">"mandatory"</span>: [</span><br><span class="line">                            <span class="string">"command"</span>,</span><br><span class="line">                            <span class="string">"control"</span>,</span><br><span class="line">                            <span class="string">"option"</span>,</span><br><span class="line">                            <span class="string">"shift"</span></span><br><span class="line">                        ]</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="attr">"to"</span>: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">"key_code"</span>: <span class="string">"escape"</span></span><br><span class="line">                    &#125;</span><br><span class="line">                ],</span><br><span class="line">                <span class="attr">"type"</span>: <span class="string">"basic"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">"description"</span>: <span class="string">"Disabling command+control+option+shift+&gt;. This triggers wifi logging also."</span>,</span><br><span class="line">        <span class="attr">"manipulators"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"from"</span>: &#123;</span><br><span class="line">                    <span class="attr">"key_code"</span>: <span class="string">"&gt;"</span>,</span><br><span class="line">                    <span class="attr">"modifiers"</span>: &#123;</span><br><span class="line">                        <span class="attr">"mandatory"</span>: [</span><br><span class="line">                            <span class="string">"command"</span>,</span><br><span class="line">                            <span class="string">"control"</span>,</span><br><span class="line">                            <span class="string">"option"</span>,</span><br><span class="line">                            <span class="string">"shift"</span></span><br><span class="line">                        ]</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="attr">"to"</span>: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">"key_code"</span>: <span class="string">"escape"</span></span><br><span class="line">                    &#125;</span><br><span class="line">                ],</span><br><span class="line">                <span class="attr">"type"</span>: <span class="string">"basic"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">"description"</span>: <span class="string">"Change caps_lock key to command+control+option+shift. (Post escape key when pressed alone)"</span>,</span><br><span class="line">        <span class="attr">"manipulators"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"from"</span>: &#123;</span><br><span class="line">                    <span class="attr">"key_code"</span>: <span class="string">"caps_lock"</span>,</span><br><span class="line">                    <span class="attr">"modifiers"</span>: &#123;</span><br><span class="line">                        <span class="attr">"optional"</span>: [</span><br><span class="line">                            <span class="string">"any"</span></span><br><span class="line">                        ]</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="attr">"to"</span>: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">"key_code"</span>: <span class="string">"left_shift"</span>,</span><br><span class="line">                        <span class="attr">"modifiers"</span>: [</span><br><span class="line">                            <span class="string">"left_command"</span>,</span><br><span class="line">                            <span class="string">"left_control"</span>,</span><br><span class="line">                            <span class="string">"left_option"</span></span><br><span class="line">                        ]</span><br><span class="line">                    &#125;</span><br><span class="line">                ],</span><br><span class="line">                <span class="attr">"to_if_alone"</span>: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">"key_code"</span>: <span class="string">"escape"</span></span><br><span class="line">                    &#125;</span><br><span class="line">                ],</span><br><span class="line">                <span class="attr">"type"</span>: <span class="string">"basic"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>/private/var/tmp</code> 文件夹下可能还有很多 <code>sysdiagnose</code> 文件，这个应该是可以删，是系统诊断结果。但不太确定，我没删。</p>
+<p>Sysdiagnose 可以通过 <code>command+control+option+shift+.</code> 来启动一次，所以也要注意</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/12/21/%E5%A4%9A%E7%BB%B4%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B/" rel="prev" title="多维数据模型">
+                  <i class="fa fa-chevron-left"></i> 多维数据模型
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/10/22/fantastic-tools/" rel="next" title="fantastic tools">
+                  fantastic tools <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cherish</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">269k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:04</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

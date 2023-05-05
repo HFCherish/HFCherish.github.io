@@ -1,16 +1,361 @@
-{% extends '_layout.njk' %}
-{% import '_macro/sidebar.njk' as sidebar_template with context %}
+<!DOCTYPE html>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block class %}post posts-expand{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block content %}
 
-  {{ partial('_macro/post.njk', {post: page}) }}
 
-{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-{% block sidebar %}
-  {{ sidebar_template.render(page.toc.enable) }}
-{% endblock %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="我在学习 react，一直在使用 create-react-app 创建项目。create-react-app 其实包括两个核心：  create-react-app：主要提供了 command-line 工具，方便用户创建 react 项目 react-scripts：这才是核心。它封装了所有开发 react 项目的配置，使得用户可以零配置直接开始开发 react。用户基本不需要更新 creat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js ecosystem">
+<meta property="og:url" content="http://yoursite.com/2018/06/21/js-ecosystem-md/index.html">
+<meta property="og:site_name" content="Cherish&#39;s Blog">
+<meta property="og:description" content="我在学习 react，一直在使用 create-react-app 创建项目。create-react-app 其实包括两个核心：  create-react-app：主要提供了 command-line 工具，方便用户创建 react 项目 react-scripts：这才是核心。它封装了所有开发 react 项目的配置，使得用户可以零配置直接开始开发 react。用户基本不需要更新 creat">
+<meta property="og:locale">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/721960-cc0aae2294d01d0a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="article:published_time" content="2018-06-21T03:54:38.000Z">
+<meta property="article:modified_time" content="2022-10-22T06:22:52.342Z">
+<meta property="article:author" content="Cherish">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/721960-cc0aae2294d01d0a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+<link rel="canonical" href="http://yoursite.com/2018/06/21/js-ecosystem-md/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"Chinese","comments":true,"permalink":"http://yoursite.com/2018/06/21/js-ecosystem-md/","path":"2018/06/21/js-ecosystem-md/","title":"js ecosystem"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>js ecosystem | Cherish's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cherish's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#webpack"><span class="nav-number">1.</span> <span class="nav-text">webpack</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ESLint"><span class="nav-number">2.</span> <span class="nav-text">ESLint</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ECMAScript"><span class="nav-number">3.</span> <span class="nav-text">ECMAScript</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#babel"><span class="nav-number">4.</span> <span class="nav-text">babel</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cherish</p>
+  <div class="site-description" itemprop="description">从心所欲不逾矩</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="Chinese">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/21/js-ecosystem-md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="js ecosystem | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          js ecosystem
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-21 11:54:38" itemprop="dateCreated datePublished" datetime="2018-06-21T11:54:38+08:00">2018-06-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>我在学习 react，一直在使用 <a href="https://github.com/facebook/create-react-app" target="_blank" rel="noopener">create-react-app</a> 创建项目。create-react-app 其实包括两个核心：</p>
+<ul>
+<li><code>create-react-app</code>：主要提供了 command-line 工具，方便用户创建 react 项目</li>
+<li><code>react-scripts</code>：这才是核心。它封装了所有开发 react 项目的配置，使得用户可以零配置直接开始开发 react。用户基本不需要更新 <code>create-react-app</code>，因为它总是拉最新的 <code>react-scripts</code>，而 <code>react-scripts</code> 才是简化用户配置的核心。</li>
+</ul>
+<p>问题来了，我在写测试的时候发现，<code>react-scripts</code> 默认配置使用的是 jest，而且版本较低（可运行 <code>npm ls jest</code> 查看依赖树，结果如下图所示）。而我需要使用的 data-driven-test 依赖包 <code>jest-each</code> 是 jest 23.0.0 以后的版本才有的。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/721960-cc0aae2294d01d0a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="react-scripts-dependency.png"></p>
+<p>所以我需要在测试的时候不使用默认安装的 jest，</p>
+<p>读了一个 <a href="https://medium.com/@francesco.agnoletto/i-didnt-like-create-react-app-so-i-created-my-own-boilerplate-190a7dd5d74" target="_blank" rel="noopener">post: 自己写样板，不使用 create-react-app</a>，受它的启发要自己配置 react 项目，那么就有必要了解 js ecosystem 中的一些工程。</p>
+<h1 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a><a href="https://www.webpackjs.com/concepts/" target="_blank" rel="noopener">webpack</a></h1><p>一个开源的前端打包工具，支持用户进行模块化开发（即用户开发很多 module，然后不同的 mudule 之间可通过 import, export 进行相互引用）。原本 js 是不支持的，可参见 <a href="https://hfcherish.github.io/2018/06/21/js-global-namespace/" target="_blank" rel="noopener">js global namespace</a>。</p>
+<h1 id="ESLint"><a href="#ESLint" class="headerlink" title="ESLint"></a><a href="http://eslint.cn/docs/user-guide/configuring" target="_blank" rel="noopener">ESLint</a></h1><p>是一个 javascript 的语法检查器。类似于在 IDE 中写 java 时的即时编译检查。它是可以配置的，以完成你所需要的检查。</p>
+<h1 id="ECMAScript"><a href="#ECMAScript" class="headerlink" title="ECMAScript"></a><a href="https://zh.wikipedia.org/wiki/ECMAScript" target="_blank" rel="noopener">ECMAScript</a></h1><p><a href="https://huangxuan.me/2015/09/22/js-version/" target="_blank" rel="noopener">ES5, ES6, ES2016, ES.Next: What’s going on with JavaScript versioning?</a> 翻译的这个文章讲得很好，我直接引用原文：</p>
+<blockquote>
+<ul>
+<li><strong>ECMAScript</strong>：一个由 ECMA International 进行标准化，TC39 委员会进行监督的语言。通常用于指代标准本身。</li>
+<li><strong>JavaScript</strong>：ECMAScript 标准的各种实现的最常用称呼。这个术语并不局限于某个特定版本的 ECMAScript 规范，并且可能被用于任何不同程度的任意版本的 ECMAScript 的实现。</li>
+<li><strong>ECMAScript 5 (ES5)</strong>：ECMAScript 的第五版修订，于 2009 年完成标准化。这个规范在所有现代浏览器中都相当完全的实现了。</li>
+<li><strong>ECMAScript 6 (ES6) / ECMAScript 2015 (ES2015)</strong>：ECMAScript 的第六版修订，于 2015 年完成标准化。这个标准被部分实现于大部分现代浏览器。可以查阅这张兼容性表来查看不同浏览器和工具的实现情况。</li>
+<li><strong>ECMAScript 2016</strong>：预计的第七版 ECMAScript 修订，计划于明年夏季发布。这份规范具体将包含哪些特性还没有最终确定</li>
+<li><strong>ECMAScript Proposals</strong>：被考虑加入未来版本 ECMAScript 标准的特性与语法提案，他们需要经历五个阶段：Strawman（稻草人），Proposal（提议），Draft（草案），Candidate（候选）以及 Finished （完成）。</li>
+</ul>
+</blockquote>
+<p>blog 里也讲了 ecmascript 的历史。简答总结一下：</p>
+<ol>
+<li>很久以前（1996），网景浏览器把他们写的 javascript 交给 ECMA International（欧洲计算机制造协会）进行标准化</li>
+<li>ECMA 1，2，3 版本很快发布，而且被各大浏览器厂商支持</li>
+<li>ECMA 一直没有变化，各大浏览器厂商自行扩展（所以 javascript 其实是 ECMAScript 的实现和扩展）</li>
+<li>某一年，ECMA 4 出来，太激进，被废弃了（只有 Adobe 实现了）</li>
+<li>2009 年，ECMA 5（es5） 出来。但直到 2012 年才逐渐被公众接受</li>
+<li>2015 年，es6 出来。与此同时，相关委员会决定每年定义一次新标准，避免等待整个草案完成。因此 ES6 也被命名为 ECMAScript 2015</li>
+</ol>
+<p>一些资源：</p>
+<ul>
+<li>如果你还不熟悉 ES6，Babel 有一个<a href="https://babeljs.io/docs/learn-es2015/" target="_blank" rel="noopener">很不错的特性概览</a></li>
+<li>如果你希望深入 ES6，这里有两本很不错的书： Axel Rauschmayer 的 <a href="http://exploringjs.com/" target="_blank" rel="noopener">Exploring ES6</a>和 Nicholas Zakas 的 <a href="https://leanpub.com/understandinges6" target="_blank" rel="noopener">Understanding ECMAScript 6</a>。Axel 的博客 <a href="http://www.2ality.com/" target="_blank" rel="noopener">2ality</a> 也是很不错的 ES6 资源</li>
+</ul>
+<h1 id="babel"><a href="#babel" class="headerlink" title="babel"></a><a href="https://www.babeljs.cn/" target="_blank" rel="noopener">babel</a></h1><p>babel 是一个 javascript 编译器。其核心是一个语法转换器，能将使用 es6、flow、jsx 的代码转换为浏览器兼容的 javascript。所以这些项目 build 后其实是生成了浏览器兼容的 javascript。</p>
+<p>为啥会有这个，原因就是上边说的，新版本 js 出来了，但是大家还不支持。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/javascript/" rel="tag"># javascript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/06/15/js-export/" rel="prev" title="js export">
+                  <i class="fa fa-chevron-left"></i> js export
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/06/21/js-global-namespace/" rel="next" title="js global namespace">
+                  js global namespace <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cherish</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">269k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:04</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

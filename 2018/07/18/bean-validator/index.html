@@ -1,16 +1,332 @@
-{% extends '_layout.njk' %}
-{% import '_macro/sidebar.njk' as sidebar_template with context %}
+<!DOCTYPE html>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block class %}post posts-expand{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block content %}
 
-  {{ partial('_macro/post.njk', {post: page}) }}
 
-{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-{% block sidebar %}
-  {{ sidebar_template.render(page.toc.enable) }}
-{% endblock %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="bean validator 主要是验证一个 bean 的各字段是否满足一些约束，例如 @NotNull bean validation 有个规范 jsr 380，里边定义了一堆 api。有很多规范的实现，最常用的是 hibernate validator，jersey 出的 jersey-bean-validation 也是基于 hibernate validator 做的。 bean vali">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bean validator">
+<meta property="og:url" content="http://yoursite.com/2018/07/18/bean-validator/index.html">
+<meta property="og:site_name" content="Cherish&#39;s Blog">
+<meta property="og:description" content="bean validator 主要是验证一个 bean 的各字段是否满足一些约束，例如 @NotNull bean validation 有个规范 jsr 380，里边定义了一堆 api。有很多规范的实现，最常用的是 hibernate validator，jersey 出的 jersey-bean-validation 也是基于 hibernate validator 做的。 bean vali">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-07-18T02:30:57.000Z">
+<meta property="article:modified_time" content="2022-10-22T06:22:52.330Z">
+<meta property="article:author" content="Cherish">
+<meta property="article:tag" content="rest">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yoursite.com/2018/07/18/bean-validator/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"Chinese","comments":true,"permalink":"http://yoursite.com/2018/07/18/bean-validator/","path":"2018/07/18/bean-validator/","title":"bean validator"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>bean validator | Cherish's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cherish's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%95%E5%85%A5%E4%BE%9D%E8%B5%96"><span class="nav-number">1.</span> <span class="nav-text">引入依赖</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-bean%EF%BC%8C%E6%A0%87%E6%98%8E%E7%BA%A6%E6%9D%9F"><span class="nav-number">2.</span> <span class="nav-text">创建 bean，标明约束</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81"><span class="nav-number">3.</span> <span class="nav-text">验证</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cherish</p>
+  <div class="site-description" itemprop="description">从心所欲不逾矩</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="Chinese">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/18/bean-validator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="bean validator | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          bean validator
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-18 10:30:57" itemprop="dateCreated datePublished" datetime="2018-07-18T10:30:57+08:00">2018-07-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>bean validator 主要是验证一个 bean 的各字段是否满足一些约束，例如 <code>@NotNull</code></p>
+<p>bean validation 有个规范 <a href="https://beanvalidation.org/2.0/" target="_blank" rel="noopener">jsr 380</a>，里边定义了一堆 api。有很多规范的实现，最常用的是 <a href="http://hibernate.org/validator/" target="_blank" rel="noopener">hibernate validator</a>，jersey 出的 <a href="https://jersey.github.io/documentation/latest/bean-validation.html" target="_blank" rel="noopener">jersey-bean-validation</a> 也是基于 hibernate validator 做的。</p>
+<p>bean validator 一般是应用在 web 框架（如 spring、jersey）上，框架在反序列化 rest 请求到 bean 对象时，框架会调用 validator 根据 bean 对象的 annotation 对 bean 进行验证。</p>
+<p>这个过程也可以手动进行。可参考 <a href="http://hibernate.org/validator/documentation/getting-started/" target="_blank" rel="noopener">hibernate validator: get started</a>。</p>
+<h1 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h1><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// jsr 380 api</span></span><br><span class="line">compile <span class="string">"javax.validation:validation-api:2.0.1.Final"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// hibernate vaidator 实现</span></span><br><span class="line">testCompile <span class="string">"org.hibernate.validator:hibernate-validator:6.0.10.Final"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// hibernate validator 依赖的 JSR 341 实现</span></span><br><span class="line">testCompile <span class="string">"org.glassfish:javax.el:3.0.0"</span></span><br></pre></td></tr></table></figure>
+<h1 id="创建-bean，标明约束"><a href="#创建-bean，标明约束" class="headerlink" title="创建 bean，标明约束"></a>创建 bean，标明约束</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.hibernate.validator.referenceguide.chapter01;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.Min;</span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.NotNull;</span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.Size;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@NotNull</span></span><br><span class="line">   <span class="keyword">private</span> String manufacturer;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@NotNull</span></span><br><span class="line">   <span class="meta">@Size</span>(min = <span class="number">2</span>, max = <span class="number">14</span>)</span><br><span class="line">   <span class="keyword">private</span> String licensePlate;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Min</span>(<span class="number">2</span>)</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">int</span> seatCount;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="title">Car</span><span class="params">(String manufacturer, String licencePlate, <span class="keyword">int</span> seatCount)</span></span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.manufacturer = manufacturer;</span><br><span class="line">      <span class="keyword">this</span>.licensePlate = licencePlate;</span><br><span class="line">      <span class="keyword">this</span>.seatCount = seatCount;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h1><ol>
+<li>利用 <code>Validation</code> 获取默认的 <code>ValidatorFactory</code>：<code>Validation.buildDefaultValidatorFactory()</code>；</li>
+<li>从 <code>ValidatorFacotry</code> 获取 <code>Validator</code>：<code>factory.getValidator()</code></li>
+<li>利用 <code>Validator</code> 验证 bean</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.hibernate.validator.referenceguide.chapter01;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"><span class="keyword">import</span> javax.validation.ConstraintViolation;</span><br><span class="line"><span class="keyword">import</span> javax.validation.Validation;</span><br><span class="line"><span class="keyword">import</span> javax.validation.Validator;</span><br><span class="line"><span class="keyword">import</span> javax.validation.ValidatorFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.BeforeClass;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.junit.Assert.assertEquals;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CarTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Validator validator;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@BeforeClass</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setUp</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      ValidatorFactory factory = Validation.buildDefaultValidatorFactory();</span><br><span class="line">      validator = factory.getValidator();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">manufacturerIsNull</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      Car car = <span class="keyword">new</span> Car( <span class="keyword">null</span>, <span class="string">"DD-AB-123"</span>, <span class="number">4</span> );</span><br><span class="line"></span><br><span class="line">      Set&lt;ConstraintViolation&lt;Car&gt;&gt; constraintViolations =</span><br><span class="line">      validator.validate( car );</span><br><span class="line"></span><br><span class="line">      assertEquals( <span class="number">1</span>, constraintViolations.size() );</span><br><span class="line">      assertEquals(</span><br><span class="line">         <span class="string">"may not be null"</span>,</span><br><span class="line">         constraintViolations.iterator().next().getMessage()</span><br><span class="line">      );</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">licensePlateTooShort</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      Car car = <span class="keyword">new</span> Car( <span class="string">"Morris"</span>, <span class="string">"D"</span>, <span class="number">4</span> );</span><br><span class="line"></span><br><span class="line">      Set&lt;ConstraintViolation&lt;Car&gt;&gt; constraintViolations =</span><br><span class="line">      validator.validate( car );</span><br><span class="line"></span><br><span class="line">      assertEquals( <span class="number">1</span>, constraintViolations.size() );</span><br><span class="line">      assertEquals(</span><br><span class="line">         <span class="string">"size must be between 2 and 14"</span>,</span><br><span class="line">         constraintViolations.iterator().next().getMessage()</span><br><span class="line">      );</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">seatCountTooLow</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      Car car = <span class="keyword">new</span> Car( <span class="string">"Morris"</span>, <span class="string">"DD-AB-123"</span>, <span class="number">1</span> );</span><br><span class="line"></span><br><span class="line">      Set&lt;ConstraintViolation&lt;Car&gt;&gt; constraintViolations =</span><br><span class="line">      validator.validate( car );</span><br><span class="line"></span><br><span class="line">      assertEquals( <span class="number">1</span>, constraintViolations.size() );</span><br><span class="line">      assertEquals(</span><br><span class="line">         <span class="string">"must be greater than or equal to 2"</span>,</span><br><span class="line">         constraintViolations.iterator().next().getMessage()</span><br><span class="line">      );</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">carIsValid</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      Car car = <span class="keyword">new</span> Car( <span class="string">"Morris"</span>, <span class="string">"DD-AB-123"</span>, <span class="number">2</span> );</span><br><span class="line"></span><br><span class="line">      Set&lt;ConstraintViolation&lt;Car&gt;&gt; constraintViolations =</span><br><span class="line">      validator.validate( car );</span><br><span class="line"></span><br><span class="line">      assertEquals( <span class="number">0</span>, constraintViolations.size() );</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/rest/" rel="tag"># rest</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/07/14/java-reflection/" rel="prev" title="java reflection">
+                  <i class="fa fa-chevron-left"></i> java reflection
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/07/19/hikariCP-configuration/" rel="next" title="hikariCP configuration">
+                  hikariCP configuration <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cherish</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">269k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:04</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,16 +1,369 @@
-{% extends '_layout.njk' %}
-{% import '_macro/sidebar.njk' as sidebar_template with context %}
+<!DOCTYPE html>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block class %}post posts-expand{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block content %}
 
-  {{ partial('_macro/post.njk', {post: page}) }}
 
-{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-{% block sidebar %}
-  {{ sidebar_template.render(page.toc.enable) }}
-{% endblock %}
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="数据仓库建模 数据仓库的多维数据模型 数据仓库的多维数据模型 – 非常好的一系列文章 Kimball 维度建模维度建模就是时刻考虑如何能够提供简单性，以业务为驱动，以用户理解性和查询性能为目标 kimball维度建模详解 维度建模分为两种表：事实表和维度表  事实表：必然存在的一些数据，像采集的日志文件，订单表，都可以作为事实表  特征：是一堆主键的集合，每个主键对应维度表中的一条记录，客观存在的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多维数据模型">
+<meta property="og:url" content="http://yoursite.com/2020/12/21/%E5%A4%9A%E7%BB%B4%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="Cherish&#39;s Blog">
+<meta property="og:description" content="数据仓库建模 数据仓库的多维数据模型 数据仓库的多维数据模型 – 非常好的一系列文章 Kimball 维度建模维度建模就是时刻考虑如何能够提供简单性，以业务为驱动，以用户理解性和查询性能为目标 kimball维度建模详解 维度建模分为两种表：事实表和维度表  事实表：必然存在的一些数据，像采集的日志文件，订单表，都可以作为事实表  特征：是一堆主键的集合，每个主键对应维度表中的一条记录，客观存在的">
+<meta property="og:locale">
+<meta property="og:image" content="http://webdataanalysis.net/wp-content/uploads/2010/08/Star-Schemas.png">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-1d39380d9238ca7c5876ac92d27750b2_1440w.jpg">
+<meta property="og:image" content="https://pic4.zhimg.com/80/v2-e7e1a7403be3ffb217f623d89771a573_1440w.jpg">
+<meta property="article:published_time" content="2020-12-21T08:05:11.000Z">
+<meta property="article:modified_time" content="2022-10-22T06:22:52.356Z">
+<meta property="article:author" content="Cherish">
+<meta property="article:tag" content="big data">
+<meta property="article:tag" content="data modeling">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://webdataanalysis.net/wp-content/uploads/2010/08/Star-Schemas.png">
+
+
+<link rel="canonical" href="http://yoursite.com/2020/12/21/%E5%A4%9A%E7%BB%B4%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"Chinese","comments":true,"permalink":"http://yoursite.com/2020/12/21/%E5%A4%9A%E7%BB%B4%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B/","path":"2020/12/21/多维数据模型/","title":"多维数据模型"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>多维数据模型 | Cherish's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cherish's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Kimball-%E7%BB%B4%E5%BA%A6%E5%BB%BA%E6%A8%A1"><span class="nav-number">1.</span> <span class="nav-text">Kimball 维度建模</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E7%BB%B4%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AE%9A%E4%B9%89%E5%92%8C%E4%BD%9C%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">多维数据模型的定义和作用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E9%A2%98%E5%BB%BA%E6%A8%A1"><span class="nav-number">2.1.</span> <span class="nav-text">主题建模</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E6%88%90"><span class="nav-number">2.1.1.</span> <span class="nav-text">构成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8A%BF"><span class="nav-number">2.1.2.</span> <span class="nav-text">优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A9%E5%B1%95"><span class="nav-number">2.1.3.</span> <span class="nav-text">扩展</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">3.</span> <span class="nav-text">概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E5%AE%9E%E8%A1%A8"><span class="nav-number">3.1.</span> <span class="nav-text">事实表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%B4%E8%A1%A8"><span class="nav-number">3.2.</span> <span class="nav-text">维表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%9F%E5%9E%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.3.</span> <span class="nav-text">星型模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%AA%E8%8A%B1%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.4.</span> <span class="nav-text">雪花模型</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cherish</p>
+  <div class="site-description" itemprop="description">从心所欲不逾矩</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="Chinese">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/21/%E5%A4%9A%E7%BB%B4%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="多维数据模型 | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          多维数据模型
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-12-21 16:05:11" itemprop="dateCreated datePublished" datetime="2020-12-21T16:05:11+08:00">2020-12-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a href="https://zhuanlan.zhihu.com/p/159061537" target="_blank" rel="noopener">数据仓库建模</a></p>
+<p><a href="https://www.cnblogs.com/cyechina/p/5425842.html" target="_blank" rel="noopener">数据仓库的多维数据模型</a></p>
+<p><a href="http://webdataanalysis.net/web-data-warehouse/multidimensional-data-model/" target="_blank" rel="noopener">数据仓库的多维数据模型 – 非常好的一系列文章</a></p>
+<h1 id="Kimball-维度建模"><a href="#Kimball-维度建模" class="headerlink" title="Kimball 维度建模"></a>Kimball 维度建模</h1><p><strong>维度建模就是时刻考虑如何能够提供简单性，以业务为驱动，以用户理解性和查询性能为目标</strong></p>
+<p><a href="https://segmentfault.com/a/1190000038938864" target="_blank" rel="noopener">kimball维度建模详解</a></p>
+<p>维度建模分为两种表：事实表和维度表</p>
+<ol>
+<li><strong>事实表</strong>：必然存在的一些数据，像采集的日志文件，订单表，都可以作为事实表</li>
+</ol>
+<p>特征：<strong>是一堆主键的集合</strong>，每个主键对应维度表中的一条记录，客观存在的，根据主题确定出需要使用的数据</p>
+<ol>
+<li><strong>维度表</strong>：维度就是所分析的数据的一个量，维度表就是以合适的角度来创建的表，分析问题的一个角度：时间、地域、终端、用户等角度</li>
+</ol>
+<h1 id="多维数据模型的定义和作用"><a href="#多维数据模型的定义和作用" class="headerlink" title="多维数据模型的定义和作用"></a>多维数据模型的定义和作用</h1><p>　　多维数据模型是为了满足用户从多角度多层次进行数据查询和分析的需要而建立起来的基于事实和维的数据库模型，其基本的应用是为了实现OLAP（Online Analytical Processing）。</p>
+<p>　　当然，通过多维数据模型的数据展示、查询和获取就是其作用的展现，但其真的作用的实现在于，通过数据仓库可以根据不同的数据需求建立起各类多维模型，并组成数据集市开放给不同的用户群体使用，也就是根据需求定制的各类数据商品摆放在数据集市中供不同的数据消费者进行采购。</p>
+<p><strong>多维数据模型最大的优点就是其基于分析优化的数据组织和存储模式。</strong></p>
+<h2 id="主题建模"><a href="#主题建模" class="headerlink" title="主题建模"></a>主题建模</h2><p><a href="https://zhuanlan.zhihu.com/p/113790356" target="_blank" rel="noopener">多维分析仓库构建-面向主题的建模</a></p>
+<h3 id="构成"><a href="#构成" class="headerlink" title="构成"></a>构成</h3><p>主题建模是对原始数据、原始业务理解的基础上，将数据归类为多个主题（e.g. 销量主题、维修订单主题、线索转化主题…）。</p>
+<p>一般，一个主题就是由一张事实表、多张维表、以及结果聚合表所组成。</p>
+<ol>
+<li>基于多维数据模型构建底层：事实表+维表</li>
+<li>基于上述模型，聚合结果，生成聚合数据。</li>
+</ol>
+<p>事实表要尽可能宽，尽可能容纳此主题下所有指标，如果有新指标需求，则动态添加指标。但是事实表太宽可能导致后续计算资源不足，如果需要拆分事实，拆分事实表的过程即拆分子主题。对事实表的拆分不明确，即主题不明确，会导致后续资源的浪费或者维护成本的提高。因为后续可能出现衍生指标需要两个主题出的情况，那么需要再新出一个综合主题。</p>
+<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><p>主题建模是对数据的分类，这需要对领域或企业内数据特征有深刻理解。清晰的主题规划往往是数仓设计成败的关键。</p>
+<p>与主题建模相对的，是按需输出数据，按照产品的需求出对应指标。</p>
+<p>按需出指标，不必等待多维分析数仓建立完成即可开始，前期开发周期短。</p>
+<p>主题建模是提前将维度和指标的全集定义好，聚合尽可能多的维度属性和指标的组合，与产品需求解耦，不会随产品需求增加而将数仓变得臃肿，可维护性好，长远来看性能上也更好。</p>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>原子指标、衍生指标的增长：需要增加结果表的schema，所有数据库是兼容的，产生结果表的SQL修改其中读取事实表的查询，可以向后兼容</p>
+<p>维度属性的增长：在维度表中增加具体的维度属性即可，不需要其他修改。</p>
+<p>维度的增长：产生结果表的SQL增加新的维度表，结果表的schema也进行相应修改。</p>
+<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>在看实例前，这里需要先了解两个概念：<strong>事实表和维表</strong>。事实表是用来记录具体事件的，包含了每个事件的具体要素，以及具体发生的事情；维表则是对事实表中事件的要素的描述信息。比如一个事件会包含时间、地点、人物、事件，事实表记录了整个事件的信息，但对时间、地点和人物等要素只记录了一些关键标记，比如事件的主角叫“Michael”，那么Michael到底“长什么样”，就需要到相应的维表里面去查询“Michael”的具体描述信息了。基于事实表和维表就可以构建出多种多维模型，包括星形模型、雪花模型和星座模型。这里不再展开了，解释概念真的很麻烦，而且基于我的理解的描述不一定所有人都能明白，还是直接上实例吧：</p>
+<p><img src="http://webdataanalysis.net/wp-content/uploads/2010/08/Star-Schemas.png" alt="Star-Schemas"></p>
+<p>事实表里面主要包含两方面的信息：<strong>维和度量</strong>，维的具体描述信息记录在维表，事实表中的维属性只是一个关联到维表的键，并不记录具体信息；度量一般都会记录事件的相应数值，比如这里的产品的销售数量、销售额等。维表中的信息一般是可以分层的，比如时间维的年月日、地域维的省市县等，这类分层的信息就是为了满足事实表中的度量可以在不同的粒度上完成聚合，比如2010年商品的销售额，来自上海市的销售额等。</p>
+<h2 id="事实表"><a href="#事实表" class="headerlink" title="事实表"></a>事实表</h2><p>事实表是用来记录具体事件的，包含了每个事件的具体要素，以及具体发生的事情；如<strong>系统</strong>的<strong>日志</strong>、<strong>销售记录</strong>、<strong>用户访问日志</strong>等信息，<strong>事实表的记录是动态的增长的</strong>，所以<strong>体积是大于维度表</strong>。<strong>即：用户关心的业务数据，如销售数量，库存数量，销售金额</strong></p>
+<h2 id="维表"><a href="#维表" class="headerlink" title="维表"></a>维表</h2><p>维表则是对事实表中事件的要素的描述信息。比如一个事件会包含时间、地点、人物、事件，事实表记录了整个事件的信息，但对时间、地点和人物等要素只记录了一些关键标记，比如事件的主角叫“Michael”，那么Michael到底“长什么样”，就需要到相应的维表里面去查询“Michael”的具体描述信息了。</p>
+<p><strong>维度表</strong>（Dimension Table）也称为<strong>查找表</strong>（Lookup Table）是<strong>与事实表相对应的表</strong>，这个表保存了<strong>维度的属性值</strong>，可以跟事实表做关联，<strong>相当于</strong>是将<strong>事实表</strong>中<strong>经常重复的数据抽取</strong>、<strong>规范出来用一张表管理</strong>，常见的有日期（日、周、月、季度等属性）、地区表等，所以<strong>维度表的变化通常不会太大</strong>。<strong>即：用来描述业务数据的数据，如日期、产品数据、地区、渠道</strong></p>
+<p>基于事实表和维表就可以构建出多种多维模型，包括星形模型、雪花模型和星座模型。</p>
+<h2 id="星型模型"><a href="#星型模型" class="headerlink" title="星型模型"></a>星型模型</h2><p>当所有维表都直接连接到“事实表”上时，整个图解就像星星一样，故将该模型称为星型模型。<strong>数据有一定的冗余</strong></p>
+<p><img src="https://pic3.zhimg.com/80/v2-1d39380d9238ca7c5876ac92d27750b2_1440w.jpg" alt="img"></p>
+<h2 id="雪花模型"><a href="#雪花模型" class="headerlink" title="雪花模型"></a>雪花模型</h2><p>当有一个或多个维表没有直接连接到事实表上，而是通过其他维表连接到事实表上时，其图解就像多个雪花连接在一起，故称雪花模型。<strong>雪花模型是对星型模型的扩展</strong>。它对星型模型的维表进一步层次化，原有的各维表可能被扩展为小的事实表，形成一些局部的 “层次 “ 区域，这些被分解的表都连接到主维度表而不是事实表。如图 2，将地域维表又分解为国家，省份，城市等维表。它的优点是：<strong>通过最大限度地减少数据存储量以及联合较小的维表来改善查询性能。雪花型结构去除了数据冗余</strong>。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-e7e1a7403be3ffb217f623d89771a573_1440w.jpg" alt="img"><em>**</em></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/big-data/" rel="tag"># big data</a>
+              <a href="/tags/data-modeling/" rel="tag"># data modeling</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/12/18/airflow/" rel="prev" title="airflow">
+                  <i class="fa fa-chevron-left"></i> airflow
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/02/24/clean-mac-other-storage/" rel="next" title="clean mac other storage">
+                  clean mac other storage <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cherish</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">269k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:04</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
