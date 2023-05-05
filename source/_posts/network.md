@@ -1,10 +1,11 @@
 ---
 title: network
 toc: true
-date: 2020-07-23 14:10:25
 tags:
-    - network
+  - network
+date: 2020-07-23 14:10:25
 ---
+
 
 [Eli the computer guy](https://www.youtube.com/watch?v=rL8RSFQG8do&list=PLF360ED1082F6F2A5)
 
