@@ -160,7 +160,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -263,7 +263,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p><a href="https://github.com/brettwooldridge/HikariCP" target="_blank" rel="noopener">hikariCP</a> 是一个轻量级的数据库连接池。引用 <a href="https://github.com/brettwooldridge/HikariCP" target="_blank" rel="noopener">数据库连接池性能对比</a> 的说法（我并没有测试过）：</p>
+    <div class="post-body" itemprop="articleBody"><p><a href="https://github.com/brettwooldridge/HikariCP">hikariCP</a> 是一个轻量级的数据库连接池。引用 <a href="https://github.com/brettwooldridge/HikariCP">数据库连接池性能对比</a> 的说法（我并没有测试过）：</p>
 <blockquote>
 <ol>
 <li>性能方面 hikariCP&gt;druid&gt;tomcat-jdbc&gt;dbcp&gt;c3p0 。hikariCP的高性能得益于最大限度的避免锁竞争。</li>
@@ -276,28 +276,31 @@
 <p>使用过程中出现了一些坑，总结一下。</p>
 <h1 id="java-sql-SQLTransientConnectionException"><a href="#java-sql-SQLTransientConnectionException" class="headerlink" title="java.sql.SQLTransientConnectionException"></a>java.sql.SQLTransientConnectionException</h1><p>仅使用默认配置，在运行所有测试时，会出现如下异常信息：</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/721960-3c58b4722a0f8ab5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="sql exception.png"></p>
-<p>这是因为默认的连接池数量是 10，而并行运行测试时，连接池数量不够了。通过设置 <a href="https://github.com/brettwooldridge/HikariCP#frequently-used" target="_blank" rel="noopener"><code>maximumPoolSize</code></a> 解决。</p>
+<p>这是因为默认的连接池数量是 10，而并行运行测试时，连接池数量不够了。通过设置 <a href="https://github.com/brettwooldridge/HikariCP#frequently-used"><code>maximumPoolSize</code></a> 解决。</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">spring.datasource.hikari.maximum-pool-size:1000</span></span><br></pre></td></tr></table></figure>
+
 <h1 id="too-many-connections"><a href="#too-many-connections" class="headerlink" title="too many connections"></a>too many connections</h1><p>在进行上述设置后，启动应用，连接数据库，发现数据库无法连接，报 <code>too many connections</code>。</p>
-<h2 id="fixed-size-pool"><a href="#fixed-size-pool" class="headerlink" title="fixed-size pool"></a>fixed-size pool</h2><p>按 <a href="https://github.com/brettwooldridge/HikariCP/issues/657" target="_blank" rel="noopener">hikariCP owner 的解释</a>，这可能是因为当设置 <code>maximumPoolSize</code> 后，这就变成了 fix-size 的连接池了，即总是会占有 1000（上边的设置）个连接池。idle 连接不会被释放，因为释放了也要创建新的 idle 连接池来保证 fix-size。从而新的连接就无法建立了。</p>
+<h2 id="fixed-size-pool"><a href="#fixed-size-pool" class="headerlink" title="fixed-size pool"></a>fixed-size pool</h2><p>按 <a href="https://github.com/brettwooldridge/HikariCP/issues/657">hikariCP owner 的解释</a>，这可能是因为当设置 <code>maximumPoolSize</code> 后，这就变成了 fix-size 的连接池了，即总是会占有 1000（上边的设置）个连接池。idle 连接不会被释放，因为释放了也要创建新的 idle 连接池来保证 fix-size。从而新的连接就无法建立了。</p>
 <blockquote>
 <p>When running as a fixed-size pool (default) the <code>idleTimeout</code> has no effect. Your example is a fixed-size pool – when <code>minimumIdle</code> is not defined it defaults to <code>maximumPoolSize</code>.</p>
-<p><code>idleTimeout</code> is meant to shrink the pool from <code>maximumPoolSize</code> down toward <code>minimumIdle</code> when connections are unused in the pool. However, when <code>minimumIdle</code> == <code>maximumPoolSize</code> then closing an “idle” connection makes no sense as it will be replaced immediately in the pool.</p>
+<p><code>idleTimeout</code> is meant to shrink the pool from <code>maximumPoolSize</code> down toward <code>minimumIdle</code> when connections are unused in the pool. However, when <code>minimumIdle</code> &#x3D;&#x3D; <code>maximumPoolSize</code> then closing an “idle” connection makes no sense as it will be replaced immediately in the pool.</p>
 </blockquote>
 <p>所以配置 <code>minimumIdle</code> 可以解决上述问题。</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">spring.datasource.hikari.maximum-pool-size:1000</span></span><br><span class="line"><span class="string">spring.datasource.hikari.miniumIdle:10</span></span><br></pre></td></tr></table></figure>
-<h2 id="wait-timeout-too-long"><a href="#wait-timeout-too-long" class="headerlink" title="wait-timeout too long"></a>wait-timeout too long</h2><p>有时就是因为 connection 一直没被释放，这可能是这是的 connection wait_timeout 太长了。参照 <a href="https://support.rackspace.com/how-to/how-to-change-the-mysql-timeout-on-a-server/" target="_blank" rel="noopener">change the mysql timeout on a server</a> 来了解 ‘wait_timeout’ 的设置。</p>
+
+<h2 id="wait-timeout-too-long"><a href="#wait-timeout-too-long" class="headerlink" title="wait-timeout too long"></a>wait-timeout too long</h2><p>有时就是因为 connection 一直没被释放，这可能是这是的 connection wait_timeout 太长了。参照 <a href="https://support.rackspace.com/how-to/how-to-change-the-mysql-timeout-on-a-server/">change the mysql timeout on a server</a> 来了解 ‘wait_timeout’ 的设置。</p>
 <p>引用原文：</p>
 <blockquote>
 <p>Choose a reasonable <code>wait_timeout</code> value. Stateless PHP environments do well with a 60 second timeout or less. Stateful applications that use a connection pool (Java, .NET, etc.) will need to adjust <code>wait_timeout</code> to match their connection pool settings. The default 8 hours (<code>wait_timeout = 28800</code>) works well with properly configured connection pools.</p>
 <p>Configure the <code>wait_timeout</code> to be slightly longer than the application connection pool’s expected connection lifetime. This is a good safety check.</p>
 </blockquote>
-<p>在设置了合理的 mysql <code>wait_timeout</code> 后，同样也设置 hikariCP 的连接池空闲时间，参考<a href="https://github.com/brettwooldridge/HikariCP/wiki/FAQ#q-i-am-getting-a-commysqljdbcexceptionsjdbc4communicationsexception-communications-link-failure-exception-logged-in-the-isconnectionalive-method-of-hikaripool-in-my-logs-what-is-happening" target="_blank" rel="noopener">FAQ</a></p>
+<p>在设置了合理的 mysql <code>wait_timeout</code> 后，同样也设置 hikariCP 的连接池空闲时间，参考<a href="https://github.com/brettwooldridge/HikariCP/wiki/FAQ#q-i-am-getting-a-commysqljdbcexceptionsjdbc4communicationsexception-communications-link-failure-exception-logged-in-the-isconnectionalive-method-of-hikaripool-in-my-logs-what-is-happening">FAQ</a></p>
 <blockquote>
-<p>If you set the MySQL <code>wait_timeout = 28800</code> (seconds = 8 hours), you should set HikariCP <code>idleTimeout</code> and <code>maxLifetime</code> to the slightly shorter 28000000 (milliseconds = 7 hours 46 minutes).</p>
+<p>If you set the MySQL <code>wait_timeout = 28800</code> (seconds &#x3D; 8 hours), you should set HikariCP <code>idleTimeout</code> and <code>maxLifetime</code> to the slightly shorter 28000000 (milliseconds &#x3D; 7 hours 46 minutes).</p>
 </blockquote>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">spring.datasource.hikari.maximum-pool-size:1000</span></span><br><span class="line"><span class="string">spring.datasource.hikari.miniumIdle:10</span></span><br><span class="line"><span class="string">spring.datasource.hikari.idleTimeout:28000000</span></span><br><span class="line"><span class="string">spring.datasource.hikari.maxLifetime:28000000</span></span><br></pre></td></tr></table></figure>
-<h1 id="性能优化配置"><a href="#性能优化配置" class="headerlink" title="性能优化配置"></a>性能优化配置</h1><p>按照前边的说法，合理启用 prepareStatement 缓存，可以大幅提升性能。官方推荐的配置可参考 <a href="https://github.com/brettwooldridge/HikariCP/wiki/MySQL-Configuration" target="_blank" rel="noopener">mysql configuration</a></p>
+
+<h1 id="性能优化配置"><a href="#性能优化配置" class="headerlink" title="性能优化配置"></a>性能优化配置</h1><p>按照前边的说法，合理启用 prepareStatement 缓存，可以大幅提升性能。官方推荐的配置可参考 <a href="https://github.com/brettwooldridge/HikariCP/wiki/MySQL-Configuration">mysql configuration</a></p>
 <p>一个典型配置如下：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">jdbcUrl=jdbc:mysql://localhost:3306/simpsons</span></span><br><span class="line"><span class="string">user=test</span></span><br><span class="line"><span class="string">password=test</span></span><br><span class="line"><span class="string">dataSource.cachePrepStmts=true</span></span><br><span class="line"><span class="string">dataSource.prepStmtCacheSize=250</span></span><br><span class="line"><span class="string">dataSource.prepStmtCacheSqlLimit=2048</span></span><br><span class="line"><span class="string">dataSource.useServerPrepStmts=true</span></span><br><span class="line"><span class="string">dataSource.useLocalSessionState=true</span></span><br><span class="line"><span class="string">dataSource.rewriteBatchedStatements=true</span></span><br><span class="line"><span class="string">dataSource.cacheResultSetMetadata=true</span></span><br><span class="line"><span class="string">dataSource.cacheServerConfiguration=true</span></span><br><span class="line"><span class="string">dataSource.elideSetAutoCommits=true</span></span><br><span class="line"><span class="string">dataSource.maintainTimeStats=false</span></span><br></pre></td></tr></table></figure>
     </div>
@@ -354,13 +357,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">269k</span>
+    <span title="Word count total">275k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:04</span>
+    <span title="Reading time total">4:10</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

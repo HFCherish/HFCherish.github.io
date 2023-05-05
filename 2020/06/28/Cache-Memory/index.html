@@ -19,12 +19,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="General Concept    CPU Core Caching      Cache Lines  Cache MemoryAssociative Memory    Direct-Mapped Memory    Set Associative Memory   Cache Read&#x2F;Write Policies    cache coherency MESI protocol: (Mo">
+    <meta name="description" content="General Concept    CPU Core Caching      Cache Lines  Cache MemoryAssociative Memory    Direct-Mapped Memory    Set Associative Memory   Cache Read&#x2F;Write Policies    cache coherency MESI protocol">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Cache Memory">
 <meta property="og:url" content="http://yoursite.com/2020/06/28/Cache-Memory/index.html">
 <meta property="og:site_name" content="Cherish&#39;s Blog">
-<meta property="og:description" content="General Concept    CPU Core Caching      Cache Lines  Cache MemoryAssociative Memory    Direct-Mapped Memory    Set Associative Memory   Cache Read&#x2F;Write Policies    cache coherency MESI protocol: (Mo">
+<meta property="og:description" content="General Concept    CPU Core Caching      Cache Lines  Cache MemoryAssociative Memory    Direct-Mapped Memory    Set Associative Memory   Cache Read&#x2F;Write Policies    cache coherency MESI protocol">
 <meta property="og:locale">
 <meta property="og:image" content="http://yoursite.com/images/cache-memory-simple.003.jpeg">
 <meta property="og:image" content="http://yoursite.com/images/cache-memory-simple.004.jpeg">
@@ -174,7 +174,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#General-Concept"><span class="nav-number">1.</span> <span class="nav-text">General Concept</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CPU-Core-Caching"><span class="nav-number">2.</span> <span class="nav-text">CPU Core Caching</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cache-Lines"><span class="nav-number">3.</span> <span class="nav-text">Cache Lines</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cache-Memory"><span class="nav-number">4.</span> <span class="nav-text">Cache Memory</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Associative-Memory"><span class="nav-number">4.1.</span> <span class="nav-text">Associative Memory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Direct-Mapped-Memory"><span class="nav-number">4.2.</span> <span class="nav-text">Direct-Mapped Memory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set-Associative-Memory"><span class="nav-number">4.3.</span> <span class="nav-text">Set Associative Memory</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cache-Read-Write-Policies"><span class="nav-number">5.</span> <span class="nav-text">Cache Read&#x2F;Write Policies</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Principle-Of-Locality"><span class="nav-number">6.</span> <span class="nav-text">Principle Of Locality</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Summary"><span class="nav-number">7.</span> <span class="nav-text">Summary</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#General-Concept"><span class="nav-number">1.</span> <span class="nav-text">General Concept</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CPU-Core-Caching"><span class="nav-number">2.</span> <span class="nav-text">CPU Core Caching</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cache-Lines"><span class="nav-number">3.</span> <span class="nav-text">Cache Lines</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cache-Memory"><span class="nav-number">4.</span> <span class="nav-text">Cache Memory</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Associative-Memory"><span class="nav-number">4.1.</span> <span class="nav-text">Associative Memory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Direct-Mapped-Memory"><span class="nav-number">4.2.</span> <span class="nav-text">Direct-Mapped Memory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set-Associative-Memory"><span class="nav-number">4.3.</span> <span class="nav-text">Set Associative Memory</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cache-Read-x2F-Write-Policies"><span class="nav-number">5.</span> <span class="nav-text">Cache Read&#x2F;Write Policies</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Principle-Of-Locality"><span class="nav-number">6.</span> <span class="nav-text">Principle Of Locality</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Summary"><span class="nav-number">7.</span> <span class="nav-text">Summary</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -193,7 +193,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -319,11 +319,11 @@
 <h2 id="Set-Associative-Memory"><a href="#Set-Associative-Memory" class="headerlink" title="Set Associative Memory"></a>Set Associative Memory</h2><p><img src="/images/cache-memory-simple.029.jpeg" alt="cache-memory-simple.029"></p>
 <p><img src="/images/cache-memory-simple.030.jpeg" alt="cache-memory-simple.030"></p>
 <p><img src="/images/cache-memory-simple.031.jpeg" alt="cache-memory-simple.031"></p>
-<h1 id="Cache-Read-Write-Policies"><a href="#Cache-Read-Write-Policies" class="headerlink" title="Cache Read/Write Policies"></a>Cache Read/Write Policies</h1><p><img src="/images/cache-memory-simple.033.jpeg" alt="cache-memory-simple.033"></p>
+<h1 id="Cache-Read-x2F-Write-Policies"><a href="#Cache-Read-x2F-Write-Policies" class="headerlink" title="Cache Read&#x2F;Write Policies"></a>Cache Read&#x2F;Write Policies</h1><p><img src="/images/cache-memory-simple.033.jpeg" alt="cache-memory-simple.033"></p>
 <p><img src="/images/cache-memory-simple.034.jpeg" alt="cache-memory-simple.034"></p>
 <p><img src="/images/cache-memory-simple.035.jpeg" alt="cache-memory-simple.035"></p>
 <p><img src="/images/cache-memory-simple.036.jpeg" alt="cache-memory-simple.036"></p>
-<p><a href="https://www.infoq.cn/article/cache-coherency-primer" target="_blank" rel="noopener">cache coherency</a></p>
+<p><a href="https://www.infoq.cn/article/cache-coherency-primer">cache coherency</a></p>
 <p>MESI protocol: (Modified, Exclusive, Shared, Invalid)</p>
 <blockquote>
 <ul>
@@ -395,13 +395,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">269k</span>
+    <span title="Word count total">275k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:04</span>
+    <span title="Reading time total">4:10</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

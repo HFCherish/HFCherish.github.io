@@ -159,7 +159,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -262,7 +262,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p><a href="https://support.huaweicloud.com/productdesc-obs/zh-cn_topic_0045829060.html" target="_blank" rel="noopener">Huawei Obs</a> is an object storage service on cloud.</p>
+    <div class="post-body" itemprop="articleBody"><p><a href="https://support.huaweicloud.com/productdesc-obs/zh-cn_topic_0045829060.html">Huawei Obs</a> is an object storage service on cloud.</p>
 <h1 id="Concepts"><a href="#Concepts" class="headerlink" title="Concepts"></a>Concepts</h1><h2 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h2><ol>
 <li>The real complete file or byte stream to save</li>
 <li><strong>object name is the unique id</strong> in a bucket<ol>
@@ -271,7 +271,7 @@
 </li>
 <li>Access(based on version in fact)<ol>
 <li>Object ACL:<ol>
-<li>general control to object: <strong>read object, read/write object ACL, only users in the same account</strong></li>
+<li>general control to object: <strong>read object, read&#x2F;write object ACL, only users in the same account</strong></li>
 </ol>
 </li>
 <li>Object policy<ol>
@@ -286,13 +286,13 @@
 </ol>
 </li>
 <li>directory:<ol>
-<li><strong>directory is just a view</strong>. Essentially, it’s an empty object end with “/“.</li>
+<li><strong>directory is just a view</strong>. Essentially, it’s an empty object end with “&#x2F;“.</li>
 <li><strong>all objects in a bucket are on the same level</strong>. There’s no multi-level directory in fact.</li>
-<li>to create the directory view, you need to create an object with name ending with “/“ explicility, eg. “sub1/sub2/ . It will create a two-level dir in console. There’s no need to create “sub1/“ first then “sub1/sub2”.</li>
+<li>to create the directory view, you need to create an object with name ending with “&#x2F;“ explicility, eg. “sub1&#x2F;sub2&#x2F; . It will create a two-level dir in console. There’s no need to create “sub1&#x2F;“ first then “sub1&#x2F;sub2”.</li>
 </ol>
 </li>
 <li>object actions:<ol>
-<li>For writing, there’s <strong>only write/restricted-append/delete, no put</strong></li>
+<li>For writing, there’s <strong>only write&#x2F;restricted-append&#x2F;delete, no put</strong></li>
 <li><strong>basically-write-once-read-many</strong></li>
 </ol>
 </li>
@@ -312,7 +312,7 @@
 </li>
 <li>Access<ol>
 <li>Bucket ACL: <ol>
-<li>general control to bucket and all objects in bucket: <strong>read/put buckets, read/write bucket ACL, only users in the same account</strong></li>
+<li>general control to bucket and all objects in bucket: <strong>read&#x2F;put buckets, read&#x2F;write bucket ACL, only users in the same account</strong></li>
 </ol>
 </li>
 <li>Bucket policy<ol>
@@ -338,7 +338,7 @@
 </li>
 </ol>
 <h2 id="region"><a href="#region" class="headerlink" title="region"></a>region</h2><p>The region of nodes where the storage really happens.</p>
-<h2 id="signature"><a href="#signature" class="headerlink" title="signature"></a>signature</h2><p>The signature to identify a user when accessing buckets/objects.</p>
+<h2 id="signature"><a href="#signature" class="headerlink" title="signature"></a>signature</h2><p>The signature to identify a user when accessing buckets&#x2F;objects.</p>
 <ol>
 <li>ak(access key): represent a user. one user can have multi aks. It’s kind of like an user role</li>
 <li>sk(secret key): one-to-one corresponding with ak. The secret key used for RSA authentication &amp; authorization.</li>
@@ -399,13 +399,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">269k</span>
+    <span title="Word count total">275k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:04</span>
+    <span title="Reading time total">4:10</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

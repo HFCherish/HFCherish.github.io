@@ -161,7 +161,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -265,8 +265,8 @@
     
     
     <div class="post-body" itemprop="articleBody"><h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><p><img src="http://atlas.apache.org/public/images/twiki/architecture.png" alt="img"></p>
-<h1 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h1><p><a href="https://atlas.apache.org/2.0.0/InstallationSteps.html" target="_blank" rel="noopener">install steps</a></p>
-<p>Access Apache Atlas UI using a browser: <a href="http://localhost:21000/" target="_blank" rel="noopener">http://localhost:21000</a> </p>
+<h1 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h1><p><a href="https://atlas.apache.org/2.0.0/InstallationSteps.html">install steps</a></p>
+<p>Access Apache Atlas UI using a browser: <a href="http://localhost:21000/">http://localhost:21000</a> </p>
 <p>You can also access the rest api <code>http://localhost:21000/api/atlas/v2</code></p>
 <p>默认的用户名密码是 (admin, admin)</p>
 <h1 id="Atlas-Features"><a href="#Atlas-Features" class="headerlink" title="Atlas Features"></a>Atlas Features</h1><h2 id="定义元模型，规范元数据"><a href="#定义元模型，规范元数据" class="headerlink" title="定义元模型，规范元数据"></a>定义元模型，规范元数据</h2><p>atlas 可以维护（增删改查） metadata types，支持</p>
@@ -281,12 +281,12 @@
 </ul>
 </li>
 <li>元模型支持定义属性约束、索引、唯一性等</li>
-<li>按 id/typename/query 来检索</li>
+<li>按 id&#x2F;typename&#x2F;query 来检索</li>
 </ul>
 <blockquote>
-<p><a href="http://atlas.apache.org/api/v2/resource_TypesREST.html#resource_TypesREST_createAtlasTypeDefs_POST" target="_blank" rel="noopener">相关 API 定义</a></p>
-<p><a href="http://atlas.apache.org/api/v2/json_AtlasTypesDef.html" target="_blank" rel="noopener">typedef request schema object</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># DELETE&#x2F;GET&#x2F;POST&#x2F;PUT</span><br><span class="line">&#x2F;v2&#x2F;types&#x2F;typedef</span><br></pre></td></tr></table></figure>
+<p><a href="http://atlas.apache.org/api/v2/resource_TypesREST.html#resource_TypesREST_createAtlasTypeDefs_POST">相关 API 定义</a></p>
+<p><a href="http://atlas.apache.org/api/v2/json_AtlasTypesDef.html">typedef request schema object</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># DELETE/GET/POST/PUT</span><br><span class="line">/v2/types/typedef</span><br></pre></td></tr></table></figure>
 </blockquote>
 <h3 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h3><ul>
 <li>typename 全局唯一</li>
@@ -295,12 +295,12 @@
 <ol>
 <li>REST API：atlas 提供 api 可以 bulk saveOrUpdate 某个 type 的元数据</li>
 <li>文件：atlas 可以上传文件，并 saveOrUpdate 文件中所定义的元模型、元数据等</li>
-<li>atlas hook：atlas 通过监听 kafka topic <code>ATLAS_HOOK</code> ，来实时引入数据源中的元数据。目前已提供 Apache Hive/Apache HBase/Apache Storm/Apache Sqoop 的 hook<ol>
+<li>atlas hook：atlas 通过监听 kafka topic <code>ATLAS_HOOK</code> ，来实时引入数据源中的元数据。目前已提供 Apache Hive&#x2F;Apache HBase&#x2F;Apache Storm&#x2F;Apache Sqoop 的 hook<ol>
 <li>hive hook<ol>
 <li>可以 import hive databases &amp; tables 元数据</li>
 <li>可以监听以下类型的 hive 操作，capture 其中的元数据：<ol>
 <li>create database</li>
-<li>create table/view, create table as select</li>
+<li>create table&#x2F;view, create table as select</li>
 <li>load, import, export</li>
 <li>DMLs (insert)</li>
 <li>alter database</li>
@@ -333,7 +333,7 @@
 <li>基于血缘关系链的传播</li>
 </ul>
 <h3 id="Classification-vs-label"><a href="#Classification-vs-label" class="headerlink" title="Classification vs label"></a>Classification vs label</h3><p>Atlas 中的 classification 和 label 都是标签的概念，label 是轻量级、谁都可以加的简单标签，classification 则有更多的支持。</p>
-<p><a href="https://docs.cloudera.com/runtime/7.2.1/atlas-working-with-classifications/topics/atlas-working-with-classifications.html" target="_blank" rel="noopener">atlas classification vs label</a></p>
+<p><a href="https://docs.cloudera.com/runtime/7.2.1/atlas-working-with-classifications/topics/atlas-working-with-classifications.html">atlas classification vs label</a></p>
 <h2 id="可以维护企业术语表"><a href="#可以维护企业术语表" class="headerlink" title="可以维护企业术语表"></a>可以维护企业术语表</h2><p>atlas 可以维护企业的术语，并将术语与元数据关联，支持按术语检索元数据，通过以下三个概念来实现细粒度的术语管理：</p>
 <ol>
 <li>glossary：术语表，最高级别，所有的术语都必须属于某个术语表</li>
@@ -342,13 +342,12 @@
 </ol>
 <h2 id="Notifications"><a href="#Notifications" class="headerlink" title="Notifications"></a>Notifications</h2><p>atlas 通过 kafka 实现 hook，引入元数据；也通过 kafka 广播元数据修改，供消费者使用。</p>
 <ul>
-<li><p>notifications to atlas：<code>ATLAS_HOOK</code>. 目前已提供 Apache Hive/Apache HBase/Apache Storm/Apache Sqoop 的 hook，来监听这些数据源的元数据</p>
+<li><p>notifications to atlas：<code>ATLAS_HOOK</code>. 目前已提供 Apache Hive&#x2F;Apache HBase&#x2F;Apache Storm&#x2F;Apache Sqoop 的 hook，来监听这些数据源的元数据</p>
 </li>
 <li><p>notifications from atlas: <code>ATLAS_ENTITIES</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 监听并发布以下事件的通知</span><br><span class="line">ENTITY_CREATE:         sent when an entity instance is created</span><br><span class="line">ENTITY_UPDATE:         sent when an entity instance is updated</span><br><span class="line">ENTITY_DELETE:         sent when an entity instance is deleted</span><br><span class="line">CLASSIFICATION_ADD:    sent when classifications are added to an entity instance</span><br><span class="line">CLASSIFICATION_UPDATE: sent when classifications of an entity instance are updated</span><br><span class="line">CLASSIFICATION_DELETE: sent when classifications are removed from an entity instance</span><br><span class="line"></span><br><span class="line"># notification data</span><br><span class="line">AtlasEntity  entity;</span><br><span class="line">OperationType operationType;</span><br><span class="line">List&lt;AtlasClassification&gt;  classifications</span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 监听并发布以下事件的通知</span><br><span class="line">ENTITY_CREATE:         sent when an entity instance is created</span><br><span class="line">ENTITY_UPDATE:         sent when an entity instance is updated</span><br><span class="line">ENTITY_DELETE:         sent when an entity instance is deleted</span><br><span class="line">CLASSIFICATION_ADD:    sent when classifications are added to an entity instance</span><br><span class="line">CLASSIFICATION_UPDATE: sent when classifications of an entity instance are updated</span><br><span class="line">CLASSIFICATION_DELETE: sent when classifications are removed from an entity instance</span><br><span class="line"></span><br><span class="line"># notification data</span><br><span class="line">AtlasEntity  entity;</span><br><span class="line">OperationType operationType;</span><br><span class="line">List&lt;AtlasClassification&gt;  classifications</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h2 id="检索"><a href="#检索" class="headerlink" title="检索"></a>检索</h2><p>atlas 所有的元数据存储在图数据库 JanusGraph，而索引数据则存储在 index store（solr / elasticsearch）来做全文检索</p>
+<h2 id="检索"><a href="#检索" class="headerlink" title="检索"></a>检索</h2><p>atlas 所有的元数据存储在图数据库 JanusGraph，而索引数据则存储在 index store（solr &#x2F; elasticsearch）来做全文检索</p>
 <p>atlas 支持以下检索方式：</p>
 <ol>
 <li>唯一定位元数据：通过 id</li>
@@ -358,7 +357,7 @@
 <h2 id="高可用"><a href="#高可用" class="headerlink" title="高可用"></a>高可用</h2><ol>
 <li>基础设施高可用。<ol>
 <li>atlas 使用 JanusGraph 存储元数据，并将 HBase（默认，可采用其他数据库）作为 backing store。HBase 本身的高可用特性支撑了 metadata store 的高可用</li>
-<li>atlas 使用 solr / elasticsearch 存储元数据索引。这些组件同样支持高可用</li>
+<li>atlas 使用 solr &#x2F; elasticsearch 存储元数据索引。这些组件同样支持高可用</li>
 </ol>
 </li>
 <li>Web Service 高可用。<ol>
@@ -371,9 +370,9 @@
 <li><p>元模型：基于某个元模型或某类元模型的访问控制。典型 example：</p>
 <blockquote>
 <ul>
-<li>Admin users can create/update/delete types of all categories</li>
-<li>Data stewards can create/update/delete classification types</li>
-<li>Healthcare data stewards can create/update/delete types having names start with “hc”</li>
+<li>Admin users can create&#x2F;update&#x2F;delete types of all categories</li>
+<li>Data stewards can create&#x2F;update&#x2F;delete classification types</li>
+<li>Healthcare data stewards can create&#x2F;update&#x2F;delete types having names start with “hc”</li>
 </ul>
 </blockquote>
 </li>
@@ -382,13 +381,13 @@
 <ul>
 <li>Admin users can perform all entity operations on entities of all types</li>
 <li>Data stewards can perform all entity operations, except delete, on entities of all types</li>
-<li>Data quality admins can add/update/remove DATA_QUALITY classification</li>
-<li>Users in specific groups can read/update entities with PII classification or its sub-classification</li>
-<li>Finance users can read/update entities whose ID start with ‘finance’</li>
+<li>Data quality admins can add&#x2F;update&#x2F;remove DATA_QUALITY classification</li>
+<li>Users in specific groups can read&#x2F;update entities with PII classification or its sub-classification</li>
+<li>Finance users can read&#x2F;update entities whose ID start with ‘finance’</li>
 </ul>
 </blockquote>
 </li>
-<li><p>admin 操作：可以控制 user/group 来 import/export entities</p>
+<li><p>admin 操作：可以控制 user&#x2F;group 来 import&#x2F;export entities</p>
 </li>
 </ul>
 <h2 id="UI"><a href="#UI" class="headerlink" title="UI"></a>UI</h2><p>有个 ui 可以管理元数据、标签、术语</p>
@@ -487,13 +486,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">269k</span>
+    <span title="Word count total">275k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:04</span>
+    <span title="Reading time total">4:10</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

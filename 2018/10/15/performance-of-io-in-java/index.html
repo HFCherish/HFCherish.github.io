@@ -158,7 +158,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -262,7 +262,7 @@
     
     
     <div class="post-body" itemprop="articleBody"><h1 id="java-io-ByteArrayOutputStream"><a href="#java-io-ByteArrayOutputStream" class="headerlink" title="java.io.ByteArrayOutputStream"></a>java.io.ByteArrayOutputStream</h1><p>这一般在用到字节流是会用到。</p>
-<p><a href="http://java-performance.info/java-io-bytearrayoutputstream/" target="_blank" rel="noopener">java performance tuning guide</a> 这篇文章不建议在 performance-criticted 代码中使用 <code>ByteArrayOutputStream</code>：</p>
+<p><a href="http://java-performance.info/java-io-bytearrayoutputstream/">java performance tuning guide</a> 这篇文章不建议在 performance-criticted 代码中使用 <code>ByteArrayOutputStream</code>：</p>
 <ol>
 <li><strong>同步写入，效率低</strong></li>
 </ol>
@@ -278,7 +278,7 @@
 <li><strong>toByteArray() 效率低，使用 toString(charset)</strong></li>
 </ol>
 <p><code>toByteArray</code> 执行了一遍拷贝，效率低。<code>toString</code> 则使用 <code>String(bytes[])</code> 直接将内部 byte 转成了 String</p>
-<p><a href="http://java-performance.info/inefficient-byte-to-string-constructor/" target="_blank" rel="noopener">inefficient byte[] to String constructor</a> 指出 <code>String(bytes[])</code>  也是 copy，但 java8 中的源码看了下，似乎不是 copy，待考证……</p>
+<p><a href="http://java-performance.info/inefficient-byte-to-string-constructor/">inefficient byte[] to String constructor</a> 指出 <code>String(bytes[])</code>  也是 copy，但 java8 中的源码看了下，似乎不是 copy，待考证……</p>
 
     </div>
 
@@ -334,13 +334,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">269k</span>
+    <span title="Word count total">275k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:04</span>
+    <span title="Reading time total">4:10</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

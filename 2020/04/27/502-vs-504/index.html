@@ -19,12 +19,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="nginx 502 和 504 超时演示  502 Bad Gateway: The server was acting as a gateway) or proxy and received an invalid response from the upstream server. 504: he server was acting as a gateway or proxy and did n">
+    <meta name="description" content="nginx 502 和 504 超时演示  502 Bad Gateway: The server was acting as a gateway or proxy and received an invalid response from the upstream server. 504: he server was acting as a gateway or proxy and did no">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nginx 502 vs 504">
 <meta property="og:url" content="http://yoursite.com/2020/04/27/502-vs-504/index.html">
 <meta property="og:site_name" content="Cherish&#39;s Blog">
-<meta property="og:description" content="nginx 502 和 504 超时演示  502 Bad Gateway: The server was acting as a gateway) or proxy and received an invalid response from the upstream server. 504: he server was acting as a gateway or proxy and did n">
+<meta property="og:description" content="nginx 502 和 504 超时演示  502 Bad Gateway: The server was acting as a gateway or proxy and received an invalid response from the upstream server. 504: he server was acting as a gateway or proxy and did no">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-04-27T05:57:12.000Z">
 <meta property="article:modified_time" content="2022-10-22T06:22:52.318Z">
@@ -157,7 +157,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -260,16 +260,16 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p><a href="https://juejin.im/post/5b54635ae51d451951133d85" target="_blank" rel="noopener">nginx 502 和 504 超时演示</a></p>
+    <div class="post-body" itemprop="articleBody"><p><a href="https://juejin.im/post/5b54635ae51d451951133d85">nginx 502 和 504 超时演示</a></p>
 <blockquote>
-<p>502 Bad Gateway: The server was acting as a <a href="https://www.wikiwand.com/en/Gateway_(telecommunications" target="_blank" rel="noopener">gateway</a>) or proxy and received an invalid response from the upstream server.</p>
+<p>502 Bad Gateway: The server was acting as a <a href="https://www.wikiwand.com/en/Gateway_(telecommunications)">gateway</a> or proxy and received an invalid response from the upstream server.</p>
 <p>504: he server was acting as a gateway or proxy and did not receive a timely response from the upstream server.</p>
 </blockquote>
 <h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p><strong>504 是 nginx 没有及时从上游服务获取响应，超时了：</strong></p>
 <ul>
-<li>上游服务响应慢，读取 response / 发送 request 超时（<code>upstream timed out (110: Operation timed out) **while** reading response header from upstream</code>）<ul>
-<li>某些请求处理就是慢。此时就应该调大 <a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_read_timeout" target="_blank" rel="noopener"><strong>proxy_read_timeout</strong></a> (默认 60s)</li>
-<li>上游服务压力太大，响应变慢。此时可以增加上游服务的响应能力，也可以适当提升 <a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_send_timeout" target="_blank" rel="noopener"><strong>proxy_send_timeout</strong></a>, <a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_read_timeout" target="_blank" rel="noopener"><strong>proxy_read_timeout</strong></a></li>
+<li>上游服务响应慢，读取 response &#x2F; 发送 request 超时（<code>upstream timed out (110: Operation timed out) **while** reading response header from upstream</code>）<ul>
+<li>某些请求处理就是慢。此时就应该调大 <a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_read_timeout"><strong>proxy_read_timeout</strong></a> (默认 60s)</li>
+<li>上游服务压力太大，响应变慢。此时可以增加上游服务的响应能力，也可以适当提升 <a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_send_timeout"><strong>proxy_send_timeout</strong></a>, <a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_read_timeout"><strong>proxy_read_timeout</strong></a></li>
 </ul>
 </li>
 <li>连接上游服务超时。可能是上游服务已经断了，但由于 keepalive，nginx 依然保有 tcp 连接，但实际操作时，却连不上，就超时了。</li>
@@ -327,13 +327,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">269k</span>
+    <span title="Word count total">275k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:04</span>
+    <span title="Reading time total">4:10</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

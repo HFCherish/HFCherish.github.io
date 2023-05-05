@@ -159,7 +159,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -263,18 +263,18 @@
     
     
     <div class="post-body" itemprop="articleBody"><h1 id="可选-lib"><a href="#可选-lib" class="headerlink" title="可选 lib"></a>可选 lib</h1><ul>
-<li><a href="http://poi.apache.org/components/document/index.html" target="_blank" rel="noopener">apache POI</a>：java 中最大众的 ，支持 <code>xls</code>、<code>xlsx</code>，提供接口来创建、读写 excel文件。</li>
-<li><a href="http://www.openoffice.org/download/sdk/" target="_blank" rel="noopener">apache openOffice uno</a>：</li>
-<li><del><a href="http://www.openoffice.org/download/sdk/" target="_blank" rel="noopener">JExcel app</a></del>：这个功能强大，什么都可以做，但是可能收费，而且仅基于 windows + installed excel</li>
-<li><del><a href="http://jexcelapi.sourceforge.net/" target="_blank" rel="noopener">JExcelAPI</a></del>：轻量更易用，但似乎仅支持 <code>xls</code>，而且不支持复杂的 range、formular 计算操作。</li>
-<li><a href="https://www.teamdev.com/jexcel" target="_blank" rel="noopener">javascript 版本的 JExcel</a></li>
-<li><del><a href="https://www.docx4java.org/trac/docx4j" target="_blank" rel="noopener">docx4j</a></del>：其中 <a href="https://github.com/plutext/docx4j/tree/master/src/samples/xlsx4j/org/xlsx4j/samples" target="_blank" rel="noopener">xlsx4j</a> 是处理 excel 的，不过看起来功能比较简单。</li>
-<li><a href="https://msdn.microsoft.com/zh-cn/vba/vba-excel" target="_blank" rel="noopener">microsoft excel VBA</a>：vba 是微软写的操作 office 软件的语言。所以可以利用这个 vba 写代码……</li>
+<li><a href="http://poi.apache.org/components/document/index.html">apache POI</a>：java 中最大众的 ，支持 <code>xls</code>、<code>xlsx</code>，提供接口来创建、读写 excel文件。</li>
+<li><a href="http://www.openoffice.org/download/sdk/">apache openOffice uno</a>：</li>
+<li><del><a href="http://www.openoffice.org/download/sdk/">JExcel app</a></del>：这个功能强大，什么都可以做，但是可能收费，而且仅基于 windows + installed excel</li>
+<li><del><a href="http://jexcelapi.sourceforge.net/">JExcelAPI</a></del>：轻量更易用，但似乎仅支持 <code>xls</code>，而且不支持复杂的 range、formular 计算操作。</li>
+<li><a href="https://www.teamdev.com/jexcel">javascript 版本的 JExcel</a></li>
+<li><del><a href="https://www.docx4java.org/trac/docx4j">docx4j</a></del>：其中 <a href="https://github.com/plutext/docx4j/tree/master/src/samples/xlsx4j/org/xlsx4j/samples">xlsx4j</a> 是处理 excel 的，不过看起来功能比较简单。</li>
+<li><a href="https://msdn.microsoft.com/zh-cn/vba/vba-excel">microsoft excel VBA</a>：vba 是微软写的操作 office 软件的语言。所以可以利用这个 vba 写代码……</li>
 </ul>
 <p>ref doc:</p>
 <ul>
-<li><a href="http://www.baeldung.com/java-microsoft-excel" target="_blank" rel="noopener">baeldung example for apache POI &amp; JExcelAPI</a></li>
-<li><a href="https://www.mkyong.com/java/jexcel-api-reading-and-writing-excel-file-in-java/" target="_blank" rel="noopener">Mkyong example for JExcelAPI</a></li>
+<li><a href="http://www.baeldung.com/java-microsoft-excel">baeldung example for apache POI &amp; JExcelAPI</a></li>
+<li><a href="https://www.mkyong.com/java/jexcel-api-reading-and-writing-excel-file-in-java/">Mkyong example for JExcelAPI</a></li>
 </ul>
 <h1 id="核心操作支持"><a href="#核心操作支持" class="headerlink" title="核心操作支持"></a>核心操作支持</h1><table>
 <thead>
@@ -285,28 +285,27 @@
 <th>JExcelAPI</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td>read/create excel file</td>
+<tbody><tr>
+<td>read&#x2F;create excel file</td>
 <td>✔️</td>
 <td>可以</td>
 <td>✔️</td>
 </tr>
 <tr>
-<td>read/write excel cells</td>
+<td>read&#x2F;write excel cells</td>
 <td>1. 获取 sheet，遍历 row，遍历 row cells；</td>
 <td>可以</td>
 <td>1. 获取 sheet，可以根据 cell 行列数获取（<code>getCell(rowIndex, columnIndex)</code>）</td>
 </tr>
 <tr>
 <td>compute formula for cells</td>
-<td>可以（用 formular evaluator，参见<a href="https://stackoverflow.com/questions/5937373/using-apache-poi-hssf-how-can-i-refresh-all-formula-cells-at-once" target="_blank" rel="noopener">stackoverflow</a>）</td>
+<td>可以（用 formular evaluator，参见<a href="https://stackoverflow.com/questions/5937373/using-apache-poi-hssf-how-can-i-refresh-all-formula-cells-at-once">stackoverflow</a>）</td>
 <td>可以(calculateAll())</td>
 <td>可能可以</td>
 </tr>
 <tr>
-<td>write/read named cells of file</td>
-<td>可以（<code>workBook.getNamedAt(&quot;name&quot;)</code>，参见 <a href="https://stackoverflow.com/questions/33183144/apache-poi-update-cells-in-a-named-range" target="_blank" rel="noopener">stackoverflow</a>, <a href="https://poi.apache.org/components/spreadsheet/quick-guide.html#NamedRanges" target="_blank" rel="noopener">官方文档</a>）</td>
+<td>write&#x2F;read named cells of file</td>
+<td>可以（<code>workBook.getNamedAt(&quot;name&quot;)</code>，参见 <a href="https://stackoverflow.com/questions/33183144/apache-poi-update-cells-in-a-named-range">stackoverflow</a>, <a href="https://poi.apache.org/components/spreadsheet/quick-guide.html#NamedRanges">官方文档</a>）</td>
 <td>可以（<code>namedRange</code>)</td>
 <td>NO</td>
 </tr>
@@ -322,11 +321,10 @@
 <td>1. 文档乱七八糟；2. 采用 uno，领域对象不太一致；3. 必须要安装 openoffice</td>
 <td>1. 功能太简单，复杂需求实现不了</td>
 </tr>
-</tbody>
-</table>
-<h1 id="核心操作-example（POI）"><a href="#核心操作-example（POI）" class="headerlink" title="核心操作 example（POI）"></a>核心操作 example（POI）</h1><p><a href="https://poi.apache.org/components/spreadsheet/quick-guide.html#NamedRanges" target="_blank" rel="noopener">quick guide</a></p>
-<p><a href="https://github.com/HFCherish/learning-common/blob/master/common-excel/src/test/java/learning/common/excel/utils/XLSXTest.java" target="_blank" rel="noopener">源代码</a></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//        load excel</span></span><br><span class="line">XSSFWorkbook workbook = <span class="keyword">new</span> XSSFWorkbook(getFile(<span class="string">"test.xlsx"</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        get sheet by name</span></span><br><span class="line">String sheetName = <span class="string">"Product Mix"</span>;</span><br><span class="line">XSSFSheet sheet = workbook.getSheet(sheetName);</span><br><span class="line">assertThat(sheet.getSheetName(), is(sheetName));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        get cell by coordinate</span></span><br><span class="line">XSSFCell tvsetNumber = getCell(sheet, <span class="string">"D4"</span>);</span><br><span class="line">assertThat(tvsetNumber.getNumericCellValue(), closeTo(<span class="number">100</span>, <span class="number">0.1</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        get formula cell by coordinate</span></span><br><span class="line">XSSFCell total = getCell(sheet, <span class="string">"D13"</span>);</span><br><span class="line">assertThat(total.getNumericCellValue(), closeTo(<span class="number">16000</span>, <span class="number">0.1</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        change cell value</span></span><br><span class="line">tvsetNumber.setCellValue(<span class="number">200</span>);</span><br><span class="line">assertThat(tvsetNumber.getNumericCellValue(), closeTo(<span class="number">200</span>, <span class="number">0.1</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        refresh formulas</span></span><br><span class="line">XSSFFormulaEvaluator.evaluateAllFormulaCells(workbook);</span><br><span class="line">assertThat(total.getNumericCellValue(), closeTo(<span class="number">23500</span>, <span class="number">0.1</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        write back to file</span></span><br><span class="line">workbook.write(<span class="keyword">new</span> FileOutputStream(getFile(<span class="string">"update.xlsx"</span>)));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        check data updated</span></span><br><span class="line">XSSFWorkbook updateWorkBook = <span class="keyword">new</span> XSSFWorkbook(getFile(<span class="string">"update.xlsx"</span>));</span><br><span class="line">assertThat(getCell(updateWorkBook.getSheet(sheetName), <span class="string">"D4"</span>).getNumericCellValue(), closeTo(<span class="number">200</span>, <span class="number">0.1</span>));</span><br><span class="line">assertThat(getCell(updateWorkBook.getSheet(sheetName), <span class="string">"D13"</span>).getNumericCellValue(), closeTo(<span class="number">23500</span>, <span class="number">0.1</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//		  get cell by name</span></span><br><span class="line">XSSFName test_name = workbook.getName(<span class="string">"test_cell_name"</span>);</span><br><span class="line">AreaReference areaReference = <span class="keyword">new</span> AreaReference(test_name.getRefersToFormula(), SpreadsheetVersion.EXCEL2007);</span><br><span class="line"></span><br><span class="line">CellReference firstCell = areaReference.getFirstCell();</span><br><span class="line">XSSFSheet sheet = workbook.getSheet(firstCell.getSheetName());</span><br><span class="line">XSSFRow row = sheet.getRow(firstCell.getRow());</span><br><span class="line">XSSFCell cell = row.getCell(firstCell.getCol());</span><br><span class="line"></span><br><span class="line"><span class="comment">// get cell function</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> XSSFCell <span class="title">getCell</span><span class="params">(XSSFSheet sheet, String cellCoordinate)</span> </span>&#123;</span><br><span class="line">    CellReference d4 = <span class="keyword">new</span> CellReference(cellCoordinate);</span><br><span class="line">    XSSFRow row = sheet.getRow(d4.getRow());</span><br><span class="line">    <span class="keyword">return</span> row.getCell(d4.getCol());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</tbody></table>
+<h1 id="核心操作-example（POI）"><a href="#核心操作-example（POI）" class="headerlink" title="核心操作 example（POI）"></a>核心操作 example（POI）</h1><p><a href="https://poi.apache.org/components/spreadsheet/quick-guide.html#NamedRanges">quick guide</a></p>
+<p><a href="https://github.com/HFCherish/learning-common/blob/master/common-excel/src/test/java/learning/common/excel/utils/XLSXTest.java">源代码</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//        load excel</span></span><br><span class="line"><span class="type">XSSFWorkbook</span> <span class="variable">workbook</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">XSSFWorkbook</span>(getFile(<span class="string">&quot;test.xlsx&quot;</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        get sheet by name</span></span><br><span class="line"><span class="type">String</span> <span class="variable">sheetName</span> <span class="operator">=</span> <span class="string">&quot;Product Mix&quot;</span>;</span><br><span class="line"><span class="type">XSSFSheet</span> <span class="variable">sheet</span> <span class="operator">=</span> workbook.getSheet(sheetName);</span><br><span class="line">assertThat(sheet.getSheetName(), is(sheetName));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        get cell by coordinate</span></span><br><span class="line"><span class="type">XSSFCell</span> <span class="variable">tvsetNumber</span> <span class="operator">=</span> getCell(sheet, <span class="string">&quot;D4&quot;</span>);</span><br><span class="line">assertThat(tvsetNumber.getNumericCellValue(), closeTo(<span class="number">100</span>, <span class="number">0.1</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        get formula cell by coordinate</span></span><br><span class="line"><span class="type">XSSFCell</span> <span class="variable">total</span> <span class="operator">=</span> getCell(sheet, <span class="string">&quot;D13&quot;</span>);</span><br><span class="line">assertThat(total.getNumericCellValue(), closeTo(<span class="number">16000</span>, <span class="number">0.1</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        change cell value</span></span><br><span class="line">tvsetNumber.setCellValue(<span class="number">200</span>);</span><br><span class="line">assertThat(tvsetNumber.getNumericCellValue(), closeTo(<span class="number">200</span>, <span class="number">0.1</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        refresh formulas</span></span><br><span class="line">XSSFFormulaEvaluator.evaluateAllFormulaCells(workbook);</span><br><span class="line">assertThat(total.getNumericCellValue(), closeTo(<span class="number">23500</span>, <span class="number">0.1</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        write back to file</span></span><br><span class="line">workbook.write(<span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(getFile(<span class="string">&quot;update.xlsx&quot;</span>)));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        check data updated</span></span><br><span class="line"><span class="type">XSSFWorkbook</span> <span class="variable">updateWorkBook</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">XSSFWorkbook</span>(getFile(<span class="string">&quot;update.xlsx&quot;</span>));</span><br><span class="line">assertThat(getCell(updateWorkBook.getSheet(sheetName), <span class="string">&quot;D4&quot;</span>).getNumericCellValue(), closeTo(<span class="number">200</span>, <span class="number">0.1</span>));</span><br><span class="line">assertThat(getCell(updateWorkBook.getSheet(sheetName), <span class="string">&quot;D13&quot;</span>).getNumericCellValue(), closeTo(<span class="number">23500</span>, <span class="number">0.1</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//		  get cell by name</span></span><br><span class="line"><span class="type">XSSFName</span> <span class="variable">test_name</span> <span class="operator">=</span> workbook.getName(<span class="string">&quot;test_cell_name&quot;</span>);</span><br><span class="line"><span class="type">AreaReference</span> <span class="variable">areaReference</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AreaReference</span>(test_name.getRefersToFormula(), SpreadsheetVersion.EXCEL2007);</span><br><span class="line"></span><br><span class="line"><span class="type">CellReference</span> <span class="variable">firstCell</span> <span class="operator">=</span> areaReference.getFirstCell();</span><br><span class="line"><span class="type">XSSFSheet</span> <span class="variable">sheet</span> <span class="operator">=</span> workbook.getSheet(firstCell.getSheetName());</span><br><span class="line"><span class="type">XSSFRow</span> <span class="variable">row</span> <span class="operator">=</span> sheet.getRow(firstCell.getRow());</span><br><span class="line"><span class="type">XSSFCell</span> <span class="variable">cell</span> <span class="operator">=</span> row.getCell(firstCell.getCol());</span><br><span class="line"></span><br><span class="line"><span class="comment">// get cell function</span></span><br><span class="line"><span class="keyword">private</span> XSSFCell <span class="title function_">getCell</span><span class="params">(XSSFSheet sheet, String cellCoordinate)</span> &#123;</span><br><span class="line">    <span class="type">CellReference</span> <span class="variable">d4</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CellReference</span>(cellCoordinate);</span><br><span class="line">    <span class="type">XSSFRow</span> <span class="variable">row</span> <span class="operator">=</span> sheet.getRow(d4.getRow());</span><br><span class="line">    <span class="keyword">return</span> row.getCell(d4.getCol());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1 id="其他操作（POI）"><a href="#其他操作（POI）" class="headerlink" title="其他操作（POI）"></a>其他操作（POI）</h1><h2 id="copy-sheet"><a href="#copy-sheet" class="headerlink" title="copy sheet"></a>copy sheet</h2><h2 id="xlsm-to-xlsx"><a href="#xlsm-to-xlsx" class="headerlink" title="xlsm to xlsx"></a>xlsm to xlsx</h2>
     </div>
 
@@ -383,13 +381,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">269k</span>
+    <span title="Word count total">275k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:04</span>
+    <span title="Reading time total">4:10</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

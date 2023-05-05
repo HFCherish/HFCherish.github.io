@@ -19,12 +19,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="playing-nhibernate-inverse-and-cascade, nhibernate-inverse bidirectional associations In database, there may be biodirectional relationships, e.g. Parent has multiple child, and Child has a parent.123">
+    <meta name="description" content="playing-nhibernate-inverse-and-cascade, nhibernate-inverse bidirectional associations In database, there may be biodirectional relationships, e.g. Parent has multiple child, and Child has a parent.  1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NHibernate: inverse, cascade">
 <meta property="og:url" content="http://yoursite.com/2020/05/25/NHibernate-inverse-cascade/index.html">
 <meta property="og:site_name" content="Cherish&#39;s Blog">
-<meta property="og:description" content="playing-nhibernate-inverse-and-cascade, nhibernate-inverse bidirectional associations In database, there may be biodirectional relationships, e.g. Parent has multiple child, and Child has a parent.123">
+<meta property="og:description" content="playing-nhibernate-inverse-and-cascade, nhibernate-inverse bidirectional associations In database, there may be biodirectional relationships, e.g. Parent has multiple child, and Child has a parent.  1">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-05-25T03:38:17.000Z">
 <meta property="article:modified_time" content="2022-10-22T06:22:52.320Z">
@@ -158,7 +158,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -261,26 +261,28 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p><a href="https://dzone.com/articles/playing-nhibernate-inverse-and" target="_blank" rel="noopener">playing-nhibernate-inverse-and-cascade</a>,</p>
-<p><a href="https://web.archive.org/web/20080415101633/http://simoes.org/docs/hibernate-2.1/155.html" target="_blank" rel="noopener">nhibernate-inverse</a></p>
-<p><a href="https://nhibernate.info/doc/nhibernate-reference/collections.html#collections-bidirectional" target="_blank" rel="noopener">bidirectional associations</a></p>
-<p>In database, there may be biodirectional relationships, e.g. Parent has multiple child, and Child has a parent.<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#### class definition</span></span><br><span class="line"><span class="attr">class Parent:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">String</span> <span class="string">id</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">IList&lt;Child&gt;</span> <span class="string">childs</span>	</span><br><span class="line"><span class="attr">class Child:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">String</span> <span class="string">id</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">Parent</span> <span class="string">parent</span></span><br><span class="line">	</span><br><span class="line"><span class="comment">#### db definition</span></span><br><span class="line"><span class="attr">table Parent:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">id</span></span><br><span class="line"><span class="attr">table Child:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">id</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">parentId</span></span><br></pre></td></tr></table></figure></p>
+    <div class="post-body" itemprop="articleBody"><p><a href="https://dzone.com/articles/playing-nhibernate-inverse-and">playing-nhibernate-inverse-and-cascade</a>,</p>
+<p><a href="https://web.archive.org/web/20080415101633/http://simoes.org/docs/hibernate-2.1/155.html">nhibernate-inverse</a></p>
+<p><a href="https://nhibernate.info/doc/nhibernate-reference/collections.html#collections-bidirectional">bidirectional associations</a></p>
+<p>In database, there may be biodirectional relationships, e.g. Parent has multiple child, and Child has a parent. </p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#### class definition</span></span><br><span class="line"><span class="attr">class Parent:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">String</span> <span class="string">id</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">IList&lt;Child&gt;</span> <span class="string">childs</span>	</span><br><span class="line"><span class="attr">class Child:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">String</span> <span class="string">id</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">Parent</span> <span class="string">parent</span></span><br><span class="line">	</span><br><span class="line"><span class="comment">#### db definition</span></span><br><span class="line"><span class="attr">table Parent:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">id</span></span><br><span class="line"><span class="attr">table Child:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">id</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">parentId</span></span><br></pre></td></tr></table></figure>
+
 <h2 id="Inverse"><a href="#Inverse" class="headerlink" title="Inverse"></a>Inverse</h2><p><code>Inverse</code> focus on the association. It defines which side is responsible of the association maintenance (create, update, delete), that is, the assignment of <code>parentId</code> column. It doesn’t care about the maintenance of associated objects which is what <code>cascade</code> cares).</p>
-<p>By default, <code>invert=false</code>, then the assignment of <code>parentId</code> is maintened when parent is created/updated/deleted. If we set <code>parent.child.inverse=true</code> and the <code>child.parent is not-null</code>, then the assignment of <code>parentId</code> is maintened when child is created/updated/deleted. </p>
+<p>By default, <code>invert=false</code>, then the assignment of <code>parentId</code> is maintened when parent is created&#x2F;updated&#x2F;deleted. If we set <code>parent.child.inverse=true</code> and the <code>child.parent is not-null</code>, then the assignment of <code>parentId</code> is maintened when child is created&#x2F;updated&#x2F;deleted. </p>
 <blockquote>
 <p><code>many-to-one</code> is <strong>always</strong> <code>inverse=&quot;false&quot;</code> (the attribute does not exist), that is, it means nothing to set <code>child.parent.inverse=true</code></p>
 </blockquote>
 <h2 id="Cascade"><a href="#Cascade" class="headerlink" title="Cascade"></a>Cascade</h2><p><code>cascade</code> instead will focus on the associated objects. It defines if the current object is responsible of the maintenance of associated objects.</p>
 <p>By default, <code>cascade=None</code>, that is, when saving parent, the childs on parent won’t be saved cascadelly.</p>
-<p>See <a href="https://stackoverflow.com/questions/1994433/nhibernate-cascade" target="_blank" rel="noopener">cascade stackoverflow</a></p>
+<p>See <a href="https://stackoverflow.com/questions/1994433/nhibernate-cascade">cascade stackoverflow</a></p>
 <blockquote>
 <ul>
 <li>none - do not do any cascades, let users handle them by themselves.</li>
-<li>save-update - when the object is saved/updated, check the associations and save/update any object that requires it (including save/update the associations in many-to-many scenario).</li>
+<li>save-update - when the object is saved&#x2F;updated, check the associations and save&#x2F;update any object that requires it (including save&#x2F;update the associations in many-to-many scenario).</li>
 <li>delete - when the object is deleted, delete all the objects in the association.</li>
 <li>delete-orphan - when the object is deleted, delete all the objects in the association. In addition, when an object is removed from the association and not associated with another object (orphaned), also delete it.</li>
-<li>all - when an object is save/update/delete, check the associations and save/update/delete all the objects found.</li>
-<li>all-delete-orphan - when an object is save/update/delete, check the associations and save/update/delete all the objects found. In additional to that, when an object is removed from the association and not associated with another object (orphaned), also delete it.</li>
+<li>all - when an object is save&#x2F;update&#x2F;delete, check the associations and save&#x2F;update&#x2F;delete all the objects found.</li>
+<li>all-delete-orphan - when an object is save&#x2F;update&#x2F;delete, check the associations and save&#x2F;update&#x2F;delete all the objects found. In additional to that, when an object is removed from the association and not associated with another object (orphaned), also delete it.</li>
 </ul>
 </blockquote>
 
@@ -338,13 +340,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">269k</span>
+    <span title="Word count total">275k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:04</span>
+    <span title="Reading time total">4:10</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

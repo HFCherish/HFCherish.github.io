@@ -162,7 +162,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -273,12 +273,12 @@
 </ol>
 <p><img src="https://camo.githubusercontent.com/f6ea1099ada7ec855919d6e483d0d903f1cc96ca/68747470733a2f2f636d732d6173736574732e74757473706c75732e636f6d2f75706c6f6164732f75736572732f3438372f706f7374732f32323534332f696d6167652f747261646974696f6e616c2d61757468656e7469636174696f6e2d73797374656d2d706e672e706e67" alt="auth image"></p>
 <p>这种方式有个缺陷：如果做分布式服务部署，那么需要每个服务器都要同步相同的登录信息，这不是一个好的方式。所以一般 rest 微服务都要求的是 stateless，即 server 端不保存任何用户信息，请求中包含所有需要的信息。</p>
-<h1 id="oauth"><a href="#oauth" class="headerlink" title="oauth"></a>oauth</h1><p><a href="https://zh.wikipedia.org/wiki/%E5%BC%80%E6%94%BE%E6%8E%88%E6%9D%83" target="_blank" rel="noopener">oauth</a> 是一个开放标准，允许用户让第三方应用访问该用户在某一网站上存储的私密的资源（如照片，视频，联系人列表），而无需将用户名和<a href="https://zh.wikipedia.org/wiki/%E5%AF%86%E7%A0%81" target="_blank" rel="noopener">密码</a>提供给第三方应用。</p>
-<p>OAuth允许用户提供一个 <a href="https://zh.wikipedia.org/w/index.php?title=%E4%BB%A4%E7%89%8C&amp;action=edit&amp;redlink=1" target="_blank" rel="noopener">令牌</a>，而不是用户名和密码来访问他们存放在特定服务提供者的数据。每一个令牌授权一个特定的网站（例如，视频编辑网站)在特定的时段（例如，接下来的2小时内）内访问特定的资源（例如仅仅是某一相册中的视频）。这样，OAuth让用户可以授权第三方网站访问他们存储在另外服务提供者的某些特定信息，而非所有内容。</p>
+<h1 id="oauth"><a href="#oauth" class="headerlink" title="oauth"></a>oauth</h1><p><a href="https://zh.wikipedia.org/wiki/%E5%BC%80%E6%94%BE%E6%8E%88%E6%9D%83">oauth</a> 是一个开放标准，允许用户让第三方应用访问该用户在某一网站上存储的私密的资源（如照片，视频，联系人列表），而无需将用户名和<a href="https://zh.wikipedia.org/wiki/%E5%AF%86%E7%A0%81">密码</a>提供给第三方应用。</p>
+<p>OAuth允许用户提供一个 <a href="https://zh.wikipedia.org/w/index.php?title=%E4%BB%A4%E7%89%8C&action=edit&redlink=1">令牌</a>，而不是用户名和密码来访问他们存放在特定服务提供者的数据。每一个令牌授权一个特定的网站（例如，视频编辑网站)在特定的时段（例如，接下来的2小时内）内访问特定的资源（例如仅仅是某一相册中的视频）。这样，OAuth让用户可以授权第三方网站访问他们存储在另外服务提供者的某些特定信息，而非所有内容。</p>
 <p> 其令牌可以是 JWT 或其他形式。</p>
 <p><img src="https://docs.oracle.com/cd/E74890_01/books/RestAPI/images/OAuth2leg_V.gif" alt="oauth"></p>
-<p>ref: <a href="https://my.oschina.net/eyes4/blog/639970" target="_blank" rel="noopener">oauth 2.0 的用途</a></p>
-<h1 id="Auth0"><a href="#Auth0" class="headerlink" title="Auth0"></a>Auth0</h1><p><a href="https://auth0.com/" target="_blank" rel="noopener">autho0</a> 实现了<a href="https://auth0.com/docs/protocols" target="_blank" rel="noopener">很多开放标准</a>，包括 oauth。(<a href="https://www.youtube.com/watch?v=QsMK3d3LxYQ" target="_blank" rel="noopener">学习视频</a>)</p>
+<p>ref: <a href="https://my.oschina.net/eyes4/blog/639970">oauth 2.0 的用途</a></p>
+<h1 id="Auth0"><a href="#Auth0" class="headerlink" title="Auth0"></a>Auth0</h1><p><a href="https://auth0.com/">autho0</a> 实现了<a href="https://auth0.com/docs/protocols">很多开放标准</a>，包括 oauth。(<a href="https://www.youtube.com/watch?v=QsMK3d3LxYQ">学习视频</a>)</p>
 <ol>
 <li>要使用 Auth0，首先需要创建一个 App（被称作 client），其中定义了 clientId、domain name、callbackUrl、secret 等。</li>
 <li>前端交互：<ol>
@@ -349,13 +349,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">269k</span>
+    <span title="Word count total">275k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:04</span>
+    <span title="Reading time total">4:10</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

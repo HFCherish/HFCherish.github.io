@@ -30,8 +30,8 @@
 <meta property="article:modified_time" content="2022-10-22T06:22:52.335Z">
 <meta property="article:author" content="Cherish">
 <meta property="article:tag" content="gradle">
-<meta property="article:tag" content="java">
 <meta property="article:tag" content="build">
+<meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary">
 
 
@@ -160,7 +160,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -269,15 +269,17 @@
 <li>java -jar 时，classpath 指定？</li>
 </ol>
 <h1 id="classpath"><a href="#classpath" class="headerlink" title="classpath"></a>classpath</h1><p>classpath 指定的是 java 类所在的目录（包括当前项目的类、依赖的类等）。应该是当打 jar 包的时候，默认会加上当前目录(.)到 classpath，这样就包含了 jar 内部的类？</p>
-<h1 id="Thin-jar"><a href="#Thin-jar" class="headerlink" title="Thin jar"></a>Thin jar</h1><p><a href="https://github.com/cuzfrog/gradle-lean" target="_blank" rel="noopener">gradle lean</a></p>
+<h1 id="Thin-jar"><a href="#Thin-jar" class="headerlink" title="Thin jar"></a>Thin jar</h1><p><a href="https://github.com/cuzfrog/gradle-lean">gradle lean</a></p>
 <p>This plugin depends on <code>JavaPlugin</code> and <code>ApplicationPlugin</code>.</p>
 <ul>
 <li>for <code>installDist</code>, jars under <code>install/$PROJECT_NAME$/lib/</code></li>
 <li>for <code>distZip</code>, jars under <code>/lib/</code> inside package</li>
 </ul>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id <span class="string">'java'</span></span><br><span class="line">    <span class="comment">// Apply the application plugin to add support for building a CLI application.</span></span><br><span class="line">    id <span class="string">'application'</span></span><br><span class="line"></span><br><span class="line">    id <span class="string">'scala'</span></span><br><span class="line"></span><br><span class="line">    id <span class="string">'com.github.maiflai.scalatest'</span> version <span class="string">'0.26'</span></span><br><span class="line"></span><br><span class="line">    id <span class="string">"com.github.gradle-lean"</span> version <span class="string">"0.1.2"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="implementation-vs-compile-vs-api"><a href="#implementation-vs-compile-vs-api" class="headerlink" title="implementation vs compile vs api"></a>implementation vs compile vs api</h1><p><a href="https://stackoverflow.com/questions/44493378/whats-the-difference-between-implementation-and-compile-in-gradle" target="_blank" rel="noopener">stackoverflow</a></p>
-<h1 id="Dependency-Conflict"><a href="#Dependency-Conflict" class="headerlink" title="Dependency Conflict"></a>Dependency Conflict</h1><h2 id="force-some-edition"><a href="#force-some-edition" class="headerlink" title="force some edition"></a>force some edition</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">configurations.all &#123;</span><br><span class="line">    resolutionStrategy &#123;</span><br><span class="line">        force <span class="string">'com.fasterxml.jackson.module:jackson-module-scala_2.11:2.10.3'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id <span class="string">&#x27;java&#x27;</span></span><br><span class="line">    <span class="comment">// Apply the application plugin to add support for building a CLI application.</span></span><br><span class="line">    id <span class="string">&#x27;application&#x27;</span></span><br><span class="line"></span><br><span class="line">    id <span class="string">&#x27;scala&#x27;</span></span><br><span class="line"></span><br><span class="line">    id <span class="string">&#x27;com.github.maiflai.scalatest&#x27;</span> version <span class="string">&#x27;0.26&#x27;</span></span><br><span class="line"></span><br><span class="line">    id <span class="string">&quot;com.github.gradle-lean&quot;</span> version <span class="string">&quot;0.1.2&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="implementation-vs-compile-vs-api"><a href="#implementation-vs-compile-vs-api" class="headerlink" title="implementation vs compile vs api"></a>implementation vs compile vs api</h1><p><a href="https://stackoverflow.com/questions/44493378/whats-the-difference-between-implementation-and-compile-in-gradle">stackoverflow</a></p>
+<h1 id="Dependency-Conflict"><a href="#Dependency-Conflict" class="headerlink" title="Dependency Conflict"></a>Dependency Conflict</h1><h2 id="force-some-edition"><a href="#force-some-edition" class="headerlink" title="force some edition"></a>force some edition</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">configurations.all &#123;</span><br><span class="line">    resolutionStrategy &#123;</span><br><span class="line">        force <span class="string">&#x27;com.fasterxml.jackson.module:jackson-module-scala_2.11:2.10.3&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -288,8 +290,8 @@
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/gradle/" rel="tag"># gradle</a>
-              <a href="/tags/java/" rel="tag"># java</a>
               <a href="/tags/build/" rel="tag"># build</a>
+              <a href="/tags/java/" rel="tag"># java</a>
           </div>
 
         
@@ -335,13 +337,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">269k</span>
+    <span title="Word count total">275k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:04</span>
+    <span title="Reading time total">4:10</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

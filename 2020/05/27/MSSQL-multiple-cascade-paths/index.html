@@ -19,12 +19,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="SymptomsYou may receive the following error message when you create a FOREIGN KEY constraint: (microsoft report) 1Server: Msg 1785, Level 16, State 1, Line 1 Introducing FOREIGN KEY constraint &#39;fk">
+    <meta name="description" content="SymptomsYou may receive the following error message when you create a FOREIGN KEY constraint: (microsoft report) 1Server: Msg 1785, Level 16, State 1, Line 1 Introducing FOREIGN KEY constraint &amp;#x27;f">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MSSQL: multiple cascade paths">
 <meta property="og:url" content="http://yoursite.com/2020/05/27/MSSQL-multiple-cascade-paths/index.html">
 <meta property="og:site_name" content="Cherish&#39;s Blog">
-<meta property="og:description" content="SymptomsYou may receive the following error message when you create a FOREIGN KEY constraint: (microsoft report) 1Server: Msg 1785, Level 16, State 1, Line 1 Introducing FOREIGN KEY constraint &#39;fk">
+<meta property="og:description" content="SymptomsYou may receive the following error message when you create a FOREIGN KEY constraint: (microsoft report) 1Server: Msg 1785, Level 16, State 1, Line 1 Introducing FOREIGN KEY constraint &amp;#x27;f">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-05-27T03:10:25.000Z">
 <meta property="article:modified_time" content="2022-10-22T06:22:52.320Z">
@@ -158,7 +158,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -261,25 +261,30 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="Symptoms"><a href="#Symptoms" class="headerlink" title="Symptoms"></a>Symptoms</h1><p>You may receive the following error message when you create a FOREIGN KEY constraint: (<a href="https://support.microsoft.com/en-us/help/321843/error-message-1785-occurs-when-you-create-a-foreign-key-constraint-tha" target="_blank" rel="noopener">microsoft report</a>)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Server: Msg 1785, Level 16, State 1, Line 1 Introducing FOREIGN KEY constraint &#39;fk_two&#39; on table &#39;table2&#39; may cause cycles or multiple cascade paths. Specify ON DELETE NO ACTION or ON UPDATE NO ACTION, or modify other FOREIGN KEY constraints. Server: Msg 1750, Level 16, State 1, Line 1 Could not create constraint. See previous errors.</span><br></pre></td></tr></table></figure>
+    <div class="post-body" itemprop="articleBody"><h1 id="Symptoms"><a href="#Symptoms" class="headerlink" title="Symptoms"></a>Symptoms</h1><p>You may receive the following error message when you create a FOREIGN KEY constraint: (<a href="https://support.microsoft.com/en-us/help/321843/error-message-1785-occurs-when-you-create-a-foreign-key-constraint-tha">microsoft report</a>)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Server: Msg 1785, Level 16, State 1, Line 1 Introducing FOREIGN KEY constraint &#x27;fk_two&#x27; on table &#x27;table2&#x27; may cause cycles or multiple cascade paths. Specify ON DELETE NO ACTION or ON UPDATE NO ACTION, or modify other FOREIGN KEY constraints. Server: Msg 1750, Level 16, State 1, Line 1 Could not create constraint. See previous errors.</span><br></pre></td></tr></table></figure>
+
 <p>For example, the table definition is like this:</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Table t1:</span></span><br><span class="line">	<span class="attr">Id:</span> <span class="string">primaryKey</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Table t2:</span></span><br><span class="line">	<span class="attr">Id:</span> <span class="string">primaryKey</span></span><br><span class="line">	<span class="attr">parent:</span> <span class="string">ForeignKey(t1,</span> <span class="string">Id)</span> <span class="string">on</span> <span class="string">cascade</span> <span class="string">delete</span></span><br><span class="line">	<span class="attr">child:</span> <span class="string">ForeignKey(t1,</span> <span class="string">Id)</span> <span class="string">on</span> <span class="string">cascade</span> <span class="string">delete</span></span><br><span class="line"><span class="comment"># this would raise the above exception</span></span><br></pre></td></tr></table></figure>
-<h1 id="Cause"><a href="#Cause" class="headerlink" title="Cause"></a>Cause</h1><p>Basically, you can’t create multiple cascade paths to same table with cascade delete/update. Since you may define <code>t2.parent</code> with cascade delete, <code>t2.child</code> with cascade update(e.g. update as null), this will make sql server ambiguous when t1 is deleted. MSSQL doesn’t detect whether there’re actual circle or not, it just forbids the operation to make the design simple.</p>
+
+
+
+<h1 id="Cause"><a href="#Cause" class="headerlink" title="Cause"></a>Cause</h1><p>Basically, you can’t create multiple cascade paths to same table with cascade delete&#x2F;update. Since you may define <code>t2.parent</code> with cascade delete, <code>t2.child</code> with cascade update(e.g. update as null), this will make sql server ambiguous when t1 is deleted. MSSQL doesn’t detect whether there’re actual circle or not, it just forbids the operation to make the design simple.</p>
 <blockquote>
 <p>A table cannot appear more than one time in a list of all the cascading referential actions that are started by either a DELETE or an UPDATE statement. For example, the tree of cascading referential actions must only have one path to a particular table on the cascading referential actions tree.</p>
 </blockquote>
-<p><a href="https://stackoverflow.com/questions/851625/foreign-key-constraint-may-cause-cycles-or-multiple-cascade-paths" target="_blank" rel="noopener">stackoverflow</a></p>
+<p><a href="https://stackoverflow.com/questions/851625/foreign-key-constraint-may-cause-cycles-or-multiple-cascade-paths">stackoverflow</a></p>
 <blockquote>
 <p>SQL Server does simple counting of cascade paths and, rather than trying to work out whether any cycles actually exist, it assumes the worst and refuses to create the referential actions (CASCADE): you can and should still create the constraints without the referential actions. If you can’t alter your design (or doing so would compromise things) then you should consider using triggers as a last resort.</p>
-<p>FWIW resolving cascade paths is a complex problem. Other SQL products will simply ignore the problem and allow you to create cycles, in which case it will be a race to see which will overwrite the value last, probably to the ignorance of the designer (e.g. ACE/Jet does this). I understand some SQL products will attempt to resolve simple cases. Fact remains, SQL Server doesn’t even try, plays it ultra safe by disallowing more than one path and at least it tells you so.<br>Microsoft themselves <a href="https://support.microsoft.com/en-us/help/321843/error-message-1785-occurs-when-you-create-a-foreign-key-constraint-tha" target="_blank" rel="noopener">advises</a> the use of triggers instead of FK constraints.</p>
+<p>FWIW resolving cascade paths is a complex problem. Other SQL products will simply ignore the problem and allow you to create cycles, in which case it will be a race to see which will overwrite the value last, probably to the ignorance of the designer (e.g. ACE&#x2F;Jet does this). I understand some SQL products will attempt to resolve simple cases. Fact remains, SQL Server doesn’t even try, plays it ultra safe by disallowing more than one path and at least it tells you so.<br>Microsoft themselves <a href="https://support.microsoft.com/en-us/help/321843/error-message-1785-occurs-when-you-create-a-foreign-key-constraint-tha">advises</a> the use of triggers instead of FK constraints.</p>
 </blockquote>
 <h1 id="Workaround"><a href="#Workaround" class="headerlink" title="Workaround"></a>Workaround</h1><p>Use trigger instead of ForeignKey to keep the integrity and avoid the exceptions.</p>
 <ol>
 <li>Set cascade delete on t2.child</li>
 <li>Use <code>instead of</code> trigger to cascade delete on t2.parent (you can also use trigger for all fields instead of foreign key constraints)</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CREATE TRIGGER [DELETE_t2]</span><br><span class="line">   ON dbo.[t1]</span><br><span class="line">   INSTEAD OF DELETE</span><br><span class="line">AS </span><br><span class="line">BEGIN</span><br><span class="line"> SET NOCOUNT ON;</span><br><span class="line"> DELETE FROM [t2] WHERE parent IN (SELECT Id FROM DELETED)</span><br><span class="line"> DELETE FROM [t1] WHERE Id IN (SELECT Id FROM DELETED)</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CREATE TRIGGER [DELETE_t2]</span><br><span class="line">   ON dbo.[t1]</span><br><span class="line">   INSTEAD OF DELETE</span><br><span class="line">AS </span><br><span class="line">BEGIN</span><br><span class="line"> SET NOCOUNT ON;</span><br><span class="line"> DELETE FROM [t2] WHERE parent IN (SELECT Id FROM DELETED)</span><br><span class="line"> DELETE FROM [t1] WHERE Id IN (SELECT Id FROM DELETED)</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -335,13 +340,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">269k</span>
+    <span title="Word count total">275k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:04</span>
+    <span title="Reading time total">4:10</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

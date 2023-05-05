@@ -19,12 +19,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="背景 项目需要引入 local 第三方包 该第三方包只有 window&#x2F;linux license，而开发在 macos 开发时，通过 gradle dependency compile files(&#39;path&#x2F;to&#x2F;thejar.jar&#39;) 来引入包  问题运行时，报错误 java.lang.UnsatisfiedLinkError: no thejar in java.libr">
+    <meta name="description" content="背景 项目需要引入 local 第三方包 该第三方包只有 window&#x2F;linux license，而开发在 macos 开发时，通过 gradle dependency compile files(&#39;path&#x2F;to&#x2F;thejar.jar&#39;) 来引入包  问题运行时，报错误 java.lang.UnsatisfiedLinkError: no thejar in java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java.lang.UnsatisfiedLinkError: no xxx in java.library.path">
 <meta property="og:url" content="http://yoursite.com/2018/08/14/java-application-using-third-party-lib/index.html">
 <meta property="og:site_name" content="Cherish&#39;s Blog">
-<meta property="og:description" content="背景 项目需要引入 local 第三方包 该第三方包只有 window&#x2F;linux license，而开发在 macos 开发时，通过 gradle dependency compile files(&#39;path&#x2F;to&#x2F;thejar.jar&#39;) 来引入包  问题运行时，报错误 java.lang.UnsatisfiedLinkError: no thejar in java.libr">
+<meta property="og:description" content="背景 项目需要引入 local 第三方包 该第三方包只有 window&#x2F;linux license，而开发在 macos 开发时，通过 gradle dependency compile files(&#39;path&#x2F;to&#x2F;thejar.jar&#39;) 来引入包  问题运行时，报错误 java.lang.UnsatisfiedLinkError: no thejar in java">
 <meta property="og:locale">
 <meta property="article:published_time" content="2018-08-14T02:07:06.000Z">
 <meta property="article:modified_time" content="2022-10-22T06:22:52.338Z">
@@ -160,7 +160,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -265,7 +265,7 @@
     
     <div class="post-body" itemprop="articleBody"><h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><ol>
 <li>项目需要引入 local 第三方包</li>
-<li>该第三方包只有 window/linux license，而开发在 macos</li>
+<li>该第三方包只有 window&#x2F;linux license，而开发在 macos</li>
 <li>开发时，通过 gradle dependency <code>compile files(&#39;path/to/thejar.jar&#39;)</code> 来引入包</li>
 </ol>
 <h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>运行时，报错误 <code>java.lang.UnsatisfiedLinkError: no thejar in java.library.path</code></p>
@@ -285,13 +285,16 @@
 <li><code>classpath</code>：jvm 在执行时用来寻找 java class。classpath 一般指向 jar 包的位置，即 jdk 的 lib 目录</li>
 <li><code>java.library.path</code>: 指向非 java 类包的位置，如 .dll, .so 等。在 java <code>System.loadLibrary()</code> 时从这找</li>
 </ol>
-<p><code>java.library.path</code> 的设定可参照 <a href="https://stackoverflow.com/questions/1403788/java-lang-unsatisfiedlinkerror-no-dll-in-java-library-path" target="_blank" rel="noopener">stackoverflow</a></p>
+<p><code>java.library.path</code> 的设定可参照 <a href="https://stackoverflow.com/questions/1403788/java-lang-unsatisfiedlinkerror-no-dll-in-java-library-path">stackoverflow</a></p>
 <ul>
 <li><code>java -jar xxx.jar -Djava.library.path=xxx</code></li>
 <li>Set PATH</li>
 <li>Set programmatically (NOT RECOMMENDED, may cause unpredictable result):</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">System.setProperty(<span class="string">"java.library.path"</span>, path);</span><br><span class="line"><span class="comment">//set sys_paths to null</span></span><br><span class="line">final Field sysPathsField = ClassLoader.class.getDeclaredField("sys_paths");</span><br><span class="line">sysPathsField.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">sysPathsField.set(<span class="keyword">null</span>, <span class="keyword">null</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">System.setProperty(<span class="string">&quot;java.library.path&quot;</span>, path);</span><br><span class="line"><span class="comment">//set sys_paths to null</span></span><br><span class="line"><span class="keyword">final</span> <span class="type">Field</span> <span class="variable">sysPathsField</span> <span class="operator">=</span> ClassLoader.class.getDeclaredField(<span class="string">&quot;sys_paths&quot;</span>);</span><br><span class="line">sysPathsField.setAccessible(<span class="literal">true</span>);</span><br><span class="line">sysPathsField.set(<span class="literal">null</span>, <span class="literal">null</span>);</span><br></pre></td></tr></table></figure>
+
+
+
 <p>linux 下可通过 <code>LD_LIBRARY_PATH</code> 设置 <code>java.library.path</code>。windows 下似乎是通过 <code>PATH</code> 设定（待确定）</p>
 
     </div>
@@ -350,13 +353,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">269k</span>
+    <span title="Word count total">275k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:04</span>
+    <span title="Reading time total">4:10</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

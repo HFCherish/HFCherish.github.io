@@ -40,8 +40,8 @@
 <meta property="article:published_time" content="2019-01-10T02:17:01.000Z">
 <meta property="article:modified_time" content="2023-05-05T03:01:45.801Z">
 <meta property="article:author" content="Cherish">
-<meta property="article:tag" content="hadoop">
 <meta property="article:tag" content="big data">
+<meta property="article:tag" content="hadoop">
 <meta property="article:tag" content="distributed computing">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://d2h0cx97tjks2p.cloudfront.net/blogs/wp-content/uploads/sites/2/2017/07/apache-spark-ecosystem-components.jpg">
@@ -172,7 +172,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -275,30 +275,30 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h1><p><a href="https://spark.apache.org/docs/latest/" target="_blank" rel="noopener">spark</a> is a fast and general-purpose cluster computing system like Hadoop Map-reduce.  It runs on the clusters.</p>
-<h2 id="Spark-Ecosystem"><a href="#Spark-Ecosystem" class="headerlink" title="Spark Ecosystem"></a>Spark Ecosystem</h2><p><strong><a href="http://data-flair.training/blogs/apache-spark-ecosystem-components/" target="_blank" rel="noopener">The components of Apache Spark Ecosystem</a></strong></p>
+    <div class="post-body" itemprop="articleBody"><h1 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h1><p><a href="https://spark.apache.org/docs/latest/">spark</a> is a fast and general-purpose cluster computing system like Hadoop Map-reduce.  It runs on the clusters.</p>
+<h2 id="Spark-Ecosystem"><a href="#Spark-Ecosystem" class="headerlink" title="Spark Ecosystem"></a>Spark Ecosystem</h2><p><strong><a href="http://data-flair.training/blogs/apache-spark-ecosystem-components/">The components of Apache Spark Ecosystem</a></strong></p>
 <p><img src="https://d2h0cx97tjks2p.cloudfront.net/blogs/wp-content/uploads/sites/2/2017/07/apache-spark-ecosystem-components.jpg" alt="ecosystem"></p>
 <ul>
 <li>spark core: <strong>cluster computing system</strong>. Provide API to  write computing functions.</li>
-<li><a href="https://spark.apache.org/docs/2.4.0/sql-programming-guide.html" target="_blank" rel="noopener">Spark SQL</a>. SQL for data processing, like hive?</li>
-<li><a href="https://spark.apache.org/docs/2.4.0/ml-guide.html" target="_blank" rel="noopener">MLlib</a> for machine learning.</li>
-<li><a href="https://spark.apache.org/docs/2.4.0/graphx-programming-guide.html" target="_blank" rel="noopener">GraphX</a> for graph processing</li>
-<li><a href="https://spark.apache.org/docs/2.4.0/streaming-programming-guide.html" target="_blank" rel="noopener">Spark Streaming</a>.</li>
+<li><a href="https://spark.apache.org/docs/2.4.0/sql-programming-guide.html">Spark SQL</a>. SQL for data processing, like hive?</li>
+<li><a href="https://spark.apache.org/docs/2.4.0/ml-guide.html">MLlib</a> for machine learning.</li>
+<li><a href="https://spark.apache.org/docs/2.4.0/graphx-programming-guide.html">GraphX</a> for graph processing</li>
+<li><a href="https://spark.apache.org/docs/2.4.0/streaming-programming-guide.html">Spark Streaming</a>.</li>
 </ul>
 <h3 id="Spark-Core"><a href="#Spark-Core" class="headerlink" title="Spark Core"></a>Spark Core</h3><p>Spark Core is the fundamental unit of the whole Spark project. Its key features are:</p>
 <ul>
-<li>It is in charge of essential I/O functionalities.</li>
-<li>Provide API to defines and manipulate the RDDs. Significant in programming and observing the role of the <strong><a href="http://data-flair.training/blogs/install-apache-spark-multi-node-cluster/" target="_blank" rel="noopener">Spark cluster</a></strong>.</li>
+<li>It is in charge of essential I&#x2F;O functionalities.</li>
+<li>Provide API to defines and manipulate the RDDs. Significant in programming and observing the role of the <strong><a href="http://data-flair.training/blogs/install-apache-spark-multi-node-cluster/">Spark cluster</a></strong>.</li>
 <li>Task dispatching, scheduling</li>
 <li>Fault recovery.</li>
-<li>It overcomes the snag of<strong><a href="http://data-flair.training/blogs/hadoop-mapreduce-introduction-tutorial-comprehensive-guide/" target="_blank" rel="noopener"> MapReduce</a></strong> by using in-memory computation.</li>
+<li>It overcomes the snag of**<a href="http://data-flair.training/blogs/hadoop-mapreduce-introduction-tutorial-comprehensive-guide/"> MapReduce</a>** by using in-memory computation.</li>
 </ul>
-<p>Spark makes use of Special data structure known as <strong><a href="http://data-flair.training/blogs/rdd-in-apache-spark/" target="_blank" rel="noopener">RDD (Resilient Distributed Dataset)</a></strong>. Spark Core is distributed execution engine with all the functionality attached on its top. For example, MLlib, <strong><a href="http://data-flair.training/blogs/spark-sql-tutorial/" target="_blank" rel="noopener">SparkSQL</a></strong>, GraphX, <strong><a href="http://data-flair.training/blogs/apache-spark-streaming-comprehensive-guide/" target="_blank" rel="noopener">Spark Streaming</a></strong>. Thus, allows diverse workload on single platform. All the basic functionality of Apache Spark Like <strong><a href="http://data-flair.training/blogs/apache-spark-in-memory-computing/" target="_blank" rel="noopener">in-memory computation</a>, <a href="http://data-flair.training/blogs/apache-spark-streaming-fault-tolerance/" target="_blank" rel="noopener">fault tolerance</a></strong>, memory management, monitoring, task scheduling is provided by Spark Core.<br>Apart from this Spark also provides the basic connectivity with the data sources. For example, <strong><a href="http://data-flair.training/blogs/category/hbase/" target="_blank" rel="noopener">HBase</a></strong>, Amazon S3, <strong><a href="http://data-flair.training/blogs/comprehensive-hdfs-guide-introduction-architecture-data-read-write-tutorial/" target="_blank" rel="noopener">HDFS </a></strong>etc.</p>
+<p>Spark makes use of Special data structure known as <strong><a href="http://data-flair.training/blogs/rdd-in-apache-spark/">RDD (Resilient Distributed Dataset)</a></strong>. Spark Core is distributed execution engine with all the functionality attached on its top. For example, MLlib, <strong><a href="http://data-flair.training/blogs/spark-sql-tutorial/">SparkSQL</a></strong>, GraphX, <strong><a href="http://data-flair.training/blogs/apache-spark-streaming-comprehensive-guide/">Spark Streaming</a></strong>. Thus, allows diverse workload on single platform. All the basic functionality of Apache Spark Like <strong><a href="http://data-flair.training/blogs/apache-spark-in-memory-computing/">in-memory computation</a>, <a href="http://data-flair.training/blogs/apache-spark-streaming-fault-tolerance/">fault tolerance</a></strong>, memory management, monitoring, task scheduling is provided by Spark Core.<br>Apart from this Spark also provides the basic connectivity with the data sources. For example, <strong><a href="http://data-flair.training/blogs/category/hbase/">HBase</a></strong>, Amazon S3, **<a href="http://data-flair.training/blogs/comprehensive-hdfs-guide-introduction-architecture-data-read-write-tutorial/">HDFS </a>**etc.</p>
 <h4 id="Action-Job-Stage-Task"><a href="#Action-Job-Stage-Task" class="headerlink" title="Action, Job, Stage, Task"></a>Action, Job, Stage, Task<a name="action-job-stage-task" /></h4><p><strong>Actions</strong> are RDD’s operation. <em>reduce, collect, takeSample, take, first, saveAsTextfile, saveAsSequenceFile, countByKey, foreach</em> are common actions in Apache spark.</p>
 <p>In a Spark application, when you invoke an action on RDD, a <strong>job</strong> is created. Jobs are the main function that has to be done and is submitted to Spark. The jobs are divided into <strong>stages</strong> depending on how they can be separately carried out (mainly on shuffle boundaries). Then, these stages are divided into <strong>tasks</strong>. Tasks are the smallest unit of work that has to be done the executor.</p>
 <p>When you call <code>collect()</code> on an RDD or Dataset, the whole data is sent to the <strong>Driver</strong>. This is why you should be careful when calling <code>collect()</code>.</p>
 <p> <strong>An example:</strong></p>
-<p><a href="https://stackoverflow.com/questions/28973112/what-is-spark-job" target="_blank" rel="noopener">What is Spark Job ?</a></p>
+<p><a href="https://stackoverflow.com/questions/28973112/what-is-spark-job">What is Spark Job ?</a></p>
 <blockquote>
 <p>let’s say you need to do the following:</p>
 <ol>
@@ -313,52 +313,51 @@
 </ol>
 <p>So,</p>
 <ol>
-<li>The <strong><em>driver program\</em></strong> is this entire piece of code, running all 8 steps.</li>
-<li>Producing the entire HTML card set on step 5 is a <strong><em>job\</em></strong> (clear because we are using the <em>save</em> action, not a transformation). Same with the <em>collect</em> on step 8</li>
-<li>Other steps will be organized into <strong><em>stages\</em></strong>, with each job being the result of a sequence of stages. For simple things a job can have a single stage, but the need to repartition data (for instance, the join on step 3) or anything that breaks the locality of the data usually causes more stages to appear. You can think of stages as computations that produce intermediate results, which can in fact be persisted. For instance, we can persist RDD1 since we’ll be using it more than once, avoiding recomputation.</li>
-<li>All 3 above basically talk about how the <em>logic</em> of a given algorithm will be broken. In contrast, a <strong><em>task\</em></strong> is a particular <em>piece of data</em> that will go through a given stage, on a given executor.</li>
+<li>The *<strong>driver program*</strong> is this entire piece of code, running all 8 steps.</li>
+<li>Producing the entire HTML card set on step 5 is a *<strong>job*</strong> (clear because we are using the <em>save</em> action, not a transformation). Same with the <em>collect</em> on step 8</li>
+<li>Other steps will be organized into *<strong>stages*</strong>, with each job being the result of a sequence of stages. For simple things a job can have a single stage, but the need to repartition data (for instance, the join on step 3) or anything that breaks the locality of the data usually causes more stages to appear. You can think of stages as computations that produce intermediate results, which can in fact be persisted. For instance, we can persist RDD1 since we’ll be using it more than once, avoiding recomputation.</li>
+<li>All 3 above basically talk about how the <em>logic</em> of a given algorithm will be broken. In contrast, a *<strong>task*</strong> is a particular <em>piece of data</em> that will go through a given stage, on a given executor.</li>
 </ol>
 </blockquote>
 <h3 id="RDD"><a href="#RDD" class="headerlink" title="RDD"></a>RDD</h3><p>RDD 数据模型</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:center">属性名</th>
-<th style="text-align:center">成员类型</th>
-<th style="text-align:center">属性含义</th>
+<th align="center">属性名</th>
+<th align="center">成员类型</th>
+<th align="center">属性含义</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">dependencies</td>
-<td style="text-align:center">变量</td>
-<td style="text-align:center">生成该RDD所依赖的父RDD</td>
+<tbody><tr>
+<td align="center">dependencies</td>
+<td align="center">变量</td>
+<td align="center">生成该RDD所依赖的父RDD</td>
 </tr>
 <tr>
-<td style="text-align:center">compute</td>
-<td style="text-align:center">方法</td>
-<td style="text-align:center">生成该RDD的计算接口</td>
+<td align="center">compute</td>
+<td align="center">方法</td>
+<td align="center">生成该RDD的计算接口</td>
 </tr>
 <tr>
-<td style="text-align:center">partitions</td>
-<td style="text-align:center">变量</td>
-<td style="text-align:center">该RDD的所有数据分片实体</td>
+<td align="center">partitions</td>
+<td align="center">变量</td>
+<td align="center">该RDD的所有数据分片实体</td>
 </tr>
 <tr>
-<td style="text-align:center">partitioner</td>
-<td style="text-align:center">方法</td>
-<td style="text-align:center">划分数据分片的规则</td>
+<td align="center">partitioner</td>
+<td align="center">方法</td>
+<td align="center">划分数据分片的规则</td>
 </tr>
 <tr>
-<td style="text-align:center">preferredLocations</td>
-<td style="text-align:center">变量</td>
-<td style="text-align:center">数据分片的物理位置偏好</td>
+<td align="center">preferredLocations</td>
+<td align="center">变量</td>
+<td align="center">数据分片的物理位置偏好</td>
 </tr>
-</tbody>
-</table>
-<h2 id="SparkContext"><a href="#SparkContext" class="headerlink" title="SparkContext"></a>SparkContext</h2><p><a href="https://data-flair.training/blogs/learn-apache-spark-sparkcontext/" target="_blank" rel="noopener">SparkContext</a> is the entry point of Spark functionality. The most important step of any Spark driver application is to generate SparkContext. <strong>It allows your Spark Application to access Spark Cluster</strong> with the help of Resource Manager. </p>
-<p>If you want to create SparkContext, first <strong>SparkConf</strong> should be made. The SparkConf has a configuration parameter that our Spark driver application will pass to SparkContext. Some of these parameter defines properties of Spark driver application. While some are used by Spark to allocate resources on the cluster, like the number, memory size, and cores used by executor running on the worker nodes.<br>In short, <strong>it guides how to access the Spark cluster</strong>. After the creation of a SparkContext object, we can invoke functions such as <strong>textFile, sequenceFile, parallelize</strong> etc.<br>Once the SparkContext is created, it can be used to <strong><a href="http://data-flair.training/blogs/how-to-create-rdds-in-apache-spark/" target="_blank" rel="noopener">create RDDs</a></strong>, broadcast variable, and accumulator, ingress Spark service and run jobs. All these things can be carried out until SparkContext is stopped.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> operator <span class="keyword">import</span> add</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    <span class="keyword">if</span> len(sys.argv) != <span class="number">2</span>:</span><br><span class="line">        print(<span class="string">"Usage: wordcount &lt;file&gt;"</span>, file=sys.stderr)</span><br><span class="line">        sys.exit(<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># the builder here defines the sparkConf, and then create a sparkSession with an underlying SparkContext `spark.sparkContext`</span></span><br><span class="line">    spark = SparkSession\</span><br><span class="line">        .builder\</span><br><span class="line">        .appName(<span class="string">"PythonWordCount"</span>)\</span><br><span class="line">        .getOrCreate()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># here by `spark.read.text('some.txt')`, we use SparkContext create an DataFrame</span></span><br><span class="line">    lines = spark.read.text(sys.argv[<span class="number">1</span>]).rdd.map(<span class="keyword">lambda</span> r: r[<span class="number">0</span>])</span><br><span class="line">    counts = lines.flatMap(<span class="keyword">lambda</span> x: x.split(<span class="string">' '</span>)) \</span><br><span class="line">                  .map(<span class="keyword">lambda</span> x: (x, <span class="number">1</span>)) \</span><br><span class="line">                  .reduceByKey(add)</span><br><span class="line">    <span class="comment"># this is the spark action `collect`</span></span><br><span class="line">    output = counts.collect()</span><br><span class="line">    <span class="keyword">for</span> (word, count) <span class="keyword">in</span> output:</span><br><span class="line">        print(<span class="string">"%s: %i"</span> % (word, count))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># this in fact stop the sparkContext</span></span><br><span class="line">    spark.stop()</span><br></pre></td></tr></table></figure>
+</tbody></table>
+<h2 id="SparkContext"><a href="#SparkContext" class="headerlink" title="SparkContext"></a>SparkContext</h2><p><a href="https://data-flair.training/blogs/learn-apache-spark-sparkcontext/">SparkContext</a> is the entry point of Spark functionality. The most important step of any Spark driver application is to generate SparkContext. <strong>It allows your Spark Application to access Spark Cluster</strong> with the help of Resource Manager. </p>
+<p>If you want to create SparkContext, first <strong>SparkConf</strong> should be made. The SparkConf has a configuration parameter that our Spark driver application will pass to SparkContext. Some of these parameter defines properties of Spark driver application. While some are used by Spark to allocate resources on the cluster, like the number, memory size, and cores used by executor running on the worker nodes.<br>In short, <strong>it guides how to access the Spark cluster</strong>. After the creation of a SparkContext object, we can invoke functions such as <strong>textFile, sequenceFile, parallelize</strong> etc.<br>Once the SparkContext is created, it can be used to <strong><a href="http://data-flair.training/blogs/how-to-create-rdds-in-apache-spark/">create RDDs</a></strong>, broadcast variable, and accumulator, ingress Spark service and run jobs. All these things can be carried out until SparkContext is stopped.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> operator <span class="keyword">import</span> add</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(sys.argv) != <span class="number">2</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Usage: wordcount &lt;file&gt;&quot;</span>, file=sys.stderr)</span><br><span class="line">        sys.exit(-<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># the builder here defines the sparkConf, and then create a sparkSession with an underlying SparkContext `spark.sparkContext`</span></span><br><span class="line">    spark = SparkSession\</span><br><span class="line">        .builder\</span><br><span class="line">        .appName(<span class="string">&quot;PythonWordCount&quot;</span>)\</span><br><span class="line">        .getOrCreate()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># here by `spark.read.text(&#x27;some.txt&#x27;)`, we use SparkContext create an DataFrame</span></span><br><span class="line">    lines = spark.read.text(sys.argv[<span class="number">1</span>]).rdd.<span class="built_in">map</span>(<span class="keyword">lambda</span> r: r[<span class="number">0</span>])</span><br><span class="line">    counts = lines.flatMap(<span class="keyword">lambda</span> x: x.split(<span class="string">&#x27; &#x27;</span>)) \</span><br><span class="line">                  .<span class="built_in">map</span>(<span class="keyword">lambda</span> x: (x, <span class="number">1</span>)) \</span><br><span class="line">                  .reduceByKey(add)</span><br><span class="line">    <span class="comment"># this is the spark action `collect`</span></span><br><span class="line">    output = counts.collect()</span><br><span class="line">    <span class="keyword">for</span> (word, count) <span class="keyword">in</span> output:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;%s: %i&quot;</span> % (word, count))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># this in fact stop the sparkContext</span></span><br><span class="line">    spark.stop()</span><br></pre></td></tr></table></figure>
+
 <p><img src="https://d2h0cx97tjks2p.cloudfront.net/blogs/wp-content/uploads/sites/2/2017/08/functions-of-sparkcontext-in-apache-spark.jpg" alt="10 Important Functions of SparkContext in Apache Spark"></p>
 <h1 id="How-does-it-run"><a href="#How-does-it-run" class="headerlink" title="How does it run"></a>How does it run</h1><p>Spark core contains the main api, driver engine, scheduler… to support the cluster computing. The real computing is completed on the cluster. Spark can connect to many cluster managers(spark’s own standalone cluster manager, mesos, yarn) to complete the jobs. Typically, the process is like this:</p>
 <ol>
@@ -373,10 +372,10 @@
 </ol>
 <p><img src="https://spark.apache.org/docs/latest/img/cluster-overview.png" alt="cluster mode overview"></p>
 <p><img src="https://d2h0cx97tjks2p.cloudfront.net/blogs/wp-content/uploads/sites/2/2017/08/Internals-of-job-execution-in-spark.jpg" alt="Complete Picture of Apache Spark Job Execution Flow."></p>
-<h1 id="API"><a href="#API" class="headerlink" title="API"></a>API</h1><p>You can write spark function (eg. map function, reduce funciton) using Java/scala/python/R API. See <a href="https://spark.apache.org/docs/latest/" target="_blank" rel="noopener">api docs</a>.</p>
-<h1 id="Installation-On-Yarn"><a href="#Installation-On-Yarn" class="headerlink" title="Installation On Yarn"></a>Installation On Yarn</h1><p>See <a href="https://spark.apache.org/docs/2.4.0/running-on-yarn.html" target="_blank" rel="noopener">run spark on Yarn</a>, <a href="https://www.linode.com/docs/databases/hadoop/install-configure-run-spark-on-top-of-hadoop-yarn-cluster/" target="_blank" rel="noopener">Install, Configure, and Run Spark on Top of a Hadoop YARN Cluster</a></p>
+<h1 id="API"><a href="#API" class="headerlink" title="API"></a>API</h1><p>You can write spark function (eg. map function, reduce funciton) using Java&#x2F;scala&#x2F;python&#x2F;R API. See <a href="https://spark.apache.org/docs/latest/">api docs</a>.</p>
+<h1 id="Installation-On-Yarn"><a href="#Installation-On-Yarn" class="headerlink" title="Installation On Yarn"></a>Installation On Yarn</h1><p>See <a href="https://spark.apache.org/docs/2.4.0/running-on-yarn.html">run spark on Yarn</a>, <a href="https://www.linode.com/docs/databases/hadoop/install-configure-run-spark-on-top-of-hadoop-yarn-cluster/">Install, Configure, and Run Spark on Top of a Hadoop YARN Cluster</a></p>
 <ol>
-<li><p><a href="https://spark.apache.org/downloads.html" target="_blank" rel="noopener">downloads page</a> download the spark</p>
+<li><p><a href="https://spark.apache.org/downloads.html">downloads page</a> download the spark</p>
 </li>
 <li><p><code>tar -xvf spark-xxx.tgz</code></p>
 </li>
@@ -387,88 +386,93 @@
 <li>config in <code>/conf/spark-env.sh</code></li>
 </ul>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># config this to specify the installed HADOOP path</span></span><br><span class="line"><span class="built_in">export</span> SPARK_DIST_CLASSPATH=<span class="variable">$HADOOP_HOME</span>/bin</span><br><span class="line"><span class="built_in">export</span> HADOOP_CONF_DIR=<span class="variable">$HADOOP_HOME</span>/etc/hadoop</span><br><span class="line"><span class="built_in">export</span> YARN_CONF_DIR=<span class="variable">$HADOOP_HOME</span>/etc/hadoop</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li>config in <code>/conf/spark-default.conf</code>. (<a href="https://spark.apache.org/docs/2.4.0/configuration.html#spark-properties" target="_blank" rel="noopener">all configuration properties</a>)</li>
+<li>config in <code>/conf/spark-default.conf</code>. (<a href="https://spark.apache.org/docs/2.4.0/configuration.html#spark-properties">all configuration properties</a>)</li>
 </ul>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># config the spark master</span></span><br><span class="line">spark.master                     yarn</span><br><span class="line">spark.driver.memory    512m</span><br><span class="line">spark.yarn.am.memory    512m</span><br><span class="line">spark.executor.memory          512m</span><br></pre></td></tr></table></figure>
-<h2 id="history-server-config"><a href="#history-server-config" class="headerlink" title="history server config"></a>history server config</h2><p>When the spark job is running, you can access the job log by <code>localhost:4040</code>. When the job is finished, by default, the log is not persisted which means you can’t access it. To access the logs later, need to config the following: (see <a href="https://spark.apache.org/docs/latest/monitoring.html" target="_blank" rel="noopener">spark Monitoring and Instrumentation</a> and <a href="https://spark.apache.org/docs/2.4.0/running-on-yarn.html#using-the-spark-history-server-to-replace-the-spark-web-ui" target="_blank" rel="noopener">using history server to replace the spark web ui</a>)</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># in /conf/spark-default.conf</span></span><br><span class="line"><span class="comment"># config history server</span></span><br><span class="line">spark.ui.filters         org.apache.spark.deploy.yarn.YarnProxyRedirectFilter</span><br><span class="line"></span><br><span class="line"><span class="comment"># tell spark use history server url as the trackint url</span></span><br><span class="line">spark.yarn.historyServer.allowTracking  <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># enable log persistence</span></span><br><span class="line">spark.eventLog.enabled           <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># log write dir. Here use the hdfs dir and you must create the dir in hdfs first</span></span><br><span class="line">spark.eventLog.dir               hdfs://localhost:9000/spark-logs</span><br><span class="line"></span><br><span class="line"><span class="comment"># log read dir. Sometimes logs are transfered.</span></span><br><span class="line">spark.history.fs.logDirectory     hdfs://localhost:9000/spark-logs</span><br></pre></td></tr></table></figure>
+
+<h2 id="history-server-config"><a href="#history-server-config" class="headerlink" title="history server config"></a>history server config</h2><p>When the spark job is running, you can access the job log by <code>localhost:4040</code>. When the job is finished, by default, the log is not persisted which means you can’t access it. To access the logs later, need to config the following: (see <a href="https://spark.apache.org/docs/latest/monitoring.html">spark Monitoring and Instrumentation</a> and <a href="https://spark.apache.org/docs/2.4.0/running-on-yarn.html#using-the-spark-history-server-to-replace-the-spark-web-ui">using history server to replace the spark web ui</a>)</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># in /conf/spark-default.conf</span></span><br><span class="line"><span class="comment"># config history server</span></span><br><span class="line">spark.ui.filters         org.apache.spark.deploy.yarn.YarnProxyRedirectFilter</span><br><span class="line"></span><br><span class="line"><span class="comment"># tell spark use history server url as the trackint url</span></span><br><span class="line">spark.yarn.historyServer.allowTracking  <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># enable log persistence</span></span><br><span class="line">spark.eventLog.enabled           <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># log write dir. Here use the hdfs dir and you must create the dir in hdfs first</span></span><br><span class="line">spark.eventLog.<span class="built_in">dir</span>               hdfs://localhost:9000/spark-logs</span><br><span class="line"></span><br><span class="line"><span class="comment"># log read dir. Sometimes logs are transfered.</span></span><br><span class="line">spark.history.fs.logDirectory     hdfs://localhost:9000/spark-logs</span><br></pre></td></tr></table></figure>
+
 <h2 id="example-execution"><a href="#example-execution" class="headerlink" title="example execution"></a>example execution</h2><ul>
 <li>Start histroy server: <code>sbin/start-history-server.sh</code></li>
 <li>execute spark job:</li>
 </ul>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ ./bin/spark-submit --class org.apache.spark.examples.SparkPi \</span><br><span class="line">    --master yarn \</span><br><span class="line">    --deploy-mode client \</span><br><span class="line">    --driver-memory 4g \</span><br><span class="line">    --executor-memory 2g \</span><br><span class="line">    --executor-cores 1 \</span><br><span class="line">    examples/jars/spark-examples*.jar \</span><br><span class="line">    10</span><br></pre></td></tr></table></figure>
+
 <p>Then you can:</p>
 <ul>
-<li><p>Check the job/application info in yarn: <code>http://localhost:8088/cluster/apps</code></p>
+<li><p>Check the job&#x2F;application info in yarn: <code>http://localhost:8088/cluster/apps</code></p>
 </li>
-<li><p>Check the job/application using Spark history server: <code>http://localhost:18080/</code></p>
+<li><p>Check the job&#x2F;application using Spark history server: <code>http://localhost:18080/</code></p>
 </li>
 </ul>
-<h1 id="Glossary"><a href="#Glossary" class="headerlink" title="Glossary"></a>Glossary</h1><p><a href="https://spark.apache.org/docs/latest/cluster-overview.html#glossary" target="_blank" rel="noopener">glossary</a></p>
+<h1 id="Glossary"><a href="#Glossary" class="headerlink" title="Glossary"></a>Glossary</h1><p><a href="https://spark.apache.org/docs/latest/cluster-overview.html#glossary">glossary</a></p>
 <p>NoteThe following table summarizes terms you’ll see used to refer to cluster concepts:</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:left">Term</th>
-<th style="text-align:left">Meaning</th>
+<th align="left">Term</th>
+<th align="left">Meaning</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:left">Application</td>
-<td style="text-align:left">User program built on Spark. Consists of a <em>driver program</em> and <em>executors</em> on the cluster.</td>
+<tbody><tr>
+<td align="left">Application</td>
+<td align="left">User program built on Spark. Consists of a <em>driver program</em> and <em>executors</em> on the cluster.</td>
 </tr>
 <tr>
-<td style="text-align:left">Application jar</td>
-<td style="text-align:left">A jar containing the user’s Spark application. In some cases users will want to create an “uber jar” containing their application along with its dependencies<strong>. The user’s jar should never include Hadoop or Spark libraries, however, these will be added at runtime.</strong></td>
+<td align="left">Application jar</td>
+<td align="left">A jar containing the user’s Spark application. In some cases users will want to create an “uber jar” containing their application along with its dependencies**. The user’s jar should never include Hadoop or Spark libraries, however, these will be added at runtime.**</td>
 </tr>
 <tr>
-<td style="text-align:left">Driver program</td>
-<td style="text-align:left">The process running the main() function of the application and creating the SparkContext</td>
+<td align="left">Driver program</td>
+<td align="left">The process running the main() function of the application and creating the SparkContext</td>
 </tr>
 <tr>
-<td style="text-align:left">Cluster manager</td>
-<td style="text-align:left">An external service for acquiring resources on the cluster (e.g. standalone manager, Mesos, YARN)</td>
+<td align="left">Cluster manager</td>
+<td align="left">An external service for acquiring resources on the cluster (e.g. standalone manager, Mesos, YARN)</td>
 </tr>
 <tr>
-<td style="text-align:left">Deploy mode</td>
-<td style="text-align:left">Distinguishes where the driver process runs. In “cluster” mode, the framework launches the driver inside of the cluster. In “client” mode, the submitter launches the driver outside of the cluster.</td>
+<td align="left">Deploy mode</td>
+<td align="left">Distinguishes where the driver process runs. In “cluster” mode, the framework launches the driver inside of the cluster. In “client” mode, the submitter launches the driver outside of the cluster.</td>
 </tr>
 <tr>
-<td style="text-align:left">Worker node</td>
-<td style="text-align:left">Any node that can run application code in the cluster</td>
+<td align="left">Worker node</td>
+<td align="left">Any node that can run application code in the cluster</td>
 </tr>
 <tr>
-<td style="text-align:left">Executor</td>
-<td style="text-align:left">A process launched for an application on a worker node, that runs tasks and keeps data in memory or disk storage across them. Each application has its own executors.</td>
+<td align="left">Executor</td>
+<td align="left">A process launched for an application on a worker node, that runs tasks and keeps data in memory or disk storage across them. Each application has its own executors.</td>
 </tr>
 <tr>
-<td style="text-align:left">Task</td>
-<td style="text-align:left">A unit of work that will be sent to one executor</td>
+<td align="left">Task</td>
+<td align="left">A unit of work that will be sent to one executor</td>
 </tr>
 <tr>
-<td style="text-align:left">Job</td>
-<td style="text-align:left">A parallel computation consisting of multiple tasks that gets spawned in response to a Spark action (e.g. <code>save</code>, <code>collect</code>); you’ll see this term used in the driver’s logs.</td>
+<td align="left">Job</td>
+<td align="left">A parallel computation consisting of multiple tasks that gets spawned in response to a Spark action (e.g. <code>save</code>, <code>collect</code>); you’ll see this term used in the driver’s logs.</td>
 </tr>
 <tr>
-<td style="text-align:left">Stage</td>
-<td style="text-align:left">Each job gets divided into smaller sets of tasks called <em>stages</em> that depend on each other (similar to the map and reduce stages in MapReduce); you’ll see this term used in the driver’s logs.</td>
+<td align="left">Stage</td>
+<td align="left">Each job gets divided into smaller sets of tasks called <em>stages</em> that depend on each other (similar to the map and reduce stages in MapReduce); you’ll see this term used in the driver’s logs.</td>
 </tr>
-</tbody>
-</table>
-<h1 id="Deploy-mode"><a href="#Deploy-mode" class="headerlink" title="Deploy mode"></a>Deploy mode</h1><h2 id="yarn-client-vs-yarn-cluster"><a href="#yarn-client-vs-yarn-cluster" class="headerlink" title="yarn-client vs yarn-cluster"></a>yarn-client vs yarn-cluster</h2><p><a href="https://www.cnblogs.com/ittangtang/p/7967386.html" target="_blank" rel="noopener">yarn-client vs yarn-cluster 深度剖析</a></p>
-<p><a href="https://stackoverflow.com/questions/41124428/spark-yarn-cluster-vs-client-how-to-choose-which-one-to-use" target="_blank" rel="noopener">stackoverflow</a></p>
+</tbody></table>
+<h1 id="Deploy-mode"><a href="#Deploy-mode" class="headerlink" title="Deploy mode"></a>Deploy mode</h1><h2 id="yarn-client-vs-yarn-cluster"><a href="#yarn-client-vs-yarn-cluster" class="headerlink" title="yarn-client vs yarn-cluster"></a>yarn-client vs yarn-cluster</h2><p><a href="https://www.cnblogs.com/ittangtang/p/7967386.html">yarn-client vs yarn-cluster 深度剖析</a></p>
+<p><a href="https://stackoverflow.com/questions/41124428/spark-yarn-cluster-vs-client-how-to-choose-which-one-to-use">stackoverflow</a></p>
 <h1 id="spark-shell-vs-spark-submit"><a href="#spark-shell-vs-spark-submit" class="headerlink" title="spark-shell vs spark-submit"></a>spark-shell vs spark-submit</h1><p>Spark shell is only intended to be use for testing and perhaps development of small applications - is only an interactive shell and should not be use to run production spark applications. For production application deployment you should use spark-submit. The last one will also allow you to run applications in yarn-cluster mode</p>
-<h1 id="Spark-DataFrame"><a href="#Spark-DataFrame" class="headerlink" title="Spark DataFrame"></a>Spark DataFrame</h1><h2 id="auto-increment-id"><a href="#auto-increment-id" class="headerlink" title="auto increment id"></a>auto increment id</h2><p><a href="https://blog.csdn.net/k_wzzc/article/details/84996172" target="_blank" rel="noopener">two ways for auto increment id</a></p>
-<h3 id="Row-number"><a href="#Row-number" class="headerlink" title="Row_number"></a>Row_number</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 设置窗口函数的分区以及排序，因为是全局排序而不是分组排序，所有分区依据为空</span></span><br><span class="line"><span class="comment">  * 排序规则没有特殊要求也可以随意填写</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="keyword">val</span> spec = <span class="type">Window</span>.partitionBy().orderBy($<span class="string">"lon"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> df1 = dataframe.withColumn(<span class="string">"id"</span>, row_number().over(spec))</span><br><span class="line"></span><br><span class="line">df1.show()</span><br></pre></td></tr></table></figure>
-<h3 id="rdd-zipWithIndex"><a href="#rdd-zipWithIndex" class="headerlink" title="rdd.zipWithIndex"></a>rdd.zipWithIndex</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在原Schema信息的基础上添加一列 “id”信息</span></span><br><span class="line"> <span class="keyword">val</span> schema: <span class="type">StructType</span> = dataframe.schema.add(<span class="type">StructField</span>(<span class="string">"id"</span>, <span class="type">LongType</span>))</span><br><span class="line"></span><br><span class="line"> <span class="comment">// DataFrame转RDD 然后调用 zipWithIndex</span></span><br><span class="line"> <span class="keyword">val</span> dfRDD: <span class="type">RDD</span>[(<span class="type">Row</span>, <span class="type">Long</span>)] = dataframe.rdd.zipWithIndex()</span><br><span class="line"></span><br><span class="line"> <span class="keyword">val</span> rowRDD: <span class="type">RDD</span>[<span class="type">Row</span>] = dfRDD.map(tp =&gt; <span class="type">Row</span>.merge(tp._1, <span class="type">Row</span>(tp._2)))</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 将添加了索引的RDD 转化为DataFrame</span></span><br><span class="line"> <span class="keyword">val</span> df2 = spark.createDataFrame(rowRDD, schema)</span><br><span class="line"></span><br><span class="line"> df2.show()</span><br></pre></td></tr></table></figure>
-<h2 id="Add-constant-column"><a href="#Add-constant-column" class="headerlink" title="Add constant column"></a>Add constant column</h2><p><a href="https://stackoverflow.com/questions/32788322/how-to-add-a-constant-column-in-a-spark-dataframe" target="_blank" rel="noopener">add constant column</a></p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.spark.sql.functions.typedLit</span><br><span class="line"></span><br><span class="line">df.withColumn(<span class="string">"some_array"</span>, typedLit(<span class="type">Seq</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)))</span><br><span class="line">df.withColumn(<span class="string">"some_struct"</span>, typedLit((<span class="string">"foo"</span>, <span class="number">1</span>, <span class="number">0.3</span>)))</span><br><span class="line">df.withColumn(<span class="string">"some_map"</span>, typedLit(<span class="type">Map</span>(<span class="string">"key1"</span> -&gt; <span class="number">1</span>, <span class="string">"key2"</span> -&gt; <span class="number">2</span>)))</span><br><span class="line"></span><br><span class="line">from pyspark.sql.functions <span class="keyword">import</span> lit</span><br><span class="line">df.withColumn(<span class="symbol">'new_colum</span>n', lit(<span class="number">10</span>))</span><br></pre></td></tr></table></figure>
-<h2 id="select-latest-record"><a href="#select-latest-record" class="headerlink" title="select latest record"></a>select latest record</h2><p><a href="https://stackoverflow.com/questions/55615716/select-latest-record-from-spark-dataframe" target="_blank" rel="noopener">stackoverflow</a></p>
-<h1 id="Hive-Hints"><a href="#Hive-Hints" class="headerlink" title="Hive Hints"></a>Hive Hints</h1><p><a href="https://spark.apache.org/docs/latest/sql-ref-syntax-qry-select-hints.html#partitioning-hints" target="_blank" rel="noopener">hive hints</a></p>
-<h1 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h1><p><a href="https://www.youtube.com/watch?v=daXEp4HmS-E" target="_blank" rel="noopener">deep dive - spark optimization</a></p>
-<p><a href="https://spark.apache.org/docs/latest/sql-performance-tuning.html" target="_blank" rel="noopener">performance tuning</a></p>
+<h1 id="Spark-DataFrame"><a href="#Spark-DataFrame" class="headerlink" title="Spark DataFrame"></a>Spark DataFrame</h1><h2 id="auto-increment-id"><a href="#auto-increment-id" class="headerlink" title="auto increment id"></a>auto increment id</h2><p><a href="https://blog.csdn.net/k_wzzc/article/details/84996172">two ways for auto increment id</a></p>
+<h3 id="Row-number"><a href="#Row-number" class="headerlink" title="Row_number"></a>Row_number</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 设置窗口函数的分区以及排序，因为是全局排序而不是分组排序，所有分区依据为空</span></span><br><span class="line"><span class="comment">  * 排序规则没有特殊要求也可以随意填写</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="keyword">val</span> spec = <span class="type">Window</span>.partitionBy().orderBy($<span class="string">&quot;lon&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> df1 = dataframe.withColumn(<span class="string">&quot;id&quot;</span>, row_number().over(spec))</span><br><span class="line"></span><br><span class="line">df1.show()</span><br></pre></td></tr></table></figure>
+
+<h3 id="rdd-zipWithIndex"><a href="#rdd-zipWithIndex" class="headerlink" title="rdd.zipWithIndex"></a>rdd.zipWithIndex</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在原Schema信息的基础上添加一列 “id”信息</span></span><br><span class="line"> <span class="keyword">val</span> schema: <span class="type">StructType</span> = dataframe.schema.add(<span class="type">StructField</span>(<span class="string">&quot;id&quot;</span>, <span class="type">LongType</span>))</span><br><span class="line"></span><br><span class="line"> <span class="comment">// DataFrame转RDD 然后调用 zipWithIndex</span></span><br><span class="line"> <span class="keyword">val</span> dfRDD: <span class="type">RDD</span>[(<span class="type">Row</span>, <span class="type">Long</span>)] = dataframe.rdd.zipWithIndex()</span><br><span class="line"></span><br><span class="line"> <span class="keyword">val</span> rowRDD: <span class="type">RDD</span>[<span class="type">Row</span>] = dfRDD.map(tp =&gt; <span class="type">Row</span>.merge(tp._1, <span class="type">Row</span>(tp._2)))</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 将添加了索引的RDD 转化为DataFrame</span></span><br><span class="line"> <span class="keyword">val</span> df2 = spark.createDataFrame(rowRDD, schema)</span><br><span class="line"></span><br><span class="line"> df2.show()</span><br></pre></td></tr></table></figure>
+
+<h2 id="Add-constant-column"><a href="#Add-constant-column" class="headerlink" title="Add constant column"></a>Add constant column</h2><p><a href="https://stackoverflow.com/questions/32788322/how-to-add-a-constant-column-in-a-spark-dataframe">add constant column</a></p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.spark.sql.functions.typedLit</span><br><span class="line"></span><br><span class="line">df.withColumn(<span class="string">&quot;some_array&quot;</span>, typedLit(<span class="type">Seq</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)))</span><br><span class="line">df.withColumn(<span class="string">&quot;some_struct&quot;</span>, typedLit((<span class="string">&quot;foo&quot;</span>, <span class="number">1</span>, <span class="number">0.3</span>)))</span><br><span class="line">df.withColumn(<span class="string">&quot;some_map&quot;</span>, typedLit(<span class="type">Map</span>(<span class="string">&quot;key1&quot;</span> -&gt; <span class="number">1</span>, <span class="string">&quot;key2&quot;</span> -&gt; <span class="number">2</span>)))</span><br><span class="line"></span><br><span class="line">from pyspark.sql.functions <span class="keyword">import</span> lit</span><br><span class="line">df.withColumn(&#x27;new_column&#x27;, lit(<span class="number">10</span>))</span><br></pre></td></tr></table></figure>
+
+<h2 id="select-latest-record"><a href="#select-latest-record" class="headerlink" title="select latest record"></a>select latest record</h2><p><a href="https://stackoverflow.com/questions/55615716/select-latest-record-from-spark-dataframe">stackoverflow</a></p>
+<h1 id="Hive-Hints"><a href="#Hive-Hints" class="headerlink" title="Hive Hints"></a>Hive Hints</h1><p><a href="https://spark.apache.org/docs/latest/sql-ref-syntax-qry-select-hints.html#partitioning-hints">hive hints</a></p>
+<h1 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h1><p><a href="https://www.youtube.com/watch?v=daXEp4HmS-E">deep dive - spark optimization</a></p>
+<p><a href="https://spark.apache.org/docs/latest/sql-performance-tuning.html">performance tuning</a></p>
 <h2 id="Get-Baseline"><a href="#Get-Baseline" class="headerlink" title="Get Baseline"></a>Get Baseline</h2><ol>
 <li>利用 spark-ui 观察任务运行情况（long stages，spill，laggard tasks, etc.）</li>
 <li>利用 yarn 等观察资源利用情况（CPU 利用率 etc.）</li>
@@ -478,16 +482,16 @@
 <li>storage memory 是 persist 会用的 memory。当调用 persist（或 cache，一种使用 <code>StorageLevel.MemoryAndDisk</code> 的 persist）时，如果指定的 storage_level 有 memory，那么就会将数据存到 memory。</li>
 <li>working memory 是 spark 运算所需要的 memory，这个大小是动态变化的。当 storage memory 占用过多内存时，working memory 就不够了。然后就会有 spill，就会慢。</li>
 </ul>
-<p>memory spill 表示 working memory 不够，spark 开始使用 disk。而 disk 的 I/O 效率是极低的。所以一旦出现 spill，性能就会大大降低。</p>
+<p>memory spill 表示 working memory 不够，spark 开始使用 disk。而 disk 的 I&#x2F;O 效率是极低的。所以一旦出现 spill，性能就会大大降低。</p>
 <p>working memory 不够有很多原因：</p>
 <ol>
-<li>Memory 资源申请的太少了，就是不够 ====》 增加 <code>spark.executor.memory</code><ol>
-<li>数据在 memory/disk 的存储一般是 serialized，以节省空间。但数据 load 到 working memory 时，一般都是 deserialized 的，处理更快，但是更占空间。</li>
+<li>Memory 资源申请的太少了，就是不够 &#x3D;&#x3D;&#x3D;&#x3D;》 增加 <code>spark.executor.memory</code><ol>
+<li>数据在 memory&#x2F;disk 的存储一般是 serialized，以节省空间。但数据 load 到 working memory 时，一般都是 deserialized 的，处理更快，但是更占空间。</li>
 </ol>
 </li>
-<li>资源可以了，partition 太少，每个 partition 处理的数据太多，所以 spill 了 ====》 增加 <a href="shuffle-partition">shuffle partition</a></li>
-<li>有不均衡出现，导致某些 task 处理的数据尤其多 ====》see <a href="#balance">balance</a></li>
-<li>有太多 persist，持久化了太多东西，占用过多的 storage memory ====》see <a href="#persistence">persistence</a></li>
+<li>资源可以了，partition 太少，每个 partition 处理的数据太多，所以 spill 了 &#x3D;&#x3D;&#x3D;&#x3D;》 增加 <a href="shuffle-partition">shuffle partition</a></li>
+<li>有不均衡出现，导致某些 task 处理的数据尤其多 &#x3D;&#x3D;&#x3D;&#x3D;》see <a href="#balance">balance</a></li>
+<li>有太多 persist，持久化了太多东西，占用过多的 storage memory &#x3D;&#x3D;&#x3D;&#x3D;》see <a href="#persistence">persistence</a></li>
 </ol>
 <p><img src="/Users/zhenzheng/code/hfcherish.github.io/source/images/spark-storage-hierachy.png" alt="image-20210319124829765"></p>
 <h2 id="指定资源需求"><a href="#指定资源需求" class="headerlink" title="指定资源需求"></a>指定资源需求<a name="specify-resources" /></h2><p>Spark-submit 运行时，可通过指定以下参数来定义运行所需的资源：</p>
@@ -498,14 +502,14 @@
 <li><code>--conf spark.driver.memory=xxG</code>（或 <code>--driver-memory xxG</code>）：指定每个 driver 所需要的内存。当执行 <code>df.collect()</code>时，会将数据 collect 到 driver，此时就需要 driver 有很多的 memory</li>
 <li><code>--conf spark.driver.cores=xx</code>（或 <code>--driver-cores xx</code>）：指定每个 driver 所需要的 cores</li>
 </ul>
-<h2 id="Some-issues"><a href="#Some-issues" class="headerlink" title="Some issues"></a>Some issues</h2><h3 id="–executor-cores-settinng-not-working"><a href="#–executor-cores-settinng-not-working" class="headerlink" title="–executor-cores settinng not working"></a>–executor-cores settinng not working</h3><p>需要配置 <code>yarn.scheduler.capacity.resource-calculator=org.apache.hadoop.yarn.util.resource.DominantResourceCalculator</code>，因为默认的使用的是 <a href="https://apache.googlesource.com/hadoop-common/+/e0c9f893b684246feb5b4adbb95a05a436cdb790/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-common/src/main/java/org/apache/hadoop/yarn/util/resource/DefaultResourceCalculator.java" target="_blank" rel="noopener">DefaultResourceCalculator</a>，它只看 memory(–executor-memory)，DominantResourceCalculator 则同时考虑 cpu 和 memory</p>
-<p>see <a href="https://stackoverflow.com/questions/33248108/spark-executor-on-yarn-client-does-not-take-executor-core-count-configuration" target="_blank" rel="noopener">stackoverflow</a></p>
+<h2 id="Some-issues"><a href="#Some-issues" class="headerlink" title="Some issues"></a>Some issues</h2><h3 id="–executor-cores-settinng-not-working"><a href="#–executor-cores-settinng-not-working" class="headerlink" title="–executor-cores settinng not working"></a>–executor-cores settinng not working</h3><p>需要配置 <code>yarn.scheduler.capacity.resource-calculator=org.apache.hadoop.yarn.util.resource.DominantResourceCalculator</code>，因为默认的使用的是 <a href="https://apache.googlesource.com/hadoop-common/+/e0c9f893b684246feb5b4adbb95a05a436cdb790/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-common/src/main/java/org/apache/hadoop/yarn/util/resource/DefaultResourceCalculator.java">DefaultResourceCalculator</a>，它只看 memory(–executor-memory)，DominantResourceCalculator 则同时考虑 cpu 和 memory</p>
+<p>see <a href="https://stackoverflow.com/questions/33248108/spark-executor-on-yarn-client-does-not-take-executor-core-count-configuration">stackoverflow</a></p>
 <h3 id="–spark-dynamicAllocation-maxExecutors-not-working"><a href="#–spark-dynamicAllocation-maxExecutors-not-working" class="headerlink" title="–spark.dynamicAllocation.maxExecutors not working"></a>–spark.dynamicAllocation.maxExecutors not working<a name="dynamic-allocation" /></h3><p>这个需要和其他配置配合使用</p>
 <blockquote>
-<p>spark.dynamicAllocation.enabled = true<br>This requires <code>spark.shuffle.service.enabled</code> or <code>spark.dynamicAllocation.shuffleTracking.enabled</code> to be set. The following configurations are also relevant: <code>spark.dynamicAllocation.minExecutors</code>, <code>spark.dynamicAllocation.maxExecutors</code>, and <code>spark.dynamicAllocation.initialExecutors</code> <code>spark.dynamicAllocation.executorAllocationRatio</code></p>
+<p>spark.dynamicAllocation.enabled &#x3D; true<br>This requires <code>spark.shuffle.service.enabled</code> or <code>spark.dynamicAllocation.shuffleTracking.enabled</code> to be set. The following configurations are also relevant: <code>spark.dynamicAllocation.minExecutors</code>, <code>spark.dynamicAllocation.maxExecutors</code>, and <code>spark.dynamicAllocation.initialExecutors</code> <code>spark.dynamicAllocation.executorAllocationRatio</code></p>
 </blockquote>
 <p>如果还不工作，可能要按 [spark dynamic allocation not working](https://community.cloudera.com/t5/Support-Questions/Spark-dynamic-allocation-dont-work/td-p/140227 设置各 nodemanager 并重启</p>
-<p>See <a href="https://spark.apache.org/docs/latest/configuration.html#dynamic-allocation" target="_blank" rel="noopener">spark dynamic allocation</a></p>
+<p>See <a href="https://spark.apache.org/docs/latest/configuration.html#dynamic-allocation">spark dynamic allocation</a></p>
 <h2 id="Partitions"><a href="#Partitions" class="headerlink" title="Partitions"></a>Partitions</h2><p>接下来从输入、运行、输出三个阶段的 partition 优化来看</p>
 <p>一般 1 partition -&gt; 1 task，分多少个 partition，就拆多少个 task 来运行。</p>
 <ol>
@@ -516,10 +520,13 @@
 </ol>
 </li>
 </ol>
-<h3 id="输入（input）"><a href="#输入（input）" class="headerlink" title="输入（input）"></a>输入（input）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spark.default.parallelism (don&#39;t use)</span><br><span class="line">spark.sql.files.maxPartitionBytes (mutable，控制每个 partition 读的文件大小)</span><br></pre></td></tr></table></figure>
-<h3 id="Shuffle"><a href="#Shuffle" class="headerlink" title="Shuffle"></a>Shuffle<a name="shuffle-partition" /></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spark.sql.shuffle.partitions（控制使用多少个 partition 来 shuffle）</span><br><span class="line">spark.default.parallelism（控制 rdd 的 partition 数目？？？？？？）</span><br></pre></td></tr></table></figure>
-<p>如果配置了 <code>spark.conf.set(&quot;spark.sql.adaptive.enabled&quot;, &#39;true&#39;)</code> 或 <code>spark.sql.adaptive.coalescePartitions.enabled</code> ，它会动态控制 parition count （参见 <a href="https://spark.apache.org/docs/latest/sql-performance-tuning.html#coalescing-post-shuffle-partitions" target="_blank" rel="noopener">coalescing post shuffle partitions</a>），根据 shuffle 数据大小来动态设置 partition 数目。但是这个设置可能不合理，因为 shuffle 过程中，最终操作的数据可能远大于 shuffle read 的大小，这个过程中存在 deserialize 等。如果配置了动态控制，依然出现了 shuffle spill，那么可以先关掉这个配置，手动控制 shuffle partitions 大小。</p>
-<h3 id="输出（output）"><a href="#输出（output）" class="headerlink" title="输出（output）"></a>输出（output）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">coalesce</span><br><span class="line">repartition</span><br><span class="line">repartition(range) &#x3D;&#x3D;&#x3D;&gt; range partitioner???</span><br><span class="line">df.localCheckPoint().repartition().... &#x3D;&#x3D;&gt; how to use tis</span><br></pre></td></tr></table></figure>
+<h3 id="输入（input）"><a href="#输入（input）" class="headerlink" title="输入（input）"></a>输入（input）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spark.default.parallelism (don&#x27;t use)</span><br><span class="line">spark.sql.files.maxPartitionBytes (mutable，控制每个 partition 读的文件大小)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Shuffle"><a href="#Shuffle" class="headerlink" title="Shuffle"></a>Shuffle<a name="shuffle-partition" /></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spark.sql.shuffle.partitions（控制使用多少个 partition 来 shuffle）</span><br><span class="line">spark.default.parallelism（控制 rdd 的 partition 数目？？？？？？）</span><br></pre></td></tr></table></figure>
+
+<p>如果配置了 <code>spark.conf.set(&quot;spark.sql.adaptive.enabled&quot;, &#39;true&#39;)</code> 或 <code>spark.sql.adaptive.coalescePartitions.enabled</code> ，它会动态控制 parition count （参见 <a href="https://spark.apache.org/docs/latest/sql-performance-tuning.html#coalescing-post-shuffle-partitions">coalescing post shuffle partitions</a>），根据 shuffle 数据大小来动态设置 partition 数目。但是这个设置可能不合理，因为 shuffle 过程中，最终操作的数据可能远大于 shuffle read 的大小，这个过程中存在 deserialize 等。如果配置了动态控制，依然出现了 shuffle spill，那么可以先关掉这个配置，手动控制 shuffle partitions 大小。</p>
+<h3 id="输出（output）"><a href="#输出（output）" class="headerlink" title="输出（output）"></a>输出（output）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">coalesce</span><br><span class="line">repartition</span><br><span class="line">repartition(range) ===&gt; range partitioner???</span><br><span class="line">df.localCheckPoint().repartition().... ==&gt; how to use tis</span><br></pre></td></tr></table></figure>
+
 <h2 id="Balance"><a href="#Balance" class="headerlink" title="Balance"></a>Balance<a name="balance" /></h2><p>When some partitions are significantly larger than most, there is skew.</p>
 <p>Balance 体现在很多方面：网络、GC、数据，当然最常见的问题是数据的不均匀。</p>
 <p>通过查看 spark ui 可以看到不均匀的任务（这个时候需要停掉重跑）：</p>
@@ -545,15 +552,15 @@
 <blockquote>
 <p><a href="#action-job-stage-task">spark core</a> 中有几个概念，其中只有 action 会触发一次 dag 的运行。同一段代码，可能会生成不同的 dag，每次都需要执行。所以如果被多次使用的 superset，最好将它 cache，避免后续的重复运算。</p>
 </blockquote>
-<p>persist/cache 要慎用，因为：</p>
+<p>persist&#x2F;cache 要慎用，因为：</p>
 <ol>
 <li>占资源。当 persist 消耗了太多的 storage memory 时，就会出现 <a href="#memory-spill">memory spill</a></li>
-<li>也有时间损耗（serialize, deserialize, I/O)。persist 一般都以 serialized 的形式存储，节省空间，而 load 到 working memory 时，又需要 deserialiize</li>
+<li>也有时间损耗（serialize, deserialize, I&#x2F;O)。persist 一般都以 serialized 的形式存储，节省空间，而 load 到 working memory 时，又需要 deserialiize</li>
 </ol>
 <blockquote>
-<p>In Python, stored objects will always be serialized with the <a href="https://docs.python.org/3/library/pickle.html" target="_blank" rel="noopener">Pickle</a> library, so it does not matter whether you choose a serialized level. The available storage levels in Python include <code>MEMORY_ONLY</code>, <code>MEMORY_ONLY_2</code>, <code>MEMORY_AND_DISK</code>, <code>MEMORY_AND_DISK_2</code>, <code>DISK_ONLY</code>, <code>DISK_ONLY_2</code>, and <code>DISK_ONLY_3</code>.*</p>
+<p>In Python, stored objects will always be serialized with the <a href="https://docs.python.org/3/library/pickle.html">Pickle</a> library, so it does not matter whether you choose a serialized level. The available storage levels in Python include <code>MEMORY_ONLY</code>, <code>MEMORY_ONLY_2</code>, <code>MEMORY_AND_DISK</code>, <code>MEMORY_AND_DISK_2</code>, <code>DISK_ONLY</code>, <code>DISK_ONLY_2</code>, and <code>DISK_ONLY_3</code>.*</p>
 </blockquote>
-<h3 id="cache"><a href="#cache" class="headerlink" title="cache"></a>cache</h3><p>Cache 是选择 default 的 persist。persist 可以选择不同的 <a href="http://spark.apache.org/docs/latest/rdd-programming-guide.html#rdd-persistence" target="_blank" rel="noopener">persistence storage level</a> </p>
+<h3 id="cache"><a href="#cache" class="headerlink" title="cache"></a>cache</h3><p>Cache 是选择 default 的 persist。persist 可以选择不同的 <a href="http://spark.apache.org/docs/latest/rdd-programming-guide.html#rdd-persistence">persistence storage level</a> </p>
 <p>With <code>cache()</code>, you use only the default storage level :</p>
 <ul>
 <li><code>MEMORY_ONLY</code> for <strong>RDD</strong></li>
@@ -573,22 +580,25 @@
 <li><code>MEMORY_ONLY</code> to the <strong>RDD</strong></li>
 <li>or <code>MEMORY_AND_DISK</code> for <strong>Dataset</strong></li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">spark.catalog.cacheTable(<span class="string">"tableName"</span>)</span><br><span class="line">spark.catalog.uncacheTable(<span class="string">"tableName"</span>)</span><br><span class="line"></span><br><span class="line">dataFrame.cache()</span><br></pre></td></tr></table></figure>
-<h2 id="broadcast-join"><a href="#broadcast-join" class="headerlink" title="broadcast join"></a>broadcast join</h2><p><a href="https://zhuanlan.zhihu.com/p/58765338" target="_blank" rel="noopener">spark 执行 map-join 优化</a></p>
-<p><a href="https://www.jianshu.com/p/2c7689294a73" target="_blank" rel="noopener">spark broadcast join</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">spark.catalog.cacheTable(<span class="string">&quot;tableName&quot;</span>)</span><br><span class="line">spark.catalog.uncacheTable(<span class="string">&quot;tableName&quot;</span>)</span><br><span class="line"></span><br><span class="line">dataFrame.cache()</span><br></pre></td></tr></table></figure>
+
+<h2 id="broadcast-join"><a href="#broadcast-join" class="headerlink" title="broadcast join"></a>broadcast join</h2><p><a href="https://zhuanlan.zhihu.com/p/58765338">spark 执行 map-join 优化</a></p>
+<p><a href="https://www.jianshu.com/p/2c7689294a73">spark broadcast join</a></p>
 <p>几种方式：</p>
 <h3 id="1-spark-自动识别小表-broadcast"><a href="#1-spark-自动识别小表-broadcast" class="headerlink" title="1. spark 自动识别小表 broadcast"></a>1. spark 自动识别小表 broadcast</h3><p><code>spark.sql.statistics.fallBackToHdfs=True</code>, 这样它会直接分析文件的大小，而不是 metastore 数据</p>
-<h3 id="2-使用-hint"><a href="#2-使用-hint" class="headerlink" title="2. 使用 hint"></a>2. 使用 hint</h3><p><a href="https://spark.apache.org/docs/latest/sql-ref-syntax-qry-select-hints.html#partitioning-hints" target="_blank" rel="noopener">hive hints</a></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="comment">/*+ BROADCAST (b) */</span> * <span class="keyword">from</span> a <span class="keyword">where</span> <span class="keyword">id</span> <span class="keyword">not</span> <span class="keyword">in</span> (<span class="keyword">select</span> <span class="keyword">id</span> <span class="keyword">from</span> b)</span><br></pre></td></tr></table></figure>
-<h3 id="3-使用-dataframe-api"><a href="#3-使用-dataframe-api" class="headerlink" title="3. 使用 dataframe api"></a>3. 使用 dataframe api</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark.sql.functions <span class="keyword">import</span> broadcast</span><br><span class="line">broadcast(spark.table(<span class="string">"b"</span>)).join(spark.table(<span class="string">"a"</span>), <span class="string">"id"</span>).show()</span><br></pre></td></tr></table></figure>
-<h2 id="cache-vs-broadcast"><a href="#cache-vs-broadcast" class="headerlink" title="cache vs broadcast"></a>cache vs broadcast</h2><p><a href="https://stackoverflow.com/questions/38056774/spark-cache-vs-broadcast" target="_blank" rel="noopener">cache vs broadcast</a></p>
+<h3 id="2-使用-hint"><a href="#2-使用-hint" class="headerlink" title="2. 使用 hint"></a>2. 使用 hint</h3><p><a href="https://spark.apache.org/docs/latest/sql-ref-syntax-qry-select-hints.html#partitioning-hints">hive hints</a></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="comment">/*+ BROADCAST (b) */</span> <span class="operator">*</span> <span class="keyword">from</span> a <span class="keyword">where</span> id <span class="keyword">not</span> <span class="keyword">in</span> (<span class="keyword">select</span> id <span class="keyword">from</span> b)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-使用-dataframe-api"><a href="#3-使用-dataframe-api" class="headerlink" title="3. 使用 dataframe api"></a>3. 使用 dataframe api</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark.sql.functions <span class="keyword">import</span> broadcast</span><br><span class="line">broadcast(spark.table(<span class="string">&quot;b&quot;</span>)).join(spark.table(<span class="string">&quot;a&quot;</span>), <span class="string">&quot;id&quot;</span>).show()</span><br></pre></td></tr></table></figure>
+
+<h2 id="cache-vs-broadcast"><a href="#cache-vs-broadcast" class="headerlink" title="cache vs broadcast"></a>cache vs broadcast</h2><p><a href="https://stackoverflow.com/questions/38056774/spark-cache-vs-broadcast">cache vs broadcast</a></p>
 <blockquote>
 <p>RDDs are divided into <em>partitions</em>. These partitions themselves act as an immutable subset of the entire RDD. When Spark executes each stage of the graph, each partition gets sent to a worker which operates on the subset of the data. In turn, each worker can <em>cache</em> the data if the RDD needs to be re-iterated.</p>
 <p>Broadcast variables are used to send some immutable state <em>once</em> to each worker. You use them when you want a local copy of a variable.</p>
 <p>These two operations are quite different from each other, and each one represents a solution to a different problem.</p>
 </blockquote>
-<h2 id="小文件问题"><a href="#小文件问题" class="headerlink" title="小文件问题"></a>小文件问题</h2><p><a href="https://blog.csdn.net/lhxsir/article/details/87882128" target="_blank" rel="noopener">spark-sql 优化小文件过多</a></p>
-<p><a href="https://medium.com/airbnb-engineering/on-spark-hive-and-small-files-an-in-depth-look-at-spark-partitioning-strategies-a9a364f908" target="_blank" rel="noopener">On Spark, Hive, and Small Files: An In-Depth Look at Spark Partitioning Strategies</a></p>
+<h2 id="小文件问题"><a href="#小文件问题" class="headerlink" title="小文件问题"></a>小文件问题</h2><p><a href="https://blog.csdn.net/lhxsir/article/details/87882128">spark-sql 优化小文件过多</a></p>
+<p><a href="https://medium.com/airbnb-engineering/on-spark-hive-and-small-files-an-in-depth-look-at-spark-partitioning-strategies-a9a364f908">On Spark, Hive, and Small Files: An In-Depth Look at Spark Partitioning Strategies</a></p>
 <h4 id="为什么会有小文件？"><a href="#为什么会有小文件？" class="headerlink" title="为什么会有小文件？"></a>为什么会有小文件？</h4><p>当 spark 要 write 到 hive 表时，这实际也是一个 shuffle stage，就会分很多个 sPartition (spark partition)。每个 sPartition 在处理时，都会生成一个文件（如果是动态分区，则更严重，因为每个 sPartition 的数据分布式均匀的，每个 sPartition 可能包含很多个 hive paritition key，spark 每遇到一个 partition key 就生成一个文件），那么 sPartition 数目越多（动态分区的情况下，会更不可控），文件数就会越多。</p>
 <p>简单来说，就是 spark 的一个 stage 分成了很多个 task（shuffle partitions 控制这个数量），即 sPartition，每个 sPartition 可能对应多个 hPartitiion（hive partition）key，多个 sPartition 也对应一个 hPartition key。而每个 sPartition 里对应的每个 hPartition key，都会生成一个文件。</p>
 <p>那么，如果一个 sPartition 和 hPartition 只是一个 <strong>多（可控数目，对应最后每个 hPartitiion 的文件数）对一</strong> 的情况，那么文件数就是可控的。</p>
@@ -602,13 +612,14 @@
 <li>Distribute by</li>
 <li>adaptive execution</li>
 </ol>
-<p><a href="http://www.jasongj.com/spark/adaptive_execution/" target="_blank" rel="noopener">Adaptive Execution 让 Spark SQL 更高效更智能</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 启用 Adaptive Execution ，从而启用自动设置 Shuffle Reducer 特性</span><br><span class="line">spark.conf.set(&quot;spark.sql.adaptive.enabled&quot;, &#39;true&#39;)</span><br><span class="line"># 设置每个 Reducer 读取的目标数据量，单位为字节。默认64M，一般改成集群块大小</span><br><span class="line">spark.conf.set(&quot;spark.sql.adaptive.shuffle.targetPostShuffleInputSize&quot;, &#39;134217728&#39;)</span><br></pre></td></tr></table></figure>
-<h2 id="python-udf-vs-scala-udf"><a href="#python-udf-vs-scala-udf" class="headerlink" title="python udf vs scala udf"></a>python udf vs scala udf</h2><p><a href="https://medium.com/quantumblack/spark-udf-deep-insights-in-performance-f0a95a4d8c62" target="_blank" rel="noopener">python udf vs scala udf</a></p>
+<p><a href="http://www.jasongj.com/spark/adaptive_execution/">Adaptive Execution 让 Spark SQL 更高效更智能</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 启用 Adaptive Execution ，从而启用自动设置 Shuffle Reducer 特性</span><br><span class="line">spark.conf.set(&quot;spark.sql.adaptive.enabled&quot;, &#x27;true&#x27;)</span><br><span class="line"># 设置每个 Reducer 读取的目标数据量，单位为字节。默认64M，一般改成集群块大小</span><br><span class="line">spark.conf.set(&quot;spark.sql.adaptive.shuffle.targetPostShuffleInputSize&quot;, &#x27;134217728&#x27;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="python-udf-vs-scala-udf"><a href="#python-udf-vs-scala-udf" class="headerlink" title="python udf vs scala udf"></a>python udf vs scala udf</h2><p><a href="https://medium.com/quantumblack/spark-udf-deep-insights-in-performance-f0a95a4d8c62">python udf vs scala udf</a></p>
 <p><img src="https://miro.medium.com/max/1570/1*ddtDqMvoDGhxsw0CDEnfag.png" alt="img"></p>
 <p><img src="https://miro.medium.com/max/1415/1*SMlxTZJBsAPKmpdRH5VFVw.png" alt="img"></p>
 <p><img src="https://miro.medium.com/max/1500/1*FFi8Yk6mwSc6AvI-avWcYw.png" alt="img"></p>
-<h1 id="Issues"><a href="#Issues" class="headerlink" title="Issues"></a>Issues</h1><h2 id="Null-aware-predicate-sub-queries-cannot-be-used-in-nested-conditions"><a href="#Null-aware-predicate-sub-queries-cannot-be-used-in-nested-conditions" class="headerlink" title="Null-aware predicate sub-queries cannot be used in nested conditions"></a>Null-aware predicate sub-queries cannot be used in nested conditions</h2><p><code>not in</code> 不能和 <code>or</code> 之类的 condition 一块用。现在好像还没有修复，参见：<a href="https://github.com/apache/spark/pull/22141" target="_blank" rel="noopener">SPARK-25154</a></p>
+<h1 id="Issues"><a href="#Issues" class="headerlink" title="Issues"></a>Issues</h1><h2 id="Null-aware-predicate-sub-queries-cannot-be-used-in-nested-conditions"><a href="#Null-aware-predicate-sub-queries-cannot-be-used-in-nested-conditions" class="headerlink" title="Null-aware predicate sub-queries cannot be used in nested conditions"></a>Null-aware predicate sub-queries cannot be used in nested conditions</h2><p><code>not in</code> 不能和 <code>or</code> 之类的 condition 一块用。现在好像还没有修复，参见：<a href="https://github.com/apache/spark/pull/22141">SPARK-25154</a></p>
 
     </div>
 
@@ -618,8 +629,8 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/hadoop/" rel="tag"># hadoop</a>
               <a href="/tags/big-data/" rel="tag"># big data</a>
+              <a href="/tags/hadoop/" rel="tag"># hadoop</a>
               <a href="/tags/distributed-computing/" rel="tag"># distributed computing</a>
           </div>
 
@@ -666,13 +677,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">269k</span>
+    <span title="Word count total">275k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:04</span>
+    <span title="Reading time total">4:10</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

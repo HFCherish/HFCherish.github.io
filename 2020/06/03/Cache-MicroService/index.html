@@ -19,12 +19,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Where is my cache for a serviceArchitectural Patterns for Caching Microservices Patterns:  embedded: save cache in the service client-server: a completely separate cache server reverse-proxy: put the">
+    <meta name="description" content="Where is my cache for a service[Architectural Patterns for Caching Microservices](Architectural Patterns for Caching Microservices) Patterns:  embedded: save cache in the service client-server: a comp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Cache - MicroService">
 <meta property="og:url" content="http://yoursite.com/2020/06/03/Cache-MicroService/index.html">
 <meta property="og:site_name" content="Cherish&#39;s Blog">
-<meta property="og:description" content="Where is my cache for a serviceArchitectural Patterns for Caching Microservices Patterns:  embedded: save cache in the service client-server: a completely separate cache server reverse-proxy: put the">
+<meta property="og:description" content="Where is my cache for a service[Architectural Patterns for Caching Microservices](Architectural Patterns for Caching Microservices) Patterns:  embedded: save cache in the service client-server: a comp">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-06-03T02:42:53.000Z">
 <meta property="article:modified_time" content="2022-10-22T06:22:52.319Z">
@@ -158,7 +158,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -261,7 +261,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="Where-is-my-cache-for-a-service"><a href="#Where-is-my-cache-for-a-service" class="headerlink" title="Where is my cache for a service"></a>Where is my cache for a service</h1><p><a href="Architectural Patterns for Caching Microservices">Architectural Patterns for Caching Microservices</a></p>
+    <div class="post-body" itemprop="articleBody"><h1 id="Where-is-my-cache-for-a-service"><a href="#Where-is-my-cache-for-a-service" class="headerlink" title="Where is my cache for a service"></a>Where is my cache for a service</h1><p>[Architectural Patterns for Caching Microservices](Architectural Patterns for Caching Microservices)</p>
 <p>Patterns:</p>
 <ol>
 <li><strong>embedded</strong>: save cache in the service</li>
@@ -279,16 +279,16 @@
 <h2 id="Client-Server"><a href="#Client-Server" class="headerlink" title="Client-Server"></a>Client-Server</h2><p>pros:</p>
 <ul>
 <li>sperarate server, so you can use any programming language you want</li>
-<li>separate management. you can scale up/down, do backup, design security separatly on need.</li>
+<li>separate management. you can scale up&#x2F;down, do backup, design security separatly on need.</li>
 </ul>
 <p>cons:</p>
 <ul>
 <li>a new deployment &amp; related ops work (cloud can make this simple)</li>
 </ul>
-<h2 id="Sidecar"><a href="#Sidecar" class="headerlink" title="Sidecar"></a>Sidecar</h2><p>A mixture of Embedded &amp; client-server. (<a href="https://hazelcast.com/blog/hazelcast-sidecar-container-pattern/" target="_blank" rel="noopener">sidecar container pattern</a>)</p>
+<h2 id="Sidecar"><a href="#Sidecar" class="headerlink" title="Sidecar"></a>Sidecar</h2><p>A mixture of Embedded &amp; client-server. (<a href="https://hazelcast.com/blog/hazelcast-sidecar-container-pattern/">sidecar container pattern</a>)</p>
 <p>Take k8s as example (now most of the sidecar pattern is implemented on k8s, becaused it supports this pattern inborn), we put the cache server with the service as separate containers on the same pod. The request reach the service container first, and then the service can access the cache server by <code>localhost</code> .</p>
 <blockquote>
-<p>The <a href="https://docs.microsoft.com/en-us/azure/architecture/patterns/sidecar" target="_blank" rel="noopener">sidecar pattern</a> is a technique of attaching an additional container to the main parent container so that both would share the same lifecycle and the same resources. You may think of it as a perfect tool for decomposing your application into reusable modules, in which each part is written in a different technology or programming language.</p>
+<p>The <a href="https://docs.microsoft.com/en-us/azure/architecture/patterns/sidecar">sidecar pattern</a> is a technique of attaching an additional container to the main parent container so that both would share the same lifecycle and the same resources. You may think of it as a perfect tool for decomposing your application into reusable modules, in which each part is written in a different technology or programming language.</p>
 </blockquote>
 <h2 id="Reverse-proxy"><a href="#Reverse-proxy" class="headerlink" title="Reverse proxy"></a>Reverse proxy</h2><ol>
 <li>Everytime you try to access the servcie, you go to the reverse proxy (e.g. nginx). </li>
@@ -362,13 +362,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">269k</span>
+    <span title="Word count total">275k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:04</span>
+    <span title="Reading time total">4:10</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

@@ -154,7 +154,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -257,7 +257,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h1><p><a href="https://zhuanlan.zhihu.com/p/148621151" target="_blank" rel="noopener">5分钟了解MPP数据库</a></p>
+          <h1 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h1><p><a href="https://zhuanlan.zhihu.com/p/148621151">5分钟了解MPP数据库</a></p>
 <p>MPP (Massively Parallel Processing)，即大规模并行处理。简单来说，MPP是将任务并行的分散到多个服务器和节点上，在每个节点上计算完成后，将各自部分的结果汇总在一起得到最终的结果(与Hadoop相似，但主要针对大规模关系型数据的分析计算)。</p>
 <h2 id="MPP架构特征"><a href="#MPP架构特征" class="headerlink" title="MPP架构特征"></a>MPP架构特征</h2><ul>
 <li>任务并行执行;</li>
@@ -267,10 +267,10 @@
 <li>横向扩展;</li>
 <li><a href="#share-nothing">Shared Nothing</a>架构。</li>
 </ul>
-<h1 id="MPPDB-v-s-Hadoop"><a href="#MPPDB-v-s-Hadoop" class="headerlink" title="MPPDB v.s. Hadoop"></a>MPPDB v.s. Hadoop</h1><p><a href="https://www.zhihu.com/question/22799482/answer/81615602" target="_blank" rel="noopener">知乎-为什么说HADOOP扩展性优于MPP架构的关系型数据库？</a></p>
+<h1 id="MPPDB-v-s-Hadoop"><a href="#MPPDB-v-s-Hadoop" class="headerlink" title="MPPDB v.s. Hadoop"></a>MPPDB v.s. Hadoop</h1><p><a href="https://www.zhihu.com/question/22799482/answer/81615602">知乎-为什么说HADOOP扩展性优于MPP架构的关系型数据库？</a></p>
 <p>hadoop 和 MPPDB <strong>最大的区别在于：对数据管理理念的不同。</strong> </p>
 <ol>
-<li>HDFS/Hadoop 对于数据管理是<strong>粗放型管理</strong>，以一个文件系统的模式，让用户根据文件夹层级，把文件直接塞到池子里。处理也<strong>以批处理为主，就是拼命 scan</strong>。如果想在一大堆数据里找符合条件的数据，hadoop 就是粗暴的把所有文件从头到尾 scan 一遍，因为对于这些文件他没有索引、分类等，他管的少，知道的也少，用的时候每次就要全 scan。</li>
+<li>HDFS&#x2F;Hadoop 对于数据管理是<strong>粗放型管理</strong>，以一个文件系统的模式，让用户根据文件夹层级，把文件直接塞到池子里。处理也<strong>以批处理为主，就是拼命 scan</strong>。如果想在一大堆数据里找符合条件的数据，hadoop 就是粗暴的把所有文件从头到尾 scan 一遍，因为对于这些文件他没有索引、分类等，他管的少，知道的也少，用的时候每次就要全 scan。</li>
 <li>数据库的本质在于数据管理，对外提供在线访问、增删改查等一系列操作。数据库的<strong>内存管理比较精细</strong>，有一套很完善的数据管理和分布体系。如果想在一大堆数据里找符合条件的数据，他可以根据分区信息先落到某个机器，再根据多维分区落到某个文件，再在文件里通过索引数据页的树形结构查询，可以直接定位到记录。</li>
 <li>因为这样的基本理念不同，使得 hadoop 的扩展只需要简单的增加机器，内部平衡和迁移 data block；而数据库的扩充则涉及到数据拓扑结构的变更、或者不同机器间数据的迁移，当变化迁移的时候，依然需要维护分区、索引等，这种复杂度就比粗放的 HDFS 要高很多了。目前两者的存储模型不同。hadoop 用的是 HDFS，而 MPP 需要自己切分扩展。HDFS 扩展是通过元数据做的，name node 存元数据，增加一个节点，修改元数据就行，所以 HDFS 的扩展能力受到管理元数据的机器（name node） 的性能限制，一般来说可以到 10k 的规模。但 MPP 采用没有中心节点的存储模型，比如 hash，每次增加节点，都需要 rehash，规模增加到几百台的时候，扩展能力就有下降下来了。</li>
 </ol>
@@ -296,16 +296,17 @@
 <li>Sybase IQ</li>
 <li>TD Aster Data</li>
 </ul>
-<h1 id="Share-Nothing"><a href="#Share-Nothing" class="headerlink" title="Share Nothing"></a>Share Nothing<a name="share-nothing" /></h1><p><a href="https://www.cnblogs.com/kzwrcom/p/6397709.html" target="_blank" rel="noopener">数据库架构设计的三种模式：share nothing , share everythong , share disk</a></p>
+<h1 id="Share-Nothing"><a href="#Share-Nothing" class="headerlink" title="Share Nothing"></a>Share Nothing<a name="share-nothing" /></h1><p><a href="https://www.cnblogs.com/kzwrcom/p/6397709.html">数据库架构设计的三种模式：share nothing , share everythong , share disk</a></p>
 <p>数据库构架设计中主要有Shared Everthting、Shared Nothing、和Shared Disk：</p>
 <ol>
-<li><p>Shared Everthting:一般是针对单个主机，完全透明共享CPU/MEMORY/IO，并行处理能力是最差的，典型的代表SQLServer</p>
+<li><p>Shared Everthting:一般是针对单个主机，完全透明共享CPU&#x2F;MEMORY&#x2F;IO，并行处理能力是最差的，典型的代表SQLServer</p>
 </li>
 <li><p>Shared Disk：各个处理单元使用自己的私有 CPU和Memory，共享磁盘系统。典型的代表Oracle Rac， 它是数据共享，可通过增加节点来提高并行处理的能力，扩展能力较好。其类似于SMP（对称多处理）模式，但是当存储器接口达到饱和的时候，增加节点并不能获得更高的性能 。</p>
 </li>
-<li>Shared Nothing：各个处理单元都有自己私有的CPU/内存/硬盘等，不存在共享资源，类似于MPP（大规模并行处理）模式，各处理单元之间通过协议通信，并行处理和扩展能力更好。典型代表DB2 DPF和Hadoop ，各节点相互独立，各自处理自己的数据，处理后的结果可能向上层汇总或在节点间流转。<br>我们常说的 Sharding 其实就是Share Nothing架构，它是把某个表从物理存储上被水平分割，并分配给多台服务器（或多个实例），每台服务器可以独立工作，具备共同的schema，比如MySQL Proxy和Google的各种架构，只需增加服务器数就可以增加处理能力和容量。</li>
+<li><p>Shared Nothing：各个处理单元都有自己私有的CPU&#x2F;内存&#x2F;硬盘等，不存在共享资源，类似于MPP（大规模并行处理）模式，各处理单元之间通过协议通信，并行处理和扩展能力更好。典型代表DB2 DPF和Hadoop ，各节点相互独立，各自处理自己的数据，处理后的结果可能向上层汇总或在节点间流转。<br>我们常说的 Sharding 其实就是Share Nothing架构，它是把某个表从物理存储上被水平分割，并分配给多台服务器（或多个实例），每台服务器可以独立工作，具备共同的schema，比如MySQL Proxy和Google的各种架构，只需增加服务器数就可以增加处理能力和容量。</p>
+</li>
 </ol>
-<h1 id="GreenPlum"><a href="#GreenPlum" class="headerlink" title="GreenPlum"></a>GreenPlum</h1><p><a href="https://gpdb.docs.pivotal.io/5280/admin_guide/intro/arch_overview.html#arch_segments" target="_blank" rel="noopener">greenplum</a></p>
+<h1 id="GreenPlum"><a href="#GreenPlum" class="headerlink" title="GreenPlum"></a>GreenPlum</h1><p><a href="https://gpdb.docs.pivotal.io/5280/admin_guide/intro/arch_overview.html#arch_segments">greenplum</a></p>
 
       
     </div>
@@ -396,7 +397,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h1><p><a href="https://zhuanlan.zhihu.com/p/91165577" target="_blank" rel="noopener">数据湖</a></p>
+          <h1 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h1><p><a href="https://zhuanlan.zhihu.com/p/91165577">数据湖</a></p>
 <p>数据湖是：</p>
 <ol>
 <li>装有一些便于提取、分析、搜索、挖掘的设备（本身不具备分析能力，是其他分析工具可以方便的在湖上运行，而不需要把湖的数据挪出去再分析）</li>
@@ -429,55 +430,53 @@
 <h4 id="机器学习（在数据湖上进行机器学习）"><a href="#机器学习（在数据湖上进行机器学习）" class="headerlink" title="机器学习（在数据湖上进行机器学习）"></a>机器学习（在数据湖上进行机器学习）</h4><p>数据湖将允许组织生成不同类型的见解，包括报告历史数据以及进行机器学习（构建模型以预测可能的结果），并建议一系列规定的行动以实现最佳结果。</p>
 <h1 id="Data-swamp"><a href="#Data-swamp" class="headerlink" title="Data swamp"></a>Data swamp</h1><p>搭建数据湖容易，但是让数据湖发挥价值是很难。如果只是一直往里面灌数据，而应用场景极少，没有输出或者极少输出，形成<strong>单向湖</strong>。</p>
 <p>企业的业务是实时在变化的，这代表着沉积在数据湖中的数据定义、数据格式实时都在发生的转变，企业的大型数据湖对企业数据治理（Data Governance）提升了更高的要求。大部分使用数据湖的企业在数据真的需要使用的时候，往往因为数据湖中的数据质量太差而无法最终使用。数据湖，被企业当成一个大数据的垃圾桶，最终数据湖成为臭气熏天，存储在Hadoop当中的数据成为无人可以清理的数据沼泽.</p>
-<p>数据湖架构的主要挑战是存储原始数据而不监督内容。对于使数据可用的数据湖，它需要有定义的机制来编目和保护数据。没有这些元素，就无法找到或信任数据，从而导致出现“<a href="https://www.gartner.com/newsroom/id/2809117" target="_blank" rel="noopener">数据沼泽</a>”。 满足更广泛受众的需求需要数据湖具有管理、语义一致性和访问控制。</p>
+<p>数据湖架构的主要挑战是存储原始数据而不监督内容。对于使数据可用的数据湖，它需要有定义的机制来编目和保护数据。没有这些元素，就无法找到或信任数据，从而导致出现“<a href="https://www.gartner.com/newsroom/id/2809117">数据沼泽</a>”。 满足更广泛受众的需求需要数据湖具有管理、语义一致性和访问控制。</p>
 <p><img src="https://pic2.zhimg.com/80/v2-7f3ec7c14c46b4e7328f74e44529ad21_720w.jpg" alt="img"></p>
-<h1 id="Data-Lake-v-s-Data-Warehouse"><a href="#Data-Lake-v-s-Data-Warehouse" class="headerlink" title="Data Lake v.s. Data Warehouse"></a>Data Lake v.s. Data Warehouse</h1><p><a href="https://aws.amazon.com/cn/big-data/datalakes-and-analytics/what-is-a-data-lake/" target="_blank" rel="noopener">aws 什么是数据湖</a></p>
-<p><a href="https://dbaplus.cn/news-141-2924-1.html" target="_blank" rel="noopener">数据仓库、数据湖 -&gt; 数据中台</a></p>
+<h1 id="Data-Lake-v-s-Data-Warehouse"><a href="#Data-Lake-v-s-Data-Warehouse" class="headerlink" title="Data Lake v.s. Data Warehouse"></a>Data Lake v.s. Data Warehouse</h1><p><a href="https://aws.amazon.com/cn/big-data/datalakes-and-analytics/what-is-a-data-lake/">aws 什么是数据湖</a></p>
+<p><a href="https://dbaplus.cn/news-141-2924-1.html">数据仓库、数据湖 -&gt; 数据中台</a></p>
 <p>数据仓库里的数据都满足特定的 schema，而数据湖则没有。仓库里的数据是简单整理过的，湖里的则是原始的（但不全是原始的）。仓库里的来源也都是规范的关系数据，而湖里则什么都有。</p>
 <p>数据仓库是一个优化的数据库，用于分析来自事务系统和业务线应用程序的关系数据。事先定义数据结构和 Schema 以优化快速 SQL 查询，其中结果通常用于操作报告和分析。数据经过了清理、丰富和转换，因此可以充当用户可信任的“单一信息源”。</p>
 <p>数据湖有所不同，因为它存储来自业务线应用程序的关系数据，以及来自移动应用程序、IoT 设备和社交媒体的非关系数据。捕获数据时，未定义数据结构或 Schema。这意味着您可以存储所有数据，而不需要精心设计也无需知道将来您可能需要哪些问题的答案。您可以对数据使用不同类型的分析（如 SQL 查询、大数据分析、全文搜索、实时分析和机器学习）来获得见解。</p>
-<p>随着使用数据仓库的组织看到数据湖的优势，他们正在改进其仓库以包括数据湖，并启用各种查询功能、数据科学使用案例和用于发现新信息模型的高级功能。Gartner 将此演变称为“分析型数据管理解决方案”或“<a href="https://www.gartner.com/doc/3614317/magic-quadrant-data-management-solutions" target="_blank" rel="noopener">DMSA</a>”。</p>
+<p>随着使用数据仓库的组织看到数据湖的优势，他们正在改进其仓库以包括数据湖，并启用各种查询功能、数据科学使用案例和用于发现新信息模型的高级功能。Gartner 将此演变称为“分析型数据管理解决方案”或“<a href="https://www.gartner.com/doc/3614317/magic-quadrant-data-management-solutions">DMSA</a>”。</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:center">特性</th>
-<th style="text-align:center">数据仓库</th>
-<th style="text-align:center">数据湖</th>
+<th align="center">特性</th>
+<th align="center">数据仓库</th>
+<th align="center">数据湖</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center"><strong>数据</strong></td>
-<td style="text-align:center">来自事务系统、运营数据库和业务线应用程序的<strong>关系数据</strong></td>
-<td style="text-align:center">来自 IoT 设备、网站、移动应用程序、社交媒体和企业应用程序的<strong>非关系和关系数据</strong></td>
+<tbody><tr>
+<td align="center"><strong>数据</strong></td>
+<td align="center">来自事务系统、运营数据库和业务线应用程序的<strong>关系数据</strong></td>
+<td align="center">来自 IoT 设备、网站、移动应用程序、社交媒体和企业应用程序的<strong>非关系和关系数据</strong></td>
 </tr>
 <tr>
-<td style="text-align:center"><strong>Schema</strong></td>
-<td style="text-align:center">设计在数据仓库实施之前（写入型 Schema）</td>
-<td style="text-align:center">写入在分析时（读取型 Schema）</td>
+<td align="center"><strong>Schema</strong></td>
+<td align="center">设计在数据仓库实施之前（写入型 Schema）</td>
+<td align="center">写入在分析时（读取型 Schema）</td>
 </tr>
 <tr>
-<td style="text-align:center"><strong>性价比</strong></td>
-<td style="text-align:center">更快查询结果会带来较高存储成本</td>
-<td style="text-align:center">更快查询结果只需较低存储成本</td>
+<td align="center"><strong>性价比</strong></td>
+<td align="center">更快查询结果会带来较高存储成本</td>
+<td align="center">更快查询结果只需较低存储成本</td>
 </tr>
 <tr>
-<td style="text-align:center"><strong>数据质量 </strong></td>
-<td style="text-align:center">可作为重要事实依据的高度监管数据</td>
-<td style="text-align:center">任何可以或无法进行监管的数据（例如原始数据）</td>
+<td align="center">**数据质量 **</td>
+<td align="center">可作为重要事实依据的高度监管数据</td>
+<td align="center">任何可以或无法进行监管的数据（例如原始数据）</td>
 </tr>
 <tr>
-<td style="text-align:center"><strong>用户</strong></td>
-<td style="text-align:center">业务分析师</td>
-<td style="text-align:center">数据科学家、数据开发人员和业务分析师（使用监管数据）</td>
+<td align="center"><strong>用户</strong></td>
+<td align="center">业务分析师</td>
+<td align="center">数据科学家、数据开发人员和业务分析师（使用监管数据）</td>
 </tr>
 <tr>
-<td style="text-align:center"><strong>分析</strong></td>
-<td style="text-align:center">批处理报告、BI 和可视化</td>
-<td style="text-align:center">机器学习、预测分析、数据发现和分析</td>
+<td align="center"><strong>分析</strong></td>
+<td align="center">批处理报告、BI 和可视化</td>
+<td align="center">机器学习、预测分析、数据发现和分析</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p><img src="https://pic2.zhimg.com/80/v2-9eb32acb557b22322749f775c17b0079_720w.jpg" alt="img"></p>
 
       
@@ -569,8 +568,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><a href="https://docs.microsoft.com/zh-cn/learn/certifications/azure-data-engineer?tab=tab-learning-paths" target="_blank" rel="noopener">learning paths</a></p>
-<h2 id="On-premises-Env-vs-Cloud"><a href="#On-premises-Env-vs-Cloud" class="headerlink" title="On-premises Env vs Cloud"></a>On-premises Env vs Cloud</h2><p><a href="https://docs.microsoft.com/en-us/learn/modules/evolving-world-of-data/3-systems-on-premise-vs-cloud" target="_blank" rel="noopener">link</a></p>
+          <p><a href="https://docs.microsoft.com/zh-cn/learn/certifications/azure-data-engineer?tab=tab-learning-paths">learning paths</a></p>
+<h2 id="On-premises-Env-vs-Cloud"><a href="#On-premises-Env-vs-Cloud" class="headerlink" title="On-premises Env vs Cloud"></a>On-premises Env vs Cloud</h2><p><a href="https://docs.microsoft.com/en-us/learn/modules/evolving-world-of-data/3-systems-on-premise-vs-cloud">link</a></p>
 <p>The term <em>total cost of ownership</em> (TCO) describes the final cost of owning a given technology. In <strong>on-premises systems</strong>, TCO includes the following costs:</p>
 <ul>
 <li>Hardware</li>
@@ -589,7 +588,7 @@
 <li>enjoy the high quality and compresensive services of big company.</li>
 </ol>
 </blockquote>
-<h2 id="Data-types"><a href="#Data-types" class="headerlink" title="Data types"></a>Data types</h2><p><a href="https://docs.microsoft.com/en-us/learn/modules/survey-the-azure-data-platform/2-structured-vs-non-structured" target="_blank" rel="noopener">link</a></p>
+<h2 id="Data-types"><a href="#Data-types" class="headerlink" title="Data types"></a>Data types</h2><p><a href="https://docs.microsoft.com/en-us/learn/modules/survey-the-azure-data-platform/2-structured-vs-non-structured">link</a></p>
 <p>For nonstructured Data, the data <strong>structure is defined only when the data is read</strong>. The difference in the definition point gives you flexibility to use the same source data for different outputs.</p>
 <blockquote>
 <p>JSON is in fact semistructured data.</p>
@@ -602,7 +601,7 @@
 <li><strong>Graph database</strong>: Finds relationships between data points by using a structure that’s composed of vertices and edges.</li>
 <li><strong>Column database</strong>: Stores data based on columns rather than rows. Columns can be defined at the query’s runtime, allowing flexibility in the data that’s returned performantly.</li>
 </ol>
-<h3 id="Azure-Storage"><a href="#Azure-Storage" class="headerlink" title="Azure Storage"></a>Azure Storage</h3><p><a href="https://docs.microsoft.com/en-us/learn/modules/survey-the-azure-data-platform/3-store-data-using-azure-store-account" target="_blank" rel="noopener">Azure Storage account</a> is the base storage type. It’s mainly used to store data but with poor or no query ability.</p>
+<h3 id="Azure-Storage"><a href="#Azure-Storage" class="headerlink" title="Azure Storage"></a>Azure Storage</h3><p><a href="https://docs.microsoft.com/en-us/learn/modules/survey-the-azure-data-platform/3-store-data-using-azure-store-account">Azure Storage account</a> is the base storage type. It’s mainly used to store data but with poor or no query ability.</p>
 <p>Azure Storage offers four configuration options:</p>
 <ul>
 <li><strong>Azure Blob</strong>: A scalable object store for text and binary data. The cheapst choice to store bot not query data.</li>
@@ -610,9 +609,9 @@
 <li><strong>Azure Queue</strong>: A messaging store for reliable messaging between application components</li>
 <li><strong>Azure Table</strong>: A NoSQL store for no-schema storage of structured data</li>
 </ul>
-<h2 id="Tasks-of-an-Azure-data-engineer"><a href="#Tasks-of-an-Azure-data-engineer" class="headerlink" title="Tasks of an Azure data engineer:"></a>Tasks of an Azure data engineer:</h2><p> <a href="https://docs.microsoft.com/en-us/learn/modules/data-engineering-processes/3-data-engineering-practices" target="_blank" rel="noopener">link</a></p>
-<p><a href="https://docs.microsoft.com/zh-cn/learn/modules/data-engineering-processes/4-architecturing-project" target="_blank" rel="noopener">example</a></p>
-<p><a href="https://docs.microsoft.com/en-us/learn/modules/data-engineering-processes/2-roles-and-responsibilities" target="_blank" rel="noopener">Data Engineer vs Data Scientist vs AI engineer</a>: Data engineer decide how to organized the data and pre-process the data. Data scientist use the result of Data engineer to create analysis model, and extract value. AI engineer use the existed model &amp; tools to process the data. AI engineer may need the help of Data engineer to store the result, and the help of Data analysis to generate new model.</p>
+<h2 id="Tasks-of-an-Azure-data-engineer"><a href="#Tasks-of-an-Azure-data-engineer" class="headerlink" title="Tasks of an Azure data engineer:"></a>Tasks of an Azure data engineer:</h2><p> <a href="https://docs.microsoft.com/en-us/learn/modules/data-engineering-processes/3-data-engineering-practices">link</a></p>
+<p><a href="https://docs.microsoft.com/zh-cn/learn/modules/data-engineering-processes/4-architecturing-project">example</a></p>
+<p><a href="https://docs.microsoft.com/en-us/learn/modules/data-engineering-processes/2-roles-and-responsibilities">Data Engineer vs Data Scientist vs AI engineer</a>: Data engineer decide how to organized the data and pre-process the data. Data scientist use the result of Data engineer to create analysis model, and extract value. AI engineer use the existed model &amp; tools to process the data. AI engineer may need the help of Data engineer to store the result, and the help of Data analysis to generate new model.</p>
 <p>Here are some of the tasks of an Azure data engineer:</p>
 <ul>
 <li>Design and develop data storage and data processing solutions for the enterprise.</li>
@@ -621,7 +620,7 @@
 <li>Ensure business continuity in uncommon conditions by using techniques for high availability and disaster recovery.</li>
 <li>Monitor to ensure that the systems run properly and are cost-effective.</li>
 </ul>
-<h2 id="Plan-the-data-storage-solution"><a href="#Plan-the-data-storage-solution" class="headerlink" title="Plan the data storage solution"></a>Plan the data storage solution</h2><p><a href="https://docs.microsoft.com/en-us/learn/modules/choose-storage-approach-in-azure/3-operations-and-latency" target="_blank" rel="noopener">Determine operational needs</a></p>
+<h2 id="Plan-the-data-storage-solution"><a href="#Plan-the-data-storage-solution" class="headerlink" title="Plan the data storage solution"></a>Plan the data storage solution</h2><p><a href="https://docs.microsoft.com/en-us/learn/modules/choose-storage-approach-in-azure/3-operations-and-latency">Determine operational needs</a></p>
 <p>What are the main operations you’ll be completing on each data type, and what are the performance requirements?</p>
 <p>Ask yourself these questions:</p>
 <ul>
@@ -631,7 +630,7 @@
 <li>Do you need to run complex analytical queries?</li>
 <li>How quickly do these operations need to complete?</li>
 </ul>
-<p><a href="https://docs.microsoft.com/en-us/learn/modules/choose-storage-approach-in-azure/5-choose-the-right-azure-service-for-your-data" target="_blank" rel="noopener">a storage solution example on the e-commerce system</a>: </p>
+<p><a href="https://docs.microsoft.com/en-us/learn/modules/choose-storage-approach-in-azure/5-choose-the-right-azure-service-for-your-data">a storage solution example on the e-commerce system</a>: </p>
 <ul>
 <li><p>Product catalog data: cosmosDB</p>
 <ul>
@@ -671,11 +670,14 @@
 </li>
 </ul>
 <h1 id="Questions"><a href="#Questions" class="headerlink" title="Questions"></a>Questions</h1><h2 id="Private-cloud-vs-Public-Cloud-vs-Specific-Cloud"><a href="#Private-cloud-vs-Public-Cloud-vs-Specific-Cloud" class="headerlink" title="Private cloud vs Public Cloud vs Specific Cloud"></a>Private cloud vs Public Cloud vs Specific Cloud</h2><ul>
-<li><p>[x] Are there still private cloud and public cloud??    ===&gt; yes</p>
+<li><p><input checked="" disabled="" type="checkbox"> 
+Are there still private cloud and public cloud??	&#x3D;&#x3D;&#x3D;&gt; yes</p>
 </li>
-<li><p>[ ] What’s the difference? The private cloud will have higher quality cloud? The so-called SLA of public cloud is in fact not assured??</p>
+<li><p><input disabled="" type="checkbox"> 
+What’s the difference? The private cloud will have higher quality cloud? The so-called SLA of public cloud is in fact not assured??</p>
 </li>
-<li><p>[x] Maybe there’re also specific cloud, like financial cloud (maybe more secure and fast) ===&gt; yes</p>
+<li><p><input checked="" disabled="" type="checkbox"> 
+Maybe there’re also specific cloud, like financial cloud (maybe more secure and fast) &#x3D;&#x3D;&#x3D;&gt; yes</p>
 </li>
 </ul>
 <h4 id="Points"><a href="#Points" class="headerlink" title="Points:"></a>Points:</h4><blockquote>
@@ -698,16 +700,16 @@
 <p>Cosmosdb(Cassendra) vs HBase: infrastructure, load-balance???</p>
 <p>Cassendra: Wide Column Stores</p>
 <h2 id="ELT-vs-ELTL"><a href="#ELT-vs-ELTL" class="headerlink" title="ELT vs ELTL"></a>ELT vs ELTL</h2><ul>
-<li style="list-style: none"><input type="checkbox"></input> In fact, often ELTL???</li>
-<li style="list-style: none"><input type="checkbox"></input> How is the data stored in T(transform)???</li>
+<li><input disabled="" type="checkbox"> In fact, often ELTL???</li>
+<li><input disabled="" type="checkbox"> How is the data stored in T(transform)???</li>
 </ul>
 <h2 id="Data-Types"><a href="#Data-Types" class="headerlink" title="Data Types"></a>Data Types</h2><ul>
-<li style="list-style: none"><input type="checkbox"></input> what’s markup language???</li>
-<li style="list-style: none"><input type="checkbox"></input> why yaml is not markup language but json is???</li>
+<li><input disabled="" type="checkbox"> what’s markup language???</li>
+<li><input disabled="" type="checkbox"> why yaml is not markup language but json is???</li>
 </ul>
 <h2 id="Azure-SQL"><a href="#Azure-SQL" class="headerlink" title="Azure SQL"></a>Azure SQL</h2><ul>
-<li style="list-style: none"><input type="checkbox"></input> how azure sql support queries across multiple databases??</li>
-<li style="list-style: none"><input type="checkbox"></input> Why does azure sql data warehouse not support???</li>
+<li><input disabled="" type="checkbox"> how azure sql support queries across multiple databases??</li>
+<li><input disabled="" type="checkbox"> Why does azure sql data warehouse not support???</li>
 </ul>
 
       
@@ -799,7 +801,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><a href="https://www.youtube.com/watch?v=rL8RSFQG8do&amp;list=PLF360ED1082F6F2A5" target="_blank" rel="noopener">Eli the computer guy</a></p>
+          <p><a href="https://www.youtube.com/watch?v=rL8RSFQG8do&list=PLF360ED1082F6F2A5">Eli the computer guy</a></p>
 <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>the whole picture </p>
 <p>Speed &amp; storage unit</p>
 <p>Physical &amp; logical</p>
@@ -807,7 +809,7 @@
 <ul>
 <li>t1</li>
 <li>dsl:<ul>
-<li>no faster than 12Mb/s</li>
+<li>no faster than 12Mb&#x2F;s</li>
 <li>Asynchronous: download faster than upload</li>
 </ul>
 </li>
@@ -828,7 +830,7 @@
 <ul>
 <li>Connect everything together</li>
 </ul>
-<h1 id="TCP-IP"><a href="#TCP-IP" class="headerlink" title="TCP/IP"></a>TCP/IP</h1><p>ip: internet protocol. How to find a computer.</p>
+<h1 id="TCP-x2F-IP"><a href="#TCP-x2F-IP" class="headerlink" title="TCP&#x2F;IP"></a>TCP&#x2F;IP</h1><p>ip: internet protocol. How to find a computer.</p>
 <p>tcp: transmission control protocol. How to communicate between 2 computers</p>
 <p>suite: tcp protocol, ip protocol, etc</p>
 <p>tcp windowing</p>
@@ -848,11 +850,12 @@
 </li>
 </ul>
 <p>subnet mask: network identifier, device identifier.</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> <span class="keyword">for</span> windows, first release and renew to ensure to get the latest configurations</span></span><br><span class="line">ipconfig /release</span><br><span class="line">ipconfig /renew</span><br><span class="line">ipconfig /all</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="keyword">for</span> linux and mac</span></span><br><span class="line">ifconfig [-a]</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> ping 10.1.10.11 10 <span class="built_in">times</span> with 60ms ttl</span></span><br><span class="line">ping www.baidu.com -c 10 -m 60</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="keyword">in</span> windows, it<span class="string">'s tracert. For linux and mac, it'</span>s traceroute</span></span><br><span class="line">traceroute www.baidu.com</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="keyword">for</span> windows, first release and renew to ensure to get the latest configurations</span></span><br><span class="line">ipconfig /release</span><br><span class="line">ipconfig /renew</span><br><span class="line">ipconfig /all</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="keyword">for</span> linux and mac</span></span><br><span class="line">ifconfig [-a]</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">ping 10.1.10.11 10 <span class="built_in">times</span> with 60ms ttl</span></span><br><span class="line">ping www.baidu.com -c 10 -m 60</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="keyword">in</span> windows, it<span class="string">&#x27;s tracert. For linux and mac, it&#x27;</span>s traceroute</span></span><br><span class="line">traceroute www.baidu.com</span><br></pre></td></tr></table></figure>
+
 <h2 id="OpenDNS-for-network-security"><a href="#OpenDNS-for-network-security" class="headerlink" title="OpenDNS for network security"></a>OpenDNS for network security</h2><p>dns can be hacked so that you’re redirected to some unwanted websites. Or a virus on your computer tries to pull more viruses  from some virus website. </p>
 <p>OpenDNS is a product to prevent such nasty issues.</p>
 <ol>
-<li><p>With a router, and dhcp on that router (allocating ip/subset mask,etc to all your network devices), you config the dns as the opendns</p>
+<li><p>With a router, and dhcp on that router (allocating ip&#x2F;subset mask,etc to all your network devices), you config the dns as the opendns</p>
 </li>
 <li><p>On opendns control panel, add your network (the external ip of your network, i.e. the router ip address) and config the filter for your network.</p>
 </li>
@@ -863,8 +866,8 @@
 <h1 id="Servers"><a href="#Servers" class="headerlink" title="Servers"></a>Servers</h1><p>server operating system: more robust and expensive, compared to desktop operating system.</p>
 <p>specific hardware: for data center. xeon processor, redundant power supply, raid (redundant hard drive).</p>
 <h1 id="Voice-over-ip-VOIP"><a href="#Voice-over-ip-VOIP" class="headerlink" title="Voice over ip (VOIP)"></a>Voice over ip (VOIP)</h1><p>At the beginning, telephone system communicate using wires. It’s completely separate to comupter system.</p>
-<p>VOIP make the audio transimit through the TCP/IP protocol.</p>
-<p>Client-Server infrastructure: hard phones / soft phones have to install the VOIP client to communicate to VOIP server, which routes all audio communications.</p>
+<p>VOIP make the audio transimit through the TCP&#x2F;IP protocol.</p>
+<p>Client-Server infrastructure: hard phones &#x2F; soft phones have to install the VOIP client to communicate to VOIP server, which routes all audio communications.</p>
 <p>Iphone in fact installs VOIP client and phone through VOIP service. IPhone is the above soft phones.</p>
 <p>Gateways. It can connect different communication system, e.g. the old telephone system and VOIP system, so that you can call through VOIP server -&gt; Gateway -&gt; the wireline telephone.</p>
 <p>Codec. It encode the audio transmitted on VOIP service and decide what the packet should be like. So it decides the quality and bandwidth it needs.</p>
@@ -997,11 +1000,11 @@
 <h2 id="Set-Associative-Memory"><a href="#Set-Associative-Memory" class="headerlink" title="Set Associative Memory"></a>Set Associative Memory</h2><p><img src="/images/cache-memory-simple.029.jpeg" alt="cache-memory-simple.029"></p>
 <p><img src="/images/cache-memory-simple.030.jpeg" alt="cache-memory-simple.030"></p>
 <p><img src="/images/cache-memory-simple.031.jpeg" alt="cache-memory-simple.031"></p>
-<h1 id="Cache-Read-Write-Policies"><a href="#Cache-Read-Write-Policies" class="headerlink" title="Cache Read/Write Policies"></a>Cache Read/Write Policies</h1><p><img src="/images/cache-memory-simple.033.jpeg" alt="cache-memory-simple.033"></p>
+<h1 id="Cache-Read-x2F-Write-Policies"><a href="#Cache-Read-x2F-Write-Policies" class="headerlink" title="Cache Read&#x2F;Write Policies"></a>Cache Read&#x2F;Write Policies</h1><p><img src="/images/cache-memory-simple.033.jpeg" alt="cache-memory-simple.033"></p>
 <p><img src="/images/cache-memory-simple.034.jpeg" alt="cache-memory-simple.034"></p>
 <p><img src="/images/cache-memory-simple.035.jpeg" alt="cache-memory-simple.035"></p>
 <p><img src="/images/cache-memory-simple.036.jpeg" alt="cache-memory-simple.036"></p>
-<p><a href="https://www.infoq.cn/article/cache-coherency-primer" target="_blank" rel="noopener">cache coherency</a></p>
+<p><a href="https://www.infoq.cn/article/cache-coherency-primer">cache coherency</a></p>
 <p>MESI protocol: (Modified, Exclusive, Shared, Invalid)</p>
 <blockquote>
 <ul>
@@ -1108,7 +1111,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Where-is-my-cache-for-a-service"><a href="#Where-is-my-cache-for-a-service" class="headerlink" title="Where is my cache for a service"></a>Where is my cache for a service</h1><p><a href="Architectural Patterns for Caching Microservices">Architectural Patterns for Caching Microservices</a></p>
+          <h1 id="Where-is-my-cache-for-a-service"><a href="#Where-is-my-cache-for-a-service" class="headerlink" title="Where is my cache for a service"></a>Where is my cache for a service</h1><p>[Architectural Patterns for Caching Microservices](Architectural Patterns for Caching Microservices)</p>
 <p>Patterns:</p>
 <ol>
 <li><strong>embedded</strong>: save cache in the service</li>
@@ -1126,16 +1129,16 @@
 <h2 id="Client-Server"><a href="#Client-Server" class="headerlink" title="Client-Server"></a>Client-Server</h2><p>pros:</p>
 <ul>
 <li>sperarate server, so you can use any programming language you want</li>
-<li>separate management. you can scale up/down, do backup, design security separatly on need.</li>
+<li>separate management. you can scale up&#x2F;down, do backup, design security separatly on need.</li>
 </ul>
 <p>cons:</p>
 <ul>
 <li>a new deployment &amp; related ops work (cloud can make this simple)</li>
 </ul>
-<h2 id="Sidecar"><a href="#Sidecar" class="headerlink" title="Sidecar"></a>Sidecar</h2><p>A mixture of Embedded &amp; client-server. (<a href="https://hazelcast.com/blog/hazelcast-sidecar-container-pattern/" target="_blank" rel="noopener">sidecar container pattern</a>)</p>
+<h2 id="Sidecar"><a href="#Sidecar" class="headerlink" title="Sidecar"></a>Sidecar</h2><p>A mixture of Embedded &amp; client-server. (<a href="https://hazelcast.com/blog/hazelcast-sidecar-container-pattern/">sidecar container pattern</a>)</p>
 <p>Take k8s as example (now most of the sidecar pattern is implemented on k8s, becaused it supports this pattern inborn), we put the cache server with the service as separate containers on the same pod. The request reach the service container first, and then the service can access the cache server by <code>localhost</code> .</p>
 <blockquote>
-<p>The <a href="https://docs.microsoft.com/en-us/azure/architecture/patterns/sidecar" target="_blank" rel="noopener">sidecar pattern</a> is a technique of attaching an additional container to the main parent container so that both would share the same lifecycle and the same resources. You may think of it as a perfect tool for decomposing your application into reusable modules, in which each part is written in a different technology or programming language.</p>
+<p>The <a href="https://docs.microsoft.com/en-us/azure/architecture/patterns/sidecar">sidecar pattern</a> is a technique of attaching an additional container to the main parent container so that both would share the same lifecycle and the same resources. You may think of it as a perfect tool for decomposing your application into reusable modules, in which each part is written in a different technology or programming language.</p>
 </blockquote>
 <h2 id="Reverse-proxy"><a href="#Reverse-proxy" class="headerlink" title="Reverse proxy"></a>Reverse proxy</h2><ol>
 <li>Everytime you try to access the servcie, you go to the reverse proxy (e.g. nginx). </li>
@@ -1244,25 +1247,30 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Symptoms"><a href="#Symptoms" class="headerlink" title="Symptoms"></a>Symptoms</h1><p>You may receive the following error message when you create a FOREIGN KEY constraint: (<a href="https://support.microsoft.com/en-us/help/321843/error-message-1785-occurs-when-you-create-a-foreign-key-constraint-tha" target="_blank" rel="noopener">microsoft report</a>)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Server: Msg 1785, Level 16, State 1, Line 1 Introducing FOREIGN KEY constraint &#39;fk_two&#39; on table &#39;table2&#39; may cause cycles or multiple cascade paths. Specify ON DELETE NO ACTION or ON UPDATE NO ACTION, or modify other FOREIGN KEY constraints. Server: Msg 1750, Level 16, State 1, Line 1 Could not create constraint. See previous errors.</span><br></pre></td></tr></table></figure>
+          <h1 id="Symptoms"><a href="#Symptoms" class="headerlink" title="Symptoms"></a>Symptoms</h1><p>You may receive the following error message when you create a FOREIGN KEY constraint: (<a href="https://support.microsoft.com/en-us/help/321843/error-message-1785-occurs-when-you-create-a-foreign-key-constraint-tha">microsoft report</a>)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Server: Msg 1785, Level 16, State 1, Line 1 Introducing FOREIGN KEY constraint &#x27;fk_two&#x27; on table &#x27;table2&#x27; may cause cycles or multiple cascade paths. Specify ON DELETE NO ACTION or ON UPDATE NO ACTION, or modify other FOREIGN KEY constraints. Server: Msg 1750, Level 16, State 1, Line 1 Could not create constraint. See previous errors.</span><br></pre></td></tr></table></figure>
+
 <p>For example, the table definition is like this:</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Table t1:</span></span><br><span class="line">	<span class="attr">Id:</span> <span class="string">primaryKey</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Table t2:</span></span><br><span class="line">	<span class="attr">Id:</span> <span class="string">primaryKey</span></span><br><span class="line">	<span class="attr">parent:</span> <span class="string">ForeignKey(t1,</span> <span class="string">Id)</span> <span class="string">on</span> <span class="string">cascade</span> <span class="string">delete</span></span><br><span class="line">	<span class="attr">child:</span> <span class="string">ForeignKey(t1,</span> <span class="string">Id)</span> <span class="string">on</span> <span class="string">cascade</span> <span class="string">delete</span></span><br><span class="line"><span class="comment"># this would raise the above exception</span></span><br></pre></td></tr></table></figure>
-<h1 id="Cause"><a href="#Cause" class="headerlink" title="Cause"></a>Cause</h1><p>Basically, you can’t create multiple cascade paths to same table with cascade delete/update. Since you may define <code>t2.parent</code> with cascade delete, <code>t2.child</code> with cascade update(e.g. update as null), this will make sql server ambiguous when t1 is deleted. MSSQL doesn’t detect whether there’re actual circle or not, it just forbids the operation to make the design simple.</p>
+
+
+
+<h1 id="Cause"><a href="#Cause" class="headerlink" title="Cause"></a>Cause</h1><p>Basically, you can’t create multiple cascade paths to same table with cascade delete&#x2F;update. Since you may define <code>t2.parent</code> with cascade delete, <code>t2.child</code> with cascade update(e.g. update as null), this will make sql server ambiguous when t1 is deleted. MSSQL doesn’t detect whether there’re actual circle or not, it just forbids the operation to make the design simple.</p>
 <blockquote>
 <p>A table cannot appear more than one time in a list of all the cascading referential actions that are started by either a DELETE or an UPDATE statement. For example, the tree of cascading referential actions must only have one path to a particular table on the cascading referential actions tree.</p>
 </blockquote>
-<p><a href="https://stackoverflow.com/questions/851625/foreign-key-constraint-may-cause-cycles-or-multiple-cascade-paths" target="_blank" rel="noopener">stackoverflow</a></p>
+<p><a href="https://stackoverflow.com/questions/851625/foreign-key-constraint-may-cause-cycles-or-multiple-cascade-paths">stackoverflow</a></p>
 <blockquote>
 <p>SQL Server does simple counting of cascade paths and, rather than trying to work out whether any cycles actually exist, it assumes the worst and refuses to create the referential actions (CASCADE): you can and should still create the constraints without the referential actions. If you can’t alter your design (or doing so would compromise things) then you should consider using triggers as a last resort.</p>
-<p>FWIW resolving cascade paths is a complex problem. Other SQL products will simply ignore the problem and allow you to create cycles, in which case it will be a race to see which will overwrite the value last, probably to the ignorance of the designer (e.g. ACE/Jet does this). I understand some SQL products will attempt to resolve simple cases. Fact remains, SQL Server doesn’t even try, plays it ultra safe by disallowing more than one path and at least it tells you so.<br>Microsoft themselves <a href="https://support.microsoft.com/en-us/help/321843/error-message-1785-occurs-when-you-create-a-foreign-key-constraint-tha" target="_blank" rel="noopener">advises</a> the use of triggers instead of FK constraints.</p>
+<p>FWIW resolving cascade paths is a complex problem. Other SQL products will simply ignore the problem and allow you to create cycles, in which case it will be a race to see which will overwrite the value last, probably to the ignorance of the designer (e.g. ACE&#x2F;Jet does this). I understand some SQL products will attempt to resolve simple cases. Fact remains, SQL Server doesn’t even try, plays it ultra safe by disallowing more than one path and at least it tells you so.<br>Microsoft themselves <a href="https://support.microsoft.com/en-us/help/321843/error-message-1785-occurs-when-you-create-a-foreign-key-constraint-tha">advises</a> the use of triggers instead of FK constraints.</p>
 </blockquote>
 <h1 id="Workaround"><a href="#Workaround" class="headerlink" title="Workaround"></a>Workaround</h1><p>Use trigger instead of ForeignKey to keep the integrity and avoid the exceptions.</p>
 <ol>
 <li>Set cascade delete on t2.child</li>
 <li>Use <code>instead of</code> trigger to cascade delete on t2.parent (you can also use trigger for all fields instead of foreign key constraints)</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CREATE TRIGGER [DELETE_t2]</span><br><span class="line">   ON dbo.[t1]</span><br><span class="line">   INSTEAD OF DELETE</span><br><span class="line">AS </span><br><span class="line">BEGIN</span><br><span class="line"> SET NOCOUNT ON;</span><br><span class="line"> DELETE FROM [t2] WHERE parent IN (SELECT Id FROM DELETED)</span><br><span class="line"> DELETE FROM [t1] WHERE Id IN (SELECT Id FROM DELETED)</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CREATE TRIGGER [DELETE_t2]</span><br><span class="line">   ON dbo.[t1]</span><br><span class="line">   INSTEAD OF DELETE</span><br><span class="line">AS </span><br><span class="line">BEGIN</span><br><span class="line"> SET NOCOUNT ON;</span><br><span class="line"> DELETE FROM [t2] WHERE parent IN (SELECT Id FROM DELETED)</span><br><span class="line"> DELETE FROM [t1] WHERE Id IN (SELECT Id FROM DELETED)</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -1353,26 +1361,28 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><a href="https://dzone.com/articles/playing-nhibernate-inverse-and" target="_blank" rel="noopener">playing-nhibernate-inverse-and-cascade</a>,</p>
-<p><a href="https://web.archive.org/web/20080415101633/http://simoes.org/docs/hibernate-2.1/155.html" target="_blank" rel="noopener">nhibernate-inverse</a></p>
-<p><a href="https://nhibernate.info/doc/nhibernate-reference/collections.html#collections-bidirectional" target="_blank" rel="noopener">bidirectional associations</a></p>
-<p>In database, there may be biodirectional relationships, e.g. Parent has multiple child, and Child has a parent.<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#### class definition</span></span><br><span class="line"><span class="attr">class Parent:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">String</span> <span class="string">id</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">IList&lt;Child&gt;</span> <span class="string">childs</span>	</span><br><span class="line"><span class="attr">class Child:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">String</span> <span class="string">id</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">Parent</span> <span class="string">parent</span></span><br><span class="line">	</span><br><span class="line"><span class="comment">#### db definition</span></span><br><span class="line"><span class="attr">table Parent:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">id</span></span><br><span class="line"><span class="attr">table Child:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">id</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">parentId</span></span><br></pre></td></tr></table></figure></p>
+          <p><a href="https://dzone.com/articles/playing-nhibernate-inverse-and">playing-nhibernate-inverse-and-cascade</a>,</p>
+<p><a href="https://web.archive.org/web/20080415101633/http://simoes.org/docs/hibernate-2.1/155.html">nhibernate-inverse</a></p>
+<p><a href="https://nhibernate.info/doc/nhibernate-reference/collections.html#collections-bidirectional">bidirectional associations</a></p>
+<p>In database, there may be biodirectional relationships, e.g. Parent has multiple child, and Child has a parent. </p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#### class definition</span></span><br><span class="line"><span class="attr">class Parent:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">String</span> <span class="string">id</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">IList&lt;Child&gt;</span> <span class="string">childs</span>	</span><br><span class="line"><span class="attr">class Child:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">String</span> <span class="string">id</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">Parent</span> <span class="string">parent</span></span><br><span class="line">	</span><br><span class="line"><span class="comment">#### db definition</span></span><br><span class="line"><span class="attr">table Parent:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">id</span></span><br><span class="line"><span class="attr">table Child:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">id</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">parentId</span></span><br></pre></td></tr></table></figure>
+
 <h2 id="Inverse"><a href="#Inverse" class="headerlink" title="Inverse"></a>Inverse</h2><p><code>Inverse</code> focus on the association. It defines which side is responsible of the association maintenance (create, update, delete), that is, the assignment of <code>parentId</code> column. It doesn’t care about the maintenance of associated objects which is what <code>cascade</code> cares).</p>
-<p>By default, <code>invert=false</code>, then the assignment of <code>parentId</code> is maintened when parent is created/updated/deleted. If we set <code>parent.child.inverse=true</code> and the <code>child.parent is not-null</code>, then the assignment of <code>parentId</code> is maintened when child is created/updated/deleted. </p>
+<p>By default, <code>invert=false</code>, then the assignment of <code>parentId</code> is maintened when parent is created&#x2F;updated&#x2F;deleted. If we set <code>parent.child.inverse=true</code> and the <code>child.parent is not-null</code>, then the assignment of <code>parentId</code> is maintened when child is created&#x2F;updated&#x2F;deleted. </p>
 <blockquote>
 <p><code>many-to-one</code> is <strong>always</strong> <code>inverse=&quot;false&quot;</code> (the attribute does not exist), that is, it means nothing to set <code>child.parent.inverse=true</code></p>
 </blockquote>
 <h2 id="Cascade"><a href="#Cascade" class="headerlink" title="Cascade"></a>Cascade</h2><p><code>cascade</code> instead will focus on the associated objects. It defines if the current object is responsible of the maintenance of associated objects.</p>
 <p>By default, <code>cascade=None</code>, that is, when saving parent, the childs on parent won’t be saved cascadelly.</p>
-<p>See <a href="https://stackoverflow.com/questions/1994433/nhibernate-cascade" target="_blank" rel="noopener">cascade stackoverflow</a></p>
+<p>See <a href="https://stackoverflow.com/questions/1994433/nhibernate-cascade">cascade stackoverflow</a></p>
 <blockquote>
 <ul>
 <li>none - do not do any cascades, let users handle them by themselves.</li>
-<li>save-update - when the object is saved/updated, check the associations and save/update any object that requires it (including save/update the associations in many-to-many scenario).</li>
+<li>save-update - when the object is saved&#x2F;updated, check the associations and save&#x2F;update any object that requires it (including save&#x2F;update the associations in many-to-many scenario).</li>
 <li>delete - when the object is deleted, delete all the objects in the association.</li>
 <li>delete-orphan - when the object is deleted, delete all the objects in the association. In addition, when an object is removed from the association and not associated with another object (orphaned), also delete it.</li>
-<li>all - when an object is save/update/delete, check the associations and save/update/delete all the objects found.</li>
-<li>all-delete-orphan - when an object is save/update/delete, check the associations and save/update/delete all the objects found. In additional to that, when an object is removed from the association and not associated with another object (orphaned), also delete it.</li>
+<li>all - when an object is save&#x2F;update&#x2F;delete, check the associations and save&#x2F;update&#x2F;delete all the objects found.</li>
+<li>all-delete-orphan - when an object is save&#x2F;update&#x2F;delete, check the associations and save&#x2F;update&#x2F;delete all the objects found. In additional to that, when an object is removed from the association and not associated with another object (orphaned), also delete it.</li>
 </ul>
 </blockquote>
 
@@ -1465,12 +1475,12 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><a href="https://www.youtube.com/watch?v=q4P4BjjXghQ" target="_blank" rel="noopener">the great video</a></p>
+          <p><a href="https://www.youtube.com/watch?v=q4P4BjjXghQ">the great video</a></p>
 <h1 id="History"><a href="#History" class="headerlink" title="History"></a>History</h1><h2 id="Why-does-we-create-internet"><a href="#Why-does-we-create-internet" class="headerlink" title="Why does we create internet?"></a>Why does we create internet?</h2><p>It’s created from the need of American military, to protect the communication in the wars. </p>
 <p>The old communication system, phone, connects Lily with Tom through fixed central offices. If some of the central offices are destroyed by nuclear, then the rerouting of the communication line is difficult, that the commnunication will fail.</p>
 <p>Ta Da.. Internet comes. It communicates through millions of routers. Even half of the routers are destroyed, there may still be the way to communicate.</p>
 <h2 id="Why-does-we-create-VPN-virtual-private-network"><a href="#Why-does-we-create-VPN-virtual-private-network" class="headerlink" title="Why does we create VPN (virtual private network)?"></a>Why does we create VPN (virtual private network)?</h2><p>Internet way secure the communication from high level, however, the data from a computer are in danger now. If a hacker can get all the data from a router, then data of users are leaked since it will go through the router.</p>
-<p>To protect the communication from one to another, you can build physical private line. However, it’s too expensive, and <a href="https://en.wikipedia.org/wiki/Virtual_private_network" target="_blank" rel="noopener">VPN</a> provides another way. The VPN secure the data in the following ways:</p>
+<p>To protect the communication from one to another, you can build physical private line. However, it’s too expensive, and <a href="https://en.wikipedia.org/wiki/Virtual_private_network">VPN</a> provides another way. The VPN secure the data in the following ways:</p>
 <ol>
 <li>creates tunnel between two communicators, </li>
 <li>the data in the tunnel is encrepted</li>
@@ -1582,16 +1592,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><a href="https://juejin.im/post/5b54635ae51d451951133d85" target="_blank" rel="noopener">nginx 502 和 504 超时演示</a></p>
+          <p><a href="https://juejin.im/post/5b54635ae51d451951133d85">nginx 502 和 504 超时演示</a></p>
 <blockquote>
-<p>502 Bad Gateway: The server was acting as a <a href="https://www.wikiwand.com/en/Gateway_(telecommunications" target="_blank" rel="noopener">gateway</a>) or proxy and received an invalid response from the upstream server.</p>
+<p>502 Bad Gateway: The server was acting as a <a href="https://www.wikiwand.com/en/Gateway_(telecommunications)">gateway</a> or proxy and received an invalid response from the upstream server.</p>
 <p>504: he server was acting as a gateway or proxy and did not receive a timely response from the upstream server.</p>
 </blockquote>
 <h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p><strong>504 是 nginx 没有及时从上游服务获取响应，超时了：</strong></p>
 <ul>
-<li>上游服务响应慢，读取 response / 发送 request 超时（<code>upstream timed out (110: Operation timed out) **while** reading response header from upstream</code>）<ul>
-<li>某些请求处理就是慢。此时就应该调大 <a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_read_timeout" target="_blank" rel="noopener"><strong>proxy_read_timeout</strong></a> (默认 60s)</li>
-<li>上游服务压力太大，响应变慢。此时可以增加上游服务的响应能力，也可以适当提升 <a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_send_timeout" target="_blank" rel="noopener"><strong>proxy_send_timeout</strong></a>, <a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_read_timeout" target="_blank" rel="noopener"><strong>proxy_read_timeout</strong></a></li>
+<li>上游服务响应慢，读取 response &#x2F; 发送 request 超时（<code>upstream timed out (110: Operation timed out) **while** reading response header from upstream</code>）<ul>
+<li>某些请求处理就是慢。此时就应该调大 <a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_read_timeout"><strong>proxy_read_timeout</strong></a> (默认 60s)</li>
+<li>上游服务压力太大，响应变慢。此时可以增加上游服务的响应能力，也可以适当提升 <a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_send_timeout"><strong>proxy_send_timeout</strong></a>, <a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_read_timeout"><strong>proxy_read_timeout</strong></a></li>
 </ul>
 </li>
 <li>连接上游服务超时。可能是上游服务已经断了，但由于 keepalive，nginx 依然保有 tcp 连接，但实际操作时，却连不上，就超时了。</li>
@@ -1639,13 +1649,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">269k</span>
+    <span title="Word count total">275k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:04</span>
+    <span title="Reading time total">4:10</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

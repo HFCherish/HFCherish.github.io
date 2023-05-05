@@ -157,7 +157,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -260,13 +260,13 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p><a href="https://docs.gradle.org/current/dsl/org.gradle.api.tasks.testing.Test.html#org.gradle.api.tasks.testing.Test:forkEvery" target="_blank" rel="noopener">gradle test configurations</a></p>
-<p><a href="https://discuss.gradle.org/t/parallel-test-execution-with-gradle-maxparallelforks-property/15136" target="_blank" rel="noopener">one sample config</a></p>
-<p><a href="https://guides.gradle.org/performance/" target="_blank" rel="noopener">ways to improve performance of gradle build</a></p>
+    <div class="post-body" itemprop="articleBody"><p><a href="https://docs.gradle.org/current/dsl/org.gradle.api.tasks.testing.Test.html#org.gradle.api.tasks.testing.Test:forkEvery">gradle test configurations</a></p>
+<p><a href="https://discuss.gradle.org/t/parallel-test-execution-with-gradle-maxparallelforks-property/15136">one sample config</a></p>
+<p><a href="https://guides.gradle.org/performance/">ways to improve performance of gradle build</a></p>
 <p>common used properties:</p>
 <ul>
 <li><code>jvmArgs</code>: jvm 参数。通常会配置堆栈大小，保证测试对内存的要求。<ul>
-<li><code>&#39;-Xms128m&#39;, &#39;-Xmx1024m&#39;, &#39;-XX:MaxMetaspaceSize=128m&#39;</code>。<code>-Xms</code> 是初始堆大小，<code>-Xmx</code> 是最大堆大小，<code>-XX:MaxMetaspaceSize</code> 是 class metadata 可占用的最大本地内存（默认是 unlimited）。具体 jvm 参数参考 <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/java.html" target="_blank" rel="noopener">java doc</a>. </li>
+<li><code>&#39;-Xms128m&#39;, &#39;-Xmx1024m&#39;, &#39;-XX:MaxMetaspaceSize=128m&#39;</code>。<code>-Xms</code> 是初始堆大小，<code>-Xmx</code> 是最大堆大小，<code>-XX:MaxMetaspaceSize</code> 是 class metadata 可占用的最大本地内存（默认是 unlimited）。具体 jvm 参数参考 <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/java.html">java doc</a>.</li>
 </ul>
 </li>
 <li><code>forkEvery</code>: 每个 test process 里跑的 test classes 的最大个数。当次数达到限制后，会自动重启。这定义了一个测试线程什么时候回重启，与并发无关。默认是 0，即无最大限制，就是可以一直跑</li>
@@ -330,13 +330,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">269k</span>
+    <span title="Word count total">275k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:04</span>
+    <span title="Reading time total">4:10</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

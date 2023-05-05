@@ -158,7 +158,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -261,7 +261,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p><a href="https://fluentvalidation.net/start#setting-the-cascade-mode" target="_blank" rel="noopener">FluentValidation</a></p>
+    <div class="post-body" itemprop="articleBody"><p><a href="https://fluentvalidation.net/start#setting-the-cascade-mode">FluentValidation</a></p>
 <h1 id="Knowledge"><a href="#Knowledge" class="headerlink" title="Knowledge"></a>Knowledge</h1><ul>
 <li>The <code>RuleFor</code> method create a validation rule.</li>
 </ul>
@@ -275,10 +275,10 @@
 <p>By default, all rules in FluentValidation are separate and cannot influence one another. This is intentional and necessary for asynchronous validation to work.</p>
 </blockquote>
 <ul>
-<li><code>Must</code>, <code>NotNull</code>…. are <a href="https://fluentvalidation.net/built-in-validators" target="_blank" rel="noopener">built-in validators</a>. <code>WithMessage</code> is a method on a validator. <code>When</code> defines condition for validator(s).</li>
+<li><code>Must</code>, <code>NotNull</code>…. are <a href="https://fluentvalidation.net/built-in-validators">built-in validators</a>. <code>WithMessage</code> is a method on a validator. <code>When</code> defines condition for validator(s).</li>
 <li>Append multiple validators on a same property are called chaining validators.</li>
 <li>Chainning Validators are executed by sequence. <code>CascadeMode</code> can define how these chaining validators are exectued. <code>Continue</code> is default which means even a validator fail, the latter validators will still be invoked. <code>StopOnFirstFailure</code> will stop at the first failure of these chaining validators.</li>
-<li><code>When</code> defines condition for validator(s)/rules. <code>ApplyConditionTo.AllValidators</code> is the default setting. <code>ApplyConditionTo.CurrentValidator</code>  will make the condition only work to the preceding validator.</li>
+<li><code>When</code> defines condition for validator(s)&#x2F;rules. <code>ApplyConditionTo.AllValidators</code> is the default setting. <code>ApplyConditionTo.CurrentValidator</code>  will make the condition only work to the preceding validator.</li>
 </ul>
 <blockquote>
 <p>By default FluentValidation will apply the condition to all preceding validators in the same call to <code>RuleFor</code></p>
@@ -338,13 +338,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">269k</span>
+    <span title="Word count total">275k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:04</span>
+    <span title="Reading time total">4:10</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

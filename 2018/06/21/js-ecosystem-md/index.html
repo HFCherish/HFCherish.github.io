@@ -160,7 +160,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -263,7 +263,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>我在学习 react，一直在使用 <a href="https://github.com/facebook/create-react-app" target="_blank" rel="noopener">create-react-app</a> 创建项目。create-react-app 其实包括两个核心：</p>
+    <div class="post-body" itemprop="articleBody"><p>我在学习 react，一直在使用 <a href="https://github.com/facebook/create-react-app">create-react-app</a> 创建项目。create-react-app 其实包括两个核心：</p>
 <ul>
 <li><code>create-react-app</code>：主要提供了 command-line 工具，方便用户创建 react 项目</li>
 <li><code>react-scripts</code>：这才是核心。它封装了所有开发 react 项目的配置，使得用户可以零配置直接开始开发 react。用户基本不需要更新 <code>create-react-app</code>，因为它总是拉最新的 <code>react-scripts</code>，而 <code>react-scripts</code> 才是简化用户配置的核心。</li>
@@ -271,16 +271,16 @@
 <p>问题来了，我在写测试的时候发现，<code>react-scripts</code> 默认配置使用的是 jest，而且版本较低（可运行 <code>npm ls jest</code> 查看依赖树，结果如下图所示）。而我需要使用的 data-driven-test 依赖包 <code>jest-each</code> 是 jest 23.0.0 以后的版本才有的。</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/721960-cc0aae2294d01d0a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="react-scripts-dependency.png"></p>
 <p>所以我需要在测试的时候不使用默认安装的 jest，</p>
-<p>读了一个 <a href="https://medium.com/@francesco.agnoletto/i-didnt-like-create-react-app-so-i-created-my-own-boilerplate-190a7dd5d74" target="_blank" rel="noopener">post: 自己写样板，不使用 create-react-app</a>，受它的启发要自己配置 react 项目，那么就有必要了解 js ecosystem 中的一些工程。</p>
-<h1 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a><a href="https://www.webpackjs.com/concepts/" target="_blank" rel="noopener">webpack</a></h1><p>一个开源的前端打包工具，支持用户进行模块化开发（即用户开发很多 module，然后不同的 mudule 之间可通过 import, export 进行相互引用）。原本 js 是不支持的，可参见 <a href="https://hfcherish.github.io/2018/06/21/js-global-namespace/" target="_blank" rel="noopener">js global namespace</a>。</p>
-<h1 id="ESLint"><a href="#ESLint" class="headerlink" title="ESLint"></a><a href="http://eslint.cn/docs/user-guide/configuring" target="_blank" rel="noopener">ESLint</a></h1><p>是一个 javascript 的语法检查器。类似于在 IDE 中写 java 时的即时编译检查。它是可以配置的，以完成你所需要的检查。</p>
-<h1 id="ECMAScript"><a href="#ECMAScript" class="headerlink" title="ECMAScript"></a><a href="https://zh.wikipedia.org/wiki/ECMAScript" target="_blank" rel="noopener">ECMAScript</a></h1><p><a href="https://huangxuan.me/2015/09/22/js-version/" target="_blank" rel="noopener">ES5, ES6, ES2016, ES.Next: What’s going on with JavaScript versioning?</a> 翻译的这个文章讲得很好，我直接引用原文：</p>
+<p>读了一个 <a href="https://medium.com/@francesco.agnoletto/i-didnt-like-create-react-app-so-i-created-my-own-boilerplate-190a7dd5d74">post: 自己写样板，不使用 create-react-app</a>，受它的启发要自己配置 react 项目，那么就有必要了解 js ecosystem 中的一些工程。</p>
+<h1 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a><a href="https://www.webpackjs.com/concepts/">webpack</a></h1><p>一个开源的前端打包工具，支持用户进行模块化开发（即用户开发很多 module，然后不同的 mudule 之间可通过 import, export 进行相互引用）。原本 js 是不支持的，可参见 <a href="https://hfcherish.github.io/2018/06/21/js-global-namespace/">js global namespace</a>。</p>
+<h1 id="ESLint"><a href="#ESLint" class="headerlink" title="ESLint"></a><a href="http://eslint.cn/docs/user-guide/configuring">ESLint</a></h1><p>是一个 javascript 的语法检查器。类似于在 IDE 中写 java 时的即时编译检查。它是可以配置的，以完成你所需要的检查。</p>
+<h1 id="ECMAScript"><a href="#ECMAScript" class="headerlink" title="ECMAScript"></a><a href="https://zh.wikipedia.org/wiki/ECMAScript">ECMAScript</a></h1><p><a href="https://huangxuan.me/2015/09/22/js-version/">ES5, ES6, ES2016, ES.Next: What’s going on with JavaScript versioning?</a> 翻译的这个文章讲得很好，我直接引用原文：</p>
 <blockquote>
 <ul>
 <li><strong>ECMAScript</strong>：一个由 ECMA International 进行标准化，TC39 委员会进行监督的语言。通常用于指代标准本身。</li>
 <li><strong>JavaScript</strong>：ECMAScript 标准的各种实现的最常用称呼。这个术语并不局限于某个特定版本的 ECMAScript 规范，并且可能被用于任何不同程度的任意版本的 ECMAScript 的实现。</li>
-<li><strong>ECMAScript 5 (ES5)</strong>：ECMAScript 的第五版修订，于 2009 年完成标准化。这个规范在所有现代浏览器中都相当完全的实现了。</li>
-<li><strong>ECMAScript 6 (ES6) / ECMAScript 2015 (ES2015)</strong>：ECMAScript 的第六版修订，于 2015 年完成标准化。这个标准被部分实现于大部分现代浏览器。可以查阅这张兼容性表来查看不同浏览器和工具的实现情况。</li>
+<li>**ECMAScript 5 (ES5)**：ECMAScript 的第五版修订，于 2009 年完成标准化。这个规范在所有现代浏览器中都相当完全的实现了。</li>
+<li>**ECMAScript 6 (ES6) &#x2F; ECMAScript 2015 (ES2015)**：ECMAScript 的第六版修订，于 2015 年完成标准化。这个标准被部分实现于大部分现代浏览器。可以查阅这张兼容性表来查看不同浏览器和工具的实现情况。</li>
 <li><strong>ECMAScript 2016</strong>：预计的第七版 ECMAScript 修订，计划于明年夏季发布。这份规范具体将包含哪些特性还没有最终确定</li>
 <li><strong>ECMAScript Proposals</strong>：被考虑加入未来版本 ECMAScript 标准的特性与语法提案，他们需要经历五个阶段：Strawman（稻草人），Proposal（提议），Draft（草案），Candidate（候选）以及 Finished （完成）。</li>
 </ul>
@@ -296,10 +296,10 @@
 </ol>
 <p>一些资源：</p>
 <ul>
-<li>如果你还不熟悉 ES6，Babel 有一个<a href="https://babeljs.io/docs/learn-es2015/" target="_blank" rel="noopener">很不错的特性概览</a></li>
-<li>如果你希望深入 ES6，这里有两本很不错的书： Axel Rauschmayer 的 <a href="http://exploringjs.com/" target="_blank" rel="noopener">Exploring ES6</a>和 Nicholas Zakas 的 <a href="https://leanpub.com/understandinges6" target="_blank" rel="noopener">Understanding ECMAScript 6</a>。Axel 的博客 <a href="http://www.2ality.com/" target="_blank" rel="noopener">2ality</a> 也是很不错的 ES6 资源</li>
+<li>如果你还不熟悉 ES6，Babel 有一个<a href="https://babeljs.io/docs/learn-es2015/">很不错的特性概览</a></li>
+<li>如果你希望深入 ES6，这里有两本很不错的书： Axel Rauschmayer 的 <a href="http://exploringjs.com/">Exploring ES6</a>和 Nicholas Zakas 的 <a href="https://leanpub.com/understandinges6">Understanding ECMAScript 6</a>。Axel 的博客 <a href="http://www.2ality.com/">2ality</a> 也是很不错的 ES6 资源</li>
 </ul>
-<h1 id="babel"><a href="#babel" class="headerlink" title="babel"></a><a href="https://www.babeljs.cn/" target="_blank" rel="noopener">babel</a></h1><p>babel 是一个 javascript 编译器。其核心是一个语法转换器，能将使用 es6、flow、jsx 的代码转换为浏览器兼容的 javascript。所以这些项目 build 后其实是生成了浏览器兼容的 javascript。</p>
+<h1 id="babel"><a href="#babel" class="headerlink" title="babel"></a><a href="https://www.babeljs.cn/">babel</a></h1><p>babel 是一个 javascript 编译器。其核心是一个语法转换器，能将使用 es6、flow、jsx 的代码转换为浏览器兼容的 javascript。所以这些项目 build 后其实是生成了浏览器兼容的 javascript。</p>
 <p>为啥会有这个，原因就是上边说的，新版本 js 出来了，但是大家还不支持。</p>
 
     </div>
@@ -356,13 +356,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">269k</span>
+    <span title="Word count total">275k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:04</span>
+    <span title="Reading time total">4:10</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

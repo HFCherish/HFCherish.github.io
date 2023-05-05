@@ -161,7 +161,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -264,7 +264,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p><a href="https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/" target="_blank" rel="noopener">k8s</a> is a platform to manage containerized workloads and services.</p>
+    <div class="post-body" itemprop="articleBody"><p><a href="https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/">k8s</a> is a platform to manage containerized workloads and services.</p>
 <h1 id="Concepts"><a href="#Concepts" class="headerlink" title="Concepts"></a>Concepts</h1><h2 id="kubernetes-Objects"><a href="#kubernetes-Objects" class="headerlink" title="kubernetes Objects"></a>kubernetes Objects</h2><ol>
 <li>Kubernetes abstract <strong>a desired state of cluster</strong> as objects.</li>
 <li>an object configuration includes:<ol>
@@ -277,7 +277,7 @@
 <li>status: describe the actual state of the object</li>
 </ol>
 </li>
-<li>cluster state (<a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/" target="_blank" rel="noopener">understanding kubernetes objects</a>):<ol>
+<li>cluster state (<a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/">understanding kubernetes objects</a>):<ol>
 <li>what containerized applications are running and where they’re running</li>
 <li>how many resources (disk, network, etc.) are attached to the the container</li>
 <li>the policies around how the application behaves, such as restart policies, fault-tolerance, etc.</li>
@@ -286,7 +286,7 @@
 </ol>
 <h3 id="Workloads"><a href="#Workloads" class="headerlink" title="Workloads"></a>Workloads</h3><p>Objects that set deployment rules of pods.</p>
 <p>All controllers are workloads.</p>
-<h3 id="POD"><a href="#POD" class="headerlink" title="POD"></a>POD</h3><p><a href="https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/" target="_blank" rel="noopener">pod</a> is <strong>a minimize runnable object</strong> in k8s object model.</p>
+<h3 id="POD"><a href="#POD" class="headerlink" title="POD"></a>POD</h3><p><a href="https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/">pod</a> is <strong>a minimize runnable object</strong> in k8s object model.</p>
 <p>A Pod encapsulates an application <em>container</em> (or, in some cases, multiple containers), <em>storage resources</em>, <em>a unique network IP</em>, and <em>options that govern how the container(s) should run.</em></p>
 <p>It represents <strong>a single instances of application</strong>.</p>
 <p>There’re two common use cases:</p>
@@ -298,7 +298,7 @@
 <p>Pod restarting is different from container restarting. <strong>Pod provides the env for containers: os, storage, network…</strong></p>
 <h3 id="Controllers"><a href="#Controllers" class="headerlink" title="Controllers"></a>Controllers</h3><p>Controllers (eg. deployment, statefulSet…) instead can create and manage multiple pods.</p>
 <h3 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h3><p>Service is an <strong>abstraction</strong> which defines <strong>a logical set of pods</strong>, and <strong>a policy by which to access the pods</strong>.</p>
-<p>It enables <strong>the decoupling of access &amp; the real pods</strong>, which means you can access by service name/ip rather than the pod ip, while <strong>pod ip is not stable</strong>.</p>
+<p>It enables <strong>the decoupling of access &amp; the real pods</strong>, which means you can access by service name&#x2F;ip rather than the pod ip, while <strong>pod ip is not stable</strong>.</p>
 <blockquote>
 <p>Q: How does k8s get all pod endpoints by service?</p>
 <p>A: By <code>LabelSelector</code>. You can define labels for each pod. And we define <code>LabelSelector</code> in service, so that k8s can search pod node by label first, and then using the <code>targetPort</code> to locate the pod on node.</p>
@@ -308,7 +308,7 @@
 <li>the control plane consists of a collection of processes for the above intention.<ol>
 <li>kubernetes master:<ol>
 <li>is responsible for the maintaining the desired state.</li>
-<li>“master” in fact refers to three processes: <a href="https://kubernetes.io/docs/admin/kube-apiserver/" target="_blank" rel="noopener">kube-apiserver</a>, <a href="https://kubernetes.io/docs/admin/kube-controller-manager/" target="_blank" rel="noopener">kube-controller-manager</a> and <a href="https://kubernetes.io/docs/admin/kube-scheduler/" target="_blank" rel="noopener">kube-scheduler</a>.</li>
+<li>“master” in fact refers to three processes: <a href="https://kubernetes.io/docs/admin/kube-apiserver/">kube-apiserver</a>, <a href="https://kubernetes.io/docs/admin/kube-controller-manager/">kube-controller-manager</a> and <a href="https://kubernetes.io/docs/admin/kube-scheduler/">kube-scheduler</a>.</li>
 <li>these three processes are typically run on single node in the cluster. This node is called “master”, too. The master can also be replicated for avaibility and redundancy.</li>
 </ol>
 </li>
@@ -349,17 +349,18 @@
 <p>In some node:</p>
 <ol>
 <li>call cluster-ip:port————— <strong>In a pod</strong></li>
-<li>the kube-proxy search the iptable, and get some info.———— <strong>pod =&gt; kube-proxy of node where the pod resides.</strong></li>
-<li>the kube-proxy using the info to ask master for the real endpoints.—— <strong>kube-proxy of node =&gt; master kube-api</strong></li>
+<li>the kube-proxy search the iptable, and get some info.———— <strong>pod &#x3D;&gt; kube-proxy of node where the pod resides.</strong></li>
+<li>the kube-proxy using the info to ask master for the real endpoints.—— <strong>kube-proxy of node &#x3D;&gt; master kube-api</strong></li>
 <li>the kube-proxy chooses a endpoint by <code>SessionAffinity</code> defined in service (round-robin by default) —— <strong>in kube-proxy</strong></li>
-<li>the kube-proxy redirect request to <code>pod-ip:podPort</code> —— <strong>kube-proxy =&gt; pod endpoint</strong></li>
+<li>the kube-proxy redirect request to <code>pod-ip:podPort</code> —— <strong>kube-proxy &#x3D;&gt; pod endpoint</strong></li>
 </ol>
 <p>kube-proxy: enables the Kubernetes service abstraction by maintaining network rules on the host and performing connection forwarding</p>
 <p><img src="https://d33wubrfki0l68.cloudfront.net/e351b830334b8622a700a8da6568cb081c464a9b/13020/images/docs/services-userspace-overview.svg" alt="proxy-mode:user space"></p>
 <h4 id="servicename-namespacename"><a href="#servicename-namespacename" class="headerlink" title="servicename.namespacename"></a>servicename.namespacename</h4><p>When accessing by service name, there’re two ways:</p>
-<h5 id="environement-viaribles"><a href="#environement-viaribles" class="headerlink" title="environement viaribles"></a>environement viaribles</h5><p>when create a service, k8s will create some env for each serivce, e.g. <code>{SVCNAME_CAPTIPAL}_SERVICE_HOST</code>. So the kube-proxy in fact gets the service cluster ip from these envs first. When a pod calls a service, t<strong>he service must be created before the pod</strong> so that the envs are created.</p>
+<h5 id="environement-viaribles"><a href="#environement-viaribles" class="headerlink" title="environement viaribles"></a>environement viaribles</h5><p>when create a service, k8s will create some env for each serivce, e.g. <code>&#123;SVCNAME_CAPTIPAL&#125;_SERVICE_HOST</code>. So the kube-proxy in fact gets the service cluster ip from these envs first. When a pod calls a service, t<strong>he service must be created before the pod</strong> so that the envs are created.</p>
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># the cluster ip</span></span><br><span class="line"><span class="attr">REDIS_MASTER_SERVICE_HOST</span>=<span class="string">10.0.0.11</span></span><br><span class="line"><span class="attr">REDIS_MASTER_SERVICE_PORT</span>=<span class="string">6379</span></span><br><span class="line"><span class="attr">REDIS_MASTER_PORT</span>=<span class="string">tcp://10.0.0.11:6379</span></span><br><span class="line"><span class="attr">REDIS_MASTER_PORT_6379_TCP</span>=<span class="string">tcp://10.0.0.11:6379</span></span><br><span class="line"><span class="attr">REDIS_MASTER_PORT_6379_TCP_PROTO</span>=<span class="string">tcp</span></span><br><span class="line"><span class="attr">REDIS_MASTER_PORT_6379_TCP_PORT</span>=<span class="string">6379</span></span><br><span class="line"><span class="attr">REDIS_MASTER_PORT_6379_TCP_ADDR</span>=<span class="string">10.0.0.11</span></span><br></pre></td></tr></table></figure>
-<h5 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a><a href="https://kubernetes.io/docs/concepts/services-networking/service/#dns" target="_blank" rel="noopener">DNS</a></h5><p>It’s an add-on k8s object, which can be chosed to add to the cluster.</p>
+
+<h5 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a><a href="https://kubernetes.io/docs/concepts/services-networking/service/#dns">DNS</a></h5><p>It’s an add-on k8s object, which can be chosed to add to the cluster.</p>
 <p>It’s an in-cluster dns, which serves DNS records for Kubernetes services.</p>
 <p>It watches the k8s api for new services and create <strong>DNS SVC records</strong> for each.</p>
 <p>Containers started by Kubernetes automatically include this DNS server in their DNS searches.</p>
@@ -424,13 +425,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">269k</span>
+    <span title="Word count total">275k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:04</span>
+    <span title="Reading time total">4:10</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

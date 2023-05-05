@@ -163,7 +163,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -266,11 +266,11 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p><a href="https://zhuanlan.zhihu.com/p/159061537" target="_blank" rel="noopener">数据仓库建模</a></p>
-<p><a href="https://www.cnblogs.com/cyechina/p/5425842.html" target="_blank" rel="noopener">数据仓库的多维数据模型</a></p>
-<p><a href="http://webdataanalysis.net/web-data-warehouse/multidimensional-data-model/" target="_blank" rel="noopener">数据仓库的多维数据模型 – 非常好的一系列文章</a></p>
+    <div class="post-body" itemprop="articleBody"><p><a href="https://zhuanlan.zhihu.com/p/159061537">数据仓库建模</a></p>
+<p><a href="https://www.cnblogs.com/cyechina/p/5425842.html">数据仓库的多维数据模型</a></p>
+<p><a href="http://webdataanalysis.net/web-data-warehouse/multidimensional-data-model/">数据仓库的多维数据模型 – 非常好的一系列文章</a></p>
 <h1 id="Kimball-维度建模"><a href="#Kimball-维度建模" class="headerlink" title="Kimball 维度建模"></a>Kimball 维度建模</h1><p><strong>维度建模就是时刻考虑如何能够提供简单性，以业务为驱动，以用户理解性和查询性能为目标</strong></p>
-<p><a href="https://segmentfault.com/a/1190000038938864" target="_blank" rel="noopener">kimball维度建模详解</a></p>
+<p><a href="https://segmentfault.com/a/1190000038938864">kimball维度建模详解</a></p>
 <p>维度建模分为两种表：事实表和维度表</p>
 <ol>
 <li><strong>事实表</strong>：必然存在的一些数据，像采集的日志文件，订单表，都可以作为事实表</li>
@@ -282,7 +282,7 @@
 <h1 id="多维数据模型的定义和作用"><a href="#多维数据模型的定义和作用" class="headerlink" title="多维数据模型的定义和作用"></a>多维数据模型的定义和作用</h1><p>　　多维数据模型是为了满足用户从多角度多层次进行数据查询和分析的需要而建立起来的基于事实和维的数据库模型，其基本的应用是为了实现OLAP（Online Analytical Processing）。</p>
 <p>　　当然，通过多维数据模型的数据展示、查询和获取就是其作用的展现，但其真的作用的实现在于，通过数据仓库可以根据不同的数据需求建立起各类多维模型，并组成数据集市开放给不同的用户群体使用，也就是根据需求定制的各类数据商品摆放在数据集市中供不同的数据消费者进行采购。</p>
 <p><strong>多维数据模型最大的优点就是其基于分析优化的数据组织和存储模式。</strong></p>
-<h2 id="主题建模"><a href="#主题建模" class="headerlink" title="主题建模"></a>主题建模</h2><p><a href="https://zhuanlan.zhihu.com/p/113790356" target="_blank" rel="noopener">多维分析仓库构建-面向主题的建模</a></p>
+<h2 id="主题建模"><a href="#主题建模" class="headerlink" title="主题建模"></a>主题建模</h2><p><a href="https://zhuanlan.zhihu.com/p/113790356">多维分析仓库构建-面向主题的建模</a></p>
 <h3 id="构成"><a href="#构成" class="headerlink" title="构成"></a>构成</h3><p>主题建模是对原始数据、原始业务理解的基础上，将数据归类为多个主题（e.g. 销量主题、维修订单主题、线索转化主题…）。</p>
 <p>一般，一个主题就是由一张事实表、多张维表、以及结果聚合表所组成。</p>
 <ol>
@@ -307,7 +307,7 @@
 <h2 id="星型模型"><a href="#星型模型" class="headerlink" title="星型模型"></a>星型模型</h2><p>当所有维表都直接连接到“事实表”上时，整个图解就像星星一样，故将该模型称为星型模型。<strong>数据有一定的冗余</strong></p>
 <p><img src="https://pic3.zhimg.com/80/v2-1d39380d9238ca7c5876ac92d27750b2_1440w.jpg" alt="img"></p>
 <h2 id="雪花模型"><a href="#雪花模型" class="headerlink" title="雪花模型"></a>雪花模型</h2><p>当有一个或多个维表没有直接连接到事实表上，而是通过其他维表连接到事实表上时，其图解就像多个雪花连接在一起，故称雪花模型。<strong>雪花模型是对星型模型的扩展</strong>。它对星型模型的维表进一步层次化，原有的各维表可能被扩展为小的事实表，形成一些局部的 “层次 “ 区域，这些被分解的表都连接到主维度表而不是事实表。如图 2，将地域维表又分解为国家，省份，城市等维表。它的优点是：<strong>通过最大限度地减少数据存储量以及联合较小的维表来改善查询性能。雪花型结构去除了数据冗余</strong>。</p>
-<p><img src="https://pic4.zhimg.com/80/v2-e7e1a7403be3ffb217f623d89771a573_1440w.jpg" alt="img"><em>**</em></p>
+<p><img src="https://pic4.zhimg.com/80/v2-e7e1a7403be3ffb217f623d89771a573_1440w.jpg" alt="img">****</p>
 
     </div>
 
@@ -364,13 +364,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Word count total">269k</span>
+    <span title="Word count total">275k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">4:04</span>
+    <span title="Reading time total">4:10</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
