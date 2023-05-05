@@ -44,6 +44,7 @@
     "stylelint-stylus": "0.18.0"
   },
   "dependencies": {
-    "hexo-theme-next": "^8.15.1"
+    "hexo-theme-next": "^8.15.1",
+    "hexo-word-counter": "^0.1.0"
   }
 }
