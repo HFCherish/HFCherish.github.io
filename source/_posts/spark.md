@@ -50,7 +50,7 @@ When you call `collect()` on an RDD or Dataset, the whole data is sent to the **
 [What is Spark Job ?](https://stackoverflow.com/questions/28973112/what-is-spark-job)
 
 > let's say you need to do the following:
->
+> 
 > 1. Load a file with people names and addresses into RDD1
 > 2. Load a file with people names and phones into RDD2
 > 3. Join RDD1 and RDD2 by name, to get RDD3
@@ -59,9 +59,9 @@ When you call `collect()` on an RDD or Dataset, the whole data is sent to the **
 > 6. Map RDD1 to extract zipcodes from the addresses to get RDD5
 > 7. Aggregate on RDD5 to get a count of how many people live on each zipcode as RDD6
 > 8. Collect RDD6 and prints these stats to the stdout.
->
+> 
 > So,
->
+> 
 > 1. The ***driver program\*** is this entire piece of code, running all 8 steps.
 > 2. Producing the entire HTML card set on step 5 is a ***job\*** (clear because we are using the *save* action, not a transformation). Same with the *collect* on step 8
 > 3. Other steps will be organized into ***stages\***, with each job being the result of a sequence of stages. For simple things a job can have a single stage, but the need to repartition data (for instance, the join on step 3) or anything that breaks the locality of the data usually causes more stages to appear. You can think of stages as computations that produce intermediate results, which can in fact be persisted. For instance, we can persist RDD1 since we'll be using it more than once, avoiding recomputation.
@@ -71,13 +71,13 @@ When you call `collect()` on an RDD or Dataset, the whole data is sent to the **
 
 RDD 数据模型
 
-|       属性名       | 成员类型 |        属性含义         |
-| :----------------: | :------: | :---------------------: |
-|    dependencies    |   变量   | 生成该RDD所依赖的父RDD  |
-|      compute       |   方法   |   生成该RDD的计算接口   |
-|     partitions     |   变量   | 该RDD的所有数据分片实体 |
-|    partitioner     |   方法   |   划分数据分片的规则    |
-| preferredLocations |   变量   | 数据分片的物理位置偏好  |
+| 属性名                | 成员类型 | 属性含义           |
+|:------------------:|:----:|:--------------:|
+| dependencies       | 变量   | 生成该RDD所依赖的父RDD |
+| compute            | 方法   | 生成该RDD的计算接口    |
+| partitions         | 变量   | 该RDD的所有数据分片实体  |
+| partitioner        | 方法   | 划分数据分片的规则      |
+| preferredLocations | 变量   | 数据分片的物理位置偏好    |
 
 ## SparkContext
 
@@ -121,8 +121,6 @@ if __name__ == "__main__":
     spark.stop()
 ```
 
-
-
 ![10 Important Functions of SparkContext in Apache Spark](https://d2h0cx97tjks2p.cloudfront.net/blogs/wp-content/uploads/sites/2/2017/08/functions-of-sparkcontext-in-apache-spark.jpg)
 
 # How does it run
@@ -151,9 +149,10 @@ You can write spark function (eg. map function, reduce funciton) using Java/scal
 See [run spark on Yarn](https://spark.apache.org/docs/2.4.0/running-on-yarn.html), [Install, Configure, and Run Spark on Top of a Hadoop YARN Cluster](https://www.linode.com/docs/databases/hadoop/install-configure-run-spark-on-top-of-hadoop-yarn-cluster/)
 
 1. [downloads page](https://spark.apache.org/downloads.html) download the spark
-2. `tar -xvf spark-xxx.tgz`
-3. configuration
 
+2. `tar -xvf spark-xxx.tgz`
+
+3. configuration
 * config in `/conf/spark-env.sh`
 
 ```sh
@@ -180,7 +179,7 @@ When the spark job is running, you can access the job log by `localhost:4040`. W
 ```sh
 # in /conf/spark-default.conf
 # config history server
-spark.ui.filters		 org.apache.spark.deploy.yarn.YarnProxyRedirectFilter
+spark.ui.filters         org.apache.spark.deploy.yarn.YarnProxyRedirectFilter
 
 # tell spark use history server url as the trackint url
 spark.yarn.historyServer.allowTracking  true
@@ -223,18 +222,18 @@ Then you can:
 
 NoteThe following table summarizes terms you’ll see used to refer to cluster concepts:
 
-| Term            | Meaning                                                      |
-| :-------------- | :----------------------------------------------------------- |
-| Application     | User program built on Spark. Consists of a *driver program* and *executors* on the cluster. |
+| Term            | Meaning                                                                                                                                                                                                                                                                    |
+|:--------------- |:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Application     | User program built on Spark. Consists of a *driver program* and *executors* on the cluster.                                                                                                                                                                                |
 | Application jar | A jar containing the user's Spark application. In some cases users will want to create an "uber jar" containing their application along with its dependencies**. The user's jar should never include Hadoop or Spark libraries, however, these will be added at runtime.** |
-| Driver program  | The process running the main() function of the application and creating the SparkContext |
-| Cluster manager | An external service for acquiring resources on the cluster (e.g. standalone manager, Mesos, YARN) |
-| Deploy mode     | Distinguishes where the driver process runs. In "cluster" mode, the framework launches the driver inside of the cluster. In "client" mode, the submitter launches the driver outside of the cluster. |
-| Worker node     | Any node that can run application code in the cluster        |
-| Executor        | A process launched for an application on a worker node, that runs tasks and keeps data in memory or disk storage across them. Each application has its own executors. |
-| Task            | A unit of work that will be sent to one executor             |
-| Job             | A parallel computation consisting of multiple tasks that gets spawned in response to a Spark action (e.g. `save`, `collect`); you'll see this term used in the driver's logs. |
-| Stage           | Each job gets divided into smaller sets of tasks called *stages* that depend on each other (similar to the map and reduce stages in MapReduce); you'll see this term used in the driver's logs. |
+| Driver program  | The process running the main() function of the application and creating the SparkContext                                                                                                                                                                                   |
+| Cluster manager | An external service for acquiring resources on the cluster (e.g. standalone manager, Mesos, YARN)                                                                                                                                                                          |
+| Deploy mode     | Distinguishes where the driver process runs. In "cluster" mode, the framework launches the driver inside of the cluster. In "client" mode, the submitter launches the driver outside of the cluster.                                                                       |
+| Worker node     | Any node that can run application code in the cluster                                                                                                                                                                                                                      |
+| Executor        | A process launched for an application on a worker node, that runs tasks and keeps data in memory or disk storage across them. Each application has its own executors.                                                                                                      |
+| Task            | A unit of work that will be sent to one executor                                                                                                                                                                                                                           |
+| Job             | A parallel computation consisting of multiple tasks that gets spawned in response to a Spark action (e.g. `save`, `collect`); you'll see this term used in the driver's logs.                                                                                              |
+| Stage           | Each job gets divided into smaller sets of tasks called *stages* that depend on each other (similar to the map and reduce stages in MapReduce); you'll see this term used in the driver's logs.                                                                            |
 
 # Deploy mode
 
@@ -401,10 +400,7 @@ coalesce
 repartition
 repartition(range) ===> range partitioner???
 df.localCheckPoint().repartition().... ==> how to use tis
-
 ```
-
-
 
 ## Balance<a name="balance" />
 
@@ -423,7 +419,6 @@ Balance 体现在很多方面：网络、GC、数据，当然最常见的问题�
    1. ![image-20210317130839506](/Users/zhenzheng/code/hfcherish.github.io/source/images/spark-gc-skew.png)
 3. 
 
-
 ## Persistence<a name="persistence" />
 
 当 execution plan 中，有些 superset 被多个 subset 所使用，superset 计算复杂、耗时久，这个时候就可以选择将 superset persist，从而避免重复运算。
@@ -435,7 +430,7 @@ persist/cache 要慎用，因为：
 1. 占资源。当 persist 消耗了太多的 storage memory 时，就会出现 [memory spill](#memory-spill)
 2. 也有时间损耗（serialize, deserialize, I/O)。persist 一般都以 serialized 的形式存储，节省空间，而 load 到 working memory 时，又需要 deserialiize
 
->In Python, stored objects will always be serialized with the [Pickle](https://docs.python.org/3/library/pickle.html) library, so it does not matter whether you choose a serialized level. The available storage levels in Python include `MEMORY_ONLY`, `MEMORY_ONLY_2`, `MEMORY_AND_DISK`, `MEMORY_AND_DISK_2`, `DISK_ONLY`, `DISK_ONLY_2`, and `DISK_ONLY_3`.*
+> In Python, stored objects will always be serialized with the [Pickle](https://docs.python.org/3/library/pickle.html) library, so it does not matter whether you choose a serialized level. The available storage levels in Python include `MEMORY_ONLY`, `MEMORY_ONLY_2`, `MEMORY_AND_DISK`, `MEMORY_AND_DISK_2`, `DISK_ONLY`, `DISK_ONLY_2`, and `DISK_ONLY_3`.*
 
 ### cache
 
@@ -465,8 +460,6 @@ spark.catalog.uncacheTable("tableName")
 
 dataFrame.cache()
 ```
-
-
 
 ## broadcast join
 
@@ -499,11 +492,11 @@ broadcast(spark.table("b")).join(spark.table("a"), "id").show()
 
 [cache vs broadcast](https://stackoverflow.com/questions/38056774/spark-cache-vs-broadcast)
 
->RDDs are divided into *partitions*. These partitions themselves act as an immutable subset of the entire RDD. When Spark executes each stage of the graph, each partition gets sent to a worker which operates on the subset of the data. In turn, each worker can *cache* the data if the RDD needs to be re-iterated.
->
->Broadcast variables are used to send some immutable state *once* to each worker. You use them when you want a local copy of a variable.
->
->These two operations are quite different from each other, and each one represents a solution to a different problem.
+> RDDs are divided into *partitions*. These partitions themselves act as an immutable subset of the entire RDD. When Spark executes each stage of the graph, each partition gets sent to a worker which operates on the subset of the data. In turn, each worker can *cache* the data if the RDD needs to be re-iterated.
+> 
+> Broadcast variables are used to send some immutable state *once* to each worker. You use them when you want a local copy of a variable.
+> 
+> These two operations are quite different from each other, and each one represents a solution to a different problem.
 
 ## 小文件问题
 
@@ -520,7 +513,7 @@ broadcast(spark.table("b")).join(spark.table("a"), "id").show()
 那么，如果一个 sPartition 和 hPartition 只是一个 **多（可控数目，对应最后每个 hPartitiion 的文件数）对一** 的情况，那么文件数就是可控的。
 
 > 使用 hive 时，不会有小文件问题。hive 里只需要设置下边的这些参数，就
->
+> 
 > In pure Hive pipelines, there are configurations provided to automatically collect results into reasonably sized files, nearly transparently from the perspective of the developer, such as *hive.merge.smallfiles.avgsize*, or *hive.merge.size.per.task*.
 
 #### 解决方案

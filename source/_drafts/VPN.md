@@ -3,7 +3,7 @@ title: VPN
 toc: true
 date: 2020-05-06 19:14:51
 tags:
-	- networking
+    - networking
 ---
 
 [the great video](https://www.youtube.com/watch?v=q4P4BjjXghQ)
@@ -28,3 +28,20 @@ To protect the communication from one to another, you can build physical private
 2. the data in the tunnel is encrepted
 3. if the tunnel detects attack, it will destroy the old tunnel & create a new one.
 
+
+
+Client-Server infrastructure. We need to know:
+
+1. external address (the address of vpn server)
+
+2. username & password
+
+
+
+These factors may influence the VPN quality:
+
+1. hacker penetrate. (like said above, during the rebuilt of tunnel, packets maybe lost)
+
+2. old wiring, which will cause frequent tunnel rebuilt, too
+
+3. old routers that not allow vpn passing through
