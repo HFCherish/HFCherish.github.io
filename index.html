@@ -148,7 +148,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-count">64</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -184,6 +184,137 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://hfcherish.github.io/2023/05/09/java-thread/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/05/09/java-thread/" class="post-title-link" itemprop="url">java multithread programming</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-05-09 16:53:26" itemprop="dateCreated datePublished" datetime="2023-05-09T16:53:26+08:00">2023-05-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-05-10 11:23:12" itemprop="dateModified" datetime="2023-05-10T11:23:12+08:00">2023-05-10</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="WORDS">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">WORDS:</span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a href="https://www.digitalocean.com/community/tutorials/core-java-tutorial">Core Java Tutorial | DigitalOcean</a></p>
+<h1 id="Thread"><a href="#Thread" class="headerlink" title="Thread"></a>Thread</h1><p>Process: A process is a self contained execution environment and it can be seen as a program or application.</p>
+<p>Thread: lightweight.</p>
+<ul>
+<li><p>a process can have multiple threads running, and at least one main thread.</p>
+</li>
+<li><p>all thread share parent process code and data</p>
+</li>
+<li><p>thread creation, context switching, and intercommunication are less expensive</p>
+</li>
+<li><p>Multithreading: In multi-core system, more than one thread can run at the exactly same time. In single-core system, more than one thread can run parallel using OS feature time slicing to share the processor time.</p>
+</li>
+</ul>
+<h2 id="example"><a href="#example" class="headerlink" title="example"></a>example</h2><ul>
+<li><p>implement <code>Runnable</code>: recommended (interface-oriented programming). Support to be more functional class.</p>
+</li>
+<li><p>extends <code>Thread</code></p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// anonymous way</span></span><br><span class="line"><span class="type">Runnable</span> <span class="variable">r</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Runnable</span>()&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;My Runnable&quot;</span>);</span><br><span class="line">            &#125;&#125;;</span><br><span class="line"><span class="comment">// lambda way, since Runnable is a functional interface</span></span><br><span class="line"><span class="type">Runnable</span> <span class="variable">r1</span> <span class="operator">=</span> () -&gt; System.out.println(<span class="string">&quot;My Runnable&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HeavyWorkRunnable</span> <span class="keyword">implements</span> <span class="title class_">Runnable</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Doing heavy processing - START &quot;</span>+Thread.currentThread().getName());</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">            <span class="comment">//Get database connection, delete unused data from DB</span></span><br><span class="line">            doDBProcessing();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;Doing heavy processing - END &quot;</span>+Thread.currentThread().getName());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">doDBProcessing</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">        Thread.sleep(<span class="number">5000</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyThread</span> <span class="keyword">extends</span> <span class="title class_">Thread</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">MyThread</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;MyThread - START &quot;</span>+Thread.currentThread().getName());</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">            doDBProcessing();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;MyThread - END &quot;</span>+Thread.currentThread().getName());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">doDBProcessing</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">        Thread.sleep(<span class="number">5000</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ThreadRunExample</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">HeavyWorkRunnable</span>(), <span class="string">&quot;t1&quot;</span>);</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">t2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">HeavyWorkRunnable</span>(), <span class="string">&quot;t2&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;Starting Runnable threads&quot;</span>);</span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line">        System.out.println(<span class="string">&quot;Runnable Threads has been started&quot;</span>);</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">t3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MyThread</span>(<span class="string">&quot;t3&quot;</span>);</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">t4</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MyThread</span>(<span class="string">&quot;t4&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;Starting MyThreads&quot;</span>);</span><br><span class="line">        t3.start();</span><br><span class="line">        t4.start();</span><br><span class="line">        System.out.println(<span class="string">&quot;MyThreads has been started&quot;</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="blocked-thread-wait-notify…"><a href="#blocked-thread-wait-notify…" class="headerlink" title="blocked thread (wait, notify…)"></a>blocked thread (wait, notify…)</h2><p><img src="/../images/Thread-Lifecycle-States.png" alt="thread-life-cycle.png"></p>
+<h1 id="Callable"><a href="#Callable" class="headerlink" title="Callable"></a>Callable</h1><p>Callable is thread that can return things.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyCallable</span> <span class="keyword">implements</span> <span class="title class_">Callable</span>&lt;String&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        <span class="keyword">return</span> Thread.currentThread().getName();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String args[])</span>&#123;</span><br><span class="line">        <span class="comment">//Get ExecutorService from Executors utility class, thread pool size is 10</span></span><br><span class="line">        <span class="type">ExecutorService</span> <span class="variable">executor</span> <span class="operator">=</span> Executors.newFixedThreadPool(<span class="number">10</span>);</span><br><span class="line">        <span class="comment">//create a list to hold the Future object associated with Callable</span></span><br><span class="line">        List&lt;Future&lt;String&gt;&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Future&lt;String&gt;&gt;();</span><br><span class="line">        <span class="comment">//Create MyCallable instance</span></span><br><span class="line">        Callable&lt;String&gt; callable = <span class="keyword">new</span> <span class="title class_">MyCallable</span>();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>; i&lt; <span class="number">100</span>; i++)&#123;</span><br><span class="line">            <span class="comment">//submit Callable tasks to be executed by thread pool</span></span><br><span class="line">            Future&lt;String&gt; future = executor.submit(callable);</span><br><span class="line">            <span class="comment">//add Future to the list, we can get return value using Future</span></span><br><span class="line">            list.add(future);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(Future&lt;String&gt; fut : list)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">//print the return value of Future, notice the output delay in console</span></span><br><span class="line">                <span class="comment">// because Future.get() waits for task to get completed</span></span><br><span class="line">                System.out.println(<span class="keyword">new</span> <span class="title class_">Date</span>()+ <span class="string">&quot;::&quot;</span>+fut.get());</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException | ExecutionException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//shut down the executor service now</span></span><br><span class="line">        executor.shutdown();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Thread-Pool-Framework"><a href="#Thread-Pool-Framework" class="headerlink" title="Thread Pool Framework"></a>Thread Pool Framework</h1><p>Tread pool is a way to manage the pool of worker threads. It contains a queue that keeps tasks waiting to get executed. There’re 3 main classes:</p>
+<ol>
+<li><p><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html">ExecutorService </a>: the interface of thread pool.</p>
+</li>
+<li><p><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ThreadPoolExecutor.html">ThreadPoolExecutor </a>: the implemented thread pool, with complex functions.</p>
+</li>
+<li><p><a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executors.html">Executors </a>: factory class to create all kinds of thread pool</p>
+</li>
+</ol>
+<h2 id="some-executor-pools"><a href="#some-executor-pools" class="headerlink" title="some executor pools"></a>some executor pools</h2><p>The work queue size of an <code>ExecutorService</code> in Java depends on the type of the work queue implementation used.</p>
+<p>If the <code>ExecutorService</code> is created using the <code>Executors.newFixedThreadPool(int nThreads)</code> method, which creates a fixed-size thread pool, then the work queue size is unbounded. This means that tasks submitted to the thread pool will wait in an unbounded queue until a thread is available to execute them.</p>
+<p>If the <code>ExecutorService</code> is created using the <code>Executors.newCachedThreadPool()</code> method, which creates a thread pool that creates new threads as needed, then the work queue size is also unbounded.</p>
+<p>If the <code>ExecutorService</code> is created using the <code>Executors.newSingleThreadExecutor()</code> method, which creates a single thread executor that executes tasks sequentially in the order they are submitted, and the work queue size is also unbounded. The main difference between <code>newSingleThreadExecutor()</code> and <code>newFixedThreadPool(1)</code> is the order of execution of submitted tasks. If you need to ensure that tasks are executed in the order they are submitted, you should use <code>newSingleThreadExecutor()</code>. If you need to limit the number of concurrent tasks to one but do not care about the order of execution, you can use <code>newFixedThreadPool(1)</code>.</p>
+<p><strong>Unbounded work queue size can potentially cause memory issues if the queue grows too large.</strong></p>
+<p>If you want to create an <code>ExecutorService</code> with a bounded work queue size, you can use the <code>ThreadPoolExecutor</code> class and specify the maximum size of the work queue when creating the thread pool. In the following example, the ThreadPoolExecutor has the initial pool size as 2, maximum pool size to 4 and work queue size as 2. So if there are 4 running tasks and more tasks are submitted, the work queue will hold only 2 of them and the rest of them will be handled by <code>RejectedExecutionHandlerImpl</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.concurrent.ExecutorService;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.Executors;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.ThreadPoolExecutor;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.RejectedExecutionHandler;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.ArrayBlockingQueue;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.ThreadFactory;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WorkerPool</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> InterruptedException&#123;</span><br><span class="line">        <span class="comment">//RejectedExecutionHandler implementation</span></span><br><span class="line">        <span class="type">RejectedExecutionHandlerImpl</span> <span class="variable">rejectionHandler</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RejectedExecutionHandlerImpl</span>();</span><br><span class="line">        <span class="comment">//Get the ThreadFactory implementation to use</span></span><br><span class="line">        <span class="type">ThreadFactory</span> <span class="variable">threadFactory</span> <span class="operator">=</span> Executors.defaultThreadFactory();</span><br><span class="line">        <span class="comment">//creating the ThreadPoolExecutor with initial pool size as 2, maximum pool size to 4 and work queue size as 2</span></span><br><span class="line">        <span class="type">ThreadPoolExecutor</span> <span class="variable">executorPool</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ThreadPoolExecutor</span>(<span class="number">2</span>, <span class="number">4</span>, <span class="number">10</span>, TimeUnit.SECONDS, <span class="keyword">new</span> <span class="title class_">ArrayBlockingQueue</span>&lt;Runnable&gt;(<span class="number">2</span>), threadFactory, rejectionHandler);</span><br><span class="line">        <span class="comment">//start the monitoring thread</span></span><br><span class="line">        <span class="type">MyMonitorThread</span> <span class="variable">monitor</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MyMonitorThread</span>(executorPool, <span class="number">3</span>);</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">monitorThread</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(monitor);</span><br><span class="line">        monitorThread.start();</span><br><span class="line">        <span class="comment">//submit work to the thread pool</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>; i&lt;<span class="number">10</span>; i++)&#123;</span><br><span class="line">            executorPool.execute(<span class="keyword">new</span> <span class="title class_">WorkerThread</span>(<span class="string">&quot;cmd&quot;</span>+i));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Thread.sleep(<span class="number">30000</span>);</span><br><span class="line">        <span class="comment">//shut down the pool</span></span><br><span class="line">        executorPool.shutdown();</span><br><span class="line">        <span class="comment">//shut down the monitor thread</span></span><br><span class="line">        Thread.sleep(<span class="number">5000</span>);</span><br><span class="line">        monitor.shutdown();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">WorkerThread</span> <span class="keyword">implements</span> <span class="title class_">Runnable</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String command;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">WorkerThread</span><span class="params">(String s)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.command=s;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(Thread.currentThread().getName()+<span class="string">&quot; Start. Command = &quot;</span>+command);</span><br><span class="line">        processCommand();</span><br><span class="line">        System.out.println(Thread.currentThread().getName()+<span class="string">&quot; End.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">processCommand</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">5000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.command;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RejectedExecutionHandlerImpl</span> <span class="keyword">implements</span> <span class="title class_">RejectedExecutionHandler</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">rejectedExecution</span><span class="params">(Runnable r, ThreadPoolExecutor executor)</span> &#123;</span><br><span class="line">        System.out.println(r.toString() + <span class="string">&quot; is rejected&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyMonitorThread</span> <span class="keyword">implements</span> <span class="title class_">Runnable</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> ThreadPoolExecutor executor;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> seconds;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> run=<span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">MyMonitorThread</span><span class="params">(ThreadPoolExecutor executor, <span class="type">int</span> delay)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">this</span>.executor = executor;</span><br><span class="line">        <span class="built_in">this</span>.seconds=delay;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">shutdown</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.run=<span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>(run)&#123;</span><br><span class="line">                System.out.println(</span><br><span class="line">                    String.format(<span class="string">&quot;[monitor] [%d/%d] Active: %d, Completed: %d, Task: %d, isShutdown: %s, isTerminated: %s&quot;</span>,</span><br><span class="line">                        <span class="built_in">this</span>.executor.getPoolSize(),</span><br><span class="line">                        <span class="built_in">this</span>.executor.getCorePoolSize(),</span><br><span class="line">                        <span class="built_in">this</span>.executor.getActiveCount(),</span><br><span class="line">                        <span class="built_in">this</span>.executor.getCompletedTaskCount(),</span><br><span class="line">                        <span class="built_in">this</span>.executor.getTaskCount(),</span><br><span class="line">                        <span class="built_in">this</span>.executor.isShutdown(),</span><br><span class="line">                        <span class="built_in">this</span>.executor.isTerminated()));</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    Thread.sleep(seconds*<span class="number">1000</span>);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1815,151 +1946,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://hfcherish.github.io/2020/11/10/sqoop/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Cherish">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cherish's Blog">
-      <meta itemprop="description" content="从心所欲不逾矩">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Cherish's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/11/10/sqoop/" class="post-title-link" itemprop="url">sqoop</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-11-10 13:39:30" itemprop="dateCreated datePublished" datetime="2020-11-10T13:39:30+08:00">2020-11-10</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="WORDS">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">WORDS:</span>
-      <span>0</span>
-    </span>
-    <span class="post-meta-item" title="Reading time">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>1 mins.</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h1><p>Sqoop: sq are the first two of “sql”, oop are the last three of “hadoop”. It <strong>transfers bulk data between hdfs and relational database servers</strong>. It supports:</p>
-<ul>
-<li>Full Load</li>
-<li>Incremental Load</li>
-<li>Parallel Import&#x2F;Export (throught mapper jobs)</li>
-<li>Compression</li>
-<li>Kerberos Security Integration</li>
-<li>Data  loading directly to HIVE</li>
-</ul>
-<blockquote>
-<p>Sqoop cannot import .csv files into hdfs&#x2F;hive. It only support databases &#x2F; mainframe datasets import.</p>
-</blockquote>
-<h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><p>Sqoop provides CLI, thus you can use a simple command to conduct import&#x2F;export.</p>
-<p>The import&#x2F;export are executes in fact through map tasks.</p>
-<p><img src="/images/sqoop-20201110134912159.png" alt="sqoop-20201110134912159.png"></p>
-<p>When Import from DB:</p>
-<ul>
-<li>it split to some map tasks. And each map task will connect to DB, and fetch some rows&#x2F;tables, and write it to a file into HDFS</li>
-</ul>
-<p>When export to DB:</p>
-<ul>
-<li>it also split to some map tasks. And each map task will fetch a HDFS file, and write each record in the file as a row by specified delimiter to some table.</li>
-</ul>
-<p><img src="/images/sqoop-20201110135220097.png" alt="sqoop-20201110135220097.png"></p>
-<h1 id="Sqoop-v-s-Spark-jdbc"><a href="#Sqoop-v-s-Spark-jdbc" class="headerlink" title="Sqoop v.s. Spark jdbc"></a>Sqoop v.s. Spark jdbc</h1><p>sqoop uses mapreduce technique, while spark is a revolutionary engine to replace mapreduce technique with its in-memory execution and DAG smartness. Thus Spark jdbc is way faster than sqoop.</p>
-<ol>
-<li>You can combine all the read, transform and write operations into one script&#x2F;program instead of reading it separately through SQOOP in one script and then doing transformation and write in another.</li>
-<li>You can define a new split column on the fly (using functions like ORA_HASH) if you want the data to be partitioned in a proper way.</li>
-<li>You can control the number of connection to the database. Increasing the number of connection will surely speed up your data import.</li>
-</ol>
-<h1 id="Common-Commands"><a href="#Common-Commands" class="headerlink" title="Common Commands"></a>Common Commands</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$  sqoop import \</span><br><span class="line">	--connect jdbc:mysql://&lt;ipaddress&gt;/&lt;database name&gt;</span><br><span class="line">	--table &lt;my_table name&gt;</span><br><span class="line">	--username &lt;username_for_my_sql&gt; --password &lt;password&gt;</span><br><span class="line">  --target-dir &lt;target <span class="built_in">dir</span> <span class="keyword">in</span> HDFS <span class="built_in">where</span> data needs to be imported&gt;</span><br><span class="line">  </span><br><span class="line">$  sqoop <span class="built_in">export</span> \</span><br><span class="line">	--connect jdbc:mysql://&lt;ipaddress&gt;/&lt;database name&gt;</span><br><span class="line">	--table &lt;my_table name&gt;</span><br><span class="line">	--username &lt;username_for_my_sql&gt; --password &lt;password&gt;</span><br><span class="line">  --export-dir &lt;target <span class="built_in">dir</span> <span class="keyword">in</span> HDFS <span class="built_in">where</span> data needs to be exported&gt;</span><br></pre></td></tr></table></figure>
-
-<h1 id="Incremental-Import"><a href="#Incremental-Import" class="headerlink" title="Incremental Import"></a>Incremental Import</h1><p>增量导入时，sqoop 需要识别到增量数据，有三种方法：</p>
-<ol>
-<li>根据自增字段识别新数据（append 模式）：可以直接识别新数据并导入到 hive 中</li>
-<li>根据修改时间识别新数据（lastmodified 模式）：要求这个字段会随数据的改变而改变，但是似乎只能导入到 hdfs 中，不能直接导入到 hive 中。导入时，可以通过制定<code>--merge-key id</code> 来按 id 字段进行合并，或者之后通过 <code>sqoop merge</code> 功能单独运行</li>
-<li>根据 where 或 query 识别新数据：可能之后只能通过 <code>sqoop merge</code> 来 merge 数据</li>
-</ol>
-<blockquote>
-<p>目前 <strong>sqoop 导入时不能识别删除数据</strong>，都需要通过其他方式来解决（对比数据，或者数据上有 delete 标识符时，通过 <a href="https://docs.cloudera.com/HDPDocuments/HDP2/HDP-2.6.5/bk_data-access/content/incrementally-updating-hive-table-with-sqoop-and-ext-table.html">Incrementally Updating a Table</a> 来实现）</p>
-</blockquote>
-<h2 id="append-模式"><a href="#append-模式" class="headerlink" title="append 模式"></a>append 模式</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql://192.168.33.2:3306/doit_mall \</span><br><span class="line">--username root \</span><br><span class="line">--password root \</span><br><span class="line">--table oms_order \</span><br><span class="line">--target-dir  /tmp/query  \</span><br><span class="line">--hive-import \</span><br><span class="line">--hive-table doit12.oms_order \</span><br><span class="line">--as-textfile \</span><br><span class="line">--fields-terminated-by <span class="string">&#x27;,&#x27;</span> \</span><br><span class="line">--compress   \</span><br><span class="line">--compression-codec gzip \</span><br><span class="line">--split-by <span class="built_in">id</span> \</span><br><span class="line">--null-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--null-non-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--incremental append \	<span class="comment"># append 模式</span></span><br><span class="line">--check-column <span class="built_in">id</span> \			<span class="comment"># 自增字段</span></span><br><span class="line">--last-value 22 \				<span class="comment"># 自增字段的 last value</span></span><br><span class="line">-m 2 </span><br></pre></td></tr></table></figure>
-
-<h2 id="lastmodified-模式"><a href="#lastmodified-模式" class="headerlink" title="lastmodified 模式"></a>lastmodified 模式</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql://192.168.33.2:3306/dicts \</span><br><span class="line">--username root \</span><br><span class="line">--password root \</span><br><span class="line">--table doit_stu \</span><br><span class="line">--target-dir  /doit_stu/2020-02-09  \</span><br><span class="line">--as-textfile \</span><br><span class="line">--fields-terminated-by <span class="string">&#x27;,&#x27;</span> \</span><br><span class="line">--split-by <span class="built_in">id</span> \</span><br><span class="line">--null-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--null-non-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--incremental lastmodified \		<span class="comment"># lastmodified 模式</span></span><br><span class="line">--check-column update_time \		<span class="comment"># 时间字段</span></span><br><span class="line">--last-value <span class="string">&#x27;2020-02-09 23:59:59&#x27;</span> \	<span class="comment"># 上一次获取的数据时间</span></span><br><span class="line">--fields-terminated-by <span class="string">&#x27;,&#x27;</span> \</span><br><span class="line">--merge-key <span class="built_in">id</span> \					<span class="comment">#按照id字段进行合并</span></span><br><span class="line">-m 1 </span><br></pre></td></tr></table></figure>
-
-<h2 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h2><p>这里写的都是全量导入 hive。如果要增量，只能先导入到 hdfs，然后再做 merge</p>
-<h3 id="–where"><a href="#–where" class="headerlink" title="–where"></a>–where</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql://192.168.33.2:3306/doit_mall \</span><br><span class="line">--username root \</span><br><span class="line">--password root \</span><br><span class="line">--table oms_order \</span><br><span class="line">--hive-import \</span><br><span class="line">--hive-table doit12.oms_order \</span><br><span class="line">--delete-target-dir \</span><br><span class="line">--as-textfile \</span><br><span class="line">--fields-terminated-by <span class="string">&#x27;,&#x27;</span> \</span><br><span class="line">--compress   \</span><br><span class="line">--compression-codec gzip \</span><br><span class="line">--split-by <span class="built_in">id</span> \</span><br><span class="line">-m 2   \</span><br><span class="line">--null-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--null-non-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--<span class="built_in">where</span> <span class="string">&quot;delivery_company is null&quot;</span> \	<span class="comment"># filter condition</span></span><br><span class="line">--hive-overwrite</span><br></pre></td></tr></table></figure>
-
-<h3 id="–query"><a href="#–query" class="headerlink" title="–query"></a>–query</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">sqoop import \</span><br><span class="line">--connect jdbc:mysql://192.168.33.2:3306/doit_mall \</span><br><span class="line">--username root \</span><br><span class="line">--password root \</span><br><span class="line">--target-dir  /tmp/query  \		<span class="comment"># sqoop 导入数据到 hive，本质就是先将数据导入到 hdfs，然后再去 hive 数据库创建元数据。这里需要手动指定中间临时目标目录（不太清楚为啥）</span></span><br><span class="line">--hive-import \</span><br><span class="line">--hive-table doit12.oms_order \</span><br><span class="line">--delete-target-dir \</span><br><span class="line">--as-textfile \</span><br><span class="line">--fields-terminated-by <span class="string">&#x27;,&#x27;</span> \</span><br><span class="line">--compress   \</span><br><span class="line">--compression-codec gzip \</span><br><span class="line">--split-by <span class="built_in">id</span> \</span><br><span class="line">--null-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--null-non-string <span class="string">&#x27;\\N&#x27;</span> \</span><br><span class="line">--hive-overwrite \</span><br><span class="line">--query <span class="string">&quot;select id,member_id,order_sn,total_amount,pay_amount,status from oms_order where status=4 and \$CONDITIONS&quot;</span>  \			<span class="comment"># 查询语句，也支持复杂查询</span></span><br><span class="line">-m 2</span><br></pre></td></tr></table></figure>
-
-<h1 id="运行-sqoop-action"><a href="#运行-sqoop-action" class="headerlink" title="运行 sqoop action"></a>运行 sqoop action</h1><p>在数据接入时，特别是连接数据库增量导入数据时，这种周期性任务的执行，有很多种方式：</p>
-<ol>
-<li>写一个 long running 脚本，不断执行增量 import</li>
-<li><a href="https://www.cnblogs.com/xing901022/p/6091306.html">采用 Oozie 等调度工具来运行</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -1985,14 +1971,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">275k</span>
+    <span title="Word count total">286k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">4:10</span>
+    <span title="Reading time total">4:20</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

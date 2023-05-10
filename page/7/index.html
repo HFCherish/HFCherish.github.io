@@ -148,7 +148,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-count">64</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -184,6 +184,102 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://hfcherish.github.io/2018/05/31/javascript-spread-operator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/05/31/javascript-spread-operator/" class="post-title-link" itemprop="url">javascript 表达式和操作符</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-05-31 16:09:58" itemprop="dateCreated datePublished" datetime="2018-05-31T16:09:58+08:00">2018-05-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="WORDS">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">WORDS:</span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="扩展运算符"><a href="#扩展运算符" class="headerlink" title="... 扩展运算符"></a><code>...</code> 扩展运算符</h1><p><code>...obj</code> 是 js 的扩展运算符，可以将一个可迭代的对象在函数调用的位置展开成为多个参数,或者在数组字面量中展开成多个数组元素。(其他可参见<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators#Relational_operators">运算符介绍</a>，<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators">运算符和表达式清单 reference</a>)</p>
+<p>eg.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在数组字面量中展开</span></span><br><span class="line"><span class="comment">// 利用扩展运算符，实现了数组合并</span></span><br><span class="line"><span class="keyword">var</span> parts = [<span class="string">&#x27;shoulder&#x27;</span>, <span class="string">&#x27;knees&#x27;</span>];</span><br><span class="line"><span class="keyword">var</span> lyrics = [<span class="string">&#x27;head&#x27;</span>, ...parts, <span class="string">&#x27;and&#x27;</span>, <span class="string">&#x27;toes&#x27;</span>];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 在函数调用处展开</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">f</span>(<span class="params">x, y, z</span>) &#123; &#125;</span><br><span class="line"><span class="keyword">var</span> args = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line"><span class="title function_">f</span>(...args);</span><br></pre></td></tr></table></figure>
+
+<h1 id="96-96-template-literals"><a href="#96-96-template-literals" class="headerlink" title="&#96;&#96; template literals"></a>&#96;&#96; template literals</h1><p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals">template literals</a></p>
+<p><a href="https://www.npmjs.com/package/sql-template-strings">sql template strings</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -657,14 +753,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">275k</span>
+    <span title="Word count total">286k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">4:10</span>
+    <span title="Reading time total">4:20</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
