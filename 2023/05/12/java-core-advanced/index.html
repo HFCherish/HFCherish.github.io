@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"hfcherish.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="JVM is the heart of Java programming language. When we execute a Java program, JVM is responsible for converting the byte code to the machine-specific code. JVM is also platform-dependent and provides">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jave core(advanced topics)">
+<meta property="og:url" content="http://hfcherish.github.io/2023/05/12/java-core-advanced/index.html">
+<meta property="og:site_name" content="Cherish&#39;s Blog">
+<meta property="og:description" content="JVM is the heart of Java programming language. When we execute a Java program, JVM is responsible for converting the byte code to the machine-specific code. JVM is also platform-dependent and provides">
+<meta property="og:locale">
+<meta property="og:image" content="http://hfcherish.github.io/images/java_memory_model.png">
+<meta property="og:image" content="http://hfcherish.github.io/images/comparing_collector_types.png">
+<meta property="og:image" content="http://hfcherish.github.io/images/commercial-gc.png">
+<meta property="article:published_time" content="2023-05-12T00:04:51.000Z">
+<meta property="article:modified_time" content="2023-05-18T15:28:42.421Z">
+<meta property="article:author" content="Cherish">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://hfcherish.github.io/images/java_memory_model.png">
+
+
+<link rel="canonical" href="http://hfcherish.github.io/2023/05/12/java-core-advanced/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"Chinese","comments":true,"permalink":"http://hfcherish.github.io/2023/05/12/java-core-advanced/","path":"2023/05/12/java-core-advanced/","title":"jave core(advanced topics)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>jave core(advanced topics) | Cherish's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cherish's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Garbage-Collection"><span class="nav-number">1.</span> <span class="nav-text">Garbage Collection</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM-Memory-Model"><span class="nav-number">1.1.</span> <span class="nav-text">JVM Memory Model</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-thread-stack"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. thread stack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-heap-memory"><span class="nav-number">1.1.2.</span> <span class="nav-text">2. heap memory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-permanent-generation-x2F-Metaspace"><span class="nav-number">1.1.3.</span> <span class="nav-text">3. permanent generation &#x2F; Metaspace</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Object-Allocation"><span class="nav-number">1.2.</span> <span class="nav-text">Object Allocation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#where%E2%80%99s-string-pool"><span class="nav-number">1.2.1.</span> <span class="nav-text">where’s string pool</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Garbage-Collection-1"><span class="nav-number">1.3.</span> <span class="nav-text">Garbage Collection</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Young-Generation-GC"><span class="nav-number">1.3.1.</span> <span class="nav-text">Young Generation GC</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#workflow"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">workflow</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#when-to-trigger"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">when to trigger</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Why-eden-and-2-survivor-spaces"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">Why eden and 2 survivor spaces?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Age-tracking"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">Age tracking</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#space-size"><span class="nav-number">1.3.1.5.</span> <span class="nav-text">space size</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#promotion-failure"><span class="nav-number">1.3.1.6.</span> <span class="nav-text">promotion failure</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Old-Generation-GC"><span class="nav-number">1.3.2.</span> <span class="nav-text">Old Generation GC</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#when-to-trigger-1"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">when to trigger</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#workflow-1"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">workflow</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#resurrect-objects"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">resurrect objects</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Compaction"><span class="nav-number">1.3.2.4.</span> <span class="nav-text">Compaction</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Incremental-compaction"><span class="nav-number">1.3.2.4.1.</span> <span class="nav-text">Incremental compaction</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#External-and-Internal-Compaction"><span class="nav-number">1.3.2.4.2.</span> <span class="nav-text">External and Internal Compaction</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Sliding-Window-Schemes"><span class="nav-number">1.3.2.4.3.</span> <span class="nav-text">Sliding Window Schemes</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Compaction-Area-Sizing"><span class="nav-number">1.3.2.4.4.</span> <span class="nav-text">Compaction Area Sizing</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Strong-Weak-Soft-and-Phantom-References"><span class="nav-number">1.3.2.5.</span> <span class="nav-text">Strong, Weak, Soft and Phantom References</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Permanent-Generation-GC"><span class="nav-number">1.3.3.</span> <span class="nav-text">Permanent Generation GC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Collection-Strategies"><span class="nav-number">1.3.4.</span> <span class="nav-text">Collection Strategies</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Concurrent-collector"><span class="nav-number">1.3.4.1.</span> <span class="nav-text">Concurrent collector</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Parallel-collector"><span class="nav-number">1.3.4.2.</span> <span class="nav-text">Parallel collector</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Stop-the-world-STW"><span class="nav-number">1.3.4.3.</span> <span class="nav-text">Stop-the-world (STW)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Incremental"><span class="nav-number">1.3.4.4.</span> <span class="nav-text">Incremental</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Conservative"><span class="nav-number">1.3.4.5.</span> <span class="nav-text">Conservative</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Precise"><span class="nav-number">1.3.4.6.</span> <span class="nav-text">Precise</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Collector-Types"><span class="nav-number">1.3.5.</span> <span class="nav-text">Collector Types</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Commercial-Collectors"><span class="nav-number">1.3.6.</span> <span class="nav-text">Commercial Collectors</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Oracle%E2%80%99s-HotSpot-ParallelGC"><span class="nav-number">1.3.6.1.</span> <span class="nav-text">Oracle’s HotSpot ParallelGC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Oracle%E2%80%99s-HotSpot-CMS"><span class="nav-number">1.3.6.2.</span> <span class="nav-text">Oracle’s HotSpot CMS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Oracle%E2%80%99s-HotSpot-G1GC-Garbage-First"><span class="nav-number">1.3.6.3.</span> <span class="nav-text">Oracle’s HotSpot G1GC (Garbage First)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Monitor"><span class="nav-number">1.3.7.</span> <span class="nav-text">Monitor</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#jstat"><span class="nav-number">1.3.7.1.</span> <span class="nav-text">jstat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java-VisualVM-with-Visual-GC"><span class="nav-number">1.3.7.2.</span> <span class="nav-text">Java VisualVM with Visual GC</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tuning-Memory-Management-System"><span class="nav-number">1.4.</span> <span class="nav-text">Tuning Memory Management System</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Choose-collector-types"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">Choose collector types</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Set-heap-size"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">Set heap size</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#other"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">other</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JIT"><span class="nav-number">2.</span> <span class="nav-text">JIT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Serialization"><span class="nav-number">3.</span> <span class="nav-text">Serialization</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Serializable"><span class="nav-number">3.0.1.</span> <span class="nav-text">Serializable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#serialVersionUID"><span class="nav-number">3.0.2.</span> <span class="nav-text">serialVersionUID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Externalizable"><span class="nav-number">3.0.3.</span> <span class="nav-text">Externalizable</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Serialization-Proxy-Pattern"><span class="nav-number">3.1.</span> <span class="nav-text">Serialization Proxy Pattern</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#why"><span class="nav-number">3.1.0.1.</span> <span class="nav-text">why</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#how"><span class="nav-number">3.1.0.2.</span> <span class="nav-text">how</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ClassLoader"><span class="nav-number">4.</span> <span class="nav-text">ClassLoader</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Set-as-default-classLoader"><span class="nav-number">4.0.1.</span> <span class="nav-text">Set as default classLoader</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cherish</p>
+  <div class="site-description" itemprop="description">从心所欲不逾矩</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="sidebar-button animated">
+    <button><i class="fa fa-comment"></i>
+      Chat
+    </button>
+  </div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hfcherish" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hfcherish" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:pzcherishhf@gmail.com" title="E-Mail → mailto:pzcherishhf@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="Chinese">
+    <link itemprop="mainEntityOfPage" href="http://hfcherish.github.io/2023/05/12/java-core-advanced/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="jave core(advanced topics) | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          jave core(advanced topics)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-05-12 08:04:51" itemprop="dateCreated datePublished" datetime="2023-05-12T08:04:51+08:00">2023-05-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-05-18 23:28:42" itemprop="dateModified" datetime="2023-05-18T23:28:42+08:00">2023-05-18</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="WORDS">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">WORDS:</span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>JVM is the heart of Java programming language. When we execute a Java program, JVM is responsible for converting the byte code to the machine-specific code. JVM is also platform-dependent and provides core java functions such as memory management, garbage collection, security, etc.</p>
+<h1 id="Garbage-Collection"><a href="#Garbage-Collection" class="headerlink" title="Garbage Collection"></a>Garbage Collection</h1><p>In Java, a developer does not need to explicitly allocate and deallocate memory – the JVM and more specifically the Garbage Collector – has the duty of handling memory allocation so that the developer doesn’t have to.</p>
+<p>For most collectors GC related pauses are proportional to size of their heaps which is approximately 1 second for each gigabyte of live objects. So, a larger heap (which can be advantageous for most apps) means a longer pause.</p>
+<h2 id="JVM-Memory-Model"><a href="#JVM-Memory-Model" class="headerlink" title="JVM Memory Model"></a>JVM Memory Model</h2><p>Firstly, we need to understand the memory model.</p>
+<p><img src="/../images/java_memory_model.png" alt="java memory model"></p>
+<p>There are 3 kinds of memory jvm used:</p>
+<h3 id="1-thread-stack"><a href="#1-thread-stack" class="headerlink" title="1. thread stack"></a>1. thread stack</h3><p>Java Stack memory is used for the execution of a thread. It contains information about nested method calls down to the current position in the program. It also contains all local variables and references to objects on the heap defined in currently executing methods.</p>
+<p>Stack memory is always referenced in LIFO (Last-In-First-Out) order. Whenever a method is invoked, a new block is created in the stack memory for the method to hold local primitive values and reference to other objects in the method. As soon as the method ends, the block becomes unused and becomes available for the next method. Stack memory size is very less compared to Heap memory.</p>
+<h3 id="2-heap-memory"><a href="#2-heap-memory" class="headerlink" title="2. heap memory"></a>2. heap memory</h3><p>Java Heap space is used by java runtime to allocate memory to Objects and JRE classes. Whenever we create an object, it’s always created in the Heap space. Garbage Collection runs on the heap memory to free the memory used by objects that don’t have any reference. Any object created in the heap space has global access and can be referenced from anywhere of the application.</p>
+<p>Different Garbage Collectors have different implementation. Heap can be a single area as single-generation. Or it can be divided into two generations by the object age, which is the mostly used way currenly.</p>
+<p>At broad level, JVM Heap memory is physically divided into two parts - <strong>Young Generation</strong> and <strong>Old Generation</strong>. </p>
+<p>The young generation is the place where all the new objects are created. When the young generation is filled, garbage collection is performed. This garbage collection is called <strong>Minor GC</strong>. Young Generation is divided into three parts - <strong>Eden Memory</strong> and two <strong>Survivor Memory</strong> spaces.</p>
+<p>Old Generation memory contains the objects that are long-lived and survived after many rounds of Minor GC. Usually, garbage collection is performed in Old Generation memory when it’s full. Old Generation Garbage Collection is called <strong>Major GC</strong> and usually takes a longer time.</p>
+<p>By dividing memory into the young and old generations, the JVM can quickly identify and collect short-lived objects, while allowing long-lived objects to reside in the old generation. This helps to minimize the overhead of garbage collection and improve the performance of Java programs.</p>
+<p>For more about the garbage collecting process, see below <a href="#object-allocation">Object Allocation</a> and <a href="#garbage-collection">Garbage Collection</a>.</p>
+<h3 id="3-permanent-generation-x2F-Metaspace"><a href="#3-permanent-generation-x2F-Metaspace" class="headerlink" title="3. permanent generation &#x2F; Metaspace"></a>3. permanent generation &#x2F; Metaspace</h3><p><strong>Permanent Generation</strong>: This was a memory region in earlier versions of Java that was used to store metadata related to the Java classes and the Java Virtual Machine itself, such as the bytecode, class objects, method objects, and constant pools. </p>
+<p>However, in Java 8 and later versions, the Permanent Generation has been removed and replaced with the Metaspace.</p>
+<p><strong>Metaspace</strong>: It is a memory region that stores metadata related to the Java classes and the Java Virtual Machine itself. Unlike the Permanent Generation, the size of the Metaspace is not fixed and can be dynamically adjusted by the JVM at runtime.</p>
+<p>The following types of metadata are typically stored in the Metaspace:</p>
+<ol>
+<li><p>Class metadata: Metaspace stores information about classes, including class names, superclass and interfaces, modifiers (such as public, private, abstract, etc.), annotations, and method information (names, signatures, return types, parameter types, etc.).</p>
+</li>
+<li><p>Method metadata: Metaspace holds metadata about methods, such as method names, signatures, return types, parameter types, annotations, access modifiers, and bytecode instructions.</p>
+</li>
+<li><p>Field metadata: Metaspace stores information about class fields, including field names, types, modifiers, annotations, and access control information.</p>
+</li>
+<li><p>Constant pool: The constant pool is a table maintained by Metaspace that contains symbolic references, literal values, and other constant data used by the class. It includes items such as class names, method and field names, string literals, numeric constants, and method references.</p>
+</li>
+<li><p>Annotations: Metaspace stores metadata related to annotations, which are used to provide additional information about classes, methods, fields, and other program elements.</p>
+</li>
+<li><p>Reflection-related information: Metaspace holds information required for Java reflection, which allows runtime inspection and modification of classes, methods, and fields.</p>
+</li>
+</ol>
+<p>The Metaspace is designed to be dynamically expandable to accommodate the growing number of loaded classes and their associated metadata. It allows for efficient memory allocation and management of class-related information at runtime.</p>
+<h2 id="Object-Allocation"><a href="#Object-Allocation" class="headerlink" title="Object Allocation"></a>Object Allocation</h2><p>The method primitive local variables are allocated in thread stacks.</p>
+<p>Class static primitive variables are allocatted in constant pool of Metaspace. However the class static complex objects are allocated in the heap, and the constant pool only save the reference to the objects.</p>
+<p>Almost all other objects are allocated in the heap. Heap is for object allocation. In generational heap, the objects are almost always allocated into the young generation, or more specifically, the eden space, except for large objects, which are allocated directly to the old generation to avoid copying overhead.</p>
+<h3 id="where’s-string-pool"><a href="#where’s-string-pool" class="headerlink" title="where’s string pool"></a>where’s string pool</h3><p>The string pool can belong to Heap or Perm Gen, depending on the JVM memory manager implementation.</p>
+<p>In Java, the string pool is a special area of memory that resides in the Java heap. The string pool is a storage area where Java stores a pool of unique string literals, i.e., string objects that are explicitly written as literals in the source code (e.g., “Hello”, “World”).</p>
+<p>When you create a string literal in Java, such as assigning a value to a string variable using double quotes, the Java compiler checks if the same string already exists in the string pool. If it does, the existing string object is reused; otherwise, a new string object is created and added to the string pool.</p>
+<p>The string pool provides several benefits, including memory efficiency and improved performance for string comparisons. By reusing string literals, Java avoids unnecessary duplication of string objects, saving memory. Additionally, string comparisons using the <code>equals()</code> method can be optimized by comparing references directly when the strings are interned in the string pool.</p>
+<p>It’s important to note that not all string objects reside in the string pool. Strings that are dynamically created using the <code>new</code> keyword (e.g., <code>new String(&quot;Dynamic&quot;)</code>) or through string concatenation operations (<code>&quot;Hello&quot; + &quot;World&quot;</code>) are not added to the string pool unless explicitly interned using the <code>intern()</code> method. Interning a string using the <code>intern()</code> method allows you to place it in the string pool manually.</p>
+<p>Overall, the string pool in Java is a specialized area of the heap memory where unique string literals are stored, promoting memory efficiency and improving string comparison performance.</p>
+<h2 id="Garbage-Collection-1"><a href="#Garbage-Collection-1" class="headerlink" title="Garbage Collection"></a>Garbage Collection</h2><p>The <strong>young generation hosts most of the newly created objects</strong>. An empirical study of most applications shows that majority of objects are quickly short lived and therefore, soon become eligible for collection. Therefore, new objects start their journey here and are only “promoted” to the old generation space after they have attained a certain “age”.</p>
+<p>On young Generation, minor GC is executed. Minor GC can clean most of the short-lived objects by scanning only small limited area (the eden space and one of the survivor space), which is a lot more quick than scanning the big heap. And it also use different algorithm which is swift to collect objects.</p>
+<h3 id="Young-Generation-GC"><a href="#Young-Generation-GC" class="headerlink" title="Young Generation GC"></a>Young Generation GC</h3><h4 id="workflow"><a href="#workflow" class="headerlink" title="workflow"></a>workflow</h4><p>Young Generation are further divided into Eden space and 2 survivor spaces. The detail steps for the minor GC workflow:</p>
+<ol>
+<li><p> <strong>Any new objects are allocated to the Eden space</strong>. Both survivor spaces start out empty. When the Eden space fills up, a minor garbage collection is triggered. Referenced objects are moved to the first survivor space. Unreferenced objects are deleted.</p>
+</li>
+<li><p>During the next minor GC, the same thing happens to the Eden space. Unreferenced objects are deleted and referenced objects are moved to a survivor space. However, in this case, they are moved to the second survivor space (S2). In addition, objects from the last minor GC in the first survivor space (S1) have their age incremented and are moved to S2. Once all surviving objects have been moved to S2, both S1 and Eden space are cleared. At this point, S2 contains objects with different ages.</p>
+</li>
+<li><p>At the next minor GC, the same process is repeated. However this time the survivor spaces switch. Referenced objects are moved to S1 from both Eden and S2. Surviving objects are aged. Eden and S2 are cleared.</p>
+</li>
+<li><p>After every minor garbage collection cycle, the age of each object is checked. Those that have reached a certain arbitrary age, for example, 8, are promoted from the young generation to the old or tenured generation. For all subsequent minor GC cycles, objects will continue to be promoted to the old generation space.</p>
+</li>
+</ol>
+<p>The primary algorithm used for Minor GC is called the <strong>copying or scavenging</strong> algorithm, not the mark-and-sweep algorithm in Major GC.</p>
+<ol>
+<li><p>The collector identifies live objects in the young generation by tracing object references starting from the root set (such as static variables, local variables, etc.). This process is known as “tracing” or “marking,” where live objects are marked as reachable.</p>
+</li>
+<li><p>The live objects are then copied from the Eden space and one of the Survivor spaces to the other empty Survivor space. This step is called “compacting” or “copying.”</p>
+</li>
+<li><p>The memory space occupied by the non-live objects (garbage) is completely reclaimed and made available for future allocations.</p>
+</li>
+<li><p>After the copying process, the roles of the Survivor spaces are swapped. The Survivor space that was just used becomes empty and ready to receive live objects during the next minor GC.</p>
+</li>
+</ol>
+<p>Deciding when to promote objects can dramatically improve efficiency. Keeping objects in the young generation a little longer may allow many of them to die and save collection time. If you keep them too long the young generation can run out of space or ruin the generational assumption altogether. Waiting too long to promote can also dramatically increase the work needed to copy the live objects and therefore the time it takes to do GC.</p>
+<p>Minor GC is swift, also because there’s <strong>remembered set</strong>.</p>
+<p>Generational collectors use a ‘remembered set’ to track all references into the young generation from the outside, so the collector doesn’t have to scan for them. This set is also used as part of the ‘roots’ for the garbage collector. A common technique is ‘card marking’, which uses a bit (or byte) indicating that a word or region in the old generation is suspect. These ‘marks’ can be precise or imprecise, meaning it may record the exact location or just a region in memory. Write barriers are used to track references from the young generation into the old generation and keep the remembered set up to date. Oracle’s HotSpot uses what’s called a ‘blind store’. Every time you store a reference it marks a card. This works well, because checking the reference takes more CPU time, so the system saves time by just marking the card.</p>
+<h4 id="when-to-trigger"><a href="#when-to-trigger" class="headerlink" title="when to trigger"></a>when to trigger</h4><ol>
+<li><p>Eden Space Exhaustion: When the Eden space becomes full, a minor GC is triggered.</p>
+</li>
+<li><p>Survivor Space Threshold: When the survivor space, which is the survivor space currently being used for object survivorship after minor GC, reaches a certain threshold (often configurable), a minor GC is triggered.</p>
+</li>
+</ol>
+<h4 id="Why-eden-and-2-survivor-spaces"><a href="#Why-eden-and-2-survivor-spaces" class="headerlink" title="Why eden and 2 survivor spaces?"></a>Why eden and 2 survivor spaces?</h4><p>There’re always an empty survivor space. It is important because it provides a clean area for live objects and allows efficient copying of live objects during each minor GC.</p>
+<p>By keeping the Eden space separate from the Survivor spaces, the generational garbage collector can treat them as distinct regions representing the young generation and survivor generation. This separation aligns with the generational hypothesis, where most objects in the young generation have a shorter lifespan compared to objects in the survivor or tenured generations. It allows the garbage collector to optimize its collection strategies and policies based on the different characteristics of these generations.</p>
+<p>Besides, it simplifies the allocation of new objects. Objects are allocated directly into the Eden space, which provides a clean region for new object allocation.</p>
+<p>Combining the Eden space and one of the Survivor spaces into a single space is indeed a viable approach that can be taken in some garbage collection algorithms. In fact, certain garbage collectors, such as the Shenandoah garbage collector, employ a design that combines the Eden space and one of the Survivor spaces into a single region called the “forwarding space.”</p>
+<h4 id="Age-tracking"><a href="#Age-tracking" class="headerlink" title="Age tracking"></a>Age tracking</h4><p>Objects survive serveral minor GC cycles, are promoted to old generation. The ages of the objects are calcuated as below:</p>
+<ol>
+<li><p>Age Tracking: Objects that survive a young generation collection are promoted to the Survivor spaces. The garbage collector keeps track of the number of times an object has survived collection cycles. This tracking is often done using a technique called “age bits” or “age counters.”</p>
+</li>
+<li><p>Age Threshold: The garbage collector has an age threshold or limit that determines when an object is considered mature or aged. This threshold defines the number of collection cycles an object must survive to be promoted to the old generation. The specific age threshold can be configurable or determined by heuristics based on the JVM implementation.</p>
+</li>
+<li><p>Promotion to Old Generation: When an object’s age surpasses the age threshold, it is considered mature and is promoted to the old generation.</p>
+</li>
+</ol>
+<h4 id="space-size"><a href="#space-size" class="headerlink" title="space size"></a>space size</h4><p>The size of the Eden space and the two Survivor spaces in Java’s generational garbage collection can vary depending on the JVM implementation and configuration settings. The default sizes are typically determined based on the heap size, the garbage collector algorithm being used, and other factors.</p>
+<p>In the HotSpot JVM, which is the most widely used JVM implementation, the sizes of the Eden space and Survivor spaces are configurable through JVM options. The options commonly used to control these sizes are:</p>
+<ol>
+<li><p><code>-Xmn</code> or <code>-XX:NewSize</code>: This option sets the initial and maximum size of the young generation, which includes the Eden space and the two Survivor spaces combined. For example, <code>-Xmn256m</code> sets the young generation size to 256 megabytes.</p>
+</li>
+<li><p><code>-XX:SurvivorRatio</code>: This option specifies the ratio of Eden space size to each Survivor space size. The default value is often 8, meaning that each Survivor space will be one-eighth the size of the Eden space.</p>
+</li>
+</ol>
+<h4 id="promotion-failure"><a href="#promotion-failure" class="headerlink" title="promotion failure"></a>promotion failure</h4><p>If the available space in the destination Survivor space is not sufficient to accommodate all the live objects being copied from the Eden space and one Survivor space, a condition known as “promotion failure” or “promotion bottleneck” occurs. This situation arises when the objects surviving in the young generation (Eden and Survivor spaces) exceed the capacity of the available Survivor space.</p>
+<p>When a promotion failure happens, the garbage collector needs to handle it appropriately. Here are a few common scenarios:</p>
+<ol>
+<li><p>Resize Survivor space: The garbage collector may dynamically adjust the sizes of the Survivor spaces to provide more space for the promotion. It can either increase the size of the Survivor spaces or allocate additional memory to accommodate the live objects. This resizing approach allows the promotion to proceed successfully by providing sufficient space.</p>
+</li>
+<li><p>Perform Full GC: If resizing the Survivor space is not possible or does not alleviate the promotion bottleneck, the garbage collector may initiate a Full GC (major garbage collection) instead. During a Full GC, the entire heap, including both the young and old generations, is collected. The goal is to reclaim memory, promote objects to the old generation, and potentially resize memory regions if needed. Full GCs are more time-consuming and can significantly impact application performance.</p>
+</li>
+<li><p>Trigger Out-of-Memory Error: In some cases, if the JVM determines that there is no feasible way to accommodate the promotion, it may throw an Out-of-Memory Error. This error indicates that the JVM has exhausted all available memory and cannot allocate additional space for the promotion.</p>
+</li>
+</ol>
+<p>To avoid promotion bottlenecks, it’s essential to appropriately size the Survivor spaces based on the application’s memory usage patterns, allocate sufficient memory to the JVM, and optimize the allocation and deallocation of objects to minimize unnecessary promotions.</p>
+<h3 id="Old-Generation-GC"><a href="#Old-Generation-GC" class="headerlink" title="Old Generation GC"></a>Old Generation GC</h3><p>Major GC (Full GC) are executed on old generation when it’s full.</p>
+<h4 id="when-to-trigger-1"><a href="#when-to-trigger-1" class="headerlink" title="when to trigger"></a>when to trigger</h4><ol>
+<li><p>Heap Space Exhaustion: When the available memory in the heap is nearly full or reaches a certain threshold, the JVM may trigger a major GC.</p>
+</li>
+<li><p>Allocation Failure: If an allocation request for a large object cannot be fulfilled due to insufficient contiguous space in the heap, a major GC may be triggered.</p>
+</li>
+<li><p>Explicit Invocation: Major GC can also be triggered explicitly by invoking the <code>System.gc()</code> method or using JVM-specific flags. However, it’s important to note that the JVM may choose to ignore explicit GC requests, as it has its own internal mechanisms for determining when to perform garbage collection.</p>
+</li>
+<li><p>Time-Based Triggers: Some garbage collection algorithms employ time-based triggers where a major GC is initiated after a certain amount of time has elapsed since the last major GC or based on specific time intervals.</p>
+</li>
+</ol>
+<h4 id="workflow-1"><a href="#workflow-1" class="headerlink" title="workflow"></a>workflow</h4><p>The most common used algorithm in major GC is the mark-and-sweep algorithm.</p>
+<ol>
+<li><p>Marking:</p>
+<ul>
+<li>The first step is to mark all the live objects in the heap. The process starts from the root objects, such as static variables, local variables in active threads, and other reachable objects.</li>
+<li>Each live object is traversed recursively, marking its references to other objects as live as well. This process continues until all reachable objects are marked.</li>
+<li>To mark an object, a flag or a bit is typically set in its header or memory structure to indicate that it is live.</li>
+<li>To handle cycles in the object graph, the garbage collector typically uses some form of cycle detection mechanism.</li>
+<li>After the graph traversal phase, the <code>finalize</code> method is typically called. However, it’s not recommended to use <code>finalize</code>, see <a href="#resurrect-objects">resurrect objects</a></li>
+</ul>
+</li>
+<li><p>Sweeping:</p>
+<ul>
+<li>This phase iterates over the entire heap, looking for unmarked objects to reclaim the memory occupied by them.</li>
+<li>To reclaim, the garbage collector can update its internal data structures, such as the free space or available memory list, to indicate the newly freed memory regions.</li>
+</ul>
+</li>
+</ol>
+<h4 id="resurrect-objects"><a href="#resurrect-objects" class="headerlink" title="resurrect objects"></a>resurrect objects</h4><p>Object resurrection occurs via the following process. First, an object becomes <em>garbage</em> when it is no longer reachable from the program, and may be collected (destroyed and deallocated). Then, during object destruction, before the garbage collector deallocates the object, a <a href="https://en.wikipedia.org/wiki/Finalizer" title="Finalizer">finalizer</a> method may be run, which may in turn make that object or another garbage object (reachable from the object with a finalizer) reachable again by creating references to it, as a finalizer may contain arbitrary code. If this happens, the referenced object – which is not necessarily the finalized object – is no longer garbage, and cannot be deallocated, as otherwise the references to it would become <a href="https://en.wikipedia.org/wiki/Dangling_reference" title="Dangling reference">dangling references</a> and cause errors when used, generally program crash or unpredictable behavior. Instead, in order to maintain <a href="https://en.wikipedia.org/wiki/Memory_safety" title="Memory safety">memory safety</a>, the object is returned to life or <em>resurrected.</em></p>
+<p>In order to detect this, a garbage collector will generally do <a href="https://en.wikipedia.org/w/index.php?title=Two-phase_collection&action=edit&redlink=1" title="Two-phase collection (page does not exist)">two-phase collection</a> in the presence of finalizers: first finalize any garbage that has a finalizer, and then re-check <em>all</em> garbage (or all garbage reachable from the objects with finalizers), in case the finalizers have resurrected some garbage. Since the <code>finalize</code> method is executed once and only once, regardless of whether the object is actually reclaimed or not, the above policy won’t reclaim the resurrect objects. This adds overhead and delays memory reclamation.</p>
+<p>Thus <strong>the <code>finalize</code> method has been deprecated</strong> since Java 9, and the recommended approach for resource cleanup is to use try-with-resources or other explicit resource management techniques (e.g., <code>close()</code>).</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ResurrectExample</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ResurrectedObject resurrectedObject;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">ResurrectedObject</span> <span class="variable">object</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ResurrectedObject</span>();</span><br><span class="line">        object = <span class="literal">null</span>; <span class="comment">// Object becomes eligible for garbage collection</span></span><br><span class="line">        System.gc();   <span class="comment">// Trigger garbage collection</span></span><br><span class="line">        System.out.println(resurrectedObject.getMessage());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">ResurrectedObject</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> String message;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="title function_">ResurrectedObject</span><span class="params">()</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.message = <span class="string">&quot;Initial message&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> String <span class="title function_">getMessage</span><span class="params">()</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> message;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">finalize</span><span class="params">()</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">            <span class="built_in">super</span>.finalize();</span><br><span class="line">            resurrectedObject = <span class="built_in">this</span>; <span class="comment">// Resurrect the object</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>}</p>
+<h4 id="Compaction"><a href="#Compaction" class="headerlink" title="Compaction"></a>Compaction</h4><p>Objects that are allocated next to each other will not necessarily become unreachable (“die”) at the same time. This means that the heap may become fragmented after a garbage collection, so that the free spaces in the heap are many but small, making allocation of large objects hard or even impossible. Free spaces that are smaller than the minimum size can not be used at all, and the garbage collector discards them as <em>dark matter</em>.</p>
+<p>To reduce fragmentation, some GC compacts a part of the heap at every garbage collection (old collection). Compaction moves objects closer together and further down in the heap, thus creating larger free areas near the top of the heap. As these objects are moved, the collector must fix all references in the threads to these live objects, called ‘remapping’. Remap has to cover all references that could point to an object, so it usually scans everything. The amount of work done in this phase is generally linear to the size of the live set.</p>
+<p>Not all garbage collection algorithms include a separate compaction phase. Some collectors, such as the G1 (Garbage-First) collector, use a region-based approach where memory is divided into fixed-size regions, and free space is managed within those regions without the need for compaction.</p>
+<p>Compaction is performed at the beginning of or during the sweep phase and while all Java threads are paused.</p>
+<h5 id="Incremental-compaction"><a href="#Incremental-compaction" class="headerlink" title="Incremental compaction"></a>Incremental compaction</h5><p>Incremental compaction is used in a couple of commercial collectors (Oracle G1 and the Balanced Collector from IBM). This technique assumes that some regions of memory are more popular than others, although this is not always the case depending on the application. The GC algorithm tracks cross-region remembered sets (i.e. which region points to which). This allows the collector to compact a single region at a time and only scan regions pointing into it when remapping all potential references. The collector identifies region sets that fit into limited pause times, allowing the maximum time for application interruption to be controlled. Large heaps have fewer non-popular regions; the number of regions pointing into a single region tends to be linear to the size of the heap. Because of this, the work for this type of compaction can grow with the square of the heap size.</p>
+<h5 id="External-and-Internal-Compaction"><a href="#External-and-Internal-Compaction" class="headerlink" title="External and Internal Compaction"></a>External and Internal Compaction</h5><p>The JRockit JVM uses two compaction methods called <em>external compaction</em> and <em>internal compaction</em>. External compaction moves (evacuates) the objects within the compaction area to free positions outside the compaction area and as far down in the heap as possible. Internal compaction moves the objects within the compaction area as far down in the compaction area as possible, thus moving them closer together.</p>
+<p>The JVM selects a compaction method depending on the current garbage collection mode and the position of the compaction area. External compaction is typically used near the top of the heap, while internal compaction is used near the bottom where the density of objects is higher.</p>
+<h5 id="Sliding-Window-Schemes"><a href="#Sliding-Window-Schemes" class="headerlink" title="Sliding Window Schemes"></a>Sliding Window Schemes</h5><p>The position of the compaction area changes at each garbage collection, using one or two sliding windows to determine the next position. Each sliding window moves a notch up or down in the heap at each garbage collection, until it reaches the other end of the heap or meets a sliding window that moves in the opposite direction, and starts over again. Thus the whole heap is eventually traversed by compaction over and over again.</p>
+<h5 id="Compaction-Area-Sizing"><a href="#Compaction-Area-Sizing" class="headerlink" title="Compaction Area Sizing"></a>Compaction Area Sizing</h5><p>The size of the compaction area depends on the garbage collection mode used. In throughput mode the compaction area size is static, while all other modes, including the static mode, adjust the compaction area size depending on the compaction area position, aiming at keeping the compaction times equal throughout the run. The compaction time depends on the number of objects moved and the number of references to these objects. Thus the compaction area will be smaller in parts of the heap where the object density is high or where the amount of references to the objects within the area is high. Typically the object density is higher near the bottom of the heap than at the top of the heap, except at the very top where the latest allocated objects are found. Thus the compaction areas are usually smaller near the bottom of the heap than in the top half of the heap.</p>
+<h4 id="Strong-Weak-Soft-and-Phantom-References"><a href="#Strong-Weak-Soft-and-Phantom-References" class="headerlink" title="Strong, Weak, Soft and Phantom References"></a>Strong, Weak, Soft and Phantom References</h4><p>In Java, strong, weak, soft, and phantom references are different types of references that provide varying levels of control over object lifecycle and garbage collection. Here’s a brief explanation of each type:</p>
+<ol>
+<li><p>Strong Reference:</p>
+<p>Strong references are the default type of reference in Java. An object with a strong reference remains reachable as long as the reference itself is in scope or actively referenced. The garbage collector does not reclaim objects that have at least one strong reference.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Object</span> <span class="variable">strongRef</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Object</span>();</span><br></pre></td></tr></table></figure>
+
+<p>In this example, the <code>strongRef</code> is a strong reference to the <code>Object</code> instance. As long as there is an active strong reference to an object, it won’t be eligible for garbage collection.</p>
+</li>
+<li><p>Weak Reference:</p>
+<p>Weak references allow objects to be eligible for garbage collection even if they have weak references pointing to them. Weak references are useful for implementing caches or managing non-essential or optional data. When the garbage collector detects an object with only weak references, it is free to reclaim the object’s memory.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WeakReference&lt;Object&gt; weakRef = <span class="keyword">new</span> <span class="title class_">WeakReference</span>&lt;&gt;(<span class="keyword">new</span> <span class="title class_">Object</span>());</span><br></pre></td></tr></table></figure>
+
+<p>Here, <code>weakRef</code> is a weak reference to the <code>Object</code> instance. Weak references are cleared and become eligible for garbage collection when there are no strong references to the object.</p>
+</li>
+<li><p>Soft Reference:</p>
+<p>Soft references are similar to weak references but have a stronger guarantee for longer retention. The garbage collector only reclaims objects with soft references if memory becomes scarce. Soft references are commonly used for implementing memory-sensitive caches or data structures that prioritize preserving memory over strong references.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SoftReference&lt;Object&gt; softRef = <span class="keyword">new</span> <span class="title class_">SoftReference</span>&lt;&gt;(<span class="keyword">new</span> <span class="title class_">Object</span>());</span><br></pre></td></tr></table></figure>
+
+<p>The <code>softRef</code> is a soft reference to the <code>Object</code> instance. Soft references are similar to weak references but have a higher tendency to survive garbage collection. They are typically used for implementing caches or other memory-sensitive caches.</p>
+</li>
+<li><p>Phantom Reference:</p>
+<p>Phantom references are the weakest type of reference. They provide a way to get notified when an object is about to be finalized but do not prevent the object from being collected. Phantom references are often used for monitoring or performing post-mortem cleanup actions on objects.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ReferenceQueue&lt;Object&gt; referenceQueue = <span class="keyword">new</span> <span class="title class_">ReferenceQueue</span>&lt;&gt;();</span><br><span class="line">PhantomReference&lt;Object&gt; phantomRef = <span class="keyword">new</span> <span class="title class_">PhantomReference</span>&lt;&gt;(<span class="keyword">new</span> <span class="title class_">Object</span>(), referenceQueue);</span><br></pre></td></tr></table></figure>
+
+<p>In this example, <code>phantomRef</code> is a phantom reference to the <code>Object</code> instance. Phantom references are the weakest type of reference and are enqueued in a <code>ReferenceQueue</code> after the object has been finalized. They are useful for performing post-mortem cleanup actions.</p>
+</li>
+</ol>
+<h3 id="Permanent-Generation-GC"><a href="#Permanent-Generation-GC" class="headerlink" title="Permanent Generation GC"></a>Permanent Generation GC</h3><p>With the introduction of the Metaspace in Java 8 and later versions, the collection of class metadata and interned strings is handled by the native memory management system rather than the traditional garbage collection process used for the Java heap. The Metaspace has its own mechanisms for managing memory, such as native memory allocation and deallocation, which are typically handled by the underlying operating system.</p>
+<h3 id="Collection-Strategies"><a href="#Collection-Strategies" class="headerlink" title="Collection Strategies"></a>Collection Strategies</h3><h4 id="Concurrent-collector"><a href="#Concurrent-collector" class="headerlink" title="Concurrent collector"></a>Concurrent collector</h4><p>The <em>mostly concurrent mark and sweep strategy</em> (often simply called <em>concurrent garbage collection</em>) allows the Java threads to continue running during large portions of the garbage collection. The threads must however be stopped a few times for synchronization.</p>
+<p>The mostly concurrent mark phase is divided into four parts:</p>
+<ul>
+<li><em>Initial marking</em>, where the root set of live objects is identified. This is done while the Java threads are paused.</li>
+<li><em>Concurrent marking</em>, where the references from the root set are followed in order to find and mark the rest of the live objects in the heap. This is done while the Java threads are running.</li>
+<li><em>Precleaning</em>, where changes in the heap during the concurrent mark phase are tracked in card marks and any additional live objects are found and marked. This is done while the Java threads are running.</li>
+<li><em>Final marking</em>, where changes during the precleaning phase are identified and any additional live objects are found and marked. This is done while the Java threads are paused.</li>
+</ul>
+<p>The mostly concurrent sweep phase consists of four parts:</p>
+<ul>
+<li>Sweeping of one half of the heap. This is done while the Java threads are running and are allowed to allocate objects in the part of the heap that isn’t currently being swept.</li>
+<li>A short pause to switch halves.</li>
+<li>Sweeping of the other half of the heap. This is done while the Java threads are running and are allowed to allocate objects in the part of the heap that was swept first.</li>
+<li>A short pause for synchronization and recording statistics.</li>
+</ul>
+<h4 id="Parallel-collector"><a href="#Parallel-collector" class="headerlink" title="Parallel collector"></a>Parallel collector</h4><p>The parallel mark and sweep strategy (also called the <em>parallel garbage collector</em>) uses all available CPUs in the system for performing the garbage collection as fast as possible. All Java threads are paused during the entire parallel garbage collection. </p>
+<p>A collector can be concurrent but not parallel, and it can be concurrent AND parallel. (Side note – be cautious when researching older literature on garbage collection, since what we used to call parallel is now called concurrent.)</p>
+<h4 id="Stop-the-world-STW"><a href="#Stop-the-world-STW" class="headerlink" title="Stop-the-world (STW)"></a>Stop-the-world (STW)</h4><p> It’s the opposite of concurrent. It performs garbage collection while the application is completely stopped.</p>
+<h4 id="Incremental"><a href="#Incremental" class="headerlink" title="Incremental"></a>Incremental</h4><p>It performs garbage collection as a series of smaller increments with potentially long gaps in between. The application is stopped during garbage collection but runs in between increments. Moving – the collector moves objects during garbage collection and has to update references to those live objects.</p>
+<h4 id="Conservative"><a href="#Conservative" class="headerlink" title="Conservative"></a>Conservative</h4><p> most non-managed runtimes are conservative. In this model, the collector is unsure of whether a field is a reference or not, so it assumes that it is. This is in contrast to a Precise Collector.</p>
+<h4 id="Precise"><a href="#Precise" class="headerlink" title="Precise"></a>Precise</h4><p>A precise collector knows exactly where every possible object reference is. A collector cannot be a moving collector without also being precise, because you have to know which references to fix when you move the live objects. Precise collectors identify the live objects in the memory heap, reclaim resources held by dead objects and periodically relocate live objects.</p>
+<p>Most of the work the virtual machine does to be precise, is actually in the compiler, not the collector itself. All commercial JVMs today are moving and precise.</p>
+<h3 id="Collector-Types"><a href="#Collector-Types" class="headerlink" title="Collector Types"></a>Collector Types</h3><p><strong>1. Mark&#x2F;Sweep&#x2F;Compact Collector</strong></p>
+<p>performs the three phases as three separate steps.</p>
+<p><strong>2. Mark&#x2F;Compact Collector</strong></p>
+<p>skips the sweep and moves live objects to a contiguous area of the heap.</p>
+<p><strong>3. Copying Collector</strong></p>
+<p>performs all three phases in one pass. A copying collector is pretty aggressive. It uses a ‘from’ and ‘to’ space and moves all the live objects then fixes the references all in one pass. When the ‘from’ space is empty the collection is complete. Work done in a copying collector is linear to the size of the live set.</p>
+<p><strong>4. Generational Collectors</strong> </p>
+<p>A generational collector is based on the hypothesis that most objects die young. This is the collector introduced above. </p>
+<p>Commercial server-side JVMs typically use a copying collector for the young generation that employs a monolithic, stop-the-world collection. In other words, the collector stops application processing and copies the entire live set into a new section of the heap. The old generation usually uses a Mark&#x2F;Sweep&#x2F;Compact collector, which may be stop-the-world, concurrent,mostly concurrent, incremental stop-the-world or mostly incremental stop-the-world.</p>
+<p><img src="/../images/comparing_collector_types.png" alt="comparing collector types"></p>
+<h3 id="Commercial-Collectors"><a href="#Commercial-Collectors" class="headerlink" title="Commercial Collectors"></a>Commercial Collectors</h3><h4 id="Oracle’s-HotSpot-ParallelGC"><a href="#Oracle’s-HotSpot-ParallelGC" class="headerlink" title="Oracle’s HotSpot ParallelGC"></a>Oracle’s HotSpot ParallelGC</h4><p>This is the default collector for HotSpot. It uses a monolithic, stop-the-world copying collector for the young generation and a monolithic, stop-the-world Mark&#x2F;Sweep&#x2F;Compact algorithm for the old generation.</p>
+<h4 id="Oracle’s-HotSpot-CMS"><a href="#Oracle’s-HotSpot-CMS" class="headerlink" title="Oracle’s HotSpot CMS"></a>Oracle’s HotSpot CMS</h4><p>The Concurrent Mark&#x2F;Sweep collector (CMS) is an option in HotSpot. It attempts to reduce the old generation pauses as much as possible by concurrently marking and sweeping the old generation without compacting. Once the old generation becomes too fragmented, it falls back to a monolithic, stop-the-world compaction.</p>
+<p>CMS performs mostly concurrent marking for old generation. For young generation, it’s the same as above.</p>
+<h4 id="Oracle’s-HotSpot-G1GC-Garbage-First"><a href="#Oracle’s-HotSpot-G1GC-Garbage-First" class="headerlink" title="Oracle’s HotSpot G1GC (Garbage First)"></a>Oracle’s HotSpot G1GC (Garbage First)</h4><p>G1 is an option in HotSpot. Its goal is to avoid, “as much as possible” a full GC. G1 uses a mostly concurrent marker for the old generation. It marks concurrently as much as possible, then uses a stop-theworld pause to catch up on mutations and reference processing. G1 tracks inter-regional relationships in remembered sets and does not use fine-grained free lists. It uses stop-the-world, mostly incremental compaction and delays compaction of popular objects and regions as much as possible. G1 falls back to monolithic, stop-the-world full compaction of these popular areas when needed.</p>
+<p>For young generation, it’s the same as above.</p>
+<p><img src="/../images/commercial-gc.png" alt="commercial GC"> </p>
+<h3 id="Monitor"><a href="#Monitor" class="headerlink" title="Monitor"></a>Monitor</h3><p>We can use the Java command line as well as UI tools for monitoring garbage collection activities of an application.</p>
+<h4 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h4><p>We can use <code>jstat</code> command line tool to monitor the JVM memory and garbage collection activities. It’s shipped with standard JDK.</p>
+<p>Firstly, execute the application.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">java -Xmx120m -Xms30m -Xmn10m -XX:PermSize=20m -XX:MaxPermSize=20m -XX:+UseSerialGC -jar Java2Demo.jar</span></span><br></pre></td></tr></table></figure>
+
+<p>To execute <code>jstat</code> you need to know the process id of the application, you can get it easily using <code>ps -eaf | grep java</code> command.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">ps -eaf | grep Java2Demo.jar</span></span><br><span class="line">  501 9582  11579   0  9:48PM ttys000    0:21.66 /usr/bin/java -Xmx120m -Xms30m -Xmn10m -XX:PermSize=20m -XX:MaxPermSize=20m -XX:+UseG1GC -jar Java2Demo.jar</span><br><span class="line">  501 14073 14045   0  9:48PM ttys002    0:00.00 grep Java2Demo.jar</span><br></pre></td></tr></table></figure>
+
+<p>So the process id for my java application is 9582. Now we can run <strong>jstat</strong> command as shown below.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">jstat -gc 9582 1000</span></span><br><span class="line"> S0C    S1C    S0U    S1U      EC       EU        OC         OU       PC     PU    YGC     YGCT    FGC    FGCT     GCT</span><br><span class="line">1024.0 1024.0  0.0    0.0    8192.0   7933.3   42108.0    23401.3   20480.0 19990.9    157    0.274  40      1.381    1.654</span><br><span class="line">1024.0 1024.0  0.0    0.0    8192.0   8026.5   42108.0    23401.3   20480.0 19990.9    157    0.274  40      1.381    1.654</span><br><span class="line">1024.0 1024.0  0.0    0.0    8192.0   8030.0   42108.0    23401.3   20480.0 19990.9    157    0.274  40      1.381    1.654</span><br><span class="line">1024.0 1024.0  0.0    0.0    8192.0   8122.2   42108.0    23401.3   20480.0 19990.9    157    0.274  40      1.381    1.654</span><br><span class="line">1024.0 1024.0  0.0    0.0    8192.0   8171.2   42108.0    23401.3   20480.0 19990.9    157    0.274  40      1.381    1.654</span><br><span class="line">1024.0 1024.0  48.7   0.0    8192.0   106.7    42108.0    23401.3   20480.0 19990.9    158    0.275  40      1.381    1.656</span><br><span class="line">1024.0 1024.0  48.7   0.0    8192.0   145.8    42108.0    23401.3   20480.0 19990.9    158    0.275  40      1.381    1.656</span><br></pre></td></tr></table></figure>
+
+<p>The last argument for jstat is the time interval between each output, so it will print memory and garbage collection data every 1 second. Let’s go through each of the columns one by one.</p>
+<ul>
+<li><strong>S0C and S1C</strong>: This column shows the current size of the Survivor0 and Survivor1 areas in KB.</li>
+<li><strong>S0U and S1U</strong>: This column shows the current usage of the Survivor0 and Survivor1 areas in KB. Notice that one of the survivor areas are empty all the time.</li>
+<li><strong>EC and EU</strong>: These columns show the current size and usage of Eden space in KB. Note that EU size is increasing and as soon as it crosses the EC, Minor GC is called and EU size is decreased.</li>
+<li><strong>OC and OU</strong>: These columns show the current size and current usage of Old generation in KB.</li>
+<li><strong>PC and PU</strong>: These columns show the current size and current usage of Perm Gen in KB.</li>
+<li><strong>YGC and YGCT</strong>: YGC column displays the number of GC event occurred in young generation. YGCT column displays the accumulated time for GC operations for Young generation. Notice that both of them are increased in the same row where EU value is dropped because of minor GC.</li>
+<li><strong>FGC and FGCT</strong>: FGC column displays the number of Full GC event occurred. FGCT column displays the accumulated time for Full GC operations. Notice that Full GC time is too high when compared to young generation GC timings.</li>
+<li><strong>GCT</strong>: This column displays the total accumulated time for GC operations. Notice that it’s sum of YGCT and FGCT column values.</li>
+</ul>
+<p>The advantage of <strong>jstat</strong> is that it can be executed in remote servers too where we don’t have GUI. Notice that the sum of S0C, S1C and EC is 10m as specified through <code>-Xmn10m</code> JVM option.</p>
+<h4 id="Java-VisualVM-with-Visual-GC"><a href="#Java-VisualVM-with-Visual-GC" class="headerlink" title="Java VisualVM with Visual GC"></a>Java VisualVM with Visual GC</h4><p>If you want to see memory and GC operations in GUI, then you can use <code>jvisualvm</code> tool. Java VisualVM is also part of JDK, so you don’t need to download it separately. Just run <code>jvisualvm</code> command in the terminal to launch the Java VisualVM application. Once launched, you need to install <strong>Visual GC</strong> plugin from Tools -&lt; Plugins option.</p>
+<p>After installing <strong>Visual GC</strong>, just open the application from the left side column and head over to <strong>Visual GC</strong> section. You will get an image of JVM memory and garbage collection details.</p>
+<h2 id="Tuning-Memory-Management-System"><a href="#Tuning-Memory-Management-System" class="headerlink" title="Tuning Memory Management System"></a>Tuning Memory Management System</h2><p><strong>Java Garbage Collection Tuning</strong> should be the last option you should use for increasing the throughput of your application and only when you see a drop in performance because of longer GC timings causing application timeout.</p>
+<h4 id="Choose-collector-types"><a href="#Choose-collector-types" class="headerlink" title="Choose collector types"></a>Choose collector types</h4><ol>
+<li><strong>Serial GC (-XX:+UseSerialGC)</strong>: Serial GC uses the simple <strong>mark-sweep-compact</strong> approach for young and old generations garbage collection i.e Minor and Major GC.Serial GC is useful in client machines such as our simple stand-alone applications and machines with smaller CPU. It is good for small applications with low memory footprint.</li>
+<li><strong>Parallel GC (-XX:+UseParallelGC)</strong>: Parallel GC is same as Serial GC except that is spawns N threads for young generation garbage collection where N is the number of CPU cores in the system. We can control the number of threads using <code>-XX:ParallelGCThreads=n</code> JVM option.Parallel Garbage Collector is also called throughput collector because it uses multiple CPUs to speed up the GC performance. Parallel GC uses a single thread for Old Generation garbage collection.</li>
+<li><strong>Parallel Old GC (-XX:+UseParallelOldGC)</strong>: This is same as Parallel GC except that it uses multiple threads for both Young Generation and Old Generation garbage collection.</li>
+<li><strong>Concurrent Mark Sweep (CMS) Collector (-XX:+UseConcMarkSweepGC)</strong>: CMS Collector is also referred as concurrent low pause collector. It does the garbage collection for the Old generation. CMS collector tries to minimize the pauses due to garbage collection by doing most of the garbage collection work concurrently with the application threads.CMS collector on the young generation uses the same algorithm as that of the parallel collector. This garbage collector is suitable for responsive applications where we can’t afford longer pause times. We can limit the number of threads in CMS collector using <code>-XX:ParallelCMSThreads=n</code> JVM option.</li>
+<li><strong>G1 Garbage Collector (-XX:+UseG1GC)</strong>: The Garbage First or G1 garbage collector is available from Java 7 and its long term goal is to replace the CMS collector. The G1 collector is a parallel, concurrent, and incrementally compacting low-pause garbage collector.Garbage First Collector doesn’t work like other collectors and there is no concept of Young and Old generation space. It divides the heap space into multiple equal-sized heap regions. When a garbage collection is invoked, it first collects the region with lesser live data, hence “Garbage First”. You can find more details about it at <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/vm/G1.html">Garbage-First Collector Oracle Documentation</a>.</li>
+</ol>
+<h4 id="Set-heap-size"><a href="#Set-heap-size" class="headerlink" title="Set heap size"></a>Set heap size</h4><p>A small heap will become full quickly and must be garbage collected more often. It is also prone to more fragmentation, making object allocation slower. A large heap introduces a slight overhead in garbage collection times. A heap that is larger than the available physical memory in the system must be paged out to disk, which leads to long access times or even application freezes, especially during garbage collection.</p>
+<ul>
+<li><code>-Xms:&lt;size&gt;</code>, which sets the initial and minimum heap size</li>
+<li><code>-Xmx:&lt;size&gt;</code>, which sets the maximum heap size</li>
+</ul>
+<p>On 64-bit systems, a memory address is 64 bits long, which makes it possible to address much more memory than with a 32-bit address; on the other hand, each address reference requires twice as much memory. To reduce the memory usage for address references on 64-bit systems, the JRockit JVM can use <em>compressed references</em>. Compressed references reduce the address references to 32 bits, and can be used as long as the entire heap can be addressed with 32 bits. So on a 64.bit system, you will usually benefit from setting the maximum heap size below 4 GB as long as the amount of live data is less than 3-4 GB. Compressed references are enabled by default whenever applicable.</p>
+<p>When you run the JRockit JVM on a 64-bit system with a heap size less than 4 GB, if native OutOfMemory errors occur despite memory being available, try disabling compressed references by using the <code>-XxcompressedRefs=0</code> option.</p>
+<h4 id="other"><a href="#other" class="headerlink" title="other"></a>other</h4><p>If you see <code>java.lang.OutOfMemoryError: PermGen space</code> errors in logs, then try to monitor and increase the Perm Gen memory space using <code>-XX:PermGen</code> and <code>-XX:MaxPermGen</code> JVM options. You might also try using <code>-XX:+CMSClassUnloadingEnabled</code> and check how it’s performing with CMS Garbage collector. If you see a lot of Full GC operations, then you should try increasing Old generation memory space.</p>
+<h1 id="JIT"><a href="#JIT" class="headerlink" title="JIT"></a>JIT</h1><p>just-in-time compilation. To be continued… </p>
+<h1 id="Serialization"><a href="#Serialization" class="headerlink" title="Serialization"></a>Serialization</h1><h3 id="Serializable"><a href="#Serializable" class="headerlink" title="Serializable"></a>Serializable</h3><p>f you want a class object to be serializable, all you need to do it implement the <code>java.io.Serializable</code> interface. Serializable in java is a marker interface and has no fields or methods to implement. It’s like an Opt-In process through which we make our classes serializable. Serialization in java is implemented by <code>ObjectInputStream</code> and <code>ObjectOutputStream</code>, so all we need is a wrapper over them to either save it to file or send it over the network.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.Serializable;</span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectOutputStream;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SerializationTest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        String fileName=<span class="string">&quot;employee.ser&quot;</span>;</span><br><span class="line">        <span class="type">Employee</span> <span class="variable">emp</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Employee</span>();</span><br><span class="line">        emp.setId(<span class="number">100</span>);</span><br><span class="line">        emp.setName(<span class="string">&quot;Pankaj&quot;</span>);</span><br><span class="line">        emp.setSalary(<span class="number">5000</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//serialize to file</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            SerializationUtil.serialize(emp, fileName);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">Employee</span> <span class="variable">empNew</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            empNew = (Employee) SerializationUtil.deserialize(fileName);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException | IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;emp Object::&quot;</span>+emp);</span><br><span class="line">        System.out.println(<span class="string">&quot;empNew Object::&quot;</span>+empNew);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Employee</span> <span class="keyword">implements</span> <span class="title class_">Serializable</span> &#123;</span><br><span class="line"><span class="comment">// static variable values are also not serialized since they belongs to class and not object.</span></span><br><span class="line"><span class="comment">//    private static final long serialVersionUID = -6470090944414208496L;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> id;</span><br><span class="line"><span class="comment">// transient field won&#x27;t be serialized</span></span><br><span class="line">    <span class="keyword">transient</span> <span class="keyword">private</span> <span class="type">int</span> salary;</span><br><span class="line"><span class="comment">//    private String password;</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Employee&#123;name=&quot;</span>+name+<span class="string">&quot;,id=&quot;</span>+id+<span class="string">&quot;,salary=&quot;</span>+salary+<span class="string">&quot;&#125;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//getter and setter methods</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getId</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setId</span><span class="params">(<span class="type">int</span> id)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getSalary</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> salary;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setSalary</span><span class="params">(<span class="type">int</span> salary)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.salary = salary;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//    public String getPassword() &#123;</span></span><br><span class="line"><span class="comment">//        return password;</span></span><br><span class="line"><span class="comment">//    &#125;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//    public void setPassword(String password) &#123;</span></span><br><span class="line"><span class="comment">//        this.password = password;</span></span><br><span class="line"><span class="comment">//    &#125;</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SerializationUtil</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// deserialize to Object from given file</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title function_">deserialize</span><span class="params">(String fileName)</span> <span class="keyword">throws</span> IOException,</span><br><span class="line">            ClassNotFoundException &#123;</span><br><span class="line">        <span class="type">FileInputStream</span> <span class="variable">fis</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileInputStream</span>(fileName);</span><br><span class="line">        <span class="type">ObjectInputStream</span> <span class="variable">ois</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectInputStream</span>(fis);</span><br><span class="line">        <span class="type">Object</span> <span class="variable">obj</span> <span class="operator">=</span> ois.readObject();</span><br><span class="line">        ois.close();</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// serialize the given object and save it to file</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">serialize</span><span class="params">(Object obj, String fileName)</span></span><br><span class="line">            <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">FileOutputStream</span> <span class="variable">fos</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(fileName);</span><br><span class="line">        <span class="type">ObjectOutputStream</span> <span class="variable">oos</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectOutputStream</span>(fos);</span><br><span class="line">        oos.writeObject(obj);</span><br><span class="line"></span><br><span class="line">        fos.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="serialVersionUID"><a href="#serialVersionUID" class="headerlink" title="serialVersionUID"></a>serialVersionUID</h3><p>For the above code, if we uncomment the “password” variable and it’s getter-setter methods from Employee class and run it. You will get below exception;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">java.io.InvalidClassException: com.xxx.Employee; local class incompatible: stream classdesc serialVersionUID = -6470090944414208496, local class serialVersionUID = -6234198221249432383</span><br><span class="line">    at java.io.ObjectStreamClass.initNonProxy(ObjectStreamClass.java:604)</span><br><span class="line">    at java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:1601)</span><br><span class="line">    at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1514)</span><br><span class="line">    at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:1750)</span><br><span class="line">    at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1347)</span><br><span class="line">    at java.io.ObjectInputStream.readObject(ObjectInputStream.java:369)</span><br><span class="line">    at com.xxx.SerializationUtil.deserialize(SerializationUtil.java:22)</span><br><span class="line">    at com.xxx.DeserializationTest.main(DeserializationTest.java:13)</span><br><span class="line">empNew Object::null</span><br></pre></td></tr></table></figure>
+
+<p>The reason is clear that serialVersionUID of the previous class and new class are different. Actually if the class doesn’t define serialVersionUID, it’s getting calculated automatically and assigned to the class. Java uses class variables, methods, class name, package etc to generate this unique long number. If you are working with any IDE, you will automatically get a warning that “The serializable class Employee does not declare a static final serialVersionUID field of type long”.</p>
+<p>We can assign this value as we want. It just need to be there to let deserialization process know that the new class is the new version of the same class and should be deserialized of possible. For example, uncomment only the serialVersionUID field from the <code>Employee</code> class and run <code>SerializationTest</code> program. Now uncomment the password field from Employee class and run the <code>DeserializationTest</code> program and you will see that the object stream is deserialized successfully because the change in Employee class is compatible with serialization process.</p>
+<h3 id="Externalizable"><a href="#Externalizable" class="headerlink" title="Externalizable"></a>Externalizable</h3><p>Sometimes we want to obscure the object data to maintain it’s integrity. We can do this by implementing <code>java.io.Externalizable</code> interface and provide implementation of <em>writeExternal()</em> and <em>readExternal()</em> methods to be used in serialization process.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.Externalizable;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectInput;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectOutput;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Person</span> <span class="keyword">implements</span> <span class="title class_">Externalizable</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String gender;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">writeExternal</span><span class="params">(ObjectOutput out)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        out.writeInt(id);</span><br><span class="line">        out.writeObject(name+<span class="string">&quot;xyz&quot;</span>);</span><br><span class="line">        out.writeObject(<span class="string">&quot;abc&quot;</span>+gender);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">readExternal</span><span class="params">(ObjectInput in)</span> <span class="keyword">throws</span> IOException,</span><br><span class="line">            ClassNotFoundException &#123;</span><br><span class="line">        id=in.readInt();</span><br><span class="line">        <span class="comment">//read in the same order as written</span></span><br><span class="line">        name=(String) in.readObject();</span><br><span class="line">        <span class="keyword">if</span>(!name.endsWith(<span class="string">&quot;xyz&quot;</span>)) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IOException</span>(<span class="string">&quot;corrupted data&quot;</span>);</span><br><span class="line">        name=name.substring(<span class="number">0</span>, name.length()-<span class="number">3</span>);</span><br><span class="line">        gender=(String) in.readObject();</span><br><span class="line">        <span class="keyword">if</span>(!gender.startsWith(<span class="string">&quot;abc&quot;</span>)) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IOException</span>(<span class="string">&quot;corrupted data&quot;</span>);</span><br><span class="line">        gender=gender.substring(<span class="number">3</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Person&#123;id=&quot;</span>+id+<span class="string">&quot;,name=&quot;</span>+name+<span class="string">&quot;,gender=&quot;</span>+gender+<span class="string">&quot;&#125;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getId</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setId</span><span class="params">(<span class="type">int</span> id)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Serialization-Proxy-Pattern"><a href="#Serialization-Proxy-Pattern" class="headerlink" title="Serialization Proxy Pattern"></a>Serialization Proxy Pattern</h2><h4 id="why"><a href="#why" class="headerlink" title="why"></a>why</h4><p>Serialization in java comes with some serious pitfalls such as;</p>
+<ul>
+<li>The class structure can’t be changed a lot without breaking the java serialization process. So even though we don’t need some variables later on, we need to keep them just for backward compatibility.</li>
+<li>Serialization causes huge security risks, an attacker can change the stream sequence and cause harm to the system. For example, user role is serialized and an attacker change the stream value to make it admin and run malicious code.</li>
+</ul>
+<p>Java Serialization Proxy pattern is a way to achieve greater security with Serialization. In this pattern, an inner private static class is used as a proxy class for serialization purpose. It’s great because:</p>
+<ol>
+<li><p>Single responsiblity. The main class doesn’t need to concern about the serialization and it can change happily. </p>
+</li>
+<li><p>In the proxy class, we can decide which attributes to be serialized and ignore the sensitive information.</p>
+</li>
+<li><p>In this way, we can always use the constructor (in the <code>readResolve</code>) to create the object, to forbid some deserialization from stream directly, which may break the data integrity. </p>
+</li>
+<li><p>It can be used in case when information are saved in db, and we can serialize only id, but get the whole object from db.</p>
+</li>
+</ol>
+<h4 id="how"><a href="#how" class="headerlink" title="how"></a>how</h4><p>This pattern is implemented by properly implementing <em>readResolve()</em> and <em>writeReplace()</em> methods.</p>
+<ol>
+<li><p><strong>readObject(ObjectInputStream ois)</strong>: If this method is present in the class, ObjectInputStream readObject() method will use this method for reading the object from stream.</p>
+</li>
+<li><p><strong>writeObject(ObjectOutputStream oos)</strong>: If this method is present in the class, ObjectOutputStream writeObject() method will use this method for writing the object to stream. One of the common usage is to obscure the object variables to maintain data integrity.</p>
+</li>
+<li><p><strong>Object writeReplace()</strong>: If this method is present, then after serialization process this method is called and the object returned is serialized to the stream.</p>
+</li>
+<li><p><strong>Object readResolve()</strong>: If this method is present, then after deserialization process, this method is called to return the final object to the caller program. One of the usage of this method is to implement Singleton pattern with Serialized classes. Read more at <a href="https://www.digitalocean.com/community/tutorials/java-singleton-design-pattern-best-practices-examples#serialization-and-singleton">Serialization and Singleton</a>.</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Person</span> <span class="keyword">implements</span> <span class="title class_">Serializable</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String email;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Person</span><span class="params">(String name, String email, String password)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">        <span class="built_in">this</span>.email = email;</span><br><span class="line">        <span class="built_in">this</span>.password = password;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Object <span class="title function_">writeReplace</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">PersonProxy</span>(<span class="built_in">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">readObject</span><span class="params">(ObjectInputStream ois)</span> <span class="keyword">throws</span> InvalidObjectException&#123;</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">InvalidObjectException</span>(<span class="string">&quot;Proxy is not used, something fishy&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">PersonProxy</span> <span class="keyword">implements</span> <span class="title class_">Serializable</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> String name;</span><br><span class="line">        <span class="keyword">private</span> String email;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="title function_">PersonProxy</span><span class="params">(Person person)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.name = person.name;</span><br><span class="line">            <span class="built_in">this</span>.email = person.email;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> Object <span class="title function_">readResolve</span><span class="params">()</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Person</span>(name, email, <span class="literal">null</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Both <code>Person</code> and <code>PersonProxy</code> class should implement Serializable interface.</li>
+<li><code>PersonProxy</code> is inner private static class, so that other classes can’t access it.</li>
+<li><code>Person</code> class should provide <em>writeReplace()</em> method returning <code>PersonProxy</code> instance. So when Person object is serialized, the returned stream is of PersonProxy class. However PersonProxy class is not visible outside, so it can’t be used directly.</li>
+<li><code>PersonProxy</code> class should implement <em>readResolve()</em> method returning <code>Person</code> object. So when Person class is deserialized, internally PersonProxy is deserialized and when it’s readResolve() method is called, we get Person object.</li>
+<li>Finally implement <em>readObject()</em> method in Person class and throw <code>InvalidObjectException</code> to avoid hackers attack trying to fabricate Data object stream and parse it.</li>
+</ul>
+<h1 id="ClassLoader"><a href="#ClassLoader" class="headerlink" title="ClassLoader"></a>ClassLoader</h1><p>When we compile a Java Class, JVM creates the bytecode, which is platform and machine-independent. The bytecode is stored in a <strong>.class file</strong>. When we try to use a class, the ClassLoader loads it into the memory.</p>
+<p>There are three types of built-in ClassLoader in Java.</p>
+<ol>
+<li><strong>Bootstrap Class Loader</strong> – It loads JDK internal classes. It loads rt.jar and other core classes for example java.lang.* package classes.</li>
+<li><strong>Extensions Class Loader</strong> – It loads classes from the JDK extensions directory, usually $JAVA_HOME&#x2F;lib&#x2F;ext directory.</li>
+<li><strong>System Class Loader</strong> – This classloader loads classes from the current classpath. We can set classpath while invoking a program using -cp or -classpath command line option.</li>
+</ol>
+<p>Whenever a request is raised to load a class, it delegates it to the parent classloader. This is how uniqueness is maintained in the runtime environment. If the parent class loader doesn’t find the class then the class loader itself tries to load the class.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.DataInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CCRun</span> &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">progClass</span> <span class="operator">=</span> args[<span class="number">0</span>];</span><br><span class="line">        String progArgs[] = <span class="keyword">new</span> <span class="title class_">String</span>[args.length - <span class="number">1</span>];</span><br><span class="line">        System.arraycopy(args, <span class="number">1</span>, progArgs, <span class="number">0</span>, progArgs.length);</span><br><span class="line"></span><br><span class="line">        <span class="type">CCLoader</span> <span class="variable">ccl</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CCLoader</span>(CCRun.class.getClassLoader());</span><br><span class="line">        <span class="type">Class</span> <span class="variable">clas</span> <span class="operator">=</span> ccl.loadClass(progClass);</span><br><span class="line">        Class mainArgType[] = &#123; (<span class="keyword">new</span> <span class="title class_">String</span>[<span class="number">0</span>]).getClass() &#125;;</span><br><span class="line">        <span class="type">Method</span> <span class="variable">main</span> <span class="operator">=</span> clas.getMethod(<span class="string">&quot;main&quot;</span>, mainArgType);</span><br><span class="line">        Object argsArray[] = &#123; progArgs &#125;;</span><br><span class="line">        main.invoke(<span class="literal">null</span>, argsArray);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Below method is used to check that the Foo is getting loaded</span></span><br><span class="line">        <span class="comment">// by our custom class loader i.e CCLoader</span></span><br><span class="line">        <span class="type">Method</span> <span class="variable">printCL</span> <span class="operator">=</span> clas.getMethod(<span class="string">&quot;printCL&quot;</span>, <span class="literal">null</span>);</span><br><span class="line">        printCL.invoke(<span class="literal">null</span>, <span class="keyword">new</span> <span class="title class_">Object</span>[<span class="number">0</span>]);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CCLoader</span> <span class="keyword">extends</span> <span class="title class_">ClassLoader</span> &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">CCLoader</span><span class="params">(ClassLoader parent)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(parent);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Loads the class from the file system. The class file should be located in</span></span><br><span class="line"><span class="comment">     * the file system. The name should be relative to get the file location</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> name</span></span><br><span class="line"><span class="comment">     *            Fully Classified name of the class, for example, com.journaldev.Foo</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Class <span class="title function_">getClass</span><span class="params">(String name)</span> <span class="keyword">throws</span> ClassNotFoundException &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">file</span> <span class="operator">=</span> name.replace(<span class="string">&#x27;.&#x27;</span>, File.separatorChar) + <span class="string">&quot;.class&quot;</span>;</span><br><span class="line">        <span class="type">byte</span>[] b = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// This loads the byte code data from the file</span></span><br><span class="line">            b = loadClassFileData(file);</span><br><span class="line">            <span class="comment">// defineClass is inherited from the ClassLoader class</span></span><br><span class="line">            <span class="comment">// that converts byte array into a Class. defineClass is Final</span></span><br><span class="line">            <span class="comment">// so we cannot override it</span></span><br><span class="line">            <span class="type">Class</span> <span class="variable">c</span> <span class="operator">=</span> defineClass(name, b, <span class="number">0</span>, b.length);</span><br><span class="line">            resolveClass(c);</span><br><span class="line">            <span class="keyword">return</span> c;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Every request for a class passes through this method. </span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Class <span class="title function_">loadClass</span><span class="params">(String name)</span> <span class="keyword">throws</span> ClassNotFoundException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Loading Class &#x27;&quot;</span> + name + <span class="string">&quot;&#x27;&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (name.startsWith(<span class="string">&quot;com.xxx&quot;</span>)) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;Loading Class using CCLoader&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> getClass(name);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">super</span>.loadClass(name);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Reads the file (.class) into a byte array. The file should be</span></span><br><span class="line"><span class="comment">     * accessible as a resource and make sure that it&#x27;s not in Classpath to avoid</span></span><br><span class="line"><span class="comment">     * any confusion.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">byte</span>[] loadClassFileData(String name) <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">InputStream</span> <span class="variable">stream</span> <span class="operator">=</span> getClass().getClassLoader().getResourceAsStream(</span><br><span class="line">                name);</span><br><span class="line">        <span class="type">int</span> <span class="variable">size</span> <span class="operator">=</span> stream.available();</span><br><span class="line">        <span class="type">byte</span> buff[] = <span class="keyword">new</span> <span class="title class_">byte</span>[size];</span><br><span class="line">        <span class="type">DataInputStream</span> <span class="variable">in</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DataInputStream</span>(stream);</span><br><span class="line">        in.readFully(buff);</span><br><span class="line">        in.close();</span><br><span class="line">        <span class="keyword">return</span> buff;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Foo Constructor &gt;&gt;&gt; &quot;</span> + args[<span class="number">0</span>] + <span class="string">&quot; &quot;</span> + args[<span class="number">1</span>]);</span><br><span class="line">        <span class="type">Bar</span> <span class="variable">bar</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Bar</span>(args[<span class="number">0</span>], args[<span class="number">1</span>]);</span><br><span class="line">        bar.printCL();</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">printCL</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Foo ClassLoader: &quot;</span>+Foo.class.getClassLoader());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Bar</span> &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Bar</span><span class="params">(String a, String b)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Bar Constructor &gt;&gt;&gt; &quot;</span> + a + <span class="string">&quot; &quot;</span> + b);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">printCL</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Bar ClassLoader: &quot;</span>+Bar.class.getClassLoader());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">compile all classes</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">javac -<span class="built_in">cp</span> . com/journaldev/cl/Foo.java</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">javac -<span class="built_in">cp</span> . com/journaldev/cl/Bar.java</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">javac CCLoader.java</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">javac CCRun.java</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">run directly</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">java CCRun com.xxx.Foo 1212 1313</span></span><br><span class="line">Loading Class &#x27;com.xxx.Foo&#x27;</span><br><span class="line">Loading Class using CCLoader</span><br><span class="line">Loading Class &#x27;java.lang.Object&#x27;</span><br><span class="line">Loading Class &#x27;java.lang.String&#x27;</span><br><span class="line">Loading Class &#x27;java.lang.Exception&#x27;</span><br><span class="line">Loading Class &#x27;java.lang.System&#x27;</span><br><span class="line">Loading Class &#x27;java.lang.StringBuilder&#x27;</span><br><span class="line">Loading Class &#x27;java.io.PrintStream&#x27;</span><br><span class="line">Foo Constructor &gt;&gt;&gt; 1212 1313</span><br><span class="line">Loading Class &#x27;com.xxx.Bar&#x27;</span><br><span class="line">Loading Class using CCLoader</span><br><span class="line">Bar Constructor &gt;&gt;&gt; 1212 1313</span><br><span class="line">Loading Class &#x27;java.lang.Class&#x27;</span><br><span class="line">Bar ClassLoader: CCLoader@71f6f0bf</span><br><span class="line">Foo ClassLoader: CCLoader@71f6f0bf</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="Set-as-default-classLoader"><a href="#Set-as-default-classLoader" class="headerlink" title="Set as default classLoader"></a>Set as default classLoader</h3><p>We can make our custom class loader as the default one when JVM starts by using Java Options.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ClassLoaderTest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;class loader for HashMap: &quot;</span></span><br><span class="line">                + java.util.HashMap.class.getClassLoader());</span><br><span class="line">        System.out.println(<span class="string">&quot;class loader for DNSNameService: &quot;</span></span><br><span class="line">                + sun.net.spi.nameservice.dns.DNSNameService.class</span><br><span class="line">                        .getClassLoader());</span><br><span class="line">        System.out.println(<span class="string">&quot;class loader for this class: &quot;</span></span><br><span class="line">                + ClassLoaderTest.class.getClassLoader());</span><br><span class="line"></span><br><span class="line">        System.out.println(com.mysql.jdbc.Blob.class.getClassLoader());</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">javac -<span class="built_in">cp</span> .:../lib/mysql-connector-java-5.0.7-bin.jar com/xxx/ClassLoaderTest.java</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">java -<span class="built_in">cp</span> .:../lib/mysql-connector-java-5.0.7-bin.jar -Djava.system.class.loader=CCLoader com.xxx.ClassLoaderTest</span></span><br><span class="line">Loading Class &#x27;com.xxx.ClassLoaderTest&#x27;</span><br><span class="line">Loading Class using CCLoader</span><br><span class="line">Loading Class &#x27;java.lang.Object&#x27;</span><br><span class="line">Loading Class &#x27;java.lang.String&#x27;</span><br><span class="line">Loading Class &#x27;java.lang.System&#x27;</span><br><span class="line">Loading Class &#x27;java.lang.StringBuilder&#x27;</span><br><span class="line">Loading Class &#x27;java.util.HashMap&#x27;</span><br><span class="line">Loading Class &#x27;java.lang.Class&#x27;</span><br><span class="line">Loading Class &#x27;java.io.PrintStream&#x27;</span><br><span class="line">class loader for HashMap: null</span><br><span class="line">Loading Class &#x27;sun.net.spi.nameservice.dns.DNSNameService&#x27;</span><br><span class="line">class loader for DNSNameService: sun.misc.Launcher$ExtClassLoader@24480457</span><br><span class="line">class loader for this class: CCLoader@38503429</span><br><span class="line">Loading Class &#x27;com.mysql.jdbc.Blob&#x27;</span><br><span class="line">sun.misc.Launcher$AppClassLoader@2f94ca6c</span><br></pre></td></tr></table></figure>
+
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ul>
+<li><p><a href="https://www.digitalocean.com/community/tutorials/java-jvm-memory-model-memory-management-in-java">Java (JVM) Memory Model - Memory Management in Java | DigitalOcean</a></p>
+</li>
+<li><p><a href="https://docs.oracle.com/cd/E13150_01/jrockit_jvm/jrockit/geninfo/diagnos/garbage_collect.html">Understanding Memory Management</a></p>
+</li>
+<li><p><a href="https://www.baeldung.com/java-memory-management-interview-questions">Memory Management in Java Interview Questions (+Answers) | Baeldung</a></p>
+</li>
+<li><p><a href="https://docs.oracle.com/javase/specs/jls/se20/html/jls-17.html#jls-17.4">javase 20 memory model</a></p>
+</li>
+<li><p><a href="https://docs.oracle.com/en/java/javase/20/gctuning/introduction-garbage-collection-tuning.html#GUID-326EB4CF-8C8C-4267-8355-21AB04F0D304">Introduction to Garbage Collection Tuning javase 20</a></p>
+</li>
+<li><p><a href="https://docs.oracle.com/en/java/javase/20/vm/index.html">Java Platform, Standard Edition Java Virtual Machine Guide, Release 20</a></p>
+</li>
+<li><p><a href="https://www.azul.com/wp-content/uploads/WP-Understanding-Java-Garbage-Collection.pdf">https://www.azul.com/wp-content/uploads/WP-Understanding-Java-Garbage-Collection.pdf</a></p>
+</li>
+<li><p><a href="https://docs.oracle.com/javase/7/docs/technotes/guides/vm/G1.html">Garbage-First Collector</a></p>
+</li>
+<li><p><a href="https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/index.html">Java Platform, Standard Edition HotSpot Virtual Machine Garbage Collection Tuning Guide, Release 8</a></p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/05/09/java-thread/" rel="prev" title="java multithread programming">
+                  <i class="fa fa-chevron-left"></i> java multithread programming
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cherish</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>Word count total: </span>
+    <span title="Word count total">377k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>Reading time total &asymp;</span>
+    <span title="Reading time total">5:43</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+<script class="next-config" data-name="chatra" type="application/json">{"enable":true,"async":true,"id":null}</script>
+<script src="/js/third-party/chat/chatra.js"></script>
+<script async src="https://call.chatra.io/chatra.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
