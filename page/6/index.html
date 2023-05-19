@@ -148,13 +148,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-count">67</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-count">54</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -184,6 +184,260 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://hfcherish.github.io/2018/07/27/asure-storage/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/07/27/asure-storage/" class="post-title-link" itemprop="url">azure storage</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-27 11:09:53" itemprop="dateCreated datePublished" datetime="2018-07-27T11:09:53+08:00">2018-07-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-05-19 09:50:38" itemprop="dateModified" datetime="2023-05-19T09:50:38+08:00">2023-05-19</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="WORDS">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">WORDS:</span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>asure storage 提供四种存储支持（<a href="https://www.youtube.com/watch?v=y6bIUHtdp6Y">asure storage overview (youtube)</a>）：</p>
+<ul>
+<li><a href="https://azure.microsoft.com/zh-cn/services/storage/blobs/">blob</a> (binary large object)：二进制数据存储。有两种：page blog（只能新增&#x2F;删除&#x2F;向已有数据附加数据，不能修改数据）；block blog（可以更新）</li>
+<li><a href="https://azure.microsoft.com/zh-cn/services/storage/tables/">table</a>：存储表格（nosql）</li>
+<li><a href="https://azure.microsoft.com/zh-cn/services/storage/queues/">queue</a>：有库，有 rest api</li>
+<li><a href="https://azure.microsoft.com/en-us/services/storage/files/">files</a>：好像主要用在文件共享的时候，就是类似于 windows server 上的文件共享（<a href="https://zh.wikipedia.org/wiki/%E4%BC%BA%E6%9C%8D%E5%99%A8%E8%A8%8A%E6%81%AF%E5%8D%80%E5%A1%8A">smb(server message block)</a>），实现和使用方式都和 windows server 的文件共享一样。所以需要支持例如按 &#x2F;servername&#x2F;filename 等方式来 share 和 使用文件。它是构建于 blob 之上的。</li>
+</ul>
+<h1 id="几个概念"><a href="#几个概念" class="headerlink" title="几个概念"></a>几个概念</h1><h2 id="Storage-Accout"><a href="#Storage-Accout" class="headerlink" title="Storage Accout"></a>Storage Accout</h2><p>storage 的所有存储都必须在一个 storage account 内发生。这有点类似于一个 database。</p>
+<p>安全也是在这里实现：</p>
+<ol>
+<li><em><strong>key</strong></em>：创建 account 时，就会生成俩 key，primary key 就是你用来登录访问数据的 key。不过这种方式对于有 client 时不太方便，因为可能不能 share key</li>
+<li><em><strong>saas token</strong></em>：就是可以登录认证获得 token，然后拿 token 访问数据。</li>
+</ol>
+<h2 id="数据容器-数据"><a href="#数据容器-数据" class="headerlink" title="数据容器 + 数据"></a>数据容器 + 数据</h2><p>在每个 storage account 里，你可以创建上述四种类型的存储容器，去存放数据。</p>
+<ul>
+<li>Blob： 在 storage account 里可以创建 <em><strong>blob container</strong></em>，在 <em><strong>blog container</strong></em> 中存放 <em><strong>blob</strong></em></li>
+<li>table：在 storage account 里创建 <em><strong>table</strong></em>，在 <em><strong>table</strong></em> 中存放 <em><strong>data entity</strong></em></li>
+<li>queue：在 storage account 里创建 <em><strong>queue</strong></em>，在 <em><strong>queue</strong></em> 中存放 <em><strong>message</strong></em></li>
+<li>file：在 storage account 里创建 <em><strong>asure files</strong></em> (类似于 <a href="https://zh.wikipedia.org/wiki/%E4%BC%BA%E6%9C%8D%E5%99%A8%E8%A8%8A%E6%81%AF%E5%8D%80%E5%A1%8A">smb(server message block)</a>)??? 感觉应该也是先创建一个 files container，再创建一个个的 asure file（即 smb）</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://hfcherish.github.io/2018/07/26/mime-type/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/07/26/mime-type/" class="post-title-link" itemprop="url">mime type</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-26 17:52:01" itemprop="dateCreated datePublished" datetime="2018-07-26T17:52:01+08:00">2018-07-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="WORDS">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">WORDS:</span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[MIME 类型](MIME 类型) 是用一种标准化的方式来表示文档的性质和格式。浏览器一般通过 MIME 类型（而不是文档扩展名）来确定如何处理文档。因此服务器传输数据时，必须设置正确的 MIME 类型。</p>
+<h1 id="通用结构"><a href="#通用结构" class="headerlink" title="通用结构"></a>通用结构</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type/subtype</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>不允许空格</li>
+<li>大小写不敏感，一般都是小写</li>
+</ol>
+<h1 id="独立类型"><a href="#独立类型" class="headerlink" title="独立类型"></a>独立类型</h1><p>type 可以是独立类型，表示文件的分类，可以是如下值：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>描述</th>
+<th>典型示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>text</code></td>
+<td>表明文件是普通文本，理论上是可读的语言</td>
+<td><code>text/plain</code>, <code>text/html</code>, <code>text/css, text/javascript</code></td>
+</tr>
+<tr>
+<td><code>image</code></td>
+<td>表明是某种图像。不包括视频，但是动态图（比如动态gif）也使用image类型</td>
+<td><code>image/gif</code>, <code>image/png</code>, <code>image/jpeg</code>, <code>image/bmp</code>, <code>image/webp</code></td>
+</tr>
+<tr>
+<td><code>audio</code></td>
+<td>表明是某种音频文件</td>
+<td><code>audio/midi</code>, <code>audio/mpeg, audio/webm, audio/ogg, audio/wav</code></td>
+</tr>
+<tr>
+<td><code>video</code></td>
+<td>表明是某种视频文件</td>
+<td><code>video/webm</code>, <code>video/ogg</code></td>
+</tr>
+<tr>
+<td><code>application</code></td>
+<td>表明是某种二进制数据</td>
+<td><code>application/octet-stream</code>, <code>application/pkcs12</code>, <code>application/vnd.mspowerpoint</code>, <code>application/xhtml+xml</code>, <code>application/xml</code>,  <code>application/pdf,``application/json</code></td>
+</tr>
+</tbody></table>
+<p>一般是文本，但是具体类型不确定时，就用 <code>test/plain</code>；是二进制数据，而类型不确定时，用 <code>application/octet-stream</code></p>
+<h2 id="application-x2F-octet-stream"><a href="#application-x2F-octet-stream" class="headerlink" title="application&#x2F;octet-stream"></a>application&#x2F;octet-stream</h2><p>这是应用程序文件的默认值。意思是 <em>未知的应用程序文件 ，</em>浏览器一般不会自动执行或询问执行。浏览器会将它作为附件来处理，附件类型等信息通过HTTP头<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Disposition"><code>Content-Disposition</code></a> 设置。</p>
+<h1 id="Multipart-类型"><a href="#Multipart-类型" class="headerlink" title="Multipart 类型"></a>Multipart 类型</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">multipart/form-data</span><br><span class="line">multipart/byteranges</span><br></pre></td></tr></table></figure>
+
+<p> 顾名思义，这是复合文件的一种表现形式，即传递过来的数据有多重类型。典型的如果表单数据可能有 string、文件、视频、音频等。</p>
+<p>它由边界线（一个由<code>&#39;--&#39;</code>开始的字符串）划分出的不同部分组成。每一部分有自己的实体，以及自己的 HTTP 请求头，<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Disposition"><code>Content-Disposition</code></a>和 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Type"><code>Content-Type</code></a> 用于文件上传领域，最常用的 (<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Length"><code>Content-Length</code></a> 因为边界线作为分隔符而被忽略）。</p>
+<p>例如，如下表单:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;http://localhost:8000/&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;myTextField&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">name</span>=<span class="string">&quot;myCheckBox&quot;</span>&gt;</span>Check<span class="tag">&lt;/<span class="name">input</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;myFile&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span>&gt;</span>Send the file<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>请求是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: localhost:8000</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:50.0) Gecko/20100101 Firefox/50.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line">Accept-Language: en-US,en;q=0.5</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Content-Type: multipart/form-data; boundary=---------------------------8721656041911415653955004498</span><br><span class="line">Content-Length: 465</span><br><span class="line"></span><br><span class="line">-----------------------------8721656041911415653955004498</span><br><span class="line">Content-Disposition: form-data; name=&quot;myTextField&quot;</span><br><span class="line"></span><br><span class="line">Test</span><br><span class="line">-----------------------------8721656041911415653955004498</span><br><span class="line">Content-Disposition: form-data; name=&quot;myCheckBox&quot;</span><br><span class="line"></span><br><span class="line">on</span><br><span class="line">-----------------------------8721656041911415653955004498</span><br><span class="line">Content-Disposition: form-data; name=&quot;myFile&quot;; filename=&quot;test.txt&quot;</span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">Simple file.</span><br><span class="line">-----------------------------8721656041911415653955004498--</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -819,7 +1073,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+      <time title="Modified: 2023-05-19 09:51:12" itemprop="dateModified" datetime="2023-05-19T09:51:12+08:00">2023-05-19</time>
     </span>
 
   
@@ -866,7 +1120,7 @@
 
 <p>如果在本地运行时，报错 <code>No class found....</code>，一般是因为 docker 的原因，我最后是通过重装 docker 解决的。由于 aws-sam-cli 使用 docker 去起一个 lambda 容器环境，所以可能是由于 credentials 等获取不到的原因？，总之可能会挂掉。可参见 <a href="https://github.com/docker/for-mac/issues/488">stackoverflow ticket</a>，</p>
 <h2 id="查看部署结果-1"><a href="#查看部署结果-1" class="headerlink" title="查看部署结果"></a>查看部署结果</h2><p>这里跟上边是一样的，我们可以只看一部分</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可查看 stack 详情</span></span><br><span class="line">$ aws cloudformation describe-stacks \</span><br><span class="line">	--stack-name your-stack-name \</span><br><span class="line">	--query <span class="string">&#x27;Stacks[].Outputs&#x27;</span></span><br><span class="line">[</span><br><span class="line">	[</span><br><span class="line">	    &#123;</span><br><span class="line">	        <span class="string">&quot;Description&quot;</span>: <span class="string">&quot;URL for application&quot;</span>,</span><br><span class="line">	        <span class="string">&quot;ExportName&quot;</span>: <span class="string">&quot;AwsLambdaJerseyApi&quot;</span>,  </span><br><span class="line">	        <span class="string">&quot;OutputKey&quot;</span>: <span class="string">&quot;AwsLambdaJerseyApi&quot;</span>,</span><br><span class="line">	        <span class="string">&quot;OutputValue&quot;</span>: <span class="string">&quot;https://xxxxxxx.execute-api.us-west-2.amazonaws.com/Prod/ping&quot;</span></span><br><span class="line">	    &#125;</span><br><span class="line">	]</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据生成的链接访问 api</span></span><br><span class="line">$ curl https://xxxxxxx.execute-api.us-west-2.amazonaws.com/Prod/ping¡</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可查看 stack 详情</span></span><br><span class="line">$ aws cloudformation describe-stacks \</span><br><span class="line">    --stack-name your-stack-name \</span><br><span class="line">    --query <span class="string">&#x27;Stacks[].Outputs&#x27;</span></span><br><span class="line">[</span><br><span class="line">    [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;Description&quot;</span>: <span class="string">&quot;URL for application&quot;</span>,</span><br><span class="line">            <span class="string">&quot;ExportName&quot;</span>: <span class="string">&quot;AwsLambdaJerseyApi&quot;</span>,  </span><br><span class="line">            <span class="string">&quot;OutputKey&quot;</span>: <span class="string">&quot;AwsLambdaJerseyApi&quot;</span>,</span><br><span class="line">            <span class="string">&quot;OutputValue&quot;</span>: <span class="string">&quot;https://xxxxxxx.execute-api.us-west-2.amazonaws.com/Prod/ping&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据生成的链接访问 api</span></span><br><span class="line">$ curl https://xxxxxxx.execute-api.us-west-2.amazonaws.com/Prod/ping¡</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -1129,201 +1383,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://hfcherish.github.io/2018/06/15/js-export/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Cherish">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cherish's Blog">
-      <meta itemprop="description" content="从心所欲不逾矩">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Cherish's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/06/15/js-export/" class="post-title-link" itemprop="url">js export</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-06-15 18:17:19" itemprop="dateCreated datePublished" datetime="2018-06-15T18:17:19+08:00">2018-06-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="WORDS">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">WORDS:</span>
-      <span>0</span>
-    </span>
-    <span class="post-meta-item" title="Reading time">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>1 mins.</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/export">export</a> 用于从 module 中导出函数、对象、原始值，在其他地方通过 <code>import</code> 使用这些函数、对象、原始值。</p>
-<p>有两种导出方式：命名导出（<code>export</code>），默认导出（<code>export default</code>）</p>
-<h1 id="1-命名导出"><a href="#1-命名导出" class="headerlink" title="1. 命名导出"></a>1. 命名导出</h1><p>就是导出 module 中有命名的函数、对象、原始值。相应的，import 时，必须使用相同的命名引入（当然可以使用 <code>import a as b from &#39;./module&#39;</code> 来修改名称）</p>
-<p>举例：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义时导出</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> a = <span class="string">&#x27;a&#x27;</span>, b = <span class="string">&#x27;b&#x27;</span>; <span class="comment">// 适用于 var, let</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">a</span>(<span class="params"></span>)&#123;&#125;;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">a</span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义后导出</span></span><br><span class="line"><span class="keyword">const</span> a = <span class="string">&#x27;a&#x27;</span>, b = <span class="string">&#x27;b&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> &#123;a, b <span class="keyword">as</span> newB&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 导出其他模块的导出。</span></span><br><span class="line"><span class="comment">// 此时仅会导出 otherModule 的命名导出，所以这里最终导出的还是有命名的</span></span><br><span class="line"><span class="keyword">export</span> * <span class="keyword">from</span> <span class="string">&#x27;otherModule&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> &#123;a, b <span class="keyword">as</span> newB&#125; <span class="keyword">from</span> <span class="string">&#x27;otherModule&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果需要导出 otherModule 的默认导出，只能这样写：</span></span><br><span class="line"><span class="keyword">import</span> defaultExport <span class="keyword">from</span> <span class="string">&#x27;otherModule&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> [<span class="keyword">default</span>] defaultExport;</span><br></pre></td></tr></table></figure>
-
-<h1 id="2-默认导出"><a href="#2-默认导出" class="headerlink" title="2. 默认导出"></a>2. 默认导出</h1><p>默认导出（<code>export default</code>）的函数、类可以认为没有固定名称，即 import 时，可以用任何名称导入</p>
-<p>一个 module 中只能有一个默认导出。</p>
-<p><code>export default</code> 后不能跟 <code>const</code>, <code>let</code>, <code>var</code></p>
-<p>举例：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 默认导出函数（定义时）</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span>(<span class="params"></span>)&#123;&#125;</span><br><span class="line"><span class="keyword">import</span> myname <span class="keyword">from</span> <span class="string">&#x27;module&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">funcName</span>(<span class="params"></span>)&#123;&#125;</span><br><span class="line"><span class="keyword">import</span> funcNameMy <span class="keyword">from</span> <span class="string">&#x27;module2&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认导出类（定义时）</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="title class_">className</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认导出 expression</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> a = <span class="string">&#x27;a&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认导出（定义后）</span></span><br><span class="line"><span class="keyword">export</span> &#123;a <span class="keyword">as</span> <span class="keyword">default</span>, b, c <span class="keyword">as</span> newC&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://hfcherish.github.io/2018/06/14/hexo-next/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Cherish">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cherish's Blog">
-      <meta itemprop="description" content="从心所欲不逾矩">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Cherish's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/06/14/hexo-next/" class="post-title-link" itemprop="url">hexo+next 设置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-06-14 19:19:44" itemprop="dateCreated datePublished" datetime="2018-06-14T19:19:44+08:00">2018-06-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="WORDS">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">WORDS:</span>
-      <span>0</span>
-    </span>
-    <span class="post-meta-item" title="Reading time">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>1 mins.</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a href="https://hfcherish.github.io/2018/05/23/build-blog-using-hexo/">使用 hexo + github 部署博客</a> 介绍了怎么部署自己的博客，然后就开始无休止的调整主题。</p>
-<p>我选定的主题是 <a href="https://github.com/theme-next/hexo-theme-next">next</a>：有目录，也有集成搜索的文档，这是一个 <a href="http://www.itfanr.cc/about/">example</a>，参照 <a href="https://theme-next.iissnan.com/third-party-services.html">第三方集成</a> 集成搜索等功能. next 优化配置可参考 <a href="http://www.vitah.net/posts/20f300cc/">这篇文章</a></p>
-<h1 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h1><p>我是采用两个配置文件的写法，即在 <code>source/_data/next.yml</code> 中写 next 相关的配置。</p>
-<h1 id="code-highlight-配置"><a href="#code-highlight-配置" class="headerlink" title="code highlight 配置"></a>code highlight 配置</h1><p>按照<a href="https://theme-next.iissnan.com/getting-started.html#theme-settings">主题设定教程</a>，我设置的是 <code>scheme: Mist</code>。默认的代码 highlight 是用 <a href="https://github.com/chriskempson/tomorrow-theme">tomorrow theme</a>，按照 <a href="https://theme-next.iissnan.com/theme-settings.html#syntax-highlight-scheme">代码高亮设置教程</a>，可以有五种选项。但是很多 code grammar 高亮显示无效，比如 jsx。所以想换一个 highlight 主题。</p>
-<p>找了个 <a href="https://vxhly.github.io/2017/10/hexo-next-advanced-settings/">code highlight theme 配置教程</a> ，开始动手。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/7/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -1349,14 +1408,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">377k</span>
+    <span title="Word count total">387k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">5:43</span>
+    <span title="Reading time total">5:52</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

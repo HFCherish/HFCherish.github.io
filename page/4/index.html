@@ -148,13 +148,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-count">67</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-count">54</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -184,6 +184,267 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://hfcherish.github.io/2019/01/30/pipeline-process-beam/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/01/30/pipeline-process-beam/" class="post-title-link" itemprop="url">pipeline process: beam</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-30 17:02:49" itemprop="dateCreated datePublished" datetime="2019-01-30T17:02:49+08:00">2019-01-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-05-19 09:47:46" itemprop="dateModified" datetime="2023-05-19T09:47:46+08:00">2023-05-19</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="WORDS">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">WORDS:</span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="What’s-beam"><a href="#What’s-beam" class="headerlink" title="What’s beam"></a>What’s beam</h1><p><a href="https://beam.apache.org/get-started/beam-overview/">beam</a> is a open-source, unified model for defining both batched &amp; streaming data-parallel processing pipelines.</p>
+<ul>
+<li>open-source (apache v2 license)</li>
+<li>to define data-parallel processing pipelines</li>
+<li>an unified model to define pipelines. The real processing is run by the underlying runner (eg. spark, apache apex, etc.). <a href="https://beam.apache.org/get-started/beam-overview/">all available runners</a></li>
+<li>can process both batched  (bounded datasets) &amp; streaming (unbounded datasets) datasets</li>
+</ul>
+<h1 id="Use-it"><a href="#Use-it" class="headerlink" title="Use it"></a>Use it</h1><p>See the <a href="https://beam.apache.org/get-started/beam-overview/">wordcount examples</a>, <a href="https://github.com/apache/beam/blob/master/examples/java/src/main/java/org/apache/beam/examples/MinimalWordCount.java">wordcount src</a></p>
+<p>Now we define a simple pipeline and run it.</p>
+<p><code>Transform</code>, <code>Count</code> are all built-in atom operations to define the pipeline scripts.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.apache.beam.examples;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> org.apache.beam.sdk.Pipeline;</span><br><span class="line"><span class="keyword">import</span> org.apache.beam.sdk.io.TextIO;</span><br><span class="line"><span class="keyword">import</span> org.apache.beam.sdk.options.PipelineOptions;</span><br><span class="line"><span class="keyword">import</span> org.apache.beam.sdk.options.PipelineOptionsFactory;</span><br><span class="line"><span class="keyword">import</span> org.apache.beam.sdk.transforms.Count;</span><br><span class="line"><span class="keyword">import</span> org.apache.beam.sdk.transforms.Filter;</span><br><span class="line"><span class="keyword">import</span> org.apache.beam.sdk.transforms.FlatMapElements;</span><br><span class="line"><span class="keyword">import</span> org.apache.beam.sdk.transforms.MapElements;</span><br><span class="line"><span class="keyword">import</span> org.apache.beam.sdk.values.KV;</span><br><span class="line"><span class="keyword">import</span> org.apache.beam.sdk.values.TypeDescriptors;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MinimalWordCount</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Create a PipelineOptions object. This object lets us set various execution</span></span><br><span class="line">    <span class="comment">// options for our pipeline, such as the runner you wish to use.</span></span><br><span class="line">    <span class="type">PipelineOptions</span> <span class="variable">options</span> <span class="operator">=</span> PipelineOptionsFactory.create();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Create the Pipeline object with the options we defined above</span></span><br><span class="line">    <span class="type">Pipeline</span> <span class="variable">p</span> <span class="operator">=</span> Pipeline.create(options);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Concept #1: Apply a root transform to the pipeline; in this case, TextIO.Read to read a set</span></span><br><span class="line">    p.apply(TextIO.read().from(<span class="string">&quot;gs://apache-beam-samples/shakespeare/*&quot;</span>))</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Concept #2: Apply a FlatMapElements transform the PCollection of text lines.</span></span><br><span class="line">        .apply(</span><br><span class="line">            FlatMapElements.into(TypeDescriptors.strings())</span><br><span class="line">                .via((String word) -&gt; Arrays.asList(word.split(<span class="string">&quot;[^\\p&#123;L&#125;]+&quot;</span>))))</span><br><span class="line">        .apply(Filter.by((String word) -&gt; !word.isEmpty()))</span><br><span class="line">        <span class="comment">// Concept #3: Apply the Count transform to our PCollection of individual words. </span></span><br><span class="line">        .apply(Count.perElement())</span><br><span class="line">        .apply(</span><br><span class="line">            MapElements.into(TypeDescriptors.strings())</span><br><span class="line">                .via(</span><br><span class="line">                    (KV&lt;String, Long&gt; wordCount) -&gt;</span><br><span class="line">                        wordCount.getKey() + <span class="string">&quot;: &quot;</span> + wordCount.getValue()))</span><br><span class="line">        <span class="comment">// Concept #4: Apply a write transform, TextIO.Write, at the end of the pipeline.</span></span><br><span class="line">        .apply(TextIO.write().to(<span class="string">&quot;wordcounts&quot;</span>));</span><br><span class="line"></span><br><span class="line">    p.run().waitUntilFinish();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Some-conceptions"><a href="#Some-conceptions" class="headerlink" title="Some conceptions"></a>Some conceptions</h1><h2 id="I-x2F-O-data-source-x2F-target"><a href="#I-x2F-O-data-source-x2F-target" class="headerlink" title="I&#x2F;O (data source&#x2F;target)"></a>I&#x2F;O (data source&#x2F;target)</h2><p>Beam can process both batched  (bounded datasets) &amp; streaming (unbounded datasets) datasets. <a href="https://beam.apache.org/documentation/io/built-in/">built-in io transforms</a></p>
+<p>Take reading as example, you specify the file location (the location must be accessable for the runner), and then the reader pull from datasource. You may also define the trigger to collect input window. When trigger is satisfied, window elements are emitted.</p>
+<p>For unbounded datasets, they are split into windows. And each window is again a bounded datasets. In each window, there’re some elements. You can define how the elements are grouped as a window and when to emit the window elements for processing. <a href="https://beam.apache.org/documentation/programming-guide/#windowing">window concept</a></p>
+<h2 id="Runner"><a href="#Runner" class="headerlink" title="Runner"></a>Runner</h2><p>Beam is an unified model. It abstracts the conception to define and run a pipeline. The real execution is conducted by the underlying runners.</p>
+<p><a href="https://beam.apache.org/get-started/beam-overview/">all available runners</a></p>
+<p>For unbounded datasets, the underlying runner must support stream processing.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://hfcherish.github.io/2019/01/23/linux-command/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/01/23/linux-command/" class="post-title-link" itemprop="url">linux commands</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-23 15:32:13" itemprop="dateCreated datePublished" datetime="2019-01-23T15:32:13+08:00">2019-01-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-02-14 17:05:07" itemprop="dateModified" datetime="2023-02-14T17:05:07+08:00">2023-02-14</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="WORDS">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">WORDS:</span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="chmod-chown"><a href="#chmod-chown" class="headerlink" title="chmod, chown"></a>chmod, chown</h1><p><a href="https://www.linux.com/learn/understanding-linux-file-permissions">understanding linux file permissions</a></p>
+<p>File permissions are defined by <strong>permission group</strong> and <strong>permission type</strong></p>
+<ol>
+<li>permission group<ul>
+<li>owner(u)</li>
+<li>group(g)</li>
+<li>all other users(a)</li>
+</ul>
+</li>
+<li>permission type<ul>
+<li>read (r - 4)</li>
+<li>write(w - 2)</li>
+<li>execute(x - 1)</li>
+</ul>
+</li>
+</ol>
+<h2 id="permission-presentation"><a href="#permission-presentation" class="headerlink" title="permission presentation"></a>permission presentation</h2><p>The permission in the command line is displayed as <em><strong>_rwxrwxrwx 1 owner:group</strong></em></p>
+<ul>
+<li>the first character (underscore <strong>_</strong>  here) is the <strong>special permission flag</strong> that can vary.</li>
+<li>the following three groups of <em><strong>rwx</strong></em> represent <strong>permission of owner, group and all other users</strong> respectively. If the owner and all users has no read permission, it is <em><strong>__wxrwx_wx</strong></em></li>
+<li>follwing that grouping since the integer displays <strong>the number of hardlinks to the file</strong></li>
+<li>the last piece is the owner and group assignment.</li>
+</ul>
+<h3 id="special-permission-flag"><a href="#special-permission-flag" class="headerlink" title="special permission flag"></a>special permission flag</h3><p>The special permission flag can be:</p>
+<ul>
+<li><strong>_</strong>: no special permissions</li>
+<li><em><strong>d</strong></em>: directory</li>
+<li><em><strong>l</strong></em>: the file or dir is a symbolic link</li>
+<li><em><strong>s</strong></em>: This indicated the setuid&#x2F;setgid permissions. This is not set displayed in the special permission part of the permissions display, but is represented as a <strong>s</strong> in the read portion of the owner or group permissions.</li>
+<li><em><strong>t</strong></em>: This indicates the sticky bit permissions. This is not set displayed in the special permission part of the permissions display, but is represented as a <strong>t</strong> in the executable portion of the all users permissions</li>
+</ul>
+<h2 id="permission-modification"><a href="#permission-modification" class="headerlink" title="permission modification"></a>permission modification</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># grant read and write permissions to the user and group</span></span><br><span class="line">$ <span class="built_in">chmod</span> ug+rw file1</span><br><span class="line"></span><br><span class="line"><span class="comment"># remove read and write permissions to the user and group</span></span><br><span class="line">$ <span class="built_in">chmod</span> ug-rw file1</span><br><span class="line"></span><br><span class="line"><span class="comment"># set permission using binary references (owner: rwx = 4+2+1, group: rx = 4+1, all users: rx = 4+1)</span></span><br><span class="line">$ <span class="built_in">chmod</span> 755 file1</span><br><span class="line"></span><br><span class="line"><span class="comment"># change the file permission recursively in the file/dir instead of just the files themselves</span></span><br><span class="line">$ <span class="built_in">chmod</span> -R 755 dir1</span><br></pre></td></tr></table></figure>
+
+<h2 id="change-owner-group-assignments"><a href="#change-owner-group-assignments" class="headerlink" title="change owner:group assignments"></a>change owner:group assignments</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># change the owner of file1 to user1 and group to family</span></span><br><span class="line">$ <span class="built_in">chown</span> user1:family file1</span><br></pre></td></tr></table></figure>
+
+<h1 id="find"><a href="#find" class="headerlink" title="find"></a>find</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># find all xml files from the current dir</span></span><br><span class="line">$ find ./* -name <span class="string">&#x27;*.xml&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>To find all files modified in the last 24 hours (last full day) in a particular specific directory and its sub-directories:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find /directory_path -mtime -1 -<span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
+
+<p>Should be to your liking</p>
+<p>The <code>-</code> before <code>1</code> is important - it means anything changed one day or less ago. A <code>+</code> before <code>1</code> would instead mean anything changed at least one day ago, while having nothing before the <code>1</code> would have meant it was changed exacted one day ago, no more, no less.</p>
+<p>Another, more humane way:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /&lt;directory&gt; -newermt <span class="string">&quot;-24 hours&quot;</span> -<span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
+
+<p>or:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /&lt;directory&gt; -newermt <span class="string">&quot;1 day ago&quot;</span> -<span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
+
+<p>or:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /&lt;directory&gt; -newermt <span class="string">&quot;yesterday&quot;</span> -<span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h1><p>找到文件并删除</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">find /home/raven -name abc.txt | xargs rm -rf</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">不使用 xargs</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># list file with creation date and sort by it</span></span><br><span class="line">$ <span class="built_in">ls</span> -lct</span><br></pre></td></tr></table></figure>
+
+<h1 id="du"><a href="#du" class="headerlink" title="du"></a>du</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">du</span> -sh -- * | <span class="built_in">sort</span> -hr</span><br></pre></td></tr></table></figure>
+
+<h1 id="List-users"><a href="#List-users" class="headerlink" title="List users"></a>List users</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> /etc/passwd | <span class="built_in">cut</span> -d: -f1</span><br></pre></td></tr></table></figure>
+
+<h1 id="pbcopy"><a href="#pbcopy" class="headerlink" title="pbcopy"></a>pbcopy</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># copy file content to clipboard</span></span><br><span class="line">$ pbcopy &lt; test.txt</span><br></pre></td></tr></table></figure>
+
+<h1 id="dstat"><a href="#dstat" class="headerlink" title="dstat"></a>dstat</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ dstat -t -a --tcp --output network.log</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1597,7 +1858,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+      <time title="Modified: 2023-05-19 09:48:10" itemprop="dateModified" datetime="2023-05-19T09:48:10+08:00">2023-05-19</time>
     </span>
 
   
@@ -1627,7 +1888,7 @@
     <div class="post-body" itemprop="articleBody">
           <p>自适应一般是设定基准值，宽、高、字体大小都指定为基准值的百分比。当基准值改变时，页面元素、宽高也会按比例变化。</p>
 <h1 id="自适应宽度"><a href="#自适应宽度" class="headerlink" title="自适应宽度"></a>自适应宽度</h1><h2 id="不使用绝对宽度"><a href="#不使用绝对宽度" class="headerlink" title="不使用绝对宽度"></a>不使用绝对宽度</h2><p>网页宽度默认等于屏幕宽度。所以大部分时候只要不适用绝对宽度即可实现自适应宽度：</p>
-<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span>: &#123;</span><br><span class="line">	<span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">	<span class="comment">// or width: auto;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span>: &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="comment">// or width: auto;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>如果元素是图片，也可以使用 <code>max-width</code> 属性，参见<a href="https://www.w3schools.com/css/css_rwd_images.asp">responsive web design: image</a></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">img &#123;</span><br><span class="line">  max-width: 100%;</span><br><span class="line">  height: auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -1642,7 +1903,7 @@
 <p>For the height of a div to be responsive, it must be inside a parent element with a defined height to derive it’s relative height from.</p>
 </blockquote>
 <p>如果父容器的高度可确定，则同上，采用百分比即可实现自适应。</p>
-<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">parent: &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">    </span><br><span class="line">    child: &#123;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">80%</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">parent: &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line"></span><br><span class="line">    child: &#123;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">80%</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="根据宽度变化，同比例改变高度"><a href="#根据宽度变化，同比例改变高度" class="headerlink" title="根据宽度变化，同比例改变高度"></a>根据宽度变化，同比例改变高度</h2><p>页面宽度的自适应容易实现，可以基于宽度的变化，同比例更改高度。</p>
 <h3 id="利用-padding"><a href="#利用-padding" class="headerlink" title="利用 padding"></a>利用 <code>padding</code></h3><p>参见<a href="https://stackoverflow.com/questions/11535827/responsive-height-proportional-to-width">responsive height proportional to width</a>，设定 <code>height</code> 为 0，<code>padding</code> 为百分比</p>
@@ -1650,221 +1911,15 @@
 <p>In all browsers, when padding is specified in %, it’s calculated relative to the parent element’s width. </p>
 </blockquote>
 <p>Html:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content&quot;</span>&gt;</span></span><br><span class="line">    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;wrapper&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content2&quot;</span>&gt;</span></span><br><span class="line">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content&quot;</span>&gt;</span></span><br><span class="line">    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;wrapper&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content2&quot;</span>&gt;</span></span><br><span class="line">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>Css:</p>
-<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.content</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding-bottom</span>: <span class="number">30%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#7ad</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.wrapper</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">padding-bottom</span>: <span class="number">30%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#7ad</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.wrapper</span> <span class="selector-class">.content2</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#7da</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.content</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding-bottom</span>: <span class="number">30%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#7ad</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.wrapper</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">padding-bottom</span>: <span class="number">30%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#7ad</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.wrapper</span> <span class="selector-class">.content2</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#7da</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="利用-viewport-units"><a href="#利用-viewport-units" class="headerlink" title="利用 viewport units"></a>利用 viewport units</h3><p>新版本的浏览器支持 <a href="https://caniuse.com/#feat=viewport-units">viewport units</a>，eg.</p>
 <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">width</span>: <span class="number">100vw</span>;</span><br><span class="line"><span class="attribute">height</span>: <span class="number">30vw</span>; <span class="comment">/* 30% of width */</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="使用-media-1"><a href="#使用-media-1" class="headerlink" title="使用 media"></a>使用 media</h2><p>同宽度，指定不同 media 情况下，高度显示不同。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://hfcherish.github.io/2018/11/06/duplicate-rows-in-postgresql/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Cherish">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cherish's Blog">
-      <meta itemprop="description" content="从心所欲不逾矩">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Cherish's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/11/06/duplicate-rows-in-postgresql/" class="post-title-link" itemprop="url">duplicate rows in postgresql</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-11-06 14:53:28" itemprop="dateCreated datePublished" datetime="2018-11-06T14:53:28+08:00">2018-11-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="WORDS">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">WORDS:</span>
-      <span>0</span>
-    </span>
-    <span class="post-meta-item" title="Reading time">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>1 mins.</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>参见 <a href="https://blog.theodo.fr/2018/01/search-destroy-duplicate-rows-postgresql/">Search and destroy duplicate rows in PostgreSQL</a></p>
-<h1 id="Find-duplicates"><a href="#Find-duplicates" class="headerlink" title="Find duplicates"></a>Find duplicates</h1><h2 id="using-group"><a href="#using-group" class="headerlink" title="using group"></a>using group</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">  firstname,</span><br><span class="line">  lastname,</span><br><span class="line">  <span class="built_in">count</span>(<span class="operator">*</span>)</span><br><span class="line"><span class="keyword">FROM</span> people</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span></span><br><span class="line">  firstname,</span><br><span class="line">  lastname</span><br><span class="line"><span class="keyword">HAVING</span> <span class="built_in">count</span>(<span class="operator">*</span>) <span class="operator">&gt;</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
-
-<h2 id="using-partition"><a href="#using-partition" class="headerlink" title="using partition"></a>using partition</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span></span><br><span class="line">  (<span class="keyword">SELECT</span> <span class="operator">*</span>, <span class="built_in">count</span>(<span class="operator">*</span>)</span><br><span class="line">  <span class="keyword">OVER</span></span><br><span class="line">    (<span class="keyword">PARTITION</span> <span class="keyword">BY</span></span><br><span class="line">      firstname,</span><br><span class="line">      lastname</span><br><span class="line">    ) <span class="keyword">AS</span> count</span><br><span class="line">  <span class="keyword">FROM</span> people) tableWithCount</span><br><span class="line">  <span class="keyword">WHERE</span> tableWithCount.count <span class="operator">&gt;</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Using-not-strict-distinct"><a href="#Using-not-strict-distinct" class="headerlink" title="Using not strict distinct"></a>Using not strict distinct</h2><p>利用 not strict distinct <code>DISTINCT ON</code> 找到唯一的那些条，剩余的就是重复的，可以修改或删除</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> people <span class="keyword">WHERE</span> people.id <span class="keyword">NOT</span> <span class="keyword">IN</span> </span><br><span class="line">(<span class="keyword">SELECT</span> id <span class="keyword">FROM</span> (</span><br><span class="line">    <span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> <span class="keyword">ON</span> (firstname, lastname) <span class="operator">*</span></span><br><span class="line">  <span class="keyword">FROM</span> people));</span><br><span class="line">  </span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> more readable code</span><br><span class="line"><span class="keyword">WITH</span> <span class="keyword">unique</span> <span class="keyword">AS</span></span><br><span class="line">    (<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> <span class="keyword">ON</span> (firstname, lastname) <span class="operator">*</span> <span class="keyword">FROM</span> people)</span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> people <span class="keyword">WHERE</span> people.id <span class="keyword">NOT</span> <span class="keyword">IN</span> (<span class="keyword">SELECT</span> id <span class="keyword">FROM</span> <span class="keyword">unique</span>);</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://hfcherish.github.io/2018/10/15/performance-of-io-in-java/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Cherish">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cherish's Blog">
-      <meta itemprop="description" content="从心所欲不逾矩">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Cherish's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/10/15/performance-of-io-in-java/" class="post-title-link" itemprop="url">performance for io in java</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-10-15 12:59:58" itemprop="dateCreated datePublished" datetime="2018-10-15T12:59:58+08:00">2018-10-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="WORDS">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">WORDS:</span>
-      <span>0</span>
-    </span>
-    <span class="post-meta-item" title="Reading time">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>1 mins.</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="java-io-ByteArrayOutputStream"><a href="#java-io-ByteArrayOutputStream" class="headerlink" title="java.io.ByteArrayOutputStream"></a>java.io.ByteArrayOutputStream</h1><p>这一般在用到字节流是会用到。</p>
-<p><a href="http://java-performance.info/java-io-bytearrayoutputstream/">java performance tuning guide</a> 这篇文章不建议在 performance-criticted 代码中使用 <code>ByteArrayOutputStream</code>：</p>
-<ol>
-<li><strong>同步写入，效率低</strong></li>
-</ol>
-<blockquote>
-<p><code>ByteArrayOutputStream</code> allows you to write anything to an internal expandable byte array and use that array as a single piece of output afterwards. Default buffer size is 32 bytes, so if you expect to write something longer, provide an explicit buffer size in the <code>ByteArrayOutputStream(int)</code> constructor</p>
-<p> 注：</p>
-<ol>
-<li><code>ByteArrayOutputStream</code> 内部是一个可变长度的 byte[]（通过扩充实现可变）。它有个初始长度（默认 32），可以在 constructor 中指定.</li>
-<li><code>ByteArrayOutputStream</code> 是同步写入，比较影响效率</li>
-</ol>
-</blockquote>
-<ol start="2">
-<li><strong>toByteArray() 效率低，使用 toString(charset)</strong></li>
-</ol>
-<p><code>toByteArray</code> 执行了一遍拷贝，效率低。<code>toString</code> 则使用 <code>String(bytes[])</code> 直接将内部 byte 转成了 String</p>
-<p><a href="http://java-performance.info/inefficient-byte-to-string-constructor/">inefficient byte[] to String constructor</a> 指出 <code>String(bytes[])</code>  也是 copy，但 java8 中的源码看了下，似乎不是 copy，待考证……</p>
 
       
     </div>
@@ -1908,14 +1963,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">377k</span>
+    <span title="Word count total">387k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">5:43</span>
+    <span title="Reading time total">5:52</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

@@ -148,13 +148,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-count">67</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-count">54</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -184,6 +184,201 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://hfcherish.github.io/2018/06/15/js-export/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/06/15/js-export/" class="post-title-link" itemprop="url">js export</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-15 18:17:19" itemprop="dateCreated datePublished" datetime="2018-06-15T18:17:19+08:00">2018-06-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="WORDS">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">WORDS:</span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/export">export</a> 用于从 module 中导出函数、对象、原始值，在其他地方通过 <code>import</code> 使用这些函数、对象、原始值。</p>
+<p>有两种导出方式：命名导出（<code>export</code>），默认导出（<code>export default</code>）</p>
+<h1 id="1-命名导出"><a href="#1-命名导出" class="headerlink" title="1. 命名导出"></a>1. 命名导出</h1><p>就是导出 module 中有命名的函数、对象、原始值。相应的，import 时，必须使用相同的命名引入（当然可以使用 <code>import a as b from &#39;./module&#39;</code> 来修改名称）</p>
+<p>举例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义时导出</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> a = <span class="string">&#x27;a&#x27;</span>, b = <span class="string">&#x27;b&#x27;</span>; <span class="comment">// 适用于 var, let</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">a</span>(<span class="params"></span>)&#123;&#125;;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">a</span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义后导出</span></span><br><span class="line"><span class="keyword">const</span> a = <span class="string">&#x27;a&#x27;</span>, b = <span class="string">&#x27;b&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> &#123;a, b <span class="keyword">as</span> newB&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 导出其他模块的导出。</span></span><br><span class="line"><span class="comment">// 此时仅会导出 otherModule 的命名导出，所以这里最终导出的还是有命名的</span></span><br><span class="line"><span class="keyword">export</span> * <span class="keyword">from</span> <span class="string">&#x27;otherModule&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> &#123;a, b <span class="keyword">as</span> newB&#125; <span class="keyword">from</span> <span class="string">&#x27;otherModule&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果需要导出 otherModule 的默认导出，只能这样写：</span></span><br><span class="line"><span class="keyword">import</span> defaultExport <span class="keyword">from</span> <span class="string">&#x27;otherModule&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> [<span class="keyword">default</span>] defaultExport;</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-默认导出"><a href="#2-默认导出" class="headerlink" title="2. 默认导出"></a>2. 默认导出</h1><p>默认导出（<code>export default</code>）的函数、类可以认为没有固定名称，即 import 时，可以用任何名称导入</p>
+<p>一个 module 中只能有一个默认导出。</p>
+<p><code>export default</code> 后不能跟 <code>const</code>, <code>let</code>, <code>var</code></p>
+<p>举例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 默认导出函数（定义时）</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span>(<span class="params"></span>)&#123;&#125;</span><br><span class="line"><span class="keyword">import</span> myname <span class="keyword">from</span> <span class="string">&#x27;module&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">funcName</span>(<span class="params"></span>)&#123;&#125;</span><br><span class="line"><span class="keyword">import</span> funcNameMy <span class="keyword">from</span> <span class="string">&#x27;module2&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认导出类（定义时）</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="title class_">className</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认导出 expression</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> a = <span class="string">&#x27;a&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认导出（定义后）</span></span><br><span class="line"><span class="keyword">export</span> &#123;a <span class="keyword">as</span> <span class="keyword">default</span>, b, c <span class="keyword">as</span> newC&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://hfcherish.github.io/2018/06/14/hexo-next/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/06/14/hexo-next/" class="post-title-link" itemprop="url">hexo+next 设置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-14 19:19:44" itemprop="dateCreated datePublished" datetime="2018-06-14T19:19:44+08:00">2018-06-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="WORDS">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">WORDS:</span>
+      <span>0</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a href="https://hfcherish.github.io/2018/05/23/build-blog-using-hexo/">使用 hexo + github 部署博客</a> 介绍了怎么部署自己的博客，然后就开始无休止的调整主题。</p>
+<p>我选定的主题是 <a href="https://github.com/theme-next/hexo-theme-next">next</a>：有目录，也有集成搜索的文档，这是一个 <a href="http://www.itfanr.cc/about/">example</a>，参照 <a href="https://theme-next.iissnan.com/third-party-services.html">第三方集成</a> 集成搜索等功能. next 优化配置可参考 <a href="http://www.vitah.net/posts/20f300cc/">这篇文章</a></p>
+<h1 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h1><p>我是采用两个配置文件的写法，即在 <code>source/_data/next.yml</code> 中写 next 相关的配置。</p>
+<h1 id="code-highlight-配置"><a href="#code-highlight-配置" class="headerlink" title="code highlight 配置"></a>code highlight 配置</h1><p>按照<a href="https://theme-next.iissnan.com/getting-started.html#theme-settings">主题设定教程</a>，我设置的是 <code>scheme: Mist</code>。默认的代码 highlight 是用 <a href="https://github.com/chriskempson/tomorrow-theme">tomorrow theme</a>，按照 <a href="https://theme-next.iissnan.com/theme-settings.html#syntax-highlight-scheme">代码高亮设置教程</a>，可以有五种选项。但是很多 code grammar 高亮显示无效，比如 jsx。所以想换一个 highlight 主题。</p>
+<p>找了个 <a href="https://vxhly.github.io/2017/10/hexo-next-advanced-settings/">code highlight theme 配置教程</a> ，开始动手。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -888,14 +1083,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">377k</span>
+    <span title="Word count total">387k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">5:43</span>
+    <span title="Reading time total">5:52</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
