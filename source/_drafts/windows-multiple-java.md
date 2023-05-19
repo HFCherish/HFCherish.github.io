@@ -3,8 +3,8 @@ title: 'windows multiple java'
 toc: true
 date: 2020-12-18 18:21:15
 tags:
-	- windows
-	- java
+    - windows
+    - java
 ---
 
 errors:
@@ -16,7 +16,7 @@ Registry key 'Software\JavaSoft\Java Runtime Environment\CurrentVersion' has val
 或者 java 和 javac 的版本不一样. 修改：
 
 1. 修改 registry key 的 `HKEY_LOCAL_MACHINE\SOFTWARE\JavaSoft\Java Runtime Environment\`  的 `currentVersion` 和 `Java6FamilyVersion` 为一致
-
+   
    > key 有可能在 `HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\JavaSoft\Java Runtime Environment` 在 64 位 win10 系统中
 
 2. 删除环境变量中 `C:\Program Files (x86)\Common Files\Oracle\Java\javapath`
@@ -33,19 +33,13 @@ Registry key 'Software\JavaSoft\Java Runtime Environment\CurrentVersion' has val
 
 [java control panel](https://zh.wikihow.com/%E5%90%AF%E7%94%A8Java)
 
-
-
 CLASSPATH
 
 .;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar;
 
-
-
 JAVA_HOME
 
 C:\Program Files (x86)\Java\jdk1.6.0_45
-
-
 
 %JAVA_HOME%\bin
 
