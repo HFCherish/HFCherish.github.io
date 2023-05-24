@@ -148,7 +148,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-count">68</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -184,6 +184,127 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://hfcherish.github.io/2020/06/03/Cache-MicroService/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/06/03/Cache-MicroService/" class="post-title-link" itemprop="url">Cache - MicroService</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-06-03 10:42:53" itemprop="dateCreated datePublished" datetime="2020-06-03T10:42:53+08:00">2020-06-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Where-is-my-cache-for-a-service"><a href="#Where-is-my-cache-for-a-service" class="headerlink" title="Where is my cache for a service"></a>Where is my cache for a service</h1><p>[Architectural Patterns for Caching Microservices](Architectural Patterns for Caching Microservices)</p>
+<p>Patterns:</p>
+<ol>
+<li><strong>embedded</strong>: save cache in the service</li>
+<li><strong>client-server</strong>: a completely separate cache server</li>
+<li><strong>reverse-proxy</strong>: put the cache in front of each service</li>
+<li><strong>Sidecar</strong>: put the cache as a sidecar container that belongs to the service</li>
+</ol>
+<p>How does cache work? The application receives the request and checks if <strong>the same request</strong> was already executed (and stored in the cache)</p>
+<h2 id="Embedded"><a href="#Embedded" class="headerlink" title="Embedded"></a>Embedded</h2><p><strong>Embedded Distributed Cache</strong></p>
+<p>Why distributed?</p>
+<ol>
+<li>Same requests happen on different instances, and we want to use cache on the second same request no matter whether they reached the same instance.</li>
+<li>An update request reached one instance, and we want all the cache of this resource on all instances should be updated.</li>
+</ol>
+<h2 id="Client-Server"><a href="#Client-Server" class="headerlink" title="Client-Server"></a>Client-Server</h2><p>pros:</p>
+<ul>
+<li>sperarate server, so you can use any programming language you want</li>
+<li>separate management. you can scale up&#x2F;down, do backup, design security separatly on need.</li>
+</ul>
+<p>cons:</p>
+<ul>
+<li>a new deployment &amp; related ops work (cloud can make this simple)</li>
+</ul>
+<h2 id="Sidecar"><a href="#Sidecar" class="headerlink" title="Sidecar"></a>Sidecar</h2><p>A mixture of Embedded &amp; client-server. (<a href="https://hazelcast.com/blog/hazelcast-sidecar-container-pattern/">sidecar container pattern</a>)</p>
+<p>Take k8s as example (now most of the sidecar pattern is implemented on k8s, becaused it supports this pattern inborn), we put the cache server with the service as separate containers on the same pod. The request reach the service container first, and then the service can access the cache server by <code>localhost</code> .</p>
+<blockquote>
+<p>The <a href="https://docs.microsoft.com/en-us/azure/architecture/patterns/sidecar">sidecar pattern</a> is a technique of attaching an additional container to the main parent container so that both would share the same lifecycle and the same resources. You may think of it as a perfect tool for decomposing your application into reusable modules, in which each part is written in a different technology or programming language.</p>
+</blockquote>
+<h2 id="Reverse-proxy"><a href="#Reverse-proxy" class="headerlink" title="Reverse proxy"></a>Reverse proxy</h2><ol>
+<li>Everytime you try to access the servcie, you go to the reverse proxy (e.g. nginx). </li>
+<li>And the proxy will first check the cache for the request. If cache exists, return immediately, else, forward to the service and write the cache.</li>
+</ol>
+<p>pros: </p>
+<ul>
+<li>In this way, the service has no idea about the cache, so nothing will change on the service when cache introduced.</li>
+</ul>
+<p>cons:</p>
+<ul>
+<li>cannot use any application-based code to invalidate the cache.</li>
+</ul>
+<p>Also, you can put the reverse proxy into the side-car, that is, <strong>reverse-proxy-sidecar</strong> pattern.</p>
+<p>Now, there is no mature <strong>HTTP Reverse Proxy Cache Sidecar</strong> solution at all. Nginx can do it, but it’s not a good choice since it’s not mature.</p>
+<h1 id="Caching-Practices"><a href="#Caching-Practices" class="headerlink" title="Caching Practices"></a>Caching Practices</h1><ul>
+<li>Always use caching in one place for a service. Mutliple caches will make the cache invalication and error-prone difficult.</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1406,162 +1527,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://hfcherish.github.io/2019/03/01/obs/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Cherish">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cherish's Blog">
-      <meta itemprop="description" content="从心所欲不逾矩">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Cherish's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/03/01/obs/" class="post-title-link" itemprop="url">obs</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-03-01 10:50:15" itemprop="dateCreated datePublished" datetime="2019-03-01T10:50:15+08:00">2019-03-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a href="https://support.huaweicloud.com/productdesc-obs/zh-cn_topic_0045829060.html">Huawei Obs</a> is an object storage service on cloud.</p>
-<h1 id="Concepts"><a href="#Concepts" class="headerlink" title="Concepts"></a>Concepts</h1><h2 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h2><ol>
-<li>The real complete file or byte stream to save</li>
-<li><strong>object name is the unique id</strong> in a bucket<ol>
-<li>it’s used as <strong>part of url path</strong>. The naming restrictions are fit to url path naming restrictions.</li>
-</ol>
-</li>
-<li>Access(based on version in fact)<ol>
-<li>Object ACL:<ol>
-<li>general control to object: <strong>read object, read&#x2F;write object ACL, only users in the same account</strong></li>
-</ol>
-</li>
-<li>Object policy<ol>
-<li>fine-grained control to object: <strong>fine-grained actions(put,delete…) on object, all users</strong></li>
-</ol>
-</li>
-</ol>
-</li>
-<li><strong>multi-versions</strong><ol>
-<li>an object can has multiple versions, each of which has an unique id.</li>
-<li>Whether there’s multi-version, it’s a policy set on a bucket.</li>
-</ol>
-</li>
-<li>directory:<ol>
-<li><strong>directory is just a view</strong>. Essentially, it’s an empty object end with “&#x2F;“.</li>
-<li><strong>all objects in a bucket are on the same level</strong>. There’s no multi-level directory in fact.</li>
-<li>to create the directory view, you need to create an object with name ending with “&#x2F;“ explicility, eg. “sub1&#x2F;sub2&#x2F; . It will create a two-level dir in console. There’s no need to create “sub1&#x2F;“ first then “sub1&#x2F;sub2”.</li>
-</ol>
-</li>
-<li>object actions:<ol>
-<li>For writing, there’s <strong>only write&#x2F;restricted-append&#x2F;delete, no put</strong></li>
-<li><strong>basically-write-once-read-many</strong></li>
-</ol>
-</li>
-<li>upload modes:<ol>
-<li>stream</li>
-<li>file</li>
-<li>multi-part (support breakpoint resume)</li>
-<li>append</li>
-</ol>
-</li>
-</ol>
-<h2 id="Bucket"><a href="#Bucket" class="headerlink" title="Bucket"></a>Bucket</h2><ol>
-<li>The place to save objects</li>
-<li><strong>bucket name is the unique id</strong> for one account(a tenant).<ol>
-<li>it’s used as <strong>part of domain name</strong> on url. The naming restrictions are fit to domain naming restrictions.</li>
-</ol>
-</li>
-<li>Access<ol>
-<li>Bucket ACL: <ol>
-<li>general control to bucket and all objects in bucket: <strong>read&#x2F;put buckets, read&#x2F;write bucket ACL, only users in the same account</strong></li>
-</ol>
-</li>
-<li>Bucket policy<ol>
-<li>fine-grained control to specific objects in bucket: <strong>fine-grained actions on bucket or specific objects in bucket, all users</strong></li>
-</ol>
-</li>
-</ol>
-</li>
-<li>storage type<ol>
-<li>standard: <ol>
-<li><strong>quick access &amp; high throughput</strong>. It’s used for high access requests and not so big files.</li>
-</ol>
-</li>
-<li>warm:<ol>
-<li><strong>low access.</strong></li>
-</ol>
-</li>
-<li>cold:<ol>
-<li><strong>very very low access</strong></li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-<h2 id="region"><a href="#region" class="headerlink" title="region"></a>region</h2><p>The region of nodes where the storage really happens.</p>
-<h2 id="signature"><a href="#signature" class="headerlink" title="signature"></a>signature</h2><p>The signature to identify a user when accessing buckets&#x2F;objects.</p>
-<ol>
-<li>ak(access key): represent a user. one user can have multi aks. It’s kind of like an user role</li>
-<li>sk(secret key): one-to-one corresponding with ak. The secret key used for RSA authentication &amp; authorization.</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -1587,14 +1552,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">387k</span>
+    <span title="Word count total">429k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">5:52</span>
+    <span title="Reading time total">6:30</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
