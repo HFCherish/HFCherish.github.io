@@ -242,45 +242,29 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>我在学习 react，一直在使用 <a href="https://github.com/facebook/create-react-app">create-react-app</a> 创建项目。create-react-app 其实包括两个核心：</p>
-<ul>
-<li><code>create-react-app</code>：主要提供了 command-line 工具，方便用户创建 react 项目</li>
-<li><code>react-scripts</code>：这才是核心。它封装了所有开发 react 项目的配置，使得用户可以零配置直接开始开发 react。用户基本不需要更新 <code>create-react-app</code>，因为它总是拉最新的 <code>react-scripts</code>，而 <code>react-scripts</code> 才是简化用户配置的核心。</li>
-</ul>
-<p>问题来了，我在写测试的时候发现，<code>react-scripts</code> 默认配置使用的是 jest，而且版本较低（可运行 <code>npm ls jest</code> 查看依赖树，结果如下图所示）。而我需要使用的 data-driven-test 依赖包 <code>jest-each</code> 是 jest 23.0.0 以后的版本才有的。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/721960-cc0aae2294d01d0a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="react-scripts-dependency.png"></p>
-<p>所以我需要在测试的时候不使用默认安装的 jest，</p>
-<p>读了一个 <a href="https://medium.com/@francesco.agnoletto/i-didnt-like-create-react-app-so-i-created-my-own-boilerplate-190a7dd5d74">post: 自己写样板，不使用 create-react-app</a>，受它的启发要自己配置 react 项目，那么就有必要了解 js ecosystem 中的一些工程。</p>
-<h1 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a><a href="https://www.webpackjs.com/concepts/">webpack</a></h1><p>一个开源的前端打包工具，支持用户进行模块化开发（即用户开发很多 module，然后不同的 mudule 之间可通过 import, export 进行相互引用）。原本 js 是不支持的，可参见 <a href="https://hfcherish.github.io/2018/06/21/js-global-namespace/">js global namespace</a>。</p>
-<h1 id="ESLint"><a href="#ESLint" class="headerlink" title="ESLint"></a><a href="http://eslint.cn/docs/user-guide/configuring">ESLint</a></h1><p>是一个 javascript 的语法检查器。类似于在 IDE 中写 java 时的即时编译检查。它是可以配置的，以完成你所需要的检查。</p>
-<h1 id="ECMAScript"><a href="#ECMAScript" class="headerlink" title="ECMAScript"></a><a href="https://zh.wikipedia.org/wiki/ECMAScript">ECMAScript</a></h1><p><a href="https://huangxuan.me/2015/09/22/js-version/">ES5, ES6, ES2016, ES.Next: What’s going on with JavaScript versioning?</a> 翻译的这个文章讲得很好，我直接引用原文：</p>
-<blockquote>
-<ul>
-<li><strong>ECMAScript</strong>：一个由 ECMA International 进行标准化，TC39 委员会进行监督的语言。通常用于指代标准本身。</li>
-<li><strong>JavaScript</strong>：ECMAScript 标准的各种实现的最常用称呼。这个术语并不局限于某个特定版本的 ECMAScript 规范，并且可能被用于任何不同程度的任意版本的 ECMAScript 的实现。</li>
-<li>**ECMAScript 5 (ES5)**：ECMAScript 的第五版修订，于 2009 年完成标准化。这个规范在所有现代浏览器中都相当完全的实现了。</li>
-<li>**ECMAScript 6 (ES6) &#x2F; ECMAScript 2015 (ES2015)**：ECMAScript 的第六版修订，于 2015 年完成标准化。这个标准被部分实现于大部分现代浏览器。可以查阅这张兼容性表来查看不同浏览器和工具的实现情况。</li>
-<li><strong>ECMAScript 2016</strong>：预计的第七版 ECMAScript 修订，计划于明年夏季发布。这份规范具体将包含哪些特性还没有最终确定</li>
-<li><strong>ECMAScript Proposals</strong>：被考虑加入未来版本 ECMAScript 标准的特性与语法提案，他们需要经历五个阶段：Strawman（稻草人），Proposal（提议），Draft（草案），Candidate（候选）以及 Finished （完成）。</li>
-</ul>
-</blockquote>
-<p>blog 里也讲了 ecmascript 的历史。简答总结一下：</p>
-<ol>
-<li>很久以前（1996），网景浏览器把他们写的 javascript 交给 ECMA International（欧洲计算机制造协会）进行标准化</li>
-<li>ECMA 1，2，3 版本很快发布，而且被各大浏览器厂商支持</li>
-<li>ECMA 一直没有变化，各大浏览器厂商自行扩展（所以 javascript 其实是 ECMAScript 的实现和扩展）</li>
-<li>某一年，ECMA 4 出来，太激进，被废弃了（只有 Adobe 实现了）</li>
-<li>2009 年，ECMA 5（es5） 出来。但直到 2012 年才逐渐被公众接受</li>
-<li>2015 年，es6 出来。与此同时，相关委员会决定每年定义一次新标准，避免等待整个草案完成。因此 ES6 也被命名为 ECMAScript 2015</li>
-</ol>
-<p>一些资源：</p>
-<ul>
-<li>如果你还不熟悉 ES6，Babel 有一个<a href="https://babeljs.io/docs/learn-es2015/">很不错的特性概览</a></li>
-<li>如果你希望深入 ES6，这里有两本很不错的书： Axel Rauschmayer 的 <a href="http://exploringjs.com/">Exploring ES6</a>和 Nicholas Zakas 的 <a href="https://leanpub.com/understandinges6">Understanding ECMAScript 6</a>。Axel 的博客 <a href="http://www.2ality.com/">2ality</a> 也是很不错的 ES6 资源</li>
-</ul>
-<h1 id="babel"><a href="#babel" class="headerlink" title="babel"></a><a href="https://www.babeljs.cn/">babel</a></h1><p>babel 是一个 javascript 编译器。其核心是一个语法转换器，能将使用 es6、flow、jsx 的代码转换为浏览器兼容的 javascript。所以这些项目 build 后其实是生成了浏览器兼容的 javascript。</p>
-<p>为啥会有这个，原因就是上边说的，新版本 js 出来了，但是大家还不支持。</p>
+          我在学习 react，一直在使用 create-react-app 创建项目。create-react-app 其实包括两个核心：
 
+ * create-react-app：主要提供了 command-line 工具，方便用户创建 react 项目
+ * react-scripts：这才是核心。它封装了所有开发 react 项目的配置，使得用户可以零配置直接开始开发 react。用户基本不需要更新 create-react-app，因为它总是拉最新的 react-scripts，而 react-scripts 才是简化用户配置的核心。
+
+问题来了，我在写测试的时候发现，react-scripts 默认配置使用的是 jest，而且版本较低（可运行 npm ls jest 查看依赖树，结果如下图所示）。而我需要使用的 data-driven-test 依赖包 jest-each 是 jest 23.0.0 以后的版本才有的。
+
+
+
+所以我需要在测试的时候不使用默认安装的 jest，
+
+读了一个 post: 自己写样板，不使用 create-react-app，受它的启发要自己配置 react 项目，那么就有必要了解 js ecosystem 中的一些工程。
+
+webpack
+一个开源的前端打包工具，支持用户进行模块化开发（即用户开发很多 module，然后不同的 mudule 之间可通
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/21/js-ecosystem-md/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -355,17 +339,58 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/export">export</a> 用于从 module 中导出函数、对象、原始值，在其他地方通过 <code>import</code> 使用这些函数、对象、原始值。</p>
-<p>有两种导出方式：命名导出（<code>export</code>），默认导出（<code>export default</code>）</p>
-<h1 id="1-命名导出"><a href="#1-命名导出" class="headerlink" title="1. 命名导出"></a>1. 命名导出</h1><p>就是导出 module 中有命名的函数、对象、原始值。相应的，import 时，必须使用相同的命名引入（当然可以使用 <code>import a as b from &#39;./module&#39;</code> 来修改名称）</p>
-<p>举例：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义时导出</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> a = <span class="string">&#x27;a&#x27;</span>, b = <span class="string">&#x27;b&#x27;</span>; <span class="comment">// 适用于 var, let</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">a</span>(<span class="params"></span>)&#123;&#125;;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">a</span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义后导出</span></span><br><span class="line"><span class="keyword">const</span> a = <span class="string">&#x27;a&#x27;</span>, b = <span class="string">&#x27;b&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> &#123;a, b <span class="keyword">as</span> newB&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 导出其他模块的导出。</span></span><br><span class="line"><span class="comment">// 此时仅会导出 otherModule 的命名导出，所以这里最终导出的还是有命名的</span></span><br><span class="line"><span class="keyword">export</span> * <span class="keyword">from</span> <span class="string">&#x27;otherModule&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> &#123;a, b <span class="keyword">as</span> newB&#125; <span class="keyword">from</span> <span class="string">&#x27;otherModule&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果需要导出 otherModule 的默认导出，只能这样写：</span></span><br><span class="line"><span class="keyword">import</span> defaultExport <span class="keyword">from</span> <span class="string">&#x27;otherModule&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> [<span class="keyword">default</span>] defaultExport;</span><br></pre></td></tr></table></figure>
+          export 用于从 module 中导出函数、对象、原始值，在其他地方通过 import 使用这些函数、对象、原始值。
 
-<h1 id="2-默认导出"><a href="#2-默认导出" class="headerlink" title="2. 默认导出"></a>2. 默认导出</h1><p>默认导出（<code>export default</code>）的函数、类可以认为没有固定名称，即 import 时，可以用任何名称导入</p>
-<p>一个 module 中只能有一个默认导出。</p>
-<p><code>export default</code> 后不能跟 <code>const</code>, <code>let</code>, <code>var</code></p>
-<p>举例：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 默认导出函数（定义时）</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span>(<span class="params"></span>)&#123;&#125;</span><br><span class="line"><span class="keyword">import</span> myname <span class="keyword">from</span> <span class="string">&#x27;module&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">funcName</span>(<span class="params"></span>)&#123;&#125;</span><br><span class="line"><span class="keyword">import</span> funcNameMy <span class="keyword">from</span> <span class="string">&#x27;module2&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认导出类（定义时）</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="title class_">className</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认导出 expression</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> a = <span class="string">&#x27;a&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认导出（定义后）</span></span><br><span class="line"><span class="keyword">export</span> &#123;a <span class="keyword">as</span> <span class="keyword">default</span>, b, c <span class="keyword">as</span> newC&#125;</span><br></pre></td></tr></table></figure>
+有两种导出方式：命名导出（export），默认导出（export default）
+
+1. 命名导出
+就是导出 module 中有命名的函数、对象、原始值。相应的，import 时，必须使用相同的命名引入（当然可以使用 import a as b from './module' 来修改名称）
+
+举例：
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+
+
+// 定义时导出
+export const a = 'a', b = 'b'; // 适用于 var, let
+export function a(){};
+export class a{};
+
+// 定义后导出
+const a = 'a', b = 'b';
+export {a, b as newB};
+
+// 导出其他模块的导出。
+// 此时仅会导出 otherModule 的命名导出，所以这里最终导出的还是有命名的
+export * from 'otherModule';
+export {a, b as newB} from 'otherModule';
+
+// 如果需要导出 otherModule 的默认导出，只能这样写：
+import defaultExport 
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/15/js-export/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -440,12 +465,25 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><a href="https://hfcherish.github.io/2018/05/23/build-blog-using-hexo/">使用 hexo + github 部署博客</a> 介绍了怎么部署自己的博客，然后就开始无休止的调整主题。</p>
-<p>我选定的主题是 <a href="https://github.com/theme-next/hexo-theme-next">next</a>：有目录，也有集成搜索的文档，这是一个 <a href="http://www.itfanr.cc/about/">example</a>，参照 <a href="https://theme-next.iissnan.com/third-party-services.html">第三方集成</a> 集成搜索等功能. next 优化配置可参考 <a href="http://www.vitah.net/posts/20f300cc/">这篇文章</a></p>
-<h1 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h1><p>我是采用两个配置文件的写法，即在 <code>source/_data/next.yml</code> 中写 next 相关的配置。</p>
-<h1 id="code-highlight-配置"><a href="#code-highlight-配置" class="headerlink" title="code highlight 配置"></a>code highlight 配置</h1><p>按照<a href="https://theme-next.iissnan.com/getting-started.html#theme-settings">主题设定教程</a>，我设置的是 <code>scheme: Mist</code>。默认的代码 highlight 是用 <a href="https://github.com/chriskempson/tomorrow-theme">tomorrow theme</a>，按照 <a href="https://theme-next.iissnan.com/theme-settings.html#syntax-highlight-scheme">代码高亮设置教程</a>，可以有五种选项。但是很多 code grammar 高亮显示无效，比如 jsx。所以想换一个 highlight 主题。</p>
-<p>找了个 <a href="https://vxhly.github.io/2017/10/hexo-next-advanced-settings/">code highlight theme 配置教程</a> ，开始动手。</p>
+          使用 hexo + github 部署博客 介绍了怎么部署自己的博客，然后就开始无休止的调整主题。
 
+我选定的主题是 next：有目录，也有集成搜索的文档，这是一个 example，参照 第三方集成 集成搜索等功能. next 优化配置可参考 这篇文章
+
+配置文件
+我是采用两个配置文件的写法，即在 source/_data/next.yml 中写 next 相关的配置。
+
+code highlight 配置
+按照主题设定教程，我设置的是 scheme: Mist。默认的代码 highlight 是用 tomorrow theme，按照 代码高亮设置教程，可以有五种选项。但是很多 code grammar 高亮显示无效，比如 jsx。所以想换一个 highlight 主题。
+
+找了个 code highlight theme 配置教程 ，开始动手。
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/14/hexo-next/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -520,52 +558,57 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p><code>setState</code> 是更新 <code>state</code> 的 API，进而会引发组件的重新渲染。然而在使用过程中发现有些坑(参见 <a href="https://doc.react-china.org/docs/state-and-lifecycle.html#%E6%AD%A3%E7%A1%AE%E5%9C%B0%E4%BD%BF%E7%94%A8%E7%8A%B6%E6%80%81">react 正确使用状态</a>)：</p>
-<blockquote>
-<ol>
-<li><strong><code>setState(obj)</code>一般情况下不会立即更新 <code>state</code> 的值；</strong></li>
-<li><strong>同一 cycle 的多次 <code>setState</code> 调用可能会合并（性能考虑）</strong></li>
-</ol>
-</blockquote>
-<p>对于第一点，引用下边的例子：</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">incrementMultiple</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="title function_">setState</span>(&#123;<span class="attr">count</span>: <span class="variable language_">this</span>.<span class="property">state</span>.<span class="property">count</span> + <span class="number">1</span>&#125;);</span><br><span class="line">  <span class="variable language_">this</span>.<span class="title function_">setState</span>(&#123;<span class="attr">count</span>: <span class="variable language_">this</span>.<span class="property">state</span>.<span class="property">count</span> + <span class="number">1</span>&#125;);</span><br><span class="line">  <span class="variable language_">this</span>.<span class="title function_">setState</span>(&#123;<span class="attr">count</span>: <span class="variable language_">this</span>.<span class="property">state</span>.<span class="property">count</span> + <span class="number">1</span>&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          问题
+setState 是更新 state 的 API，进而会引发组件的重新渲染。然而在使用过程中发现有些坑(参见 react 正确使用状态)：
 
-<p>代码运行时，虽然是对 <code>state</code> 加了三次，但是每次加操作都是针对初始的 <code>state</code>，所以最终相当于仅加了一次。即上述代码等同于下边的代码：</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Object</span>.<span class="title function_">assign</span>(</span><br><span class="line">  previousState,</span><br><span class="line">  &#123;<span class="attr">quantity</span>: state.<span class="property">quantity</span> + <span class="number">1</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">quantity</span>: state.<span class="property">quantity</span> + <span class="number">1</span>&#125;,</span><br><span class="line">  ...</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+ 1. setState(obj)一般情况下不会立即更新 state 的值；
+ 2. 同一 cycle 的多次 setState 调用可能会合并（性能考虑）
 
-<h1 id="为什么"><a href="#为什么" class="headerlink" title="为什么"></a>为什么</h1><h2 id="从-react-生命周期看-setState-生效时间"><a href="#从-react-生命周期看-setState-生效时间" class="headerlink" title="从 react 生命周期看 setState 生效时间"></a>从 react 生命周期看 setState 生效时间</h2><p>要理解其原因，我们要先看一下 <a href="https://github.com/superman66/Front-End-Blog/issues/2">react 生命周期</a>：</p>
-<p><img src="https://cloud.githubusercontent.com/assets/12592949/24903814/1b2ff98c-1ee1-11e7-9f5a-59eb84171b53.png" alt="react 生命周期"></p>
-<p><code>setState</code> 引起状态更新涉及四个函数：</p>
-<ul>
-<li>shouldComponentUpdate（默认 true）</li>
-<li>componentWillUpdate</li>
-<li>render</li>
-<li>componentDidUpdate</li>
-</ul>
-<p><strong>但直到 <code>render</code> 被调用时，<code>state</code> 才被更新</strong>。</p>
-<p>（如果 <code>shouldComponentUpdate</code> 返回 <code>false</code>，则 <code>render</code> 不会被执行，但是 <code>state</code> 会被更新）</p>
-<p>因此多次调用 <code>setState</code> 时，不能依靠 <code>this.state</code> 来计算下一个 <code>state</code> 的值，因为 <code>this.state</code> 一直没更新。</p>
-<blockquote>
-<p>setState() does not always immediately update the component. It may batch or defer the update until later. This makes reading this.state right after calling setState() a potential pitfall.</p>
-</blockquote>
-<p>但是可以使用 setState(func) api 来解决上述问题</p>
-<h2 id="setState-api"><a href="#setState-api" class="headerlink" title="setState api"></a><a href="https://doc.react-china.org/docs/react-component.html#setstate">setState api</a></h2><p><code>setState</code> api 如下：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">setState</span>(updater[, callback])</span><br></pre></td></tr></table></figure>
+对于第一点，引用下边的例子：
 
-<p>其中，<code>callback</code> 是在 <code>setState</code> 完成且组件 re-render 完成后执行（一般建议用 <code>componentDidUpdate</code> 来实现类似逻辑）。</p>
-<p>而 <code>updater</code> 可以是：</p>
-<ul>
-<li>obj：异步将 obj <strong>shallow merge</strong> 到旧 <code>state</code>，构建新 <code>state</code></li>
-<li>func：形式如下：</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(prevState, props) =&gt; stateChange</span><br></pre></td></tr></table></figure>
-
-<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><p>上述例子做如下修改即可实现真正的累加：</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">increment</span>(<span class="params">state</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;<span class="attr">count</span>: state.<span class="property">count</span> + <span class="number">1</span>&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">incrementMultiple</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="title function_">setState</span>(increment);</span><br><span class="line">  <span class="variable language_">this</span>.<span class="title function_">setState</span>(increment);</span><br><span class="line">  <span class="variable language_">this</span>.<span class="title function_">setState</span>(increment);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+1
+2
+3
+4
+5
 
 
-<p><a href="https://www.jianshu.com/p/9278c4835c55">更详细请点击参考这篇文章</a></p>
+function incrementMultiple() {
+  this.setState({count: this.state.count + 1});
+  this.setState({count: this.state.count + 1});
+  this.setState({count: this.state.count + 1});
+}
 
+
+代码运行时，虽然是对 state 加了三次，但是每次加操作都是针对初始的 state，所以最终相当于仅加了一次。即上述代码等同于下边的代码：
+
+1
+2
+3
+4
+5
+6
+
+
+Object.assign(
+  previousState,
+  {quantity: state.quantity + 1},
+  {quantity: state.quantity + 1},
+  ...
+)
+
+
+为什么
+从 react 生命周期看 setState 生效时间
+要理解其原因，我们要先
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/05/react-set-state/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -640,13 +683,47 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="扩展运算符"><a href="#扩展运算符" class="headerlink" title="... 扩展运算符"></a><code>...</code> 扩展运算符</h1><p><code>...obj</code> 是 js 的扩展运算符，可以将一个可迭代的对象在函数调用的位置展开成为多个参数,或者在数组字面量中展开成多个数组元素。(其他可参见<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Expressions_and_Operators#Relational_operators">运算符介绍</a>，<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators">运算符和表达式清单 reference</a>)</p>
-<p>eg.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在数组字面量中展开</span></span><br><span class="line"><span class="comment">// 利用扩展运算符，实现了数组合并</span></span><br><span class="line"><span class="keyword">var</span> parts = [<span class="string">&#x27;shoulder&#x27;</span>, <span class="string">&#x27;knees&#x27;</span>];</span><br><span class="line"><span class="keyword">var</span> lyrics = [<span class="string">&#x27;head&#x27;</span>, ...parts, <span class="string">&#x27;and&#x27;</span>, <span class="string">&#x27;toes&#x27;</span>];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 在函数调用处展开</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">f</span>(<span class="params">x, y, z</span>) &#123; &#125;</span><br><span class="line"><span class="keyword">var</span> args = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line"><span class="title function_">f</span>(...args);</span><br></pre></td></tr></table></figure>
+          ... 扩展运算符
+...obj 是 js 的扩展运算符，可以将一个可迭代的对象在函数调用的位置展开成为多个参数,或者在数组字面量中展开成多个数组元素。(其他可参见运算符介绍，运算符和表达式清单 reference)
 
-<h1 id="96-96-template-literals"><a href="#96-96-template-literals" class="headerlink" title="&#96;&#96; template literals"></a>&#96;&#96; template literals</h1><p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals">template literals</a></p>
-<p><a href="https://www.npmjs.com/package/sql-template-strings">sql template strings</a></p>
+eg.
 
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+
+// 在数组字面量中展开
+// 利用扩展运算符，实现了数组合并
+var parts = ['shoulder', 'knees'];
+var lyrics = ['head', ...parts, 'and', 'toes'];
+
+
+// 在函数调用处展开
+function f(x, y, z) { }
+var args = [0, 1, 2];
+f(...args);
+
+
+`` template literals
+template literals
+
+sql template strings
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/05/31/javascript-spread-operator/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -721,28 +798,87 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>具体可参见 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">mdn javascript 解构语法</a>. 这里简单总结一下。</p>
-<h1 id="解构是做什么的"><a href="#解构是做什么的" class="headerlink" title="解构是做什么的"></a>解构是做什么的</h1><p>解构就是一种方便变量赋值的语法，由编译器完成真正的变量赋值</p>
-<h1 id="数组解构"><a href="#数组解构" class="headerlink" title="数组解构"></a>数组解构</h1><ul>
-<li><strong>将数组元素赋值给变量</strong></li>
-<li><strong>赋值依据是元素顺序</strong></li>
-<li>指定变量名时，可以提供默认值，以避免 <code>undefined</code> 赋值</li>
-<li>支持忽略一些元素（添加 <code>,</code> ，但不提供变量名）</li>
-<li>支持 	<code>rest</code> 数组赋值</li>
-</ul>
-<p>eg.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基本赋值</span></span><br><span class="line"><span class="keyword">var</span> a, b, rest;</span><br><span class="line">[a, b] = [<span class="number">10</span>, <span class="number">20</span>];</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a); <span class="comment">// 10</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b); <span class="comment">// 20</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认值</span></span><br><span class="line"><span class="keyword">var</span> a, b;</span><br><span class="line"></span><br><span class="line">[a=<span class="number">5</span>, b=<span class="number">7</span>] = [<span class="number">1</span>];</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a); <span class="comment">// 1</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b); <span class="comment">// 7</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 忽略某些元素</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">f</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> [a, , b] = <span class="title function_">f</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a); <span class="comment">// 1</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b); <span class="comment">// 3</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// rest 赋值</span></span><br><span class="line">[a, b, ...rest] = [<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>];</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a); <span class="comment">// 10</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b); <span class="comment">// 20</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(rest); <span class="comment">// [30, 40, 50]</span></span><br></pre></td></tr></table></figure>
+          具体可参见 mdn javascript 解构语法. 这里简单总结一下。
 
-<h1 id="对象解构"><a href="#对象解构" class="headerlink" title="对象解构"></a>对象解构</h1><p>和数组解构差不多：</p>
-<ul>
-<li><strong>将对象属性赋值给变量</strong></li>
-<li><strong>赋值依据是属性名称</strong></li>
-<li>指定属性名时，可以给默认值，避免 <code>undefined</code> 赋值</li>
-<li>变量名称默认是属性名，也可以自定义，通过 <code>propertyName: customName</code> 方式定义</li>
-<li>支持 <code>rest</code> 对象赋值（在 proposal 中）</li>
-</ul>
-<p>eg.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基本赋值</span></span><br><span class="line">(&#123; a, b &#125; = &#123; <span class="attr">a</span>: <span class="number">10</span>, <span class="attr">b</span>: <span class="number">20</span> &#125;);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a); <span class="comment">// 10</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b); <span class="comment">// 20</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认值</span></span><br><span class="line"><span class="keyword">var</span> &#123;a = <span class="number">10</span>, b = <span class="number">5</span>&#125; = &#123;<span class="attr">a</span>: <span class="number">3</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a); <span class="comment">// 3</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b); <span class="comment">// 5</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 自定义变量名 + 默认值</span></span><br><span class="line"><span class="keyword">var</span> o = &#123;<span class="attr">p</span>: <span class="number">42</span>, <span class="attr">q</span>: <span class="literal">true</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> &#123;<span class="attr">p</span>: foo, <span class="attr">q</span>: bar, <span class="attr">m</span>: other=<span class="string">&#x27;haha&#x27;</span>&#125; = o;</span><br><span class="line"> </span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(foo); <span class="comment">// 42 </span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(bar); <span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(other); <span class="comment">// haha</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// rest 赋值</span></span><br><span class="line"><span class="comment">// Stage 3 proposal</span></span><br><span class="line">(&#123;a, b, ...rest&#125; = &#123;<span class="attr">a</span>: <span class="number">10</span>, <span class="attr">b</span>: <span class="number">20</span>, <span class="attr">c</span>: <span class="number">30</span>, <span class="attr">d</span>: <span class="number">40</span>&#125;);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a); <span class="comment">// 10</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b); <span class="comment">// 20</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(rest); <span class="comment">//&#123;c: 30, d: 40&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 无声明赋值</span></span><br><span class="line"><span class="comment">// 相当于 var &#123;a,b&#125; = &#123;a:1, b:2&#125;;</span></span><br><span class="line"><span class="comment">// 括号去掉， &#123;a,b&#125; 是块代码，不是对象，所以不能去掉</span></span><br><span class="line"><span class="keyword">var</span> a, b;</span><br><span class="line"></span><br><span class="line">(&#123;a, b&#125; = &#123;<span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+解构是做什么的
+解构就是一种方便变量赋值的语法，由编译器完成真正的变量赋值
+
+数组解构
+ * 将数组元素赋值给变量
+ * 赋值依据是元素顺序
+ * 指定变量名时，可以提供默认值，以避免 undefined 赋值
+ * 支持忽略一些元素（添加 , ，但不提供变量名）
+ * 支持rest 数组赋值
+
+eg.
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+
+
+// 基本赋值
+var a, b, rest;
+[a, b] = [10, 20];
+console.log(a); // 10
+console.log(b); // 20
+
+
+// 默认值
+var a, b;
+
+[a=5, b=7] = [1];
+console.log(a); // 1
+console.log(b); // 7
+
+
+// 忽略某些元素
+function f() {
+  return [1, 2, 3];
+}
+
+var [a, , b] = f();
+console.log(a); // 1
+console.log(b); // 3
+
+
+// rest 赋值
+[a, b, ...rest] = [10, 20, 30, 40
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/05/31/javascript-destructuring-assignment/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -817,109 +953,65 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="what’s-redux"><a href="#what’s-redux" class="headerlink" title="what’s redux"></a>what’s redux</h1><p><a href="https://cn.redux.js.org/">redux 中文文档</a> 中的几个关键特性：</p>
-<ol>
-<li><strong>状态容器</strong>，提供<strong>可预测化</strong>的状态管理</li>
-<li>跨平台，客户端、服务端、原生应用都能用</li>
-<li>易于测试</li>
-<li>轻量，支持 react 等界面库</li>
-</ol>
-<p>其中第一点，讲明了 redux 的主要用途：<strong>状态容器</strong></p>
-<p>以 react 为例，页面是渲染状态树得到，有静态状态（<code>props</code>）、动态状态（<code>state</code>）。通过在代码中 <code>setState</code> 来修改状态树，状态自上而下传递到各个子组件，最终触发组件树的重新渲染。</p>
-<p>使用 redux，我们就将状态的定义和允许的迁移 function 挪出去，放到一个状态容器里，来有效管理组件的所有状态和状态迁移。此时 <code>component</code> 代码中就没有 <code>state</code>、<code>setState</code> 等定义了。</p>
-<h2 id="counter-without-redux"><a href="#counter-without-redux" class="headerlink" title="counter without redux"></a>counter without redux</h2><p>以计数器为例，不使用 redux，即直接在本地定义 <code>state</code>，并通过 <code>setState</code> 修改状态，以实现重现渲染。(<a href="https://github.com/HFCherish/react-learning/blob/master/redux/counter/src/Counter.js">源代码</a>)</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">React</span>, &#123;<span class="title class_">Component</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="title class_">Counter</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Component</span> &#123;</span><br><span class="line">  state = &#123;</span><br><span class="line">    <span class="attr">value</span>: <span class="number">0</span>,</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        &#123;this.state.value&#125;</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;this.increment&#125;</span>&gt;</span>+<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;this.decrement&#125;</span>&gt;</span>-<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  decrement = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">setState</span>(&#123;</span><br><span class="line">      <span class="attr">value</span>: <span class="variable language_">this</span>.<span class="property">state</span>.<span class="property">value</span> - <span class="number">1</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  increment = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">setState</span>(&#123;</span><br><span class="line">      <span class="attr">value</span>: <span class="variable language_">this</span>.<span class="property">state</span>.<span class="property">value</span> + <span class="number">1</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          what’s redux
+redux 中文文档 中的几个关键特性：
 
-<h2 id="counter-with-redux"><a href="#counter-with-redux" class="headerlink" title="counter with redux"></a>counter with redux</h2><p>如果使用 redux，就是将原本的 <code>state</code> 存储到一个 <code>store</code> 中，通过 <code>dispatch</code> 一个 <code>action</code>(eg. <code>&#123;type: &#39;INCREMENT&#39;&#125;</code>)触发状态变化，<code>action</code> 如何改变 <code>state</code> 是由一个纯函数 <code>reducer</code> 定义的。（<a href="https://github.com/HFCherish/react-learning/blob/master/redux/counter/src/CounterWithRedux.js">源代码</a>）</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// counter.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">React</span>, &#123;<span class="title class_">Component</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="title class_">Counter</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Component</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        &#123;this.props.store.getState()&#125;</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;this.increment&#125;</span>&gt;</span>+<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;this.decrement&#125;</span>&gt;</span>-<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  decrement = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 改变内部 state 惟一方法是 dispatch 一个 action。</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">props</span>.<span class="property">store</span>.<span class="title function_">dispatch</span>(&#123;<span class="attr">type</span>: <span class="string">&#x27;DECREMENT&#x27;</span>&#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  increment = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">props</span>.<span class="property">store</span>.<span class="title function_">dispatch</span>(&#123;<span class="attr">type</span>: <span class="string">&#x27;INCREMENT&#x27;</span>&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// reducer.js</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 这是一个 reducer，形式为 (state, action) =&gt; state 的纯函数。</span></span><br><span class="line"><span class="comment"> * 描述了 action 如何把 state 转变成下一个 state。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">counter</span>(<span class="params">state = <span class="number">0</span>, action</span>) &#123;</span><br><span class="line">  <span class="keyword">switch</span> (action.<span class="property">type</span>) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;INCREMENT&#x27;</span>:</span><br><span class="line">      <span class="keyword">return</span> state + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;DECREMENT&#x27;</span>:</span><br><span class="line">      <span class="keyword">return</span> state - <span class="number">1</span>;</span><br><span class="line">    <span class="attr">default</span>:</span><br><span class="line">      <span class="keyword">return</span> state;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">React</span> <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> <span class="title class_">ReactDOM</span> <span class="keyword">from</span> <span class="string">&quot;react-dom&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Counter</span> <span class="keyword">from</span> <span class="string">&quot;./Counter&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> counter <span class="keyword">from</span> <span class="string">&quot;./reducer&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;createStore&#125; <span class="keyword">from</span> <span class="string">&#x27;redux&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = <span class="title function_">createStore</span>(counter);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">render</span> = (<span class="params"></span>) =&gt; <span class="title class_">ReactDOM</span>.<span class="title function_">render</span>(</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">Counter</span> <span class="attr">store</span>=<span class="string">&#123;store&#125;/</span>&gt;</span></span>,</span><br><span class="line">  <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;root&#x27;</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="title function_">render</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// store 的订阅接口，注册 listener（这里即 render）来订阅 store 的状态更新。</span></span><br><span class="line">store.<span class="title function_">subscribe</span>(render);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+ 1. 状态容器，提供可预测化的状态管理
+ 2. 跨平台，客户端、服务端、原生应用都能用
+ 3. 易于测试
+ 4. 轻量，支持 react 等界面库
 
-<h1 id="why-redux"><a href="#why-redux" class="headerlink" title="why redux"></a>why redux</h1><p>不使用 redux 时，</p>
-<ol>
-<li><strong>状态（model）、状态如何被改变（controller）、页面模板&#x2F;html（view）是耦合在一块的。</strong><font color='gray'>（react 提供的就是一种界面库，render 函数其实写的就是页面模板，将 model 填充进去，渲染得到最后的 view）</font></li>
-<li><strong>组件之间强耦合，难以确定状态的改变是在哪里被谁触发，bug 追踪难。</strong></li>
-</ol>
-<p>使用 redux 后，</p>
-<ol>
-<li><strong>model 被抽出来了</strong>（即当前视图所对应的 model 对象），而且这个 model 对象不是一个贫血模型，它提供基本的 action 来保证 model 的完整性。</li>
-<li>由于状态的变更只能通过 <code>dispatch</code> 来触发，<strong>解耦了父子组件之间的状态变更传递</strong>，易于定位. （可以利用 <a href="http://cn.redux.js.org/docs/advanced/Middleware.html">middleware</a> 记录 state 变更日志，即可实现 state 变化过程透明和可预测）</li>
-</ol>
-<h1 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h1><p>redux 是一个状态容器，它解决了： </p>
-<ul>
-<li>状态在哪：<code>createStore()</code></li>
-<li>状态是什么：<code>store.getState()</code></li>
-<li>状态怎么变： reducer，即 <code>(preState, action) =&gt; nextState</code> 函数</li>
-<li>触发状态变更：<code>store.dispatch(action)</code></li>
-<li>谁关心状态变化：<code>store.subscribe(callback)</code></li>
-</ul>
-<h2 id="reducer"><a href="#reducer" class="headerlink" title="reducer"></a><a href="http://cn.redux.js.org/docs/basics/Reducers.html">reducer</a></h2><p>Reducers 指定了应用状态的变化如何响应 actions 并发送到 store 的，记住 <strong>actions 只是描述了有事情发生了</strong>这一事实，并没有描述应用如何更新 state。reducer 函数形式如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(preState, action) =&gt; nextState</span><br></pre></td></tr></table></figure>
+其中第一点，讲明了 redux 的主要用途：状态容器
 
-<p>因为 <code>state</code> 有很多属性，针对属性的处理也有很多，全放在一块就太大、难管理，所以可以拆 reducer（称为 slice reducer），再利用 <a href="http://cn.redux.js.org/docs/api/combineReducers.html"><code>combineReducer</code></a> 组合。<font color='gray'>（redux 总是一个根，多个子：一个 store，多个子状态；一个根 reducer，多个 slice reducers）</font></p>
-<p>使用 <code>combineReducer</code> 后有两个问题：</p>
-<ol>
-<li>store state 和 slice reducer state 的关系？</li>
-<li>slice reducer 如何被调用执行？</li>
-</ol>
-<h3 id="store-state-和-slice-reducer-state-的关系？"><a href="#store-state-和-slice-reducer-state-的关系？" class="headerlink" title="store state 和 slice reducer state 的关系？"></a>store state 和 slice reducer state 的关系？</h3><p><a href="http://cn.redux.js.org/docs/api/combineReducers.html">官方 API 描述</a></p>
-<blockquote>
-<p><strong><code>combineReducers()</code> 返回的 <code>state</code> 对象，会将传入的每个 reducer 返回的 <code>state</code> 按其传递给 <code>combineReducers()</code> 时对应的 key 进行命名，并将所有 slice reducer 返回的结果合并</strong> </p>
-</blockquote>
-<p>举例：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">reducer1</span>  = (<span class="params">state=<span class="string">&#x27;initA&#x27;</span>, action</span>) =&gt; &#123;...&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">reducer2</span>  = (<span class="params">state=<span class="string">&#x27;initB&#x27;</span>, action</span>) =&gt; &#123;...&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这里 `&#123;reducer1, reducer2&#125;` 使用的是 es2015 的 shorthand property names。</span></span><br><span class="line"><span class="comment">// 等价于 `&#123;reducer1: reducer1, reducer2: reducer2&#125;`</span></span><br><span class="line"><span class="keyword">const</span> store = <span class="title function_">createStore</span>(<span class="title function_">combineReducer</span>(&#123;reducer1, reducer2&#125;));</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(store.<span class="title function_">getState</span>()); <span class="comment">//&#123;reducer1: &#x27;initA&#x27;, reducer2: &#x27;initB&#x27;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 也可以指定 key 名称</span></span><br><span class="line"><span class="keyword">const</span> store = <span class="title function_">createStore</span>(<span class="title function_">combineReducer</span>(&#123;<span class="attr">a</span>:reducer1, <span class="attr">b</span>:reducer2&#125;));</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(store.<span class="title function_">getState</span>()); <span class="comment">//&#123;a: &#x27;initA&#x27;, b: &#x27;initB&#x27;&#125;</span></span><br></pre></td></tr></table></figure>
+以 react 为例，页面是渲染状态树得到，有静态状态（props）、动态状态（state）。通过在代码中 setState 来修改状态树，状态自上而下传递到各个子组件，最终触发组件树的重新渲染。
 
-<h3 id="slice-reducer-如何被调用执行？"><a href="#slice-reducer-如何被调用执行？" class="headerlink" title="slice reducer 如何被调用执行？"></a>slice reducer 如何被调用执行？</h3><p><a href="http://cn.redux.js.org/docs/api/combineReducers.html">官方 API 描述</a></p>
-<blockquote>
-<p>返回值：<br>(Function)：<strong>一个调用 reducers 对象里所有 reducer 的 reducer，并且构造一个与 reducers 对象结构相同的 state 对象。</strong></p>
-</blockquote>
-<p>即 combinedReducer 会调用执行所有的 slice reducer，以实现分层处理</p>
-<h2 id="初始化-state"><a href="#初始化-state" class="headerlink" title="初始化 state"></a><a href="http://cn.redux.js.org/docs/recipes/reducers/InitializingState.html">初始化 state</a></h2><p>有两种方式：</p>
-<ol>
-<li>使用 <code>createStore(reducers, [preloadedState], [enhancers])</code> 中的 <code>preloadedState</code></li>
-<li>使用 reducer 中的默认属性（<code>function someReducer(state=&#123;defaultValue&#125;, action)&#123;&#125;</code>）</li>
-</ol>
-<p>这其中有两条规则：</p>
-<ol>
-<li><strong>preloadedState 先于 reducer 去填充 state</strong></li>
-<li><strong>创建 store 后，redux 会 <code>dispatch</code> 一个虚拟的 <code>action</code> 到 reducer，以触发其中的默认值来填充 state。</strong></li>
-</ol>
-<h3 id="使用单一简单-reducer"><a href="#使用单一简单-reducer" class="headerlink" title="使用单一简单 reducer"></a>使用单一简单 reducer</h3><blockquote>
-<p><em>使用 <code>preloadedState</code> 后，单一 reducer 的默认 state 赋值<strong>会</strong>失效，因为流程是这样的：</em></p>
-</blockquote>
-<ol>
-<li>创建 store，并根据 <code>preloadedState</code> 填充 <code>state</code>；</li>
-<li><code>dispatch</code> 虚拟 <code>action</code> 来使用 reducer 默认值填充 <code>state</code>。而此时 <code>state</code> 已经不是 <code>undefind</code>，因此，这个默认值填充是无效的</li>
-</ol>
-<p>举一个例子：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// reducer</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">counterReducer</span>(<span class="params">state=<span class="number">0</span>, action</span>) &#123;...&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 仅使用 reducer 初始化</span></span><br><span class="line"><span class="keyword">const</span> store = <span class="title function_">createStore</span>(counterReducer);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(store.<span class="title function_">getState</span>()); <span class="comment">//0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 同时使用 preloadedState 和 reducer</span></span><br><span class="line"><span class="keyword">const</span> store = <span class="title function_">createStore</span>(counterReducer, <span class="number">42</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(store.<span class="title function_">getState</span>()); <span class="comment">//42</span></span><br></pre></td></tr></table></figure>
+使用 redux，我们就将状态的定义和允许的迁移 function 挪出去，放到一个状态容器里，来有效管理组件的所有状态和状态迁移。此时 component 代码中就没有 state、setState 等定义了。
 
-<h3 id="使用-combineReducer"><a href="#使用-combineReducer" class="headerlink" title="使用 combineReducer()"></a>使用 <code>combineReducer()</code></h3><blockquote>
-<p><em>使用 <code>preloadedState</code> 后，使用了 <code>combineReducers</code> 的 reducer 默认 state 赋值<strong>可能会</strong>失效，因为流程是这样的：</em></p>
-</blockquote>
-<ol>
-<li>创建 store，并根据 <code>preloadedState</code> 填充 <code>state</code>；</li>
-<li><code>dispatch</code> 虚拟 <code>action</code> 来调用所有子 reducers，<ul>
-<li>如果 <code>preloadedState</code> 中定义了当前 <code>reducer</code> 的属性，则对当前 reducer，<code>state</code> 已经不是 <code>undefind</code>，此时默认值填充是无效的</li>
-<li>如果 <code>preloadedState</code> 中没有定义当前 <code>reducer</code> 的属性，则对当前 reducer，<code>state</code> 是 <code>undefind</code>，默认值填充有效</li>
-</ul>
-</li>
-</ol>
-<p>同样看一个例子：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// reducer</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">reducer1</span>  = (<span class="params">state=<span class="string">&#x27;initA&#x27;</span>, action</span>) =&gt; &#123;...&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">reducer2</span>  = (<span class="params">state=<span class="string">&#x27;initB&#x27;</span>, action</span>) =&gt; &#123;...&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> combinedReducer = <span class="title function_">combineReducers</span>(&#123;<span class="attr">a</span>: reducer1, <span class="attr">b</span>: reducer2&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 仅使用 reducer 初始化</span></span><br><span class="line"><span class="keyword">const</span> store = <span class="title function_">createStore</span>(combinedReducer);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(store.<span class="title function_">getState</span>()); <span class="comment">//&#123;a: &#x27;initA&#x27;, b: &#x27;initB&#x27;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 同时使用 preloadedState 和 reducer</span></span><br><span class="line"><span class="keyword">const</span> store = <span class="title function_">createStore</span>(counterReducer, &#123;<span class="attr">a</span>: <span class="string">&#x27;initInPreload&#x27;</span>&#125;);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(store.<span class="title function_">getState</span>()); <span class="comment">//&#123;a: &#x27;initInPreload&#x27;, b: &#x27;initB&#x27;&#125;</span></span><br></pre></td></tr></table></figure>
+counter without redux
+以计数器为例，不使用 redux，即直接在本地定义 state，并通过 setState 修改状态，以实现重现渲染。(源代码)
 
-<blockquote>
-<p><em>使用 <code>combineReducers</code> 时，<code>preloadedState</code> 必须包含 slice reducer 中的属性，与传入的 keys 保持同样的结构</em> (参见 <a href="http://cn.redux.js.org/docs/api/createStore.html">createStore API 说明</a>)</p>
-</blockquote>
-<p>举例：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">reducer1</span> = (<span class="params">state=<span class="string">&#x27;initA&#x27;</span>, action</span>) =&gt; &#123;...&#125;</span><br><span class="line"><span class="keyword">const</span> combinedReducer = <span class="title function_">combineReducers</span>(&#123;<span class="attr">a</span>: reducer1, <span class="attr">b</span>: reducer2&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 正确用法</span></span><br><span class="line"><span class="keyword">const</span> store = <span class="title function_">createStore</span>(combinedReducer, &#123;<span class="attr">b</span>: <span class="string">&#x27;bala&#x27;</span>&#125;);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(store.<span class="title function_">getState</span>()); <span class="comment">//&#123;a: &#x27;initA&#x27;, b: &#x27;bala&#x27;&#125;;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 错误用法. 此时不会包含 c 属性。</span></span><br><span class="line"><span class="comment">// 因为所有的 state 都必须映射到 reducer 上，必须保持同样的结构，映射不到的就会被忽略</span></span><br><span class="line"><span class="keyword">const</span> store = <span class="title function_">createStore</span>(combinedReducer, &#123;<span class="attr">c</span>: <span class="string">&#x27;bala&#x27;</span>&#125;);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(store.<span class="title function_">getState</span>()); <span class="comment">//&#123;a: &#x27;initA&#x27;, b: &#x27;initB&#x27;&#125;;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
 
 
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ul>
-<li><a href="http://redux.js.org/docs/basics/UsageWithReact.html">usage with react</a></li>
-<li><a href="http://redux.js.org/docs/basics/UsageWithReact.html">显示和容器组件</a></li>
-<li><a href="https://www.zhihu.com/question/41312576">为什么用redux？原理？</a></li>
-<li><a href="https://github.com/jasonslyvia/a-cartoon-intro-to-redux-cn">看漫画学redux</a></li>
-</ul>
+import React, {Component} from 'react';
 
+export default class Counter extends Componen
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/05/29/redux/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -994,61 +1086,73 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="安装部署-hexo"><a href="#安装部署-hexo" class="headerlink" title="安装部署 hexo"></a>安装部署 <a href="https://hexo.io/zh-cn/docs/index.html">hexo</a></h1><p>参考这个<a href="https://zhuanlan.zhihu.com/p/26625249">知乎文章安装</a></p>
-<h2 id="1-准备-node、git"><a href="#1-准备-node、git" class="headerlink" title="1. 准备 node、git"></a>1. 准备 node、git</h2><h2 id="2-安装-hexo-cli"><a href="#2-安装-hexo-cli" class="headerlink" title="2. 安装 hexo-cli"></a>2. 安装 hexo-cli</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm i -g hexo-cli</span><br></pre></td></tr></table></figure>
+          安装部署 hexo
+参考这个知乎文章安装
 
-<h2 id="3-创建一个网站"><a href="#3-创建一个网站" class="headerlink" title="3. 创建一个网站"></a>3. 创建一个网站</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init xxx.github.io</span><br></pre></td></tr></table></figure>
+1. 准备 node、git
+2. 安装 hexo-cli
+1
 
-<h2 id="4-部署服务器"><a href="#4-部署服务器" class="headerlink" title="4. 部署服务器"></a>4. <a href="https://hexo.io/zh-cn/docs/deployment.html">部署服务器</a></h2><p>这里选择部署到 git 上。</p>
-<ol>
-<li>首先安装 git deployer</li>
-<li>然后修改配置文件，选择部署方式为 git 并配置 repo。</li>
-<li>hexo 部署</li>
-<li>访问 <code>xxx.github.io</code> 即可</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br><span class="line">$ vi _config.yml</span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: &lt;repository url&gt;</span><br><span class="line">  branch: [branch]</span><br><span class="line">  message: [message]</span><br><span class="line"></span><br><span class="line">$ npm d</span><br></pre></td></tr></table></figure>
 
-<p>注意：</p>
-<blockquote>
-<ol>
-<li>可以选择同时部署到多个服务器。多写几个 ‘deploy’ 配置即可</li>
-<li>git 用户名、网站用户名（<code>xxx.github.io</code> 中的 <code>xxx</code>）必须相同。因为它相当于使用 github 服务器</li>
-</ol>
-</blockquote>
-<h1 id="设置-theme"><a href="#设置-theme" class="headerlink" title="设置 theme"></a>设置 theme</h1><p>在 <a href="https://hexo.io/themes/index.html">官方 themes</a> 里挑。我比较喜欢以下几款：</p>
-<ol>
-<li>带目录结构的：<ol start="2">
-<li><a href="https://github.com/probberechts/hexo-theme-cactus/blob/master/README.md">cactus</a>：英文的，有几种颜色可以选，带目录，可以配置搜索，简洁，这是<a href="https://probberechts.github.io/hexo-theme-cactus/cactus-white/public/archives/">white 版本的</a></li>
-<li><a href="https://github.com/aircloud/hexo-theme-aircloud">aircloud</a>：英文中文都 ok，有目录，还可以搜索</li>
-<li><a href="https://github.com/theme-next/hexo-theme-next">next</a>：有目录，也有集成搜索的文档，这是一个 <a href="http://www.itfanr.cc/about/">example</a>，参照 <a href="https://theme-next.iissnan.com/third-party-services.html">第三方集成</a> 集成搜索等功能. next 优化配置可参考 <a href="http://www.vitah.net/posts/20f300cc/">这篇文章</a></li>
-<li><a href="https://github.com/litten/hexo-theme-yilia">yilia</a>：有目录，有搜索，<a href="http://litten.me/2017/12/29/diary-2017-1222-1229/">owner 博客</a></li>
-</ol>
-</li>
-<li>没有目录，没有 tag<ol start="3">
-<li><a href="https://github.com/pinggod/hexo-theme-apollo">apollo</a>：<a href="http://pinggod.com/archives/">blog</a> 是中文的，比较简单，颜色也好看</li>
-</ol>
-</li>
-</ol>
-<p>配置很简单，以 <a href="https://github.com/litten/hexo-theme-yilia">yilia</a> 为例：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 找到 theme git，download 到 `themes` 文件夹下</span></span><br><span class="line">$ git <span class="built_in">clone</span> https://github.com/litten/hexo-theme-yilia.git themes/yilia</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 修改 hexo 根目录下的配置文件，指定使用该主题</span></span><br><span class="line">$ vi _config.yml</span><br><span class="line">theme: yilia</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. customize 主题配置. 可以修改 themes 中的 config，也可以直接在 hexo config 中修改</span></span><br><span class="line"><span class="comment">## 修改 themes 中的 _config.yml</span></span><br><span class="line">$ vi themes/yilia/_config.yml</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line"><span class="comment">## 修改 hexo config</span></span><br><span class="line">$ vi _config.yml</span><br><span class="line">theme_config:</span><br><span class="line">	...</span><br><span class="line">	...</span><br><span class="line">	...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+$ npm i -g hexo-cli
 
-<h1 id="发表博客"><a href="#发表博客" class="headerlink" title="发表博客"></a>发表博客</h1><h2 id="1-创建博客"><a href="#1-创建博客" class="headerlink" title="1. 创建博客"></a>1. <a href="https://hexo.io/zh-cn/docs/commands.html#new">创建博客</a></h2><p>利用命令创建一个博客，存放在 <code>source/_posts/</code> 下。然后可以编辑这个文件。刷新页面就可以看到博客有更新了</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new titlename</span><br></pre></td></tr></table></figure>
 
-<p>也可以直接把 md 文件 copy 到 <code>source/_posts/</code> 下，可以添加 <a href="https://hexo.io/zh-cn/docs/front-matter.html"><code>frong-matter</code></a> 指定 category、tag 等。</p>
-<h2 id="2-生成静态文件"><a href="#2-生成静态文件" class="headerlink" title="2. 生成静态文件"></a>2. <a href="https://hexo.io/zh-cn/docs/generating.html">生成静态文件</a></h2><p><code>hexo g</code> 会根据 md 生成 html、css 等静态文件。文章写完后，利用这个命令生成静态文件，然后再 <code>hexo d</code> 部署即可。</p>
-<p>也可以使用下述命令（两个命令等价），指同时 <code>generate</code> + <code>deploy</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g -d</span><br><span class="line">$ hexo d -g</span><br></pre></td></tr></table></figure>
+3. 创建一个网站
+1
 
-<h3 id="hexo-clean"><a href="#hexo-clean" class="headerlink" title="hexo clean"></a>hexo clean</h3><p>有时可能需要使用 <a href="https://hexo.io/zh-cn/docs/commands.html#clean"><code>hexo clean</code></a> 清除缓存文件 <code>db.json</code> 和已生成的静态文件 <code>public</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean</span><br></pre></td></tr></table></figure>
 
-<h3 id="启动本地服务器（调试用）"><a href="#启动本地服务器（调试用）" class="headerlink" title="启动本地服务器（调试用）"></a><a href="https://hexo.io/zh-cn/docs/commands.html#server">启动本地服务器（调试用）</a></h3><p>博客编辑完成后，可以先本地启动 server，看一下效果</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo s</span><br></pre></td></tr></table></figure>
+$ hexo init xxx.github.io
 
-<p><code>-s</code> 参数指定仅仅启动静态模式，即创建博客后，必须要 <code>hexo g</code> 去生成 <code>index.html</code> 等（相当于发布），网站才会真正的更新。否则网站不会更新。这一般用于 <code>production mode</code></p>
-<p>一般编辑完文章后，可以先本地启动服务器，调试一下样式可不可以，然后再部署到服务器上</p>
 
+4. 部署服务器
+这里选择部署到 git 上。
+
+ 1. 首先安装 git deployer
+ 2. 然后修改配置文件，选择部署方式为 git 并配置 repo。
+ 3. hexo 部署
+ 4. 访问 xxx.github.io 即可
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+
+$ npm install hexo-deployer-git --save
+$ vi _config.yml
+
+deploy:
+  type: git
+  repo: <repository url>
+  branch: [branch]
+  message: [message]
+
+$ npm d
+
+
+注意：
+
+ 1. 可以选择同时部署到多个服务器。多写几个 ‘deploy’ 配置即可
+ 2. git 用户名、网站用户名（xxx.github.io 中的 xxx）必须相同。因为它相当于使用 github 服务器
+
+设置 theme
+在 官方 themes 里挑。我比较喜欢以下几款：
+
+ 1. 带目录结构的： 2. cactus：英文的，有几种颜色可以选，带目录，可以
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/05/14/build-blog-using-hexo/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

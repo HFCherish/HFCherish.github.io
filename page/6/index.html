@@ -242,35 +242,29 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="traditional-authentication"><a href="#traditional-authentication" class="headerlink" title="traditional authentication"></a>traditional authentication</h1><p>传统认证使用  session:</p>
-<ol>
-<li>client 发送 username、password 给 server</li>
-<li>server 查数据库，检查信息，是否正确。正确就把用户登录信息(即用户状态)写到 session 里（即服务器内存中），并将 sessionId 返回给 client。</li>
-<li>client 在请求 api 时，在 cookie 中传递 sessionId。server 端根据 sessionId 获取用户登录信息，如果已认证，返回正常响应；反之，401</li>
-</ol>
-<p><img src="https://camo.githubusercontent.com/f6ea1099ada7ec855919d6e483d0d903f1cc96ca/68747470733a2f2f636d732d6173736574732e74757473706c75732e636f6d2f75706c6f6164732f75736572732f3438372f706f7374732f32323534332f696d6167652f747261646974696f6e616c2d61757468656e7469636174696f6e2d73797374656d2d706e672e706e67" alt="auth image"></p>
-<p>这种方式有个缺陷：如果做分布式服务部署，那么需要每个服务器都要同步相同的登录信息，这不是一个好的方式。所以一般 rest 微服务都要求的是 stateless，即 server 端不保存任何用户信息，请求中包含所有需要的信息。</p>
-<h1 id="oauth"><a href="#oauth" class="headerlink" title="oauth"></a>oauth</h1><p><a href="https://zh.wikipedia.org/wiki/%E5%BC%80%E6%94%BE%E6%8E%88%E6%9D%83">oauth</a> 是一个开放标准，允许用户让第三方应用访问该用户在某一网站上存储的私密的资源（如照片，视频，联系人列表），而无需将用户名和<a href="https://zh.wikipedia.org/wiki/%E5%AF%86%E7%A0%81">密码</a>提供给第三方应用。</p>
-<p>OAuth允许用户提供一个 <a href="https://zh.wikipedia.org/w/index.php?title=%E4%BB%A4%E7%89%8C&action=edit&redlink=1">令牌</a>，而不是用户名和密码来访问他们存放在特定服务提供者的数据。每一个令牌授权一个特定的网站（例如，视频编辑网站)在特定的时段（例如，接下来的2小时内）内访问特定的资源（例如仅仅是某一相册中的视频）。这样，OAuth让用户可以授权第三方网站访问他们存储在另外服务提供者的某些特定信息，而非所有内容。</p>
-<p> 其令牌可以是 JWT 或其他形式。</p>
-<p><img src="https://docs.oracle.com/cd/E74890_01/books/RestAPI/images/OAuth2leg_V.gif" alt="oauth"></p>
-<p>ref: <a href="https://my.oschina.net/eyes4/blog/639970">oauth 2.0 的用途</a></p>
-<h1 id="Auth0"><a href="#Auth0" class="headerlink" title="Auth0"></a>Auth0</h1><p><a href="https://auth0.com/">autho0</a> 实现了<a href="https://auth0.com/docs/protocols">很多开放标准</a>，包括 oauth。(<a href="https://www.youtube.com/watch?v=QsMK3d3LxYQ">学习视频</a>)</p>
-<ol>
-<li>要使用 Auth0，首先需要创建一个 App（被称作 client），其中定义了 clientId、domain name、callbackUrl、secret 等。</li>
-<li>前端交互：<ol>
-<li>当访问某个页面时，查看 localstorage，看用户是否登录；</li>
-<li>如果未登录，利用 Auth0 sdk 或 api 登录认证（提供前边 App 中的 clientId、secret 等信息），认证通过将认证信息（token 等）存入 localstorage，并跳转到 callback url</li>
-<li>如果登录，直接访问</li>
-</ol>
-</li>
-<li>后端交互：<ol>
-<li>前端携带 token 访问 API</li>
-<li>server 利用 Auth0 sdk 或 api 验证 token 的有效性；认证通过返回资源，否则 401</li>
-</ol>
-</li>
-</ol>
+          traditional authentication
+传统认证使用 session:
 
+ 1. client 发送 username、password 给 server
+ 2. server 查数据库，检查信息，是否正确。正确就把用户登录信息(即用户状态)写到 session 里（即服务器内存中），并将 sessionId 返回给 client。
+ 3. client 在请求 api 时，在 cookie 中传递 sessionId。server 端根据 sessionId 获取用户登录信息，如果已认证，返回正常响应；反之，401
+
+
+
+这种方式有个缺陷：如果做分布式服务部署，那么需要每个服务器都要同步相同的登录信息，这不是一个好的方式。所以一般 rest 微服务都要求的是 stateless，即 server 端不保存任何用户信息，请求中包含所有需要的信息。
+
+oauth
+oauth 是一个开放标准，允许用户让第三方应用访问该用户在某一网站上存储的私密的资源（如照片，视频，联系人列表），而无需将用户名和密码提供给第三方应用。
+
+OAuth允许用户提供一个 令牌，而不是用户名和密码来访问他们存放在特定服务提供者的数据。每一个令牌授权一个特定的网站（例如，视频编辑网站)在特定的时段（例如，接下来的2小时内）内访问特定的资源（例如仅仅是某一相册中的视频）。这样，OAuth让用户可以授权
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/07/27/oauth/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -345,27 +339,29 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>asure storage 提供四种存储支持（<a href="https://www.youtube.com/watch?v=y6bIUHtdp6Y">asure storage overview (youtube)</a>）：</p>
-<ul>
-<li><a href="https://azure.microsoft.com/zh-cn/services/storage/blobs/">blob</a> (binary large object)：二进制数据存储。有两种：page blog（只能新增&#x2F;删除&#x2F;向已有数据附加数据，不能修改数据）；block blog（可以更新）</li>
-<li><a href="https://azure.microsoft.com/zh-cn/services/storage/tables/">table</a>：存储表格（nosql）</li>
-<li><a href="https://azure.microsoft.com/zh-cn/services/storage/queues/">queue</a>：有库，有 rest api</li>
-<li><a href="https://azure.microsoft.com/en-us/services/storage/files/">files</a>：好像主要用在文件共享的时候，就是类似于 windows server 上的文件共享（<a href="https://zh.wikipedia.org/wiki/%E4%BC%BA%E6%9C%8D%E5%99%A8%E8%A8%8A%E6%81%AF%E5%8D%80%E5%A1%8A">smb(server message block)</a>），实现和使用方式都和 windows server 的文件共享一样。所以需要支持例如按 &#x2F;servername&#x2F;filename 等方式来 share 和 使用文件。它是构建于 blob 之上的。</li>
-</ul>
-<h1 id="几个概念"><a href="#几个概念" class="headerlink" title="几个概念"></a>几个概念</h1><h2 id="Storage-Accout"><a href="#Storage-Accout" class="headerlink" title="Storage Accout"></a>Storage Accout</h2><p>storage 的所有存储都必须在一个 storage account 内发生。这有点类似于一个 database。</p>
-<p>安全也是在这里实现：</p>
-<ol>
-<li><em><strong>key</strong></em>：创建 account 时，就会生成俩 key，primary key 就是你用来登录访问数据的 key。不过这种方式对于有 client 时不太方便，因为可能不能 share key</li>
-<li><em><strong>saas token</strong></em>：就是可以登录认证获得 token，然后拿 token 访问数据。</li>
-</ol>
-<h2 id="数据容器-数据"><a href="#数据容器-数据" class="headerlink" title="数据容器 + 数据"></a>数据容器 + 数据</h2><p>在每个 storage account 里，你可以创建上述四种类型的存储容器，去存放数据。</p>
-<ul>
-<li>Blob： 在 storage account 里可以创建 <em><strong>blob container</strong></em>，在 <em><strong>blog container</strong></em> 中存放 <em><strong>blob</strong></em></li>
-<li>table：在 storage account 里创建 <em><strong>table</strong></em>，在 <em><strong>table</strong></em> 中存放 <em><strong>data entity</strong></em></li>
-<li>queue：在 storage account 里创建 <em><strong>queue</strong></em>，在 <em><strong>queue</strong></em> 中存放 <em><strong>message</strong></em></li>
-<li>file：在 storage account 里创建 <em><strong>asure files</strong></em> (类似于 <a href="https://zh.wikipedia.org/wiki/%E4%BC%BA%E6%9C%8D%E5%99%A8%E8%A8%8A%E6%81%AF%E5%8D%80%E5%A1%8A">smb(server message block)</a>)??? 感觉应该也是先创建一个 files container，再创建一个个的 asure file（即 smb）</li>
-</ul>
+          asure storage 提供四种存储支持（asure storage overview (youtube)）：
 
+ * blob (binary large object)：二进制数据存储。有两种：page blog（只能新增/删除/向已有数据附加数据，不能修改数据）；block blog（可以更新）
+ * table：存储表格（nosql）
+ * queue：有库，有 rest api
+ * files：好像主要用在文件共享的时候，就是类似于 windows server 上的文件共享（smb(server message block)），实现和使用方式都和 windows server 的文件共享一样。所以需要支持例如按 /servername/filename 等方式来 share 和 使用文件。它是构建于 blob 之上的。
+
+几个概念
+Storage Accout
+storage 的所有存储都必须在一个 storage account 内发生。这有点类似于一个 database。
+
+安全也是在这里实现：
+
+ 1. key：创建 account 时，就会生成俩 key，primary key 就是你用来登录访问数据的 key。不过这种方式对于有 client 时不太方便，因为可能不能 share key
+ 2. saas token：就是可以登录认证获得 token，然
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/07/27/asure-storage/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -440,61 +436,30 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>[MIME 类型](MIME 类型) 是用一种标准化的方式来表示文档的性质和格式。浏览器一般通过 MIME 类型（而不是文档扩展名）来确定如何处理文档。因此服务器传输数据时，必须设置正确的 MIME 类型。</p>
-<h1 id="通用结构"><a href="#通用结构" class="headerlink" title="通用结构"></a>通用结构</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type/subtype</span><br></pre></td></tr></table></figure>
+          [MIME 类型](MIME 类型) 是用一种标准化的方式来表示文档的性质和格式。浏览器一般通过 MIME 类型（而不是文档扩展名）来确定如何处理文档。因此服务器传输数据时，必须设置正确的 MIME 类型。
 
-<ol>
-<li>不允许空格</li>
-<li>大小写不敏感，一般都是小写</li>
-</ol>
-<h1 id="独立类型"><a href="#独立类型" class="headerlink" title="独立类型"></a>独立类型</h1><p>type 可以是独立类型，表示文件的分类，可以是如下值：</p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>描述</th>
-<th>典型示例</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>text</code></td>
-<td>表明文件是普通文本，理论上是可读的语言</td>
-<td><code>text/plain</code>, <code>text/html</code>, <code>text/css, text/javascript</code></td>
-</tr>
-<tr>
-<td><code>image</code></td>
-<td>表明是某种图像。不包括视频，但是动态图（比如动态gif）也使用image类型</td>
-<td><code>image/gif</code>, <code>image/png</code>, <code>image/jpeg</code>, <code>image/bmp</code>, <code>image/webp</code></td>
-</tr>
-<tr>
-<td><code>audio</code></td>
-<td>表明是某种音频文件</td>
-<td><code>audio/midi</code>, <code>audio/mpeg, audio/webm, audio/ogg, audio/wav</code></td>
-</tr>
-<tr>
-<td><code>video</code></td>
-<td>表明是某种视频文件</td>
-<td><code>video/webm</code>, <code>video/ogg</code></td>
-</tr>
-<tr>
-<td><code>application</code></td>
-<td>表明是某种二进制数据</td>
-<td><code>application/octet-stream</code>, <code>application/pkcs12</code>, <code>application/vnd.mspowerpoint</code>, <code>application/xhtml+xml</code>, <code>application/xml</code>,  <code>application/pdf,``application/json</code></td>
-</tr>
-</tbody></table>
-<p>一般是文本，但是具体类型不确定时，就用 <code>test/plain</code>；是二进制数据，而类型不确定时，用 <code>application/octet-stream</code></p>
-<h2 id="application-x2F-octet-stream"><a href="#application-x2F-octet-stream" class="headerlink" title="application&#x2F;octet-stream"></a>application&#x2F;octet-stream</h2><p>这是应用程序文件的默认值。意思是 <em>未知的应用程序文件 ，</em>浏览器一般不会自动执行或询问执行。浏览器会将它作为附件来处理，附件类型等信息通过HTTP头<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Disposition"><code>Content-Disposition</code></a> 设置。</p>
-<h1 id="Multipart-类型"><a href="#Multipart-类型" class="headerlink" title="Multipart 类型"></a>Multipart 类型</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">multipart/form-data</span><br><span class="line">multipart/byteranges</span><br></pre></td></tr></table></figure>
-
-<p> 顾名思义，这是复合文件的一种表现形式，即传递过来的数据有多重类型。典型的如果表单数据可能有 string、文件、视频、音频等。</p>
-<p>它由边界线（一个由<code>&#39;--&#39;</code>开始的字符串）划分出的不同部分组成。每一部分有自己的实体，以及自己的 HTTP 请求头，<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Disposition"><code>Content-Disposition</code></a>和 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Type"><code>Content-Type</code></a> 用于文件上传领域，最常用的 (<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Length"><code>Content-Length</code></a> 因为边界线作为分隔符而被忽略）。</p>
-<p>例如，如下表单:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;http://localhost:8000/&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;myTextField&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">name</span>=<span class="string">&quot;myCheckBox&quot;</span>&gt;</span>Check<span class="tag">&lt;/<span class="name">input</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;myFile&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span>&gt;</span>Send the file<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>请求是：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: localhost:8000</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:50.0) Gecko/20100101 Firefox/50.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line">Accept-Language: en-US,en;q=0.5</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Content-Type: multipart/form-data; boundary=---------------------------8721656041911415653955004498</span><br><span class="line">Content-Length: 465</span><br><span class="line"></span><br><span class="line">-----------------------------8721656041911415653955004498</span><br><span class="line">Content-Disposition: form-data; name=&quot;myTextField&quot;</span><br><span class="line"></span><br><span class="line">Test</span><br><span class="line">-----------------------------8721656041911415653955004498</span><br><span class="line">Content-Disposition: form-data; name=&quot;myCheckBox&quot;</span><br><span class="line"></span><br><span class="line">on</span><br><span class="line">-----------------------------8721656041911415653955004498</span><br><span class="line">Content-Disposition: form-data; name=&quot;myFile&quot;; filename=&quot;test.txt&quot;</span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">Simple file.</span><br><span class="line">-----------------------------8721656041911415653955004498--</span><br></pre></td></tr></table></figure>
+通用结构
+1
 
 
+type/subtype
+
+
+ 1. 不允许空格
+ 2. 大小写不敏感，一般都是小写
+
+独立类型
+type 可以是独立类型，表示文件的分类，可以是如下值：
+
+类型描述典型示例text表明文件是普通文本，理论上是可读的语言text/plain, text/html, text/css, text/javascriptimage表明是某种图像。不包括视频，但是动态图（比如动态gif）也使用image类型image/gif, image/png, image/jpeg, image/bmp, image/webpaudio表明是某种音频文件audio/midi, audio/mpeg, audio/webm, audio/ogg, audio/wavvideo表明是某种视频文件video/webm, video/oggapplication表明是某种二进制数据application/octet-stream, application/pkcs12, application/vnd.mspowerpoint, application/xhtml+xml, appli
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/07/26/mime-type/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -569,14 +534,31 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>license 是软件的授权许可。</p>
-<p>对于开源软件来说，虽然别人可以用，但是用的时候希望别人遵循一些要求，比如，使用时必须标明原作者是谁、可以做怎样的修改、软件被用作不正规用途原作者是否要负责……这些其实就是一个协议。</p>
-<p>对于作者来说，自己为开源代码写符合法律条规的繁冗的 license 太麻烦，所以就可以采用广为流传的开源协议（eg. MIT, CC…），在 license 文件中标明 “Licnse under the MIT license”</p>
-<h1 id="快速选择"><a href="#快速选择" class="headerlink" title="快速选择"></a>快速选择</h1><p>详细的协议选择可以从 github <a href="https://choosealicense.com/">choose license</a> 项目中选。下边列些常用的（参见 <a href="https://www.cnblogs.com/Wayou/p/how_to_choose_a_license.html">如何为你的代码选择一个开源协议</a>）</p>
-<h2 id="MIT-协议"><a href="#MIT-协议" class="headerlink" title="MIT 协议"></a>MIT 协议</h2><p>宽松但覆盖一般要点。此协议允许别人以任何方式使用你的代码同时署名原作者，但原作者不承担代码使用后的风险，当然也没有技术支持的义务。jQuery和Rails就是MIT协议</p>
-<h2 id="apache-协议"><a href="#apache-协议" class="headerlink" title="apache 协议"></a>apache 协议</h2><p>作品涉及到专利，可以考虑这个。也比较宽松，但考虑了专利，简单指明了作品归属者对用户专利上的一些授权（我的理解是软件作品中含有专利，但它授权你可以免费使用）。Apache服务器，SVN还有NuGet等是使用的Apache协议。</p>
-<h2 id="GPL"><a href="#GPL" class="headerlink" title="GPL"></a>GPL</h2><p>对作品的传播和修改有约束的，可以使用这个。GPL（<a href="http://choosealicense.com/licenses/gpl-v2">V2</a>或<a href="http://choosealicense.com/licenses/gpl-v3">V3</a>）是一种版本自由的协议（可以参照copy right来理解，后者是版本保留，那copyleft便是版权自由，或者无版权，但无版权不代表你可以不遵守软件中声明的协议）。此协议要求代码分发者或者以此代码为基础开发出来的衍生作品需要以同样的协议来发布。此协议的版本3与版本2相近，只是多3中加了条对于不支持修改后代码运行的硬件的限制（没太明白此句话的内涵）。</p>
+          license 是软件的授权许可。
 
+对于开源软件来说，虽然别人可以用，但是用的时候希望别人遵循一些要求，比如，使用时必须标明原作者是谁、可以做怎样的修改、软件被用作不正规用途原作者是否要负责……这些其实就是一个协议。
+
+对于作者来说，自己为开源代码写符合法律条规的繁冗的 license 太麻烦，所以就可以采用广为流传的开源协议（eg. MIT, CC…），在 license 文件中标明 “Licnse under the MIT license”
+
+快速选择
+详细的协议选择可以从 github choose license 项目中选。下边列些常用的（参见 如何为你的代码选择一个开源协议）
+
+MIT 协议
+宽松但覆盖一般要点。此协议允许别人以任何方式使用你的代码同时署名原作者，但原作者不承担代码使用后的风险，当然也没有技术支持的义务。jQuery和Rails就是MIT协议
+
+apache 协议
+作品涉及到专利，可以考虑这个。也比较宽松，但考虑了专利，简单指明了作品归属者对用户专利上的一些授权（我的理解是软件作品中含有专利，但它授权你可以免费使用）。Apache服务器，SVN还有NuGet等是使用的Apache协议。
+
+GPL
+对作品的传播和修改有约束的，可以使用这个。GPL（V2或V3）是一种版本自由的协议（可以参照copy right来理解，后者是版本保留，那copyleft便是
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/07/26/code-license/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -651,70 +633,30 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="可选-lib"><a href="#可选-lib" class="headerlink" title="可选 lib"></a>可选 lib</h1><ul>
-<li><a href="http://poi.apache.org/components/document/index.html">apache POI</a>：java 中最大众的 ，支持 <code>xls</code>、<code>xlsx</code>，提供接口来创建、读写 excel文件。</li>
-<li><a href="http://www.openoffice.org/download/sdk/">apache openOffice uno</a>：</li>
-<li><del><a href="http://www.openoffice.org/download/sdk/">JExcel app</a></del>：这个功能强大，什么都可以做，但是可能收费，而且仅基于 windows + installed excel</li>
-<li><del><a href="http://jexcelapi.sourceforge.net/">JExcelAPI</a></del>：轻量更易用，但似乎仅支持 <code>xls</code>，而且不支持复杂的 range、formular 计算操作。</li>
-<li><a href="https://www.teamdev.com/jexcel">javascript 版本的 JExcel</a></li>
-<li><del><a href="https://www.docx4java.org/trac/docx4j">docx4j</a></del>：其中 <a href="https://github.com/plutext/docx4j/tree/master/src/samples/xlsx4j/org/xlsx4j/samples">xlsx4j</a> 是处理 excel 的，不过看起来功能比较简单。</li>
-<li><a href="https://msdn.microsoft.com/zh-cn/vba/vba-excel">microsoft excel VBA</a>：vba 是微软写的操作 office 软件的语言。所以可以利用这个 vba 写代码……</li>
-</ul>
-<p>ref doc:</p>
-<ul>
-<li><a href="http://www.baeldung.com/java-microsoft-excel">baeldung example for apache POI &amp; JExcelAPI</a></li>
-<li><a href="https://www.mkyong.com/java/jexcel-api-reading-and-writing-excel-file-in-java/">Mkyong example for JExcelAPI</a></li>
-</ul>
-<h1 id="核心操作支持"><a href="#核心操作支持" class="headerlink" title="核心操作支持"></a>核心操作支持</h1><table>
-<thead>
-<tr>
-<th>lib</th>
-<th>apache poi</th>
-<th>apache openoffice</th>
-<th>JExcelAPI</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>read&#x2F;create excel file</td>
-<td>✔️</td>
-<td>可以</td>
-<td>✔️</td>
-</tr>
-<tr>
-<td>read&#x2F;write excel cells</td>
-<td>1. 获取 sheet，遍历 row，遍历 row cells；</td>
-<td>可以</td>
-<td>1. 获取 sheet，可以根据 cell 行列数获取（<code>getCell(rowIndex, columnIndex)</code>）</td>
-</tr>
-<tr>
-<td>compute formula for cells</td>
-<td>可以（用 formular evaluator，参见<a href="https://stackoverflow.com/questions/5937373/using-apache-poi-hssf-how-can-i-refresh-all-formula-cells-at-once">stackoverflow</a>）</td>
-<td>可以(calculateAll())</td>
-<td>可能可以</td>
-</tr>
-<tr>
-<td>write&#x2F;read named cells of file</td>
-<td>可以（<code>workBook.getNamedAt(&quot;name&quot;)</code>，参见 <a href="https://stackoverflow.com/questions/33183144/apache-poi-update-cells-in-a-named-range">stackoverflow</a>, <a href="https://poi.apache.org/components/spreadsheet/quick-guide.html#NamedRanges">官方文档</a>）</td>
-<td>可以（<code>namedRange</code>)</td>
-<td>NO</td>
-</tr>
-<tr>
-<td>pros</td>
-<td>1. 使用广泛；2. 文档清晰；3. 支持很多复杂需求</td>
-<td>1. 似乎功能比 poi 更简易，也更丰富些；2. 可以同时操作 openoffice 和 microoffice；3. 语言支持多，只要使用相应语言的 binding 就可以</td>
-<td>1. 简单轻量；2. 接口友好</td>
-</tr>
-<tr>
-<td>cons</td>
-<td>接口不是很友好，访问起来比较麻烦</td>
-<td>1. 文档乱七八糟；2. 采用 uno，领域对象不太一致；3. 必须要安装 openoffice</td>
-<td>1. 功能太简单，复杂需求实现不了</td>
-</tr>
-</tbody></table>
-<h1 id="核心操作-example（POI）"><a href="#核心操作-example（POI）" class="headerlink" title="核心操作 example（POI）"></a>核心操作 example（POI）</h1><p><a href="https://poi.apache.org/components/spreadsheet/quick-guide.html#NamedRanges">quick guide</a></p>
-<p><a href="https://github.com/HFCherish/learning-common/blob/master/common-excel/src/test/java/learning/common/excel/utils/XLSXTest.java">源代码</a></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//        load excel</span></span><br><span class="line"><span class="type">XSSFWorkbook</span> <span class="variable">workbook</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">XSSFWorkbook</span>(getFile(<span class="string">&quot;test.xlsx&quot;</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        get sheet by name</span></span><br><span class="line"><span class="type">String</span> <span class="variable">sheetName</span> <span class="operator">=</span> <span class="string">&quot;Product Mix&quot;</span>;</span><br><span class="line"><span class="type">XSSFSheet</span> <span class="variable">sheet</span> <span class="operator">=</span> workbook.getSheet(sheetName);</span><br><span class="line">assertThat(sheet.getSheetName(), is(sheetName));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        get cell by coordinate</span></span><br><span class="line"><span class="type">XSSFCell</span> <span class="variable">tvsetNumber</span> <span class="operator">=</span> getCell(sheet, <span class="string">&quot;D4&quot;</span>);</span><br><span class="line">assertThat(tvsetNumber.getNumericCellValue(), closeTo(<span class="number">100</span>, <span class="number">0.1</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        get formula cell by coordinate</span></span><br><span class="line"><span class="type">XSSFCell</span> <span class="variable">total</span> <span class="operator">=</span> getCell(sheet, <span class="string">&quot;D13&quot;</span>);</span><br><span class="line">assertThat(total.getNumericCellValue(), closeTo(<span class="number">16000</span>, <span class="number">0.1</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        change cell value</span></span><br><span class="line">tvsetNumber.setCellValue(<span class="number">200</span>);</span><br><span class="line">assertThat(tvsetNumber.getNumericCellValue(), closeTo(<span class="number">200</span>, <span class="number">0.1</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        refresh formulas</span></span><br><span class="line">XSSFFormulaEvaluator.evaluateAllFormulaCells(workbook);</span><br><span class="line">assertThat(total.getNumericCellValue(), closeTo(<span class="number">23500</span>, <span class="number">0.1</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        write back to file</span></span><br><span class="line">workbook.write(<span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(getFile(<span class="string">&quot;update.xlsx&quot;</span>)));</span><br><span class="line"></span><br><span class="line"><span class="comment">//        check data updated</span></span><br><span class="line"><span class="type">XSSFWorkbook</span> <span class="variable">updateWorkBook</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">XSSFWorkbook</span>(getFile(<span class="string">&quot;update.xlsx&quot;</span>));</span><br><span class="line">assertThat(getCell(updateWorkBook.getSheet(sheetName), <span class="string">&quot;D4&quot;</span>).getNumericCellValue(), closeTo(<span class="number">200</span>, <span class="number">0.1</span>));</span><br><span class="line">assertThat(getCell(updateWorkBook.getSheet(sheetName), <span class="string">&quot;D13&quot;</span>).getNumericCellValue(), closeTo(<span class="number">23500</span>, <span class="number">0.1</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//		  get cell by name</span></span><br><span class="line"><span class="type">XSSFName</span> <span class="variable">test_name</span> <span class="operator">=</span> workbook.getName(<span class="string">&quot;test_cell_name&quot;</span>);</span><br><span class="line"><span class="type">AreaReference</span> <span class="variable">areaReference</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AreaReference</span>(test_name.getRefersToFormula(), SpreadsheetVersion.EXCEL2007);</span><br><span class="line"></span><br><span class="line"><span class="type">CellReference</span> <span class="variable">firstCell</span> <span class="operator">=</span> areaReference.getFirstCell();</span><br><span class="line"><span class="type">XSSFSheet</span> <span class="variable">sheet</span> <span class="operator">=</span> workbook.getSheet(firstCell.getSheetName());</span><br><span class="line"><span class="type">XSSFRow</span> <span class="variable">row</span> <span class="operator">=</span> sheet.getRow(firstCell.getRow());</span><br><span class="line"><span class="type">XSSFCell</span> <span class="variable">cell</span> <span class="operator">=</span> row.getCell(firstCell.getCol());</span><br><span class="line"></span><br><span class="line"><span class="comment">// get cell function</span></span><br><span class="line"><span class="keyword">private</span> XSSFCell <span class="title function_">getCell</span><span class="params">(XSSFSheet sheet, String cellCoordinate)</span> &#123;</span><br><span class="line">    <span class="type">CellReference</span> <span class="variable">d4</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CellReference</span>(cellCoordinate);</span><br><span class="line">    <span class="type">XSSFRow</span> <span class="variable">row</span> <span class="operator">=</span> sheet.getRow(d4.getRow());</span><br><span class="line">    <span class="keyword">return</span> row.getCell(d4.getCol());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="其他操作（POI）"><a href="#其他操作（POI）" class="headerlink" title="其他操作（POI）"></a>其他操作（POI）</h1><h2 id="copy-sheet"><a href="#copy-sheet" class="headerlink" title="copy sheet"></a>copy sheet</h2><h2 id="xlsm-to-xlsx"><a href="#xlsm-to-xlsx" class="headerlink" title="xlsm to xlsx"></a>xlsm to xlsx</h2>
+          可选 lib
+ * apache POI：java 中最大众的 ，支持 xls、xlsx，提供接口来创建、读写 excel文件。
+ * apache openOffice uno：
+ * JExcel app：这个功能强大，什么都可以做，但是可能收费，而且仅基于 windows + installed excel
+ * JExcelAPI：轻量更易用，但似乎仅支持 xls，而且不支持复杂的 range、formular 计算操作。
+ * javascript 版本的 JExcel
+ * docx4j：其中 xlsx4j 是处理 excel 的，不过看起来功能比较简单。
+ * microsoft excel VBA：vba 是微软写的操作 office 软件的语言。所以可以利用这个 vba 写代码……
+
+ref doc:
+
+ * baeldung example for apache POI & JExcelAPI
+ * Mkyong example for JExcelAPI
+
+核心操作支持
+libapache poiapache openofficeJExcelAPIread/create excel file✔️可以✔️read/write excel cells1. 获取 sheet，遍历 row，遍历 row cells；可以1. 获取 sheet，可以根据 cell 行列
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/07/25/java-api-for-excel/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -789,46 +731,42 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><a href="https://github.com/brettwooldridge/HikariCP">hikariCP</a> 是一个轻量级的数据库连接池。引用 <a href="https://github.com/brettwooldridge/HikariCP">数据库连接池性能对比</a> 的说法（我并没有测试过）：</p>
-<blockquote>
-<ol>
-<li>性能方面 hikariCP&gt;druid&gt;tomcat-jdbc&gt;dbcp&gt;c3p0 。hikariCP的高性能得益于最大限度的避免锁竞争。</li>
-<li>druid功能最为全面，sql拦截等功能，统计数据较为全面，具有良好的扩展性。</li>
-<li>综合性能，扩展性等方面，可考虑使用druid或者hikariCP连接池。</li>
-<li>可开启prepareStatement缓存，对性能会有大概20%的提升。</li>
-</ol>
-</blockquote>
-<p>在使用 spring jpa 时，默认使用的连接池是 hikariCP，所以最终采用了这个连接池。</p>
-<p>使用过程中出现了一些坑，总结一下。</p>
-<h1 id="java-sql-SQLTransientConnectionException"><a href="#java-sql-SQLTransientConnectionException" class="headerlink" title="java.sql.SQLTransientConnectionException"></a>java.sql.SQLTransientConnectionException</h1><p>仅使用默认配置，在运行所有测试时，会出现如下异常信息：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/721960-3c58b4722a0f8ab5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="sql exception.png"></p>
-<p>这是因为默认的连接池数量是 10，而并行运行测试时，连接池数量不够了。通过设置 <a href="https://github.com/brettwooldridge/HikariCP#frequently-used"><code>maximumPoolSize</code></a> 解决。</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">spring.datasource.hikari.maximum-pool-size:1000</span></span><br></pre></td></tr></table></figure>
+          hikariCP 是一个轻量级的数据库连接池。引用 数据库连接池性能对比 的说法（我并没有测试过）：
 
-<h1 id="too-many-connections"><a href="#too-many-connections" class="headerlink" title="too many connections"></a>too many connections</h1><p>在进行上述设置后，启动应用，连接数据库，发现数据库无法连接，报 <code>too many connections</code>。</p>
-<h2 id="fixed-size-pool"><a href="#fixed-size-pool" class="headerlink" title="fixed-size pool"></a>fixed-size pool</h2><p>按 <a href="https://github.com/brettwooldridge/HikariCP/issues/657">hikariCP owner 的解释</a>，这可能是因为当设置 <code>maximumPoolSize</code> 后，这就变成了 fix-size 的连接池了，即总是会占有 1000（上边的设置）个连接池。idle 连接不会被释放，因为释放了也要创建新的 idle 连接池来保证 fix-size。从而新的连接就无法建立了。</p>
-<blockquote>
-<p>When running as a fixed-size pool (default) the <code>idleTimeout</code> has no effect. Your example is a fixed-size pool – when <code>minimumIdle</code> is not defined it defaults to <code>maximumPoolSize</code>.</p>
-<p><code>idleTimeout</code> is meant to shrink the pool from <code>maximumPoolSize</code> down toward <code>minimumIdle</code> when connections are unused in the pool. However, when <code>minimumIdle</code> &#x3D;&#x3D; <code>maximumPoolSize</code> then closing an “idle” connection makes no sense as it will be replaced immediately in the pool.</p>
-</blockquote>
-<p>所以配置 <code>minimumIdle</code> 可以解决上述问题。</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">spring.datasource.hikari.maximum-pool-size:1000</span></span><br><span class="line"><span class="string">spring.datasource.hikari.miniumIdle:10</span></span><br></pre></td></tr></table></figure>
+ 1. 性能方面 hikariCP>druid>tomcat-jdbc>dbcp>c3p0 。hikariCP的高性能得益于最大限度的避免锁竞争。
+ 2. druid功能最为全面，sql拦截等功能，统计数据较为全面，具有良好的扩展性。
+ 3. 综合性能，扩展性等方面，可考虑使用druid或者hikariCP连接池。
+ 4. 可开启prepareStatement缓存，对性能会有大概20%的提升。
 
-<h2 id="wait-timeout-too-long"><a href="#wait-timeout-too-long" class="headerlink" title="wait-timeout too long"></a>wait-timeout too long</h2><p>有时就是因为 connection 一直没被释放，这可能是这是的 connection wait_timeout 太长了。参照 <a href="https://support.rackspace.com/how-to/how-to-change-the-mysql-timeout-on-a-server/">change the mysql timeout on a server</a> 来了解 ‘wait_timeout’ 的设置。</p>
-<p>引用原文：</p>
-<blockquote>
-<p>Choose a reasonable <code>wait_timeout</code> value. Stateless PHP environments do well with a 60 second timeout or less. Stateful applications that use a connection pool (Java, .NET, etc.) will need to adjust <code>wait_timeout</code> to match their connection pool settings. The default 8 hours (<code>wait_timeout = 28800</code>) works well with properly configured connection pools.</p>
-<p>Configure the <code>wait_timeout</code> to be slightly longer than the application connection pool’s expected connection lifetime. This is a good safety check.</p>
-</blockquote>
-<p>在设置了合理的 mysql <code>wait_timeout</code> 后，同样也设置 hikariCP 的连接池空闲时间，参考<a href="https://github.com/brettwooldridge/HikariCP/wiki/FAQ#q-i-am-getting-a-commysqljdbcexceptionsjdbc4communicationsexception-communications-link-failure-exception-logged-in-the-isconnectionalive-method-of-hikaripool-in-my-logs-what-is-happening">FAQ</a></p>
-<blockquote>
-<p>If you set the MySQL <code>wait_timeout = 28800</code> (seconds &#x3D; 8 hours), you should set HikariCP <code>idleTimeout</code> and <code>maxLifetime</code> to the slightly shorter 28000000 (milliseconds &#x3D; 7 hours 46 minutes).</p>
-</blockquote>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">spring.datasource.hikari.maximum-pool-size:1000</span></span><br><span class="line"><span class="string">spring.datasource.hikari.miniumIdle:10</span></span><br><span class="line"><span class="string">spring.datasource.hikari.idleTimeout:28000000</span></span><br><span class="line"><span class="string">spring.datasource.hikari.maxLifetime:28000000</span></span><br></pre></td></tr></table></figure>
+在使用 spring jpa 时，默认使用的连接池是 hikariCP，所以最终采用了这个连接池。
 
-<h1 id="性能优化配置"><a href="#性能优化配置" class="headerlink" title="性能优化配置"></a>性能优化配置</h1><p>按照前边的说法，合理启用 prepareStatement 缓存，可以大幅提升性能。官方推荐的配置可参考 <a href="https://github.com/brettwooldridge/HikariCP/wiki/MySQL-Configuration">mysql configuration</a></p>
-<p>一个典型配置如下：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">jdbcUrl=jdbc:mysql://localhost:3306/simpsons</span></span><br><span class="line"><span class="string">user=test</span></span><br><span class="line"><span class="string">password=test</span></span><br><span class="line"><span class="string">dataSource.cachePrepStmts=true</span></span><br><span class="line"><span class="string">dataSource.prepStmtCacheSize=250</span></span><br><span class="line"><span class="string">dataSource.prepStmtCacheSqlLimit=2048</span></span><br><span class="line"><span class="string">dataSource.useServerPrepStmts=true</span></span><br><span class="line"><span class="string">dataSource.useLocalSessionState=true</span></span><br><span class="line"><span class="string">dataSource.rewriteBatchedStatements=true</span></span><br><span class="line"><span class="string">dataSource.cacheResultSetMetadata=true</span></span><br><span class="line"><span class="string">dataSource.cacheServerConfiguration=true</span></span><br><span class="line"><span class="string">dataSource.elideSetAutoCommits=true</span></span><br><span class="line"><span class="string">dataSource.maintainTimeStats=false</span></span><br></pre></td></tr></table></figure>
+使用过程中出现了一些坑，总结一下。
+
+java.sql.SQLTransientConnectionException
+仅使用默认配置，在运行所有测试时，会出现如下异常信息：
+
+
+
+这是因为默认的连接池数量是 10，而并行运行测试时，连接池数量不够了。通过设置 maximumPoolSize 解决。
+
+1
+
+
+spring.datasource.hikari.maximum-pool-size:1000
+
+
+too many connections
+在进行上述设置后，启动应用，连接数据库，发现数据库无法连接，报 too many connections。
+
+fixed-size poo
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/07/19/hikariCP-configuration/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -903,20 +841,41 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>bean validator 主要是验证一个 bean 的各字段是否满足一些约束，例如 <code>@NotNull</code></p>
-<p>bean validation 有个规范 <a href="https://beanvalidation.org/2.0/">jsr 380</a>，里边定义了一堆 api。有很多规范的实现，最常用的是 <a href="http://hibernate.org/validator/">hibernate validator</a>，jersey 出的 <a href="https://jersey.github.io/documentation/latest/bean-validation.html">jersey-bean-validation</a> 也是基于 hibernate validator 做的。</p>
-<p>bean validator 一般是应用在 web 框架（如 spring、jersey）上，框架在反序列化 rest 请求到 bean 对象时，框架会调用 validator 根据 bean 对象的 annotation 对 bean 进行验证。</p>
-<p>这个过程也可以手动进行。可参考 <a href="http://hibernate.org/validator/documentation/getting-started/">hibernate validator: get started</a>。</p>
-<h1 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h1><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// jsr 380 api</span></span><br><span class="line">compile <span class="string">&quot;javax.validation:validation-api:2.0.1.Final&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// hibernate vaidator 实现</span></span><br><span class="line">testCompile <span class="string">&quot;org.hibernate.validator:hibernate-validator:6.0.10.Final&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// hibernate validator 依赖的 JSR 341 实现</span></span><br><span class="line">testCompile <span class="string">&quot;org.glassfish:javax.el:3.0.0&quot;</span></span><br></pre></td></tr></table></figure>
+          bean validator 主要是验证一个 bean 的各字段是否满足一些约束，例如 @NotNull
 
-<h1 id="创建-bean，标明约束"><a href="#创建-bean，标明约束" class="headerlink" title="创建 bean，标明约束"></a>创建 bean，标明约束</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.hibernate.validator.referenceguide.chapter01;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.Min;</span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.NotNull;</span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.Size;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Car</span> &#123;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@NotNull</span></span><br><span class="line">   <span class="keyword">private</span> String manufacturer;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@NotNull</span></span><br><span class="line">   <span class="meta">@Size(min = 2, max = 14)</span></span><br><span class="line">   <span class="keyword">private</span> String licensePlate;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Min(2)</span></span><br><span class="line">   <span class="keyword">private</span> <span class="type">int</span> seatCount;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">public</span> <span class="title function_">Car</span><span class="params">(String manufacturer, String licencePlate, <span class="type">int</span> seatCount)</span>&#123;</span><br><span class="line">      <span class="built_in">this</span>.manufacturer = manufacturer;</span><br><span class="line">      <span class="built_in">this</span>.licensePlate = licencePlate;</span><br><span class="line">      <span class="built_in">this</span>.seatCount = seatCount;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+bean validation 有个规范 jsr 380，里边定义了一堆 api。有很多规范的实现，最常用的是 hibernate validator，jersey 出的 jersey-bean-validation 也是基于 hibernate validator 做的。
 
-<h1 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h1><ol>
-<li>利用 <code>Validation</code> 获取默认的 <code>ValidatorFactory</code>：<code>Validation.buildDefaultValidatorFactory()</code>；</li>
-<li>从 <code>ValidatorFacotry</code> 获取 <code>Validator</code>：<code>factory.getValidator()</code></li>
-<li>利用 <code>Validator</code> 验证 bean</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.hibernate.validator.referenceguide.chapter01;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"><span class="keyword">import</span> javax.validation.ConstraintViolation;</span><br><span class="line"><span class="keyword">import</span> javax.validation.Validation;</span><br><span class="line"><span class="keyword">import</span> javax.validation.Validator;</span><br><span class="line"><span class="keyword">import</span> javax.validation.ValidatorFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.BeforeClass;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.junit.Assert.assertEquals;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CarTest</span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Validator validator;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@BeforeClass</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">setUp</span><span class="params">()</span> &#123;</span><br><span class="line">      <span class="type">ValidatorFactory</span> <span class="variable">factory</span> <span class="operator">=</span> Validation.buildDefaultValidatorFactory();</span><br><span class="line">      validator = factory.getValidator();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">manufacturerIsNull</span><span class="params">()</span> &#123;</span><br><span class="line">      <span class="type">Car</span> <span class="variable">car</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Car</span>( <span class="literal">null</span>, <span class="string">&quot;DD-AB-123&quot;</span>, <span class="number">4</span> );</span><br><span class="line"></span><br><span class="line">      Set&lt;ConstraintViolation&lt;Car&gt;&gt; constraintViolations =</span><br><span class="line">      validator.validate( car );</span><br><span class="line"></span><br><span class="line">      assertEquals( <span class="number">1</span>, constraintViolations.size() );</span><br><span class="line">      assertEquals(</span><br><span class="line">         <span class="string">&quot;may not be null&quot;</span>,</span><br><span class="line">         constraintViolations.iterator().next().getMessage()</span><br><span class="line">      );</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">licensePlateTooShort</span><span class="params">()</span> &#123;</span><br><span class="line">      <span class="type">Car</span> <span class="variable">car</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Car</span>( <span class="string">&quot;Morris&quot;</span>, <span class="string">&quot;D&quot;</span>, <span class="number">4</span> );</span><br><span class="line"></span><br><span class="line">      Set&lt;ConstraintViolation&lt;Car&gt;&gt; constraintViolations =</span><br><span class="line">      validator.validate( car );</span><br><span class="line"></span><br><span class="line">      assertEquals( <span class="number">1</span>, constraintViolations.size() );</span><br><span class="line">      assertEquals(</span><br><span class="line">         <span class="string">&quot;size must be between 2 and 14&quot;</span>,</span><br><span class="line">         constraintViolations.iterator().next().getMessage()</span><br><span class="line">      );</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">seatCountTooLow</span><span class="params">()</span> &#123;</span><br><span class="line">      <span class="type">Car</span> <span class="variable">car</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Car</span>( <span class="string">&quot;Morris&quot;</span>, <span class="string">&quot;DD-AB-123&quot;</span>, <span class="number">1</span> );</span><br><span class="line"></span><br><span class="line">      Set&lt;ConstraintViolation&lt;Car&gt;&gt; constraintViolations =</span><br><span class="line">      validator.validate( car );</span><br><span class="line"></span><br><span class="line">      assertEquals( <span class="number">1</span>, constraintViolations.size() );</span><br><span class="line">      assertEquals(</span><br><span class="line">         <span class="string">&quot;must be greater than or equal to 2&quot;</span>,</span><br><span class="line">         constraintViolations.iterator().next().getMessage()</span><br><span class="line">      );</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">carIsValid</span><span class="params">()</span> &#123;</span><br><span class="line">      <span class="type">Car</span> <span class="variable">car</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Car</span>( <span class="string">&quot;Morris&quot;</span>, <span class="string">&quot;DD-AB-123&quot;</span>, <span class="number">2</span> );</span><br><span class="line"></span><br><span class="line">      Set&lt;ConstraintViolation&lt;Car&gt;&gt; constraintViolations =</span><br><span class="line">      validator.validate( car );</span><br><span class="line"></span><br><span class="line">      assertEquals( <span class="number">0</span>, constraintViolations.size() );</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+bean validator 一般是应用在 web 框架（如 spring、jersey）上，框架在反序列化 rest 请求到 bean 对象时，框架会调用 validator 根据 bean 对象的 annotation 对 bean 进行验证。
+
+这个过程也可以手动进行。可参考 hibernate validator: get started。
+
+引入依赖
+1
+2
+3
+4
+5
+6
+7
+8
+
+
+// jsr 380 api
+compile "javax.validation:validation-api:2.0.1.Final"
+
+// hibernate vaidator 实现
+testCompile "org.hibernate.validator:hibernate-validator:6.0.10.Final"
+
+// hibernate validator 依赖的 JSR 341 实现
+te
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/07/18/bean-validator/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -991,25 +950,36 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h1><p>java 泛型存在类型擦除（参见 <a href="https://blog.csdn.net/briblue/article/details/76736356">java 泛型</a>）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; l1 = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;();</span><br><span class="line">List&lt;Integer&gt; l2 = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;();</span><br><span class="line"></span><br><span class="line">System.out.println(l1.getClass() == l2.getClass());	<span class="comment">// return true, 两个都是 List.class</span></span><br></pre></td></tr></table></figure>
+          泛型
+java 泛型存在类型擦除（参见 java 泛型）
 
-<h2 id="获取运行时泛型类型"><a href="#获取运行时泛型类型" class="headerlink" title="获取运行时泛型类型"></a>获取运行时泛型类型</h2><p>类型擦除使得根据类定义获取 runtime 泛型类型是不可能的，一般有几种方法(参见 <a href="https://stackoverflow.com/questions/3403909/get-generic-type-of-class-at-runtime">stackoverflow</a>)：</p>
-<ol>
-<li>根据类对象实例获取，可参见 <a href="http://qussay.com/2013/09/28/handling-java-generic-types-with-reflection/#has_default_constructor">handle java generic types with reflection</a><ul>
-<li>eg. <code>Class&lt;T&gt; tClass = (Class&lt;T&gt;) ReflectionUtil.getClass(ReflectionUtil.getParameterizedTypes(this)[0]);</code></li>
-</ul>
-</li>
-<li>从父类中获取（要求父类有相同的泛型参数）<ul>
-<li>eg. <code>Class&lt;T&gt; tClass = (Class&lt;T&gt;) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]</code></li>
-</ul>
-</li>
-<li>通过方法存储泛型类型为 field。但这意味着所有的 client 都必须要通过相应方法设置该 field</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过方法（constructor）存储泛型类型</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">GenericClass</span>&lt;T&gt; &#123;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">private</span> <span class="keyword">final</span> Class&lt;T&gt; type;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">public</span> <span class="title function_">GenericClass</span><span class="params">(Class&lt;T&gt; type)</span> &#123;</span><br><span class="line">          <span class="built_in">this</span>.type = type;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">public</span> Class&lt;T&gt; <span class="title function_">getMyType</span><span class="params">()</span> &#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="built_in">this</span>.type;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="获取一个带泛型信息的-class-变量"><a href="#获取一个带泛型信息的-class-变量" class="headerlink" title="获取一个带泛型信息的 class 变量"></a>获取一个带泛型信息的 class 变量</h2><p>例如当使用 <code>new ObjectMapper().readValue(string, someClass)</code>，而 someClass 是包含泛型参数的类型（eg. List<Integer>），如何获取这样的 class 变量？</p>
-<p>参见 <a href="https://stackoverflow.com/a/6349488/10003123">stackOverflow</a>，总结如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.ObjectMapper;</span><br><span class="line"><span class="type">ObjectMapper</span> <span class="variable">mapper</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectMapper</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// as Array</span></span><br><span class="line">MyClass[] myObjects = mapper.readValue(json, MyClass[].class);</span><br><span class="line"></span><br><span class="line"><span class="comment">// as List</span></span><br><span class="line">List&lt;MyClass&gt; myObjects = mapper.readValue(jsonInput, <span class="keyword">new</span> <span class="title class_">TypeReference</span>&lt;List&lt;MyClass&gt;&gt;()&#123;&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// as List (another more generic way)</span></span><br><span class="line">List&lt;MyClass&gt; myObjects = mapper.readValue(jsonInput, mapper.getTypeFactory().constructCollectionType(List.class, MyClass.class));</span><br><span class="line"></span><br><span class="line"><span class="comment">// as List (using TypeToken in Gson)</span></span><br><span class="line">Class&lt;List&lt;MyClass&gt;&gt; tClass = <span class="keyword">new</span> <span class="title class_">TypeToken</span>&lt;List&lt;MyClass&gt;() &#123;</span><br><span class="line">        &#125;.getRawType();</span><br><span class="line">        </span><br><span class="line"><span class="comment">// use c</span></span><br></pre></td></tr></table></figure>
+1
+2
+3
+4
+
+
+List<String> l1 = new ArrayList<String>();
+List<Integer> l2 = new ArrayList<Integer>();
+
+System.out.println(l1.getClass() == l2.getClass());	// return true, 两个都是 List.class
+
+
+获取运行时泛型类型
+类型擦除使得根据类定义获取 runtime 泛型类型是不可能的，一般有几种方法(参见 stackoverflow)：
+
+ 1. 根据类对象实例获取，可参见 handle java generic types with reflection * eg. Class<T> tClass = (Class<T>) ReflectionUtil.getClass(ReflectionUtil.getParameterizedTypes(this)[0]);
+    
+    
+ 2. 从父类中获取（要求父类有相同的泛型参数） * eg. Class<T> tClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/07/14/java-reflection/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1084,26 +1054,52 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>使用 <a href="https://github.com/awslabs/aws-serverless-java-container">aws serverless java container</a> 实现。</p>
-<h1 id="使用-aws-cli"><a href="#使用-aws-cli" class="headerlink" title="使用 aws cli"></a>使用 <a href="https://aws.amazon.com/cn/cli/">aws cli</a></h1><h2 id="创建项目，配置-aws-cli"><a href="#创建项目，配置-aws-cli" class="headerlink" title="创建项目，配置 aws cli"></a>创建项目，配置 aws cli</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 利用原型创建项目</span></span><br><span class="line">$ mvn archetype:generate -DgroupId=my.service -DartifactId=my-service -Dversion=1.0-SNAPSHOT \</span><br><span class="line">       -DarchetypeGroupId=com.amazonaws.serverless.archetypes \</span><br><span class="line">       -DarchetypeArtifactId=aws-serverless-jersey-archetype \</span><br><span class="line">       -DarchetypeVersion=1.1.3</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 aws cli</span></span><br><span class="line">$ pip install awscli</span><br><span class="line"><span class="comment"># 配置 credentials</span></span><br><span class="line">$ aws configure</span><br><span class="line">AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE</span><br><span class="line">AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY</span><br><span class="line">Default region name [None]: us-west-2</span><br><span class="line">Default output format [None]: json</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 写代码，测试……</span></span><br></pre></td></tr></table></figure>
+          使用 aws serverless java container 实现。
 
-<p>aws 安装之后一般要配置 credentials，详情可参见 <a href="https://docs.aws.amazon.com/zh_cn/cli/latest/userguide/cli-chap-getting-started.html">aws cli 配置</a></p>
-<h2 id="打包部署"><a href="#打包部署" class="headerlink" title="打包部署"></a>打包部署</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># package</span></span><br><span class="line">$ mvn clean package</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 上传 package 到 s3（需要先创建 s3 bucket）</span></span><br><span class="line">$ aws s3 mb s3://BUCKET_NAME</span><br><span class="line">$ aws cloudformation package --template-file sam.yaml --output-template-file output-sam.yaml --s3-bucket &lt;YOUR S3 BUCKET NAME&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署到 aws lambda</span></span><br><span class="line">$ aws cloudformation deploy --template-file output-sam.yaml --stack-name your-stack-name --capabilities CAPABILITY_IAM</span><br></pre></td></tr></table></figure>
+使用 aws cli
+创建项目，配置 aws cli
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
 
-<h2 id="查看部署结果"><a href="#查看部署结果" class="headerlink" title="查看部署结果"></a>查看部署结果</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可查看 stack 详情</span></span><br><span class="line">$ aws cloudformation describe-stacks --stack-name your-stack-name</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;Stacks&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;StackId&quot;</span>: <span class="string">&quot;arn:aws:cloudformation:us-west-2:xxxxxxxx:stack/ServerlessJerseyApi/xxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx&quot;</span>, </span><br><span class="line">            <span class="string">&quot;Description&quot;</span>: <span class="string">&quot;AWS Serverless Jersey API - learning.aws::aws-lambda-jersey&quot;</span>, </span><br><span class="line">            <span class="string">&quot;Tags&quot;</span>: [], </span><br><span class="line">            <span class="string">&quot;Outputs&quot;</span>: [</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="string">&quot;Description&quot;</span>: <span class="string">&quot;URL for application&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;ExportName&quot;</span>: <span class="string">&quot;AwsLambdaJerseyApi&quot;</span>,  </span><br><span class="line">                    <span class="string">&quot;OutputKey&quot;</span>: <span class="string">&quot;AwsLambdaJerseyApi&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;OutputValue&quot;</span>: <span class="string">&quot;https://xxxxxxx.execute-api.us-west-2.amazonaws.com/Prod/ping&quot;</span></span><br><span class="line">                &#125;</span><br><span class="line">            ], </span><br><span class="line">            <span class="string">&quot;CreationTime&quot;</span>: <span class="string">&quot;2016-12-13T22:59:31.552Z&quot;</span>, </span><br><span class="line">            <span class="string">&quot;Capabilities&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;CAPABILITY_IAM&quot;</span></span><br><span class="line">            ], </span><br><span class="line">            <span class="string">&quot;StackName&quot;</span>: <span class="string">&quot;ServerlessJerseyApi&quot;</span>, </span><br><span class="line">            <span class="string">&quot;NotificationARNs&quot;</span>: [], </span><br><span class="line">            <span class="string">&quot;StackStatus&quot;</span>: <span class="string">&quot;UPDATE_COMPLETE&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据生成的链接访问 api</span></span><br><span class="line">$ curl https://xxxxxxx.execute-api.us-west-2.amazonaws.com/Prod/ping</span><br></pre></td></tr></table></figure>
 
-<h1 id="使用-sam-cli"><a href="#使用-sam-cli" class="headerlink" title="使用 sam-cli"></a>使用 <a href="https://github.com/awslabs/aws-sam-cli">sam-cli</a></h1><p>aws-cli 只能部署到远端去查看运行效果。而 sam-cli 则可以本地 simulate 一个 lambda 环境，从而实现本地调试。</p>
-<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>aws-sam-cli 有个 <code>sam init --runtime java</code>，可以创建一个 sample 项目，但是目前支持的 template 并不包含 jersey 的。所以要创建项目还是通过 mvn archetype。</p>
-<p>（所有支持的 runtime 可以查看 <a href="https://github.com/awslabs/aws-sam-cli#project-status">project status</a>）</p>
-<p>但是 <code>sam init</code> 创建了一个 <code>template.yaml</code>，这是之后所有 sam 命令的依据。这个文件会被翻译为 <code>mvn archetype</code> 创建的 <code>sam.yaml</code>。因为其后台是利用 <code>aws cli</code> 运行的。</p>
-<p>所以我们需要在 <code>mvn archetype</code> 创建了原型之后，手动依据 <code>sam.yaml</code> 创建 <code>template.yaml</code></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 利用原型创建项目，配置 aws-cli，同上</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 template.yaml</span></span><br><span class="line">$ <span class="built_in">cp</span> sam.yaml template.yaml</span><br></pre></td></tr></table></figure>
+# 利用原型创建项目
+$ mvn archetype:generate -DgroupId=my.service -DartifactId=my-service -Dversion=1.0-SNAPSHOT \
+       -DarchetypeGroupId=com.amazonaws.serverless.archetypes \
+       -DarchetypeArtifactId=aws-serverless-jersey-archetype \
+       -DarchetypeVersion=1.1.3
 
-<h2 id="部署项目"><a href="#部署项目" class="headerlink" title="部署项目"></a>部署项目</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># package</span></span><br><span class="line">$ mvn clean package</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 本地测试运行</span></span><br><span class="line">$ sam <span class="built_in">local</span> start-api</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 上传 package 到 s3（需要先创建 s3 bucket）</span></span><br><span class="line">$ aws s3 mb s3://BUCKET_NAME</span><br><span class="line">$ sam package \</span><br><span class="line">    --template-file template.yaml \</span><br><span class="line">    --output-template-file packaged.yaml \</span><br><span class="line">    --s3-bucket YOUR_S3_BUCKET_NAME</span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署到 aws lambda</span></span><br><span class="line">$ sam deploy \</span><br><span class="line">    --template-file packaged.yaml \</span><br><span class="line">    --stack-name your-stack-name \</span><br><span class="line">    --capabilities CAPABILITY_IAM \</span><br><span class="line">    --parameter-overrides MyParameterSample=MySampleValue</span><br></pre></td></tr></table></figure>
 
-<p>如果在本地运行时，报错 <code>No class found....</code>，一般是因为 docker 的原因，我最后是通过重装 docker 解决的。由于 aws-sam-cli 使用 docker 去起一个 lambda 容器环境，所以可能是由于 credentials 等获取不到的原因？，总之可能会挂掉。可参见 <a href="https://github.com/docker/for-mac/issues/488">stackoverflow ticket</a>，</p>
-<h2 id="查看部署结果-1"><a href="#查看部署结果-1" class="headerlink" title="查看部署结果"></a>查看部署结果</h2><p>这里跟上边是一样的，我们可以只看一部分</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可查看 stack 详情</span></span><br><span class="line">$ aws cloudformation describe-stacks \</span><br><span class="line">    --stack-name your-stack-name \</span><br><span class="line">    --query <span class="string">&#x27;Stacks[].Outputs&#x27;</span></span><br><span class="line">[</span><br><span class="line">    [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;Description&quot;</span>: <span class="string">&quot;URL for application&quot;</span>,</span><br><span class="line">            <span class="string">&quot;ExportName&quot;</span>: <span class="string">&quot;AwsLambdaJerseyApi&quot;</span>,  </span><br><span class="line">            <span class="string">&quot;OutputKey&quot;</span>: <span class="string">&quot;AwsLambdaJerseyApi&quot;</span>,</span><br><span class="line">            <span class="string">&quot;OutputValue&quot;</span>: <span class="string">&quot;https://xxxxxxx.execute-api.us-west-2.amazonaws.com/Prod/ping&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据生成的链接访问 api</span></span><br><span class="line">$ curl https://xxxxxxx.execute-api.us-west-2.amazonaws.com/Prod/ping¡</span><br></pre></td></tr></table></figure>
+# 安装 aws cli
+$ pip install awscli
+# 配置 credentials
+$ aws configure
+AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
+AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+Default region name [None]: us-west-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/27/aws-lambda-jersey/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1178,34 +1174,21 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <ol>
-<li>最基本的js写法是：不管是要调用项目内或项目外的其他文件的方法，都是直接在当前文件中调用，然后在web文件（html）中利用 <code>&lt;script&gt;</code> 按依赖顺序引入所有的内部和外部文件。<ul>
-<li>即每个js中声明的变量都是全局变量。js采用{}来定义变量生命周期（或者说namespace），除了被｛｝所包围的其余变量都是全局变量。有个god object即window－－－全局对象，所有的变量、函数都是这个god object的member－－－全局变量。</li>
-<li>利用 <code>&lt;script&gt;</code> 引入所有js，效果类似于将所有文件的内容组装到一个大文件运行。因此声明顺序受依赖关系约束。</li>
-<li>即browser运行每个html时，它始终是将这个html中的所有script作为一个文件来运行。即browser是个解释执行器，它总是执行一个文件。而不同于后端（例如java 的jre）的编译运行，</li>
-</ul>
-</li>
-<li>前后端的区别：<ul>
-<li>browser是解释执行器，而js不提供import机制，所以只能人工解决依赖确定关系－－－需要提供一种机制来解决这中依赖确定关系</li>
-<li>后端执行是通过server来执行的，服务器会下载所需lib存放到服务器容器中，运行是直接从容器拿。而前端执行是通过browser来执行，每次执行js browser都需要下载依赖的各种js文件，然后将这些文件组合成一个来运行。当然有jquery之类的会利用缓存使得不需要每次执行都下载，然而这依然不是一个最佳解决方案－－－需要提供一种机制来解决依赖下载和组装。</li>
-</ul>
-</li>
-</ol>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>前端</th>
-<th>后端</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>开发生命周期</td>
-<td>1. code<br> 2. 简单组合所有文件<br> 3. 解释一行为可执行码－－即时性<br> 4. 执行一行</td>
-<td>1. code（提供import）<br> 2. 编译：确定依赖关系，据此依次编译各个文件为汇编码／机器码（其中有预编译、预处理等步骤）<br> 3. 连接：将外部函数代码添加到上述文件中，组合成一个完整可执行文件。<br> 4. 运行整个文件</td>
-</tr>
-</tbody></table>
-
+          1. 最基本的js写法是：不管是要调用项目内或项目外的其他文件的方法，都是直接在当前文件中调用，然后在web文件（html）中利用 <script> 按依赖顺序引入所有的内部和外部文件。 * 即每个js中声明的变量都是全局变量。js采用{}来定义变量生命周期（或者说namespace），除了被｛｝所包围的其余变量都是全局变量。有个god object即window－－－全局对象，所有的变量、函数都是这个god object的member－－－全局变量。
+     * 利用 <script> 引入所有js，效果类似于将所有文件的内容组装到一个大文件运行。因此声明顺序受依赖关系约束。
+     * 即browser运行每个html时，它始终是将这个html中的所有script作为一个文件来运行。即browser是个解释执行器，它总是执行一个文件。而不同于后端（例如java 的jre）的编译运行，
+    
+    
+ 2. 前后端的区别： * browser是解释执行器，而js不提供import机制，所以只能人工解决依赖确定关系－－－需要提供一种机制来解决这中依赖确定关系
+     * 后端执行是通过server来执行的，服务器会下载所需lib存放到服务器容器中，运行是直接从容器拿。而前端执行是通过browser来执行，每次执行js browser都需要下载依赖的各种js文件，然后将这
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/21/js-global-namespace/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

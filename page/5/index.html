@@ -242,41 +242,76 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>自适应一般是设定基准值，宽、高、字体大小都指定为基准值的百分比。当基准值改变时，页面元素、宽高也会按比例变化。</p>
-<h1 id="自适应宽度"><a href="#自适应宽度" class="headerlink" title="自适应宽度"></a>自适应宽度</h1><h2 id="不使用绝对宽度"><a href="#不使用绝对宽度" class="headerlink" title="不使用绝对宽度"></a>不使用绝对宽度</h2><p>网页宽度默认等于屏幕宽度。所以大部分时候只要不适用绝对宽度即可实现自适应宽度：</p>
-<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span>: &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="comment">// or width: auto;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          自适应一般是设定基准值，宽、高、字体大小都指定为基准值的百分比。当基准值改变时，页面元素、宽高也会按比例变化。
 
-<p>如果元素是图片，也可以使用 <code>max-width</code> 属性，参见<a href="https://www.w3schools.com/css/css_rwd_images.asp">responsive web design: image</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">img &#123;</span><br><span class="line">  max-width: 100%;</span><br><span class="line">  height: auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+自适应宽度
+不使用绝对宽度
+网页宽度默认等于屏幕宽度。所以大部分时候只要不适用绝对宽度即可实现自适应宽度：
 
-<h2 id="使用-media"><a href="#使用-media" class="headerlink" title="使用 media"></a>使用 media</h2><p>这适用于需要针对不同的屏幕，显示不同的排版。利用 <a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/@media"><code>@media</code></a> 的 css 规则，可实现根据一个或多个基于设备类型、具体特点和环境的媒体查询来应用样式。</p>
-<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Media query */</span></span><br><span class="line"><span class="keyword">@media</span> screen <span class="keyword">and</span> (<span class="attribute">min-width</span>: <span class="number">900px</span>) &#123;</span><br><span class="line">  <span class="selector-tag">article</span> &#123;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">1rem</span> <span class="number">3rem</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Nested media query */</span></span><br><span class="line"><span class="keyword">@supports</span> (<span class="attribute">display</span>: flex) &#123;</span><br><span class="line">  <span class="keyword">@media</span> screen <span class="keyword">and</span> (<span class="attribute">min-width</span>: <span class="number">900px</span>) &#123;</span><br><span class="line">    <span class="selector-tag">article</span> &#123;</span><br><span class="line">      <span class="attribute">display</span>: flex;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+1
+2
+3
+4
 
-<h3 id="css-规则"><a href="#css-规则" class="headerlink" title="css 规则"></a>css 规则</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/At-rule">css 规则</a> 相当于给 css 增加的函数。原本 css 只是简单的 json 对象，现在希望 css 更多样化、更容易维护，所以增加了 css 规则。</p>
-<p><code>@media</code> 这种属于条件规则组，即接收两个参数，第一个参数是个 bool 条件，第二个参数是执行的语句。仅当条件为 true 时，其后的语句才会执行。</p>
-<h1 id="自适应高度"><a href="#自适应高度" class="headerlink" title="自适应高度"></a>自适应高度</h1><p>同样的，要使得高度自适应，也必须指定一个基准值。但不同于宽度（默认是屏幕宽度），高度通常是不固定的，要确定基准值也就麻烦些。</p>
-<h2 id="父容器的高度可确定"><a href="#父容器的高度可确定" class="headerlink" title="父容器的高度可确定"></a>父容器的高度可确定</h2><blockquote>
-<p>For the height of a div to be responsive, it must be inside a parent element with a defined height to derive it’s relative height from.</p>
-</blockquote>
-<p>如果父容器的高度可确定，则同上，采用百分比即可实现自适应。</p>
-<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">parent: &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line"></span><br><span class="line">    child: &#123;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">80%</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="根据宽度变化，同比例改变高度"><a href="#根据宽度变化，同比例改变高度" class="headerlink" title="根据宽度变化，同比例改变高度"></a>根据宽度变化，同比例改变高度</h2><p>页面宽度的自适应容易实现，可以基于宽度的变化，同比例更改高度。</p>
-<h3 id="利用-padding"><a href="#利用-padding" class="headerlink" title="利用 padding"></a>利用 <code>padding</code></h3><p>参见<a href="https://stackoverflow.com/questions/11535827/responsive-height-proportional-to-width">responsive height proportional to width</a>，设定 <code>height</code> 为 0，<code>padding</code> 为百分比</p>
-<blockquote>
-<p>In all browsers, when padding is specified in %, it’s calculated relative to the parent element’s width. </p>
-</blockquote>
-<p>Html:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content&quot;</span>&gt;</span></span><br><span class="line">    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;wrapper&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content2&quot;</span>&gt;</span></span><br><span class="line">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+body: {
+    width: 100%;
+    // or width: auto;
+}
 
-<p>Css:</p>
-<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.content</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding-bottom</span>: <span class="number">30%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#7ad</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.wrapper</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">padding-bottom</span>: <span class="number">30%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#7ad</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.wrapper</span> <span class="selector-class">.content2</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#7da</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="利用-viewport-units"><a href="#利用-viewport-units" class="headerlink" title="利用 viewport units"></a>利用 viewport units</h3><p>新版本的浏览器支持 <a href="https://caniuse.com/#feat=viewport-units">viewport units</a>，eg.</p>
-<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">width</span>: <span class="number">100vw</span>;</span><br><span class="line"><span class="attribute">height</span>: <span class="number">30vw</span>; <span class="comment">/* 30% of width */</span></span><br></pre></td></tr></table></figure>
+如果元素是图片，也可以使用 max-width 属性，参见responsive web design: image
 
-<h2 id="使用-media-1"><a href="#使用-media-1" class="headerlink" title="使用 media"></a>使用 media</h2><p>同宽度，指定不同 media 情况下，高度显示不同。</p>
+1
+2
+3
+4
 
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+
+使用 media
+这适用于需要针对不同的屏幕，显示不同的排版。利用 @media 的 css 规则，可实现根据一个或多个基于设备类型、具体特点和环境的媒体查询来应用样式。
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+
+
+/* Media query */
+@media screen and (min-width: 900px) {
+  article {
+    padding: 1rem 3rem;
+  }
+}
+
+/* Nested media query */
+@supports (display: flex) {
+  @media screen and (min-width: 90
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/12/13/responsive-web-design/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -351,14 +386,80 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>参见 <a href="https://blog.theodo.fr/2018/01/search-destroy-duplicate-rows-postgresql/">Search and destroy duplicate rows in PostgreSQL</a></p>
-<h1 id="Find-duplicates"><a href="#Find-duplicates" class="headerlink" title="Find duplicates"></a>Find duplicates</h1><h2 id="using-group"><a href="#using-group" class="headerlink" title="using group"></a>using group</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">  firstname,</span><br><span class="line">  lastname,</span><br><span class="line">  <span class="built_in">count</span>(<span class="operator">*</span>)</span><br><span class="line"><span class="keyword">FROM</span> people</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span></span><br><span class="line">  firstname,</span><br><span class="line">  lastname</span><br><span class="line"><span class="keyword">HAVING</span> <span class="built_in">count</span>(<span class="operator">*</span>) <span class="operator">&gt;</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+          参见 Search and destroy duplicate rows in PostgreSQL
 
-<h2 id="using-partition"><a href="#using-partition" class="headerlink" title="using partition"></a>using partition</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span></span><br><span class="line">  (<span class="keyword">SELECT</span> <span class="operator">*</span>, <span class="built_in">count</span>(<span class="operator">*</span>)</span><br><span class="line">  <span class="keyword">OVER</span></span><br><span class="line">    (<span class="keyword">PARTITION</span> <span class="keyword">BY</span></span><br><span class="line">      firstname,</span><br><span class="line">      lastname</span><br><span class="line">    ) <span class="keyword">AS</span> count</span><br><span class="line">  <span class="keyword">FROM</span> people) tableWithCount</span><br><span class="line">  <span class="keyword">WHERE</span> tableWithCount.count <span class="operator">&gt;</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+Find duplicates
+using group
+1
+2
+3
+4
+5
+6
+7
+8
+9
 
-<h2 id="Using-not-strict-distinct"><a href="#Using-not-strict-distinct" class="headerlink" title="Using not strict distinct"></a>Using not strict distinct</h2><p>利用 not strict distinct <code>DISTINCT ON</code> 找到唯一的那些条，剩余的就是重复的，可以修改或删除</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> people <span class="keyword">WHERE</span> people.id <span class="keyword">NOT</span> <span class="keyword">IN</span> </span><br><span class="line">(<span class="keyword">SELECT</span> id <span class="keyword">FROM</span> (</span><br><span class="line">    <span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> <span class="keyword">ON</span> (firstname, lastname) <span class="operator">*</span></span><br><span class="line">  <span class="keyword">FROM</span> people));</span><br><span class="line"></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> more readable code</span><br><span class="line"><span class="keyword">WITH</span> <span class="keyword">unique</span> <span class="keyword">AS</span></span><br><span class="line">    (<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> <span class="keyword">ON</span> (firstname, lastname) <span class="operator">*</span> <span class="keyword">FROM</span> people)</span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> people <span class="keyword">WHERE</span> people.id <span class="keyword">NOT</span> <span class="keyword">IN</span> (<span class="keyword">SELECT</span> id <span class="keyword">FROM</span> <span class="keyword">unique</span>);</span><br></pre></td></tr></table></figure>
 
+SELECT
+  firstname,
+  lastname,
+  count(*)
+FROM people
+GROUP BY
+  firstname,
+  lastname
+HAVING count(*) > 1;
+
+
+using partition
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+
+SELECT * FROM
+  (SELECT *, count(*)
+  OVER
+    (PARTITION BY
+      firstname,
+      lastname
+    ) AS count
+  FROM people) tableWithCount
+  WHERE tableWithCount.count > 1;
+
+
+Using not strict distinct
+利用 not strict distinct DISTINCT ON 找到唯一的那些条，剩余的就是重复的，可以修改或删除
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+
+DELETE FROM people WHERE people.id NOT IN 
+(SELECT id FROM (
+    SELECT
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/11/06/duplicate-rows-in-postgresql/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -433,25 +534,29 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="java-io-ByteArrayOutputStream"><a href="#java-io-ByteArrayOutputStream" class="headerlink" title="java.io.ByteArrayOutputStream"></a>java.io.ByteArrayOutputStream</h1><p>这一般在用到字节流是会用到。</p>
-<p><a href="http://java-performance.info/java-io-bytearrayoutputstream/">java performance tuning guide</a> 这篇文章不建议在 performance-criticted 代码中使用 <code>ByteArrayOutputStream</code>：</p>
-<ol>
-<li><strong>同步写入，效率低</strong></li>
-</ol>
-<blockquote>
-<p><code>ByteArrayOutputStream</code> allows you to write anything to an internal expandable byte array and use that array as a single piece of output afterwards. Default buffer size is 32 bytes, so if you expect to write something longer, provide an explicit buffer size in the <code>ByteArrayOutputStream(int)</code> constructor</p>
-<p> 注：</p>
-<ol>
-<li><code>ByteArrayOutputStream</code> 内部是一个可变长度的 byte[]（通过扩充实现可变）。它有个初始长度（默认 32），可以在 constructor 中指定.</li>
-<li><code>ByteArrayOutputStream</code> 是同步写入，比较影响效率</li>
-</ol>
-</blockquote>
-<ol start="2">
-<li><strong>toByteArray() 效率低，使用 toString(charset)</strong></li>
-</ol>
-<p><code>toByteArray</code> 执行了一遍拷贝，效率低。<code>toString</code> 则使用 <code>String(bytes[])</code> 直接将内部 byte 转成了 String</p>
-<p><a href="http://java-performance.info/inefficient-byte-to-string-constructor/">inefficient byte[] to String constructor</a> 指出 <code>String(bytes[])</code>  也是 copy，但 java8 中的源码看了下，似乎不是 copy，待考证……</p>
+          java.io.ByteArrayOutputStream
+这一般在用到字节流是会用到。
 
+java performance tuning guide 这篇文章不建议在 performance-criticted 代码中使用 ByteArrayOutputStream：
+
+ 1. 同步写入，效率低
+
+ByteArrayOutputStream allows you to write anything to an internal expandable byte array and use that array as a single piece of output afterwards. Default buffer size is 32 bytes, so if you expect to write something longer, provide an explicit buffer size in the ByteArrayOutputStream(int) constructor
+
+ 注：
+
+ 1. ByteArrayOutputStream 内部是一个可变长度的 byte[]（通过扩充实现可变）。它有个初始长度（默认 32），可以在 constructor 中指定.
+ 2. ByteArrayOutputStream 是同步写入，比较影响效率
+
+ 2. toByteA
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/10/15/performance-of-io-in-java/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -526,31 +631,21 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><a href="https://www.petrikainulainen.net/programming/unit-testing/3-reasons-why-we-should-not-use-inheritance-in-our-tests/">three reasons why we should not use inheritance in tests</a></p>
-<p>大概意思是：</p>
-<ol>
-<li>很多测试里的继承用的不合适。测试也是代码，必须符合继承的原则。</li>
-</ol>
-<blockquote>
-<p>The point of inheritance is to <strong>take advantage of polymorphic behavior NOT to reuse code</strong>, and people miss that, they see inheritance as a cheap way to add behavior to a class. When I design code I like to think about options. When I inherit, I reduce my options. I am now sub-class of that class and cannot be a sub-class of something else. I have permanently fixed my construction to that of the superclass, and I am at a mercy of the super-class changing APIs. My freedom to change is fixed at compile time.</p>
-</blockquote>
-<p>多态的定义：</p>
-<blockquote>
-<p>Polymorphism is the provision of a single interface to entities of different types</p>
-</blockquote>
-<ol start="2">
-<li>可能会影响性能。</li>
-</ol>
-<p>并不是所有的测试可能都会用到测试基类里的东西，而 beforeClass、beforeTest 在执行所有测试时都会被1. 查找，2. 执行，这些都导致了 CPU 的浪费。</p>
-<p>此外，其他人也提到，比如 springboottest 中，基类中配置 <code>@SpringBootTest</code> ，最终可能导致在每个测试中配置 <code>@DirtyContext</code>等，严重影响性能。</p>
-<ol start="3">
-<li>很影响 reading</li>
-</ol>
-<p>测试即文档，而很多东西却是需要读多个类</p>
-<p>这个问题仁者见仁，智者见智。duplicate code 也是问题。两者相权，如何处理？但对于目前的代码，如果没有问题，还是保持现状比较好。对于符合继承规则这点，倒是需要注意的。</p>
-<p>作者在 <a href="https://www.petrikainulainen.net/programming/testing/writing-clean-tests-it-starts-from-the-configuration/">writing clean test</a> 中提出了些解决方法，但感觉还是有些片面。当然他写了一个系列的文章：<a href="https://www.petrikainulainen.net/writing-clean-tests/">writing clean test series</a>。</p>
-<p>另外读书：<a href="https://www.amazon.cn/dp/1935182579/ref=sr_1_2?ie=UTF8&qid=1539322654&sr=8-2&keywords=Effective+Unit+Testing:+A+guide+for+Java+developers">effective unit testing</a></p>
+          three reasons why we should not use inheritance in tests
 
+大概意思是：
+
+ 1. 很多测试里的继承用的不合适。测试也是代码，必须符合继承的原则。
+
+The point of inheritance is to take advantage of polymorphic behavior NOT to reuse code, and people miss that, they see inheritance as a cheap way to add behavior to a class. When I design code I like to think about options. When I inherit, I reduce my options. I am now sub-class of that class and cannot be a sub-class of something else. I have permanently fixed my construction to that of the superclass, and I am at a mercy of the super-class changing APIs. My freedom to change is fixed at co
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/10/12/test-principles/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -625,22 +720,30 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><a href="https://docs.gradle.org/current/dsl/org.gradle.api.tasks.testing.Test.html#org.gradle.api.tasks.testing.Test:forkEvery">gradle test configurations</a></p>
-<p><a href="https://discuss.gradle.org/t/parallel-test-execution-with-gradle-maxparallelforks-property/15136">one sample config</a></p>
-<p><a href="https://guides.gradle.org/performance/">ways to improve performance of gradle build</a></p>
-<p>common used properties:</p>
-<ul>
-<li><code>jvmArgs</code>: jvm 参数。通常会配置堆栈大小，保证测试对内存的要求。<ul>
-<li><code>&#39;-Xms128m&#39;, &#39;-Xmx1024m&#39;, &#39;-XX:MaxMetaspaceSize=128m&#39;</code>。<code>-Xms</code> 是初始堆大小，<code>-Xmx</code> 是最大堆大小，<code>-XX:MaxMetaspaceSize</code> 是 class metadata 可占用的最大本地内存（默认是 unlimited）。具体 jvm 参数参考 <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/java.html">java doc</a>.</li>
-</ul>
-</li>
-<li><code>forkEvery</code>: 每个 test process 里跑的 test classes 的最大个数。当次数达到限制后，会自动重启。这定义了一个测试线程什么时候回重启，与并发无关。默认是 0，即无最大限制，就是可以一直跑</li>
-<li><code>maxParalleForks</code>: 能并发跑的最大 test processes 数目</li>
-<li><code>systemProperty</code>: 系统属性</li>
-<li><code>environment</code>：系统环境变量</li>
-<li><code>include</code>: 具体执行的测试。可以通过这个配置不同的测试级别（单元测试、集成测试、functional 测试……）</li>
-</ul>
+          gradle test configurations
 
+one sample config
+
+ways to improve performance of gradle build
+
+common used properties:
+
+ * jvmArgs: jvm 参数。通常会配置堆栈大小，保证测试对内存的要求。 * '-Xms128m', '-Xmx1024m', '-XX:MaxMetaspaceSize=128m'。-Xms 是初始堆大小，-Xmx 是最大堆大小，-XX:MaxMetaspaceSize 是 class metadata 可占用的最大本地内存（默认是 unlimited）。具体 jvm 参数参考 java doc.
+   
+   
+ * forkEvery: 每个 test process 里跑的 test classes 的最大个数。当次数达到限制后，会自动重启。这定义了一个测试线程什么时候回重启，与并发无关。默认是 0，即无最大限制，就是可以一直跑
+ * maxParalleForks: 能并发跑的最大 test processes 数目
+ * systemProperty: 系统属性
+ * environment：系统环境变量
+ * include: 具体执行的测试。可以通过这个配置不同的测试级别（单元测试、集成测试、functional 测试……）
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/10/12/gradle-test-performance/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -715,45 +818,25 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>Synchronous vs multiprocessing vs multithreading vs async</p>
-<p>Concurrency vs Parralism.</p>
-<p>asyncio &amp; threading can run multiple I&#x2F;O operations at the same time.</p>
-<p>Async runs one block of code at a time while threading just one line of code at a time. With async, we have better control of when the execution is given to other block of code but we have to release the execution ourselves.</p>
-<ul>
-<li><strong>IO bound problems</strong>: use async if your libraries support it and if not, use threading.</li>
-<li><strong>CPU bound problems</strong>: use multi-processing.</li>
-<li><strong>None above is a problem:</strong> you are probably just fine with synchronous code. You may still want to use async to have the feeling of responsiveness in case your code interacts with a user.</li>
-</ul>
-<p>Reference: </p>
-<ul>
-<li><a href="http://www.cnblogs.com/vamei/archive/2012/09/23/2698014.html">blog: subprocess</a></li>
-</ul>
-<p>subprocess.call()<br>父进程等待子进程完成<br>返回退出信息(returncode，相当于exit code，见<a href="http://www.cnblogs.com/vamei/archive/2012/09/20/2694466.html">Linux进程基础</a>)</p>
-<p>subprocess.check_call()</p>
-<p>父进程等待子进程完成</p>
-<p>返回0</p>
-<p>检查退出信息，如果returncode不为0，则举出错误subprocess.CalledProcessError，该对象包含有returncode属性，可用try…except…来检查(见<a href="http://www.cnblogs.com/vamei/archive/2012/07/10/2582787.html">Python错误处理</a>)。</p>
-<p>subprocess.check_output()</p>
-<p>父进程等待子进程完成</p>
-<p>返回子进程向标准输出的输出结果</p>
-<p>检查退出信息，如果returncode不为0，则举出错误subprocess.CalledProcessError，该对象包含有returncode属性和output属性，output属性为标准输出的输出结果，可用try…except…来检查。</p>
-<ul>
-<li><a href="https://docs.python.org/3.7/library/subprocess.html">official doc: subprocess</a></li>
-</ul>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">subprocess.run(args, *, stdin=<span class="literal">None</span>, <span class="built_in">input</span>=<span class="literal">None</span>, stdout=<span class="literal">None</span>, stderr=<span class="literal">None</span>, capture_output=<span class="literal">False</span>, shell=<span class="literal">False</span>, cwd=<span class="literal">None</span>, timeout=<span class="literal">None</span>, check=<span class="literal">False</span>, encoding=<span class="literal">None</span>, errors=<span class="literal">None</span>, text=<span class="literal">None</span>, env=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+          Synchronous vs multiprocessing vs multithreading vs async
 
-<ul>
-<li><a href="https://docs.python.org/3.7/library/subprocess.html">config env in subprojcess</a></li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">new_env = os.environ.copy()</span><br><span class="line">new_env[&#x27;MEGAVARIABLE&#x27;] = &#x27;MEGAVALUE&#x27;</span><br><span class="line">subprocess.Popen(&#x27;path&#x27;, env=new_env)</span><br></pre></td></tr></table></figure>
+Concurrency vs Parralism.
 
-<p>an example to use subprojcess:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">                subprocess.check_output([<span class="string">&#x27;java&#x27;</span>,</span><br><span class="line">                                         <span class="string">&#x27;-DCOMMAND=&#x27;</span> + command,</span><br><span class="line">                                         <span class="string">&#x27;-DTENANT_ID=&#x27;</span> + tenant_id,</span><br><span class="line">                                         <span class="string">&#x27;-DMODEL_ID=&#x27;</span> + model_id,</span><br><span class="line">                                         <span class="string">&#x27;-jar&#x27;</span>, <span class="string">&#x27;xxx.jar&#x27;</span>,</span><br><span class="line">                                         ])</span><br><span class="line">            <span class="keyword">except</span> subprocess.CalledProcessError <span class="keyword">as</span> e:</span><br><span class="line">                db_util.reopx_solver - <span class="number">1.0</span> - SNAPSHOT - <span class="built_in">all</span>.jarport_status(tenant_id, model_id=model_id,</span><br><span class="line">                                                                           msg=<span class="string">f&#x27;Failed runner for &quot;<span class="subst">&#123;command&#125;</span>&quot;...&#x27;</span>)</span><br><span class="line">                logger.exception(<span class="string">&#x27;Could not start solver jar: &#x27;</span>, e.output)</span><br><span class="line">                <span class="keyword">raise</span> OPXException(<span class="string">f&#x27;Could not start runner for &quot;<span class="subst">&#123;command&#125;</span>&quot;.&#x27;</span>, e.stderr)</span><br></pre></td></tr></table></figure>
+asyncio & threading can run multiple I/O operations at the same time.
 
-<blockquote>
-<p>the jar must be in the same directory as parent process dir</p>
-</blockquote>
+Async runs one block of code at a time while threading just one line of code at a time. With async, we have better control of when the execution is given to other block of code but we have to release the execution ourselves.
 
+ * IO bound problems: use async if your libraries support it and if not, use threading.
+ * CPU bound problems: use multi-processing.
+ * None above is a problem:you are probably just fine with synchronous code. You may
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/09/03/python-subprocess/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -828,8 +911,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><a href="https://gist.github.com/virasak/3798194">TEST with GUICE</a></p>
-
+          TEST with GUICE
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/08/17/guice/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -904,24 +994,51 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Problems"><a href="#Problems" class="headerlink" title="Problems?"></a>Problems?</h1><ol>
-<li>manifest 是干什么用的？</li>
-<li>代码运行时，如何找到 dependency 的包</li>
-<li>java -jar 时，classpath 指定？</li>
-</ol>
-<h1 id="classpath"><a href="#classpath" class="headerlink" title="classpath"></a>classpath</h1><p>classpath 指定的是 java 类所在的目录（包括当前项目的类、依赖的类等）。应该是当打 jar 包的时候，默认会加上当前目录(.)到 classpath，这样就包含了 jar 内部的类？</p>
-<h1 id="Thin-jar"><a href="#Thin-jar" class="headerlink" title="Thin jar"></a>Thin jar</h1><p><a href="https://github.com/cuzfrog/gradle-lean">gradle lean</a></p>
-<p>This plugin depends on <code>JavaPlugin</code> and <code>ApplicationPlugin</code>.</p>
-<ul>
-<li>for <code>installDist</code>, jars under <code>install/$PROJECT_NAME$/lib/</code></li>
-<li>for <code>distZip</code>, jars under <code>/lib/</code> inside package</li>
-</ul>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id <span class="string">&#x27;java&#x27;</span></span><br><span class="line">    <span class="comment">// Apply the application plugin to add support for building a CLI application.</span></span><br><span class="line">    id <span class="string">&#x27;application&#x27;</span></span><br><span class="line"></span><br><span class="line">    id <span class="string">&#x27;scala&#x27;</span></span><br><span class="line"></span><br><span class="line">    id <span class="string">&#x27;com.github.maiflai.scalatest&#x27;</span> version <span class="string">&#x27;0.26&#x27;</span></span><br><span class="line"></span><br><span class="line">    id <span class="string">&quot;com.github.gradle-lean&quot;</span> version <span class="string">&quot;0.1.2&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          Problems?
+ 1. manifest 是干什么用的？
+ 2. 代码运行时，如何找到 dependency 的包
+ 3. java -jar 时，classpath 指定？
 
-<h1 id="implementation-vs-compile-vs-api"><a href="#implementation-vs-compile-vs-api" class="headerlink" title="implementation vs compile vs api"></a>implementation vs compile vs api</h1><p><a href="https://stackoverflow.com/questions/44493378/whats-the-difference-between-implementation-and-compile-in-gradle">stackoverflow</a></p>
-<h1 id="Dependency-Conflict"><a href="#Dependency-Conflict" class="headerlink" title="Dependency Conflict"></a>Dependency Conflict</h1><h2 id="force-some-edition"><a href="#force-some-edition" class="headerlink" title="force some edition"></a>force some edition</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">configurations.all &#123;</span><br><span class="line">    resolutionStrategy &#123;</span><br><span class="line">        force <span class="string">&#x27;com.fasterxml.jackson.module:jackson-module-scala_2.11:2.10.3&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+classpath
+classpath 指定的是 java 类所在的目录（包括当前项目的类、依赖的类等）。应该是当打 jar 包的时候，默认会加上当前目录(.)到 classpath，这样就包含了 jar 内部的类？
+
+Thin jar
+gradle lean
+
+This plugin depends on JavaPlugin and ApplicationPlugin.
+
+ * for installDist, jars under install/$PROJECT_NAME$/lib/
+ * for distZip, jars under /lib/ inside package
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
 
 
+plugins {
+    id 'java'
+    // Apply the application plugin to add support for building a CLI application.
+    id 'application'
+
+    id 'scala'
+
+    id 'com.github.maiflai.scalatest' ve
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/08/16/gradle-build/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -996,38 +1113,37 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><ol>
-<li>项目需要引入 local 第三方包</li>
-<li>该第三方包只有 window&#x2F;linux license，而开发在 macos</li>
-<li>开发时，通过 gradle dependency <code>compile files(&#39;path/to/thejar.jar&#39;)</code> 来引入包</li>
-</ol>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>运行时，报错误 <code>java.lang.UnsatisfiedLinkError: no thejar in java.library.path</code></p>
-<h1 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h1><p>引入 <code>.dll</code> 或 <code>.so</code> 失败造成。</p>
-<h1 id="solution"><a href="#solution" class="headerlink" title="solution"></a>solution</h1><ol>
-<li>把 thejar 加入到 path 中 ————— not work</li>
-<li>加入 path，并 loadLibrary ——————— not work</li>
-<li>should work（配置 .dll 或 .so 路径）：<ol>
-<li>配置 PATH</li>
-<li>或 jar 包启动时，设置 ‘-Djava.library.path’</li>
-</ol>
-</li>
-</ol>
-<p>有关 <code>PATH</code>, <code>-classpath</code>, <code>java.library.path</code> 的区别，再 google。java 在使用这三个 path 时：</p>
-<ol>
-<li><code>PATH</code>：用来寻找 <code>java</code>, <code>javac</code> 等 command 并执行</li>
-<li><code>classpath</code>：jvm 在执行时用来寻找 java class。classpath 一般指向 jar 包的位置，即 jdk 的 lib 目录</li>
-<li><code>java.library.path</code>: 指向非 java 类包的位置，如 .dll, .so 等。在 java <code>System.loadLibrary()</code> 时从这找</li>
-</ol>
-<p><code>java.library.path</code> 的设定可参照 <a href="https://stackoverflow.com/questions/1403788/java-lang-unsatisfiedlinkerror-no-dll-in-java-library-path">stackoverflow</a></p>
-<ul>
-<li><code>java -jar xxx.jar -Djava.library.path=xxx</code></li>
-<li>Set PATH</li>
-<li>Set programmatically (NOT RECOMMENDED, may cause unpredictable result):</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">System.setProperty(<span class="string">&quot;java.library.path&quot;</span>, path);</span><br><span class="line"><span class="comment">//set sys_paths to null</span></span><br><span class="line"><span class="keyword">final</span> <span class="type">Field</span> <span class="variable">sysPathsField</span> <span class="operator">=</span> ClassLoader.class.getDeclaredField(<span class="string">&quot;sys_paths&quot;</span>);</span><br><span class="line">sysPathsField.setAccessible(<span class="literal">true</span>);</span><br><span class="line">sysPathsField.set(<span class="literal">null</span>, <span class="literal">null</span>);</span><br></pre></td></tr></table></figure>
+          背景
+ 1. 项目需要引入 local 第三方包
+ 2. 该第三方包只有 window/linux license，而开发在 macos
+ 3. 开发时，通过 gradle dependency compile files('path/to/thejar.jar') 来引入包
 
-<p>linux 下可通过 <code>LD_LIBRARY_PATH</code> 设置 <code>java.library.path</code>。windows 下似乎是通过 <code>PATH</code> 设定（待确定）</p>
+问题
+运行时，报错误 java.lang.UnsatisfiedLinkError: no thejar in java.library.path
 
+原因
+引入 .dll 或 .so 失败造成。
+
+solution
+ 1. 把 thejar 加入到 path 中 ————— not work
+ 2. 加入 path，并 loadLibrary ——————— not work
+ 3. should work（配置 .dll 或 .so 路径）： 1. 配置 PATH
+     2. 或 jar 包启动时，设置 ‘-Djava.library.path’
+    
+    
+
+有关 PATH, -classpath, java.library.path 的区别，再 google。java 在使用这三个 path 时：
+
+ 1. PATH：用来寻找 java, javac 等 command 并执行
+ 2. classpath：jvm 在执行时用来寻找 java class。classpath 一般指向 jar
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/08/14/java-application-using-third-party-lib/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1102,60 +1218,48 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="几个核心类"><a href="#几个核心类" class="headerlink" title="几个核心类"></a>几个核心类</h1><p>参见:</p>
-<ul>
-<li><a href="http://www.mybatis.org/mybatis-3/zh/java-api.html">java api</a></li>
-<li><a href="http://www.mybatis.org/mybatis-3/zh/getting-started.html">入门 - 介绍核心使用组件和最佳实践</a></li>
-</ul>
-<h2 id="SqlSessionFactory"><a href="#SqlSessionFactory" class="headerlink" title="SqlSessionFactory"></a>SqlSessionFactory</h2><p>mybatis 应用以一个 sqlSessionFactory 实例为核心，即一个应用中有一个<strong>单例</strong> <code>SqlSessionFactory</code>，所以数据库 session 都从这里获得。</p>
-<p><code>SqlSessionFactory</code> 可以通过 <code>SqlSessionFactoryBuilder</code> 获得，builder 负责从 xml 配置或 java configuration 类获得。xml (或相应的 java configuration 类) 配置了 datasource（数据库连接信息）、mappers 等信息</p>
-<h2 id="SqlSessionFactoryBuilder"><a href="#SqlSessionFactoryBuilder" class="headerlink" title="SqlSessionFactoryBuilder"></a>SqlSessionFactoryBuilder</h2><p>它主要就是用来获取 <code>SqlSessionFactory</code>，可以从 xml 或 Java Configuration 类加载配置并构建。提供如下几种方式来获取（参见<a href="http://www.mybatis.org/mybatis-3/zh/java-api.html">java api</a>）：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从 xml 获取，其中配置了 environment，datasource，mappers  </span></span><br><span class="line">SqlSessionFactory <span class="title function_">build</span><span class="params">(InputStream inputStream)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从 xml 获取，但当 xml 配置了多个 env 中的 datasource 等时，通过 env 指定加载的环境</span></span><br><span class="line">SqlSessionFactory <span class="title function_">build</span><span class="params">(InputStream inputStream, String environment)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从 xml 获取，但可以指定其中使用到的 properties(详见下文的解释)</span></span><br><span class="line">SqlSessionFactory <span class="title function_">build</span><span class="params">(InputStream inputStream, Properties properties)</span>;</span><br><span class="line">    </span><br><span class="line"><span class="comment">// 从 xml 获取，并指定 env 和使用的 props</span></span><br><span class="line">SqlSessionFactory <span class="title function_">build</span><span class="params">(InputStream inputStream, String env, Properties props)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从 Java Configuration 获取</span></span><br><span class="line">SqlSessionFactory <span class="title function_">build</span><span class="params">(Configuration config)</span></span><br></pre></td></tr></table></figure>
+          几个核心类
+参见:
 
-<p><code>SqlSessionFactoryBuilder</code> 只是为了创建 <code>SqlSessionFactory</code>，创建完成就可以丢弃 builder 了。所以一般它的生命周期是方法级，是其中的一个局部变量</p>
-<h3 id="使用-xml"><a href="#使用-xml" class="headerlink" title="使用 xml"></a>使用 xml</h3><p><strong>先配置一个 <code>config.xml</code>：</strong></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">configuration</span></span></span><br><span class="line"><span class="meta">  <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Config 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">  <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">environments</span> <span class="attr">default</span>=<span class="string">&quot;development&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">environment</span> <span class="attr">id</span>=<span class="string">&quot;development&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">transactionManager</span> <span class="attr">type</span>=<span class="string">&quot;JDBC&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dataSource</span> <span class="attr">type</span>=<span class="string">&quot;POOLED&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;driver&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;driver&#125;&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;url&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;url&#125;&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;username&#125;&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;password&#125;&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dataSource</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">environment</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">environments</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">mappers</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mapper</span> <span class="attr">resource</span>=<span class="string">&quot;org/mybatis/example/BlogMapper.xml&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">mappers</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+ * java api
+ * 入门 - 介绍核心使用组件和最佳实践
 
-<p>上边的配置中，<code>environments</code> 配置的是各个环境下的数据库配置。每个环境下，都可以配置 TransactionManager、datasource 等，连接数据库、包括操作数据库的 driver 等信息都是在这里配置的)。</p>
-<p><code>$&#123;driver&#125;</code> 这种写法是用的 property。property 可以直接在这个 xml 中配置（使用 <code>&lt;properties&gt;</code> 标签），也是 java 中的 <code>System.getProperties()</code> 中的 property，还可以是在 <code>SqlSessionBuilder</code> 中传递的 <code>props</code> 参数。</p>
-<p><strong>构建 <code>SqlSessionFactory</code>：</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">resource</span> <span class="operator">=</span> <span class="string">&quot;org/mybatis/example/mybatis-config.xml&quot;</span>;</span><br><span class="line"><span class="type">InputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> Resources.getResourceAsStream(resource);</span><br><span class="line"><span class="type">SqlSessionFactory</span> <span class="variable">sqlSessionFactory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SqlSessionFactoryBuilder</span>().build(inputStream);</span><br></pre></td></tr></table></figure>
+SqlSessionFactory
+mybatis 应用以一个 sqlSessionFactory 实例为核心，即一个应用中有一个单例 SqlSessionFactory，所以数据库 session 都从这里获得。
 
-<h3 id="使用-java-Configuration-类"><a href="#使用-java-Configuration-类" class="headerlink" title="使用 java Configuration 类"></a>使用 java Configuration 类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">DataSource</span> <span class="variable">dataSource</span> <span class="operator">=</span> BlogDataSourceFactory.getBlogDataSource();</span><br><span class="line"><span class="type">TransactionFactory</span> <span class="variable">transactionFactory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JdbcTransactionFactory</span>();</span><br><span class="line"><span class="type">Environment</span> <span class="variable">environment</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Environment</span>(<span class="string">&quot;development&quot;</span>, transactionFactory, dataSource);</span><br><span class="line"><span class="type">Configuration</span> <span class="variable">configuration</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Configuration</span>(environment);</span><br><span class="line">configuration.addMapper(BlogMapper.class);</span><br><span class="line"><span class="type">SqlSessionFactory</span> <span class="variable">sqlSessionFactory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SqlSessionFactoryBuilder</span>().build(configuration);</span><br></pre></td></tr></table></figure>
+SqlSessionFactory 可以通过 SqlSessionFactoryBuilder 获得，builder 负责从 xml 配置或 java configuration 类获得。xml (或相应的 java configuration 类) 配置了 datasource（数据库连接信息）、mappers 等信息
 
-<h2 id="SqlSession"><a href="#SqlSession" class="headerlink" title="SqlSession"></a>SqlSession</h2><p><code>SqlSession</code> 是执行 sql 命令的接口：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">SqlSession</span> <span class="variable">session</span> <span class="operator">=</span> sqlSessionFactory.openSession();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="type">BlogMapper</span> <span class="variable">mapper</span> <span class="operator">=</span> session.getMapper(BlogMapper.class);</span><br><span class="line">  <span class="type">Blog</span> <span class="variable">blog</span> <span class="operator">=</span> mapper.selectBlog(<span class="number">101</span>);</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">  session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+SqlSessionFactoryBuilder
+它主要就是用来获取 SqlSessionFactory，可以从 xml 或 Java Configuration 类加载配置并构建。提供如下几种方式来获取（参见java api）：
 
-<p><code>SqlSession</code> 可以执行所有的 sql 命令、做事务提交、回滚、获取 Mapper 实例等，非常强大。<code>SqlSession</code> 也是方法作用域级别的，并且必须被正确关闭：</p>
-<blockquote>
-<p>每个线程都应该有它自己的 SqlSession 实例。SqlSession 的实例不是线程安全的，因此是不能被共享的，所以它的最佳的作用域是请求或方法作用域。<strong>绝对不能将 SqlSession 实例的引用放在一个类的静态域，甚至一个类的实例变量也不行。</strong>也绝不能将 SqlSession 实例的引用放在任何类型的管理作用域中，比如 Servlet 架构中的 HttpSession。如果你现在正在使用一种 Web 框架，要考虑 SqlSession 放在一个和 HTTP 请求对象相似的作用域中。换句话说，每次收到的 HTTP 请求，就可以打开一个 SqlSession，返回一个响应，就关闭它。这个关闭操作是很重要的，你应该把这个关闭操作放到 finally 块中以确保每次都能执行关闭。下面的示例就是一个确保 SqlSession 关闭的标准模式：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">SqlSession</span> <span class="variable">session</span> <span class="operator">=</span> sqlSessionFactory.openSession();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="comment">// do work</span></span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">  session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h2 id="Mapper"><a href="#Mapper" class="headerlink" title="Mapper"></a>Mapper</h2><p><code>Mapper</code> 是资源和数据库实例的映射，提供了相关操作来做转换。可以用两种方式写：xml 或 annotation。</p>
-<p>mapper 实例从 <code>SqlSession</code> 获得，所以生命周期和 SqlSession 相同。</p>
-<h3 id="xml"><a href="#xml" class="headerlink" title="xml"></a>xml</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span></span></span><br><span class="line"><span class="meta">  <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">  <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;org.mybatis.example.BlogMapper&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectBlog&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;Blog&quot;</span>&gt;</span></span><br><span class="line">    select * from Blog where id = #&#123;id&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
 
-<p>访问：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Blog</span> <span class="variable">blog</span> <span class="operator">=</span> (Blog) session.selectOne(<span class="string">&quot;org.mybatis.example.BlogMapper.selectBlog&quot;</span>, <span class="number">101</span>);</span><br></pre></td></tr></table></figure>
 
-<p>当然，我们希望通过 java 接口来调用这些方法，所以可以写相应的 <code>mapper</code> 接口 ，只要保证 <code>namespace</code> 是一致的即可。<code>namespace</code> 是实现接口绑定的方式。mybatis 基于命名空间的命名解析规则如下：</p>
-<blockquote>
-<ul>
-<li>完全限定名（比如“com.mypackage.MyMapper.selectAllThings”）将被直接查找并且找到即用。</li>
-<li>短名称（比如“selectAllThings”）如果全局唯一也可以作为一个单独的引用。如果不唯一，有两个或两个以上的相同名称（比如“com.foo.selectAllThings ”和“com.bar.selectAllThings”），那么使用时就会收到错误报告说短名称是不唯一的，这种情况下就必须使用完全限定名。</li>
-</ul>
-</blockquote>
-<p>一旦绑定了接口，就可以用如下方式访问 mapper 方法了：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">BlogMapper</span> <span class="variable">mapper</span> <span class="operator">=</span> session.getMapper(BlogMapper.class);</span><br><span class="line"><span class="type">Blog</span> <span class="variable">blog</span> <span class="operator">=</span> mapper.selectBlog(<span class="number">101</span>);</span><br></pre></td></tr></table></figure>
+// 从 xml 获取，其中配置了 environment，datasource，mappers  
+SqlSessionFactory build(InputStream inputStream);
 
-<h3 id="annotation"><a href="#annotation" class="headerlink" title="annotation"></a>annotation</h3><p>也可以不依赖于 xml，直接在 mapper 接口上通过 annotation 定义 sql：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.mybatis.example;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">BlogMapper</span> &#123;</span><br><span class="line">  <span class="meta">@Select(&quot;SELECT * FROM blog WHERE id = #&#123;id&#125;&quot;)</span></span><br><span class="line">  Blog <span class="title function_">selectBlog</span><span class="params">(<span class="type">int</span> id)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>annotation 可能更简洁一些，但是 mybatis 目前还是 xml 更强大。大家可以依据需求自由的在两种方式之间切换，mybatis 会自己检测。</p>
-<blockquote>
-<p>由于 Java 注解的一些限制加之某些 MyBatis 映射的复杂性，XML 映射对于大多数高级映射（比如：嵌套 Join 映射）来说仍然是必须的。有鉴于此，如果存在一个对等的 XML 配置文件的话，MyBatis 会自动查找并加载它（这种情况下， BlogMapper.xml 将会基于类路径和 BlogMapper.class 的类名被加载进来）</p>
-</blockquote>
-
+// 从 xml 获取，但当 xml 配置了多个 env
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/08/10/mybatis-%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
