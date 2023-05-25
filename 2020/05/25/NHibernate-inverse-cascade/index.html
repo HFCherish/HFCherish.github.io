@@ -27,9 +27,9 @@
 <meta property="og:description" content="playing-nhibernate-inverse-and-cascade, nhibernate-inverse bidirectional associations In database, there may be biodirectional relationships, e.g. Parent has multiple child, and Child has a parent.  1">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-05-25T03:38:17.000Z">
-<meta property="article:modified_time" content="2022-10-22T06:22:52.320Z">
+<meta property="article:modified_time" content="2023-05-25T01:17:58.613Z">
 <meta property="article:author" content="Cherish">
-<meta property="article:tag" content="database">
+<meta property="article:tag" content="storage">
 <meta name="twitter:card" content="summary">
 
 
@@ -158,7 +158,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">35</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -234,7 +234,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-22 14:22:52" itemprop="dateModified" datetime="2022-10-22T14:22:52+08:00">2022-10-22</time>
+      <time title="Modified: 2023-05-25 09:17:58" itemprop="dateModified" datetime="2023-05-25T09:17:58+08:00">2023-05-25</time>
     </span>
 
   
@@ -250,7 +250,7 @@
 <p><a href="https://web.archive.org/web/20080415101633/http://simoes.org/docs/hibernate-2.1/155.html">nhibernate-inverse</a></p>
 <p><a href="https://nhibernate.info/doc/nhibernate-reference/collections.html#collections-bidirectional">bidirectional associations</a></p>
 <p>In database, there may be biodirectional relationships, e.g. Parent has multiple child, and Child has a parent. </p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#### class definition</span></span><br><span class="line"><span class="attr">class Parent:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">String</span> <span class="string">id</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">IList&lt;Child&gt;</span> <span class="string">childs</span>	</span><br><span class="line"><span class="attr">class Child:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">String</span> <span class="string">id</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">Parent</span> <span class="string">parent</span></span><br><span class="line">	</span><br><span class="line"><span class="comment">#### db definition</span></span><br><span class="line"><span class="attr">table Parent:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">id</span></span><br><span class="line"><span class="attr">table Child:</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">id</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">parentId</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#### class definition</span></span><br><span class="line"><span class="attr">class Parent:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">String</span> <span class="string">id</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">IList&lt;Child&gt;</span> <span class="string">childs</span>    </span><br><span class="line"><span class="attr">class Child:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">String</span> <span class="string">id</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">Parent</span> <span class="string">parent</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#### db definition</span></span><br><span class="line"><span class="attr">table Parent:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">id</span></span><br><span class="line"><span class="attr">table Child:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">id</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">parentId</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="Inverse"><a href="#Inverse" class="headerlink" title="Inverse"></a>Inverse</h2><p><code>Inverse</code> focus on the association. It defines which side is responsible of the association maintenance (create, update, delete), that is, the assignment of <code>parentId</code> column. It doesn’t care about the maintenance of associated objects which is what <code>cascade</code> cares).</p>
 <p>By default, <code>invert=false</code>, then the assignment of <code>parentId</code> is maintened when parent is created&#x2F;updated&#x2F;deleted. If we set <code>parent.child.inverse=true</code> and the <code>child.parent is not-null</code>, then the assignment of <code>parentId</code> is maintened when child is created&#x2F;updated&#x2F;deleted. </p>
@@ -279,7 +279,7 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/database/" rel="tag"># database</a>
+              <a href="/tags/storage/" rel="tag"># storage</a>
           </div>
 
         
