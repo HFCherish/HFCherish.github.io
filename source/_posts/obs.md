@@ -3,10 +3,9 @@ title: obs
 toc: true
 tags:
   - cloud
-  - object storage
+  - storage
 date: 2019-03-01 10:50:15
 ---
-
 
 [Huawei Obs](https://support.huaweicloud.com/productdesc-obs/zh-cn_topic_0045829060.html) is an object storage service on cloud.
 

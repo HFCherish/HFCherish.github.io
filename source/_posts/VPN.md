@@ -2,10 +2,9 @@
 title: VPN
 toc: true
 tags:
-  - networking
+  - network
 date: 2020-05-06 19:14:51
 ---
-
 
 [the great video](https://www.youtube.com/watch?v=q4P4BjjXghQ)
 
@@ -29,15 +28,11 @@ To protect the communication from one to another, you can build physical private
 2. the data in the tunnel is encrepted
 3. if the tunnel detects attack, it will destroy the old tunnel & create a new one.
 
-
-
 Client-Server infrastructure. We need to know:
 
 1. external address (the address of vpn server)
 
 2. username & password
-
-
 
 These factors may influence the VPN quality:
 

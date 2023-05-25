@@ -3,8 +3,7 @@ layout: 'yarn,'
 title: hive introduction
 tags:
   - hadoop
-  - hive
-  - data warehouse
+  - storage
   - big data
 toc: true
 date: 2019-01-03 14:50:02
@@ -35,7 +34,7 @@ database contains highly detailed data as well as a detailed relational views. T
 将企业中的各种数据收集起来，重新组织，对这些数据做高效 ***分析***
 
 > A [data warehouse](https://panoply.io/data-warehouse-guide) is a system that pulls together data from many different sources within an organization for reporting and analysis. The reports created from complex queries within a data warehouse are used to make business decisions.
->
+> 
 > The primary focus of a data warehouse is to provide a correlation between data from existing systems, i.e., product inventory stored in one system, purchase orders for a specific customer, stored in another system. Data warehouses are used for online analytical processing (OLAP), which uses complex queries to analyze rather than process transactions.
 
 * **主要用于 OLAP (online analysis processing)**. 它收集企业内各个数据源的数据，建立数据关联，对这些数据做复杂的查询分析，以辅佐业务决策。
@@ -74,8 +73,6 @@ export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 export PATH=$PATH:$HIVE_HOME/bin
 ```
 
-
-
 ### [running using beeline](https://cwiki.apache.org/confluence/display/Hive/GettingStarted#GettingStarted-RunningHiveServer2andBeeline.1)
 
 beeline is a new hive client to replace the deprecated HiveCli. With beeline, you can execute write, load, query, etc. on hive.
@@ -99,8 +96,6 @@ Other non-sql commands to use in HiveQL or beeline, see [LanguageManual Commands
 
 [how to configure hive properties](https://cwiki.apache.org/confluence/display/Hive/AdminManual+Configuration#AdminManualConfiguration-ConfiguringHive)
 
-
-
 To show hive config in hive cli: ([show conf](https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DDL#LanguageManualDDL-ShowConf))
 
 ```sh
@@ -108,21 +103,17 @@ To show hive config in hive cli: ([show conf](https://cwiki.apache.org/confluenc
 0: jdbc:hive2://slave1:2181,slave2:2181,maste> set hive.fetch.task.conversion;
 ```
 
-
-
 There are two hive-site.xml files. See [two hive-site.xml config files on HDP](https://community.cloudera.com/t5/Support-Questions/Why-do-I-have-two-hive-site-xml-config-files-on-my-HDP-host/td-p/209500)
 
 * /etc/hive/conf/hive-site.xml is the config for Hive service itself and is managed via Ambari through the Hive service config page.
 
 * /usr/hdp/current/spark-client/conf/hive-site.xml actually points to /etc/spark/conf/hive-site.xml . This is the minimal hive config that Spark needs to access Hive. This is managed via Ambari through the Spark service config page. Ambari correctly configures this hive site for Kerberos. Depending upon your version of HDP you may not have the correct support in Ambari for configuring Livy.  The hive-site.xml in Spark doesn't have the same template as Hive's. Ambari will notice the hive-site.xml and overwrite it in the Spark directory whenever Spark is restarted.
 
-
-
 # analysis on hive
 
 When you start a sql function (eg. `select count(*) from xxx`), it in fact  starts an map-reduce job based on hadoop to search among all datanodes. Such functions are simple analysis implemented by hive.
 
->Hive compiler generates map-reduce jobs for most queries. These jobs are then submitted to the Map-Reduce cluster indicated by the variable:
+> Hive compiler generates map-reduce jobs for most queries. These jobs are then submitted to the Map-Reduce cluster indicated by the variable:
 
 ```
   mapred.job.tracker
@@ -176,9 +167,9 @@ Hive relies on Hadoop. The data in hive is saved in hdfs in fact. And the metada
 
 [hive中简单介绍分区表(partition table)，含动态分区(dynamic partition)与静态分区(static partition)](https://blog.csdn.net/helloxiaozhe/article/details/78445276)
 
->Hive organizes tables into partitions. It is a way of dividing a table into related parts based on the values of partitioned columns such as date, city, and department. Using partition, it is easy to query a portion of the data.
->Tables or partitions are sub-divided into **buckets,** to provide extra structure to the data that may be used for more efficient querying. Bucketing works based on the value of hash function of some column of a table.
->For example, a table named **Tab1** contains employee data such as id, name, dept, and yoj (i.e., year of joining). Suppose you need to retrieve the details of all employees who joined in 2012. A query searches the whole table for the required information. However, if you partition the employee data with the year and store it in a separate file, it reduces the query processing time. The following example shows how to partition a file and its data:
+> Hive organizes tables into partitions. It is a way of dividing a table into related parts based on the values of partitioned columns such as date, city, and department. Using partition, it is easy to query a portion of the data.
+> Tables or partitions are sub-divided into **buckets,** to provide extra structure to the data that may be used for more efficient querying. Bucketing works based on the value of hash function of some column of a table.
+> For example, a table named **Tab1** contains employee data such as id, name, dept, and yoj (i.e., year of joining). Suppose you need to retrieve the details of all employees who joined in 2012. A query searches the whole table for the required information. However, if you partition the employee data with the year and store it in a separate file, it reduces the query processing time. The following example shows how to partition a file and its data:
 
 ## Hive bucket
 
@@ -198,13 +189,13 @@ ROW FORMAT DELIMITED
 FIELDS TERMINATED BY ',';
 ```
 
-| PARTITIONING                                        | BUCKETING                                                    |
-| :-------------------------------------------------- | :----------------------------------------------------------- |
-| Directory is created on HDFS for each partition.    | File is created on HDFS for each bucket.                     |
-| You can have one or more Partition columns          | You can have only one Bucketing column                       |
+| PARTITIONING                                        | BUCKETING                                                              |
+|:--------------------------------------------------- |:---------------------------------------------------------------------- |
+| Directory is created on HDFS for each partition.    | File is created on HDFS for each bucket.                               |
+| You can have one or more Partition columns          | You can have only one Bucketing column                                 |
 | You can’t manage the number of partitions to create | You can manage the number of buckets to create by specifying the count |
-| NA                                                  | Bucketing can be created on a partitioned table              |
-| Uses PARTITIONED BY                                 | Uses CLUSTERED BY                                            |
+| NA                                                  | Bucketing can be created on a partitioned table                        |
+| Uses PARTITIONED BY                                 | Uses CLUSTERED BY                                                      |
 
 partition  和 bucket 都是将大数据集拆成更小的数据集，加速查询处理的方式。比如按日期拆分区，很多分析只拿当天的分区，处理的数据量、读取的 hdfs 文件很少，就快。
 
@@ -284,8 +275,6 @@ select max(ingest_date) from db.table_name
 where ingest_date>date_add(current_date,-3)
 ```
 
-
-
 ## create table from another table
 
 ```sql
@@ -324,8 +313,6 @@ select * from (
  where a.rnk=1;
 ```
 
-
-
 ## hive cli pretty
 
 ```sql
@@ -333,8 +320,6 @@ set hive.cli.print.header=true; // 打印列名
 set hive.cli.print.row.to.vertical=true; // 开启行转列功能, 前提必须开启打印列名功能
 set hive.cli.print.row.to.vertical.num=1; // 设置每行显示的列数
 ```
-
-
 
 # Optimization
 
@@ -364,8 +349,6 @@ set  mapred. min .split.size.per.rack=100000000;
 -- 执行Map前进行小文件合并
 set  hive.input.format=org.apache.hadoop.hive.ql.io.CombineHiveInputFormat; 
 ```
-
-
 
 输出时合并：
 
@@ -406,12 +389,11 @@ Hive在对结果文件进行合并时会执行一个额外的map-only脚本，ma
 
 # 推荐
 0: jdbc:hive2://slave1:2181> analyze table t [partition p] compute statistics for [columns c,...];
-
 ```
 
->Its better not to disturb the properties on the statistics usage like hive.compute.query.using.stats. It impacts the way the statistics are used in your query for performance optimization and execution plans. It has tremendous influence on execution plans, the statistics stored depends on the file format as well. Therefore definitely not a solution to change any property with regards to statistics.
-The real reason for count not working correctly is the statistics not updated in the hive due to which it returns 0. When a table is created first, the statistics is written with no data rows. Thereafter any data append/change happens hive requires to update this statistics in the metadata. Depending on the circumstances hive might not be updating this real time.
-Therefore running the ANALYZE command recomputes this statistics to make this work correctly.
+> Its better not to disturb the properties on the statistics usage like hive.compute.query.using.stats. It impacts the way the statistics are used in your query for performance optimization and execution plans. It has tremendous influence on execution plans, the statistics stored depends on the file format as well. Therefore definitely not a solution to change any property with regards to statistics.
+> The real reason for count not working correctly is the statistics not updated in the hive due to which it returns 0. When a table is created first, the statistics is written with no data rows. Thereafter any data append/change happens hive requires to update this statistics in the metadata. Depending on the circumstances hive might not be updating this real time.
+> Therefore running the ANALYZE command recomputes this statistics to make this work correctly.
 
 ## hive not recognizing alias names in select part
 
@@ -454,7 +436,6 @@ set hive.exec.max.dynamic.partitions=8000;
 set hive.exec.max.dynamic.partitions.pernode=8000;
 
 set hive.tez.log.level=DEBUG;
-
 ```
 
 ## explain
@@ -473,4 +454,3 @@ explain select sum(id) from my;
 print(res.selectExpr("trim(translate(mobile1, '\u00A0', ' '))").collect())
 print(res.selectExpr("trim(regexp_replace(mobile1, '\u00A0|\u2007|\u202F', ' '))").collect())
 ```
-

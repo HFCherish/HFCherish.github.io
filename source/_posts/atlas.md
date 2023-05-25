@@ -2,11 +2,9 @@
 title: atlas
 toc: true
 tags:
-  - metadata
   - big data
 date: 2020-11-13 10:04:33
 ---
-
 
 # Architecture
 
@@ -39,9 +37,9 @@ atlas 可以维护（增删改查） metadata types，支持
 * 按 id/typename/query 来检索
 
 > [相关 API 定义](http://atlas.apache.org/api/v2/resource_TypesREST.html#resource_TypesREST_createAtlasTypeDefs_POST)
->
+> 
 > [typedef request schema object](http://atlas.apache.org/api/v2/json_AtlasTypesDef.html)
->
+> 
 > ```
 > # DELETE/GET/POST/PUT
 > /v2/types/typedef
@@ -119,7 +117,7 @@ atlas 通过 kafka 实现 hook，引入元数据；也通过 kafka 广播元数�
 * notifications to atlas：`ATLAS_HOOK`. 目前已提供 Apache Hive/Apache HBase/Apache Storm/Apache Sqoop 的 hook，来监听这些数据源的元数据
 
 * notifications from atlas: `ATLAS_ENTITIES`
-
+  
   ```
   # 监听并发布以下事件的通知
   ENTITY_CREATE:         sent when an entity instance is created
@@ -158,13 +156,13 @@ atlas 支持以下检索方式：
 atlas 支持非常细粒度的访问控制：
 
 * 元模型：基于某个元模型或某类元模型的访问控制。典型 example：
-
+  
   > - Admin users can create/update/delete types of all categories
   > - Data stewards can create/update/delete classification types
   > - Healthcare data stewards can create/update/delete types having names start with “hc”
 
 * 元数据：基于元模型、标签、元数据 id 的元数据访问控制。典型 example：
-
+  
   > - Admin users can perform all entity operations on entities of all types
   > - Data stewards can perform all entity operations, except delete, on entities of all types
   > - Data quality admins can add/update/remove DATA_QUALITY classification

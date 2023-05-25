@@ -3,11 +3,10 @@ title: hdfs
 toc: true
 tags:
   - hadoop
-  - hdfs
-  - distributed storage
+  - storage
+  - big data
 date: 2019-01-07 14:05:16
 ---
-
 
 # [hdfs architecture](https://hadoop.apache.org/docs/r1.2.1/hdfs_design.html#The+File+System+Namespace)
 
@@ -140,4 +139,3 @@ $ hdfs dfs -chmod -R 755 /tmp
 ```
 
 # Replica
-

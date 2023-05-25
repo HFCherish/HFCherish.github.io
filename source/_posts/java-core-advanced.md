@@ -42,7 +42,7 @@ Old Generation memory contains the objects that are long-lived and survived afte
 
 By dividing memory into the young and old generations, the JVM can quickly identify and collect short-lived objects, while allowing long-lived objects to reside in the old generation. This helps to minimize the overhead of garbage collection and improve the performance of Java programs.
 
-For more about the garbage collecting process, see below [Object Allocation](#object-allocation) and [Garbage Collection](#garbage-collection).
+For more about the garbage collecting process, see below [Object Allocation](#Object-Allocation) and [Garbage Collection](#Garbage-Collection).
 
 ### 3. permanent generation / Metaspace
 
@@ -494,13 +494,9 @@ When you run the JRockit JVM on a 64-bit system with a heap size less than 4 GB,
 
 If you see `java.lang.OutOfMemoryError: PermGen space` errors in logs, then try to monitor and increase the Perm Gen memory space using `-XX:PermGen` and `-XX:MaxPermGen` JVM options. You might also try using `-XX:+CMSClassUnloadingEnabled` and check how it’s performing with CMS Garbage collector. If you see a lot of Full GC operations, then you should try increasing Old generation memory space.
 
-
-
 # JIT
 
 just-in-time compilation. To be continued... 
-
-
 
 # Serialization
 
@@ -769,8 +765,6 @@ public class Person implements Serializable {
 - `PersonProxy` class should implement *readResolve()* method returning `Person` object. So when Person class is deserialized, internally PersonProxy is deserialized and when it’s readResolve() method is called, we get Person object.
 - Finally implement *readObject()* method in Person class and throw `InvalidObjectException` to avoid hackers attack trying to fabricate Data object stream and parse it.
 
-
-
 # ClassLoader
 
 When we compile a Java Class, JVM creates the bytecode, which is platform and machine-independent. The bytecode is stored in a **.class file**. When we try to use a class, the ClassLoader loads it into the memory.
@@ -967,7 +961,21 @@ Loading Class 'com.mysql.jdbc.Blob'
 sun.misc.Launcher$AppClassLoader@2f94ca6c
 ```
 
+# Object hashCode()
 
+The `Object.hashCode()` method in Java calculates the hash code for an object. The default implementation of `hashCode()` in the `Object` class is known as the identity hash code. The identity hash code is not based on the memory address of the object, as commonly believed, but rather it is generated using a more complex algorithm.
+
+In the OpenJDK implementation of `hashCode()`, the identity hash generation involves several steps. First, the `ObjectSynchronizer::FastHashCode()` function is called. If biased locking is enabled, the function revokes any existing biases and disables biased locking on the object. This is done to ensure the correctness of the identity hash code generation process.
+
+Next, the function retrieves the object's header, which is stored in the mark word of the object. The mark word contains various information about the object, including the identity hash code. In the simplest case, where no locks are involved, the identity hash is directly stored in the mark word. However, if the object is involved in biased locking or other complex synchronization scenarios, the mark word may point to a lock record or an ObjectMonitor, which is a data structure used for synchronization.
+
+If the identity hash code is present in the mark word, it is returned. Otherwise, the function calls `get_next_hash()` to generate a new hash code and stores it in the displaced header kept by the ObjectMonitor. This ensures that the identity hash remains consistent even if the object is relocated in memory.
+
+The default algorithm used to generate the identity hash code depends on the version of OpenJDK. In OpenJDK 8 and 9, it uses a combination of thread state and the xorshift algorithm. However, previous versions like OpenJDK 7 and 6 used a randomly generated number as the default method.
+
+In summary, the default `hashCode()` implementation in Java does not simply rely on the memory address of the object. Instead, it involves complex logic to generate and store the identity hash code in the object's header, taking into account synchronization scenarios such as biased locking.
+
+[How does the default hashCode() work?](https://srvaroa.github.io/jvm/java/openjdk/biased-locking/2017/01/30/hashCode.html)
 
 # References
 

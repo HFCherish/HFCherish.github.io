@@ -1,11 +1,13 @@
 ---
-stitle: kerberos
 toc: true
-date: 2021-05-17 10:14:44
 tags:
-	- hadoop
-	- security
+  - hadoop
+  - security
+stitle: kerberos
+date: 2021-05-17 10:14:44
+title:
 ---
+
 
 [图解Kerberos协议原理](http://www.nosqlnotes.com/technotes/kerberos-protocol/)
 
@@ -16,9 +18,11 @@ tags:
 [Kerberos Concepts - Principals, Keytabs and Delegation Tokens](https://docs.cloudera.com/documentation/enterprise/5-6-x/topics/cm_sg_principal_keytab.html)
 
 > A user in Kerberos is called a principal, which is made up of three distinct components: the primary, instance, and realm. A Kerberos principal is used in a Kerberos-secured system to represent a unique identity. The first component of the principal is called the primary, or sometimes the user component. The primary component is an arbitrary string and may be the operating system username of the user or the name of a service. The primary component is followed by an optional section called the instance, which is used to create principals that are used by users in special roles or to define the host on which a service runs, for example. An instance, if it exists, is separated from the primary by a slash and then the content is used to disambiguate multiple principals for a single user or service. The final component of the principal is the realm. The realm is similar to a domain in DNS in that it logically defines a related group of objects, although rather than hostnames as in DNS, the Kerberos realm defines a group of principals . Each realm can have its own settings including the location of the KDC on the network and supported encryption algorithms. Large organizations commonly create distinct realms to delegate administration of a realm to a group within the enterprise. Realms, by convention, are written in uppercase characters.
+
+Kerberos assigns tickets to Kerberos principals to enable them to access Kerberos-secured Hadoop services. For the Hadoop daemon principals, the principal names should be of the format service/fully.qualified.domain.name@YOUR-REALM.COM. Here, service in the service/fully.qualified.domain.name@YOUR-REALM.COM principal refers to the username of an existing Unix account that is use    d by Hadoop daemons, such as hdfs or mapred.
+
 > 
-Kerberos assigns tickets to Kerberos principals to enable them to access Kerberos-secured Hadoop services. For the Hadoop daemon principals, the principal names should be of the format service/fully.qualified.domain.name@YOUR-REALM.COM. Here, service in the service/fully.qualified.domain.name@YOUR-REALM.COM principal refers to the username of an existing Unix account that is use	d by Hadoop daemons, such as hdfs or mapred.
->
+
 Human users who want to access the Hadoop cluster also need to have Kerberos principals of the format, username@YOUR-REALM.COM; in this case, username refers to the username of the user's Unix account, such as joe or jane. Single-component principal names (such as joe@YOUR-REALM.COM) are typical for client user accounts. Hadoop does not support more than two-component principal names.
 
 TGT类似于护照，Ticket则是签证，而访问特定的服务则好比出游某个国家。与护照一样，TGT可标识你的身份并允许你获得多个Ticket（签证），每个Ticket对应一个特定的服务，TGT和Ticket同样具有有效期，过期后就需要重新认证。
@@ -127,10 +131,12 @@ openssl x509 -inform PEM -in certificate.cer -out certificate.crt
 openssl x509 -inform DER -in certificate.cer -out certificate.pem
 ```
 
->File extensions for cryptographic certificates aren't really as standardized as you'd expect. Windows by default treats double-clicking a `.crt` file as a request to import the certificate into the Windows Root Certificate store, but treats a `.cer` file as a request just to view the certificate. So, they're different in the sense that Windows has some inherent different meaning for what happens when you double click each type of file.
->
+> File extensions for cryptographic certificates aren't really as standardized as you'd expect. Windows by default treats double-clicking a `.crt` file as a request to import the certificate into the Windows Root Certificate store, but treats a `.cer` file as a request just to view the certificate. So, they're different in the sense that Windows has some inherent different meaning for what happens when you double click each type of file.
+
 But the way that Windows handles them when you double-click them is about the only difference between the two. Both extensions just represent that it contains a public certificate. You can rename a certificate file to use one extension in place of the other in any system or configuration file that I've seen. And on non-Windows platforms (and even on Windows), people aren't particularly careful about which extension they use, and treat them both interchangeably, as there's no difference between them as long as the contents of the file are correct.
->
+
+> 
+
 Making things more confusing is that there are two standard ways of storing certificate data in a file: One is a "binary" X.509 encoding, and the other is a "text" base64 encoding that usually starts with "`-----BEGIN CERTIFICATE-----`". These encode the same data but in different ways. Most systems accept both formats, but, if you need to, you can convert one to the other via openssl or other tools. The encoding within a certificate file is really independent of which extension somebody gave the file.
 
 ### 默认的 certificate 目录

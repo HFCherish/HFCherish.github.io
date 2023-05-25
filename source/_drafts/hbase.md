@@ -3,7 +3,7 @@ title: hbase
 toc: true
 date: 2020-11-26 17:59:02
 tags:
-	- big data
+    - big data
 ---
 
 # hbase shell
@@ -20,4 +20,3 @@ $ ls /hbase-unsecure/table
 [hbase 在大数据生态圈中的位置](https://developer.ibm.com/zh/technologies/analytics/articles/ba-cn-bigdata-hbase/)
 
 # Base
-

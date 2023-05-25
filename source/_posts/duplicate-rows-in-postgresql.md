@@ -3,10 +3,8 @@ title: duplicate rows in postgresql
 toc: true
 tags:
   - sql
-  - postgres
 date: 2018-11-06 14:53:28
 ---
-
 
 参见 [Search and destroy duplicate rows in PostgreSQL](https://blog.theodo.fr/2018/01/search-destroy-duplicate-rows-postgresql/)
 
@@ -49,10 +47,9 @@ DELETE FROM people WHERE people.id NOT IN
 (SELECT id FROM (
     SELECT DISTINCT ON (firstname, lastname) *
   FROM people));
-  
+
 // more readable code
 WITH unique AS
     (SELECT DISTINCT ON (firstname, lastname) * FROM people)
 DELETE FROM people WHERE people.id NOT IN (SELECT id FROM unique);
 ```
-

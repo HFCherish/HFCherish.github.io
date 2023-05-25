@@ -3,10 +3,8 @@ title: k8s general
 toc: true
 tags:
   - container
-  - k8s
 date: 2019-03-01 15:41:12
 ---
-
 
 [k8s](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/) is a platform to manage containerized workloads and services.
 
@@ -62,10 +60,8 @@ Service is an **abstraction** which defines **a logical set of pods**, and **a p
 It enables **the decoupling of access & the real pods**, which means you can access by service name/ip rather than the pod ip, while **pod ip is not stable**.
 
 > Q: How does k8s get all pod endpoints by service?
->
+> 
 > A: By `LabelSelector`. You can define labels for each pod. And we define `LabelSelector` in service, so that k8s can search pod node by label first, and then using the `targetPort` to locate the pod on node.
-
-
 
 ## kubernetes control plane
 
@@ -126,8 +122,6 @@ In some node:
 3. the kube-proxy using the info to ask master for the real endpoints.—— **kube-proxy of node => master kube-api**
 4. the kube-proxy chooses a endpoint by `SessionAffinity` defined in service (round-robin by default) —— **in kube-proxy**
 5. the kube-proxy redirect request to `pod-ip:podPort` —— **kube-proxy => pod endpoint**
-
-
 
 kube-proxy: enables the Kubernetes service abstraction by maintaining network rules on the host and performing connection forwarding
 

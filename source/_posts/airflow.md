@@ -3,17 +3,16 @@ title: airflow
 toc: true
 tags:
   - schedule
-  - biodata
+  - big data
 date: 2020-12-18 15:33:14
 ---
-
 
 # install
 
 [quickstart](https://airflow.apache.org/docs/apache-airflow/stable/start.html)
 
 > Airflow is published as `apache-airflow` package in PyPI. Installing it however might be sometimes tricky because Airflow is a bit of both a library and application. Libraries usually keep their dependencies open and applications usually pin them, but we should do neither and both at the same time. We decided to keep our dependencies as open as possible (in `setup.cfg` and `setup.py`) so users can install different version of libraries if needed. This means that from time to time plain `pip install apache-airflow` will not work or will produce unusable Airflow installation.
->
+> 
 > In order to have repeatable installation, however, starting from **Airflow 1.10.10** and updated in **Airflow 1.10.13** we also keep a set of "known-to-be-working" constraint files in the `constraints-master` and `constraints-1-10` orphan branches. Those "known-to-be-working" constraints are per major/minor python version. You can use them as constraint files when installing Airflow from PyPI. Note that you have to specify correct Airflow version and python versions in the URL.
 
 ```sh

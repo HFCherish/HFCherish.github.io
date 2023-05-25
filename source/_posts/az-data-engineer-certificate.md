@@ -3,11 +3,10 @@ title: az data engineer certificate
 toc: true
 tags:
   - certificate
-  - cloud computing
+  - cloud
   - big data
 date: 2020-10-10 17:03:32
 ---
-
 
 [learning paths](https://docs.microsoft.com/zh-cn/learn/certifications/azure-data-engineer?tab=tab-learning-paths)
 
@@ -16,6 +15,7 @@ date: 2020-10-10 17:03:32
 [link](https://docs.microsoft.com/en-us/learn/modules/evolving-world-of-data/3-systems-on-premise-vs-cloud)
 
 The term *total cost of ownership* (TCO) describes the final cost of owning a given technology. In **on-premises systems**, TCO includes the following costs:
+
 - Hardware
 - Software licensing
 - Labor (installation, upgrades, maintenance)
@@ -23,20 +23,18 @@ The term *total cost of ownership* (TCO) describes the final cost of owning a gi
 
 **Cloud systems** like Azure track costs by subscriptions. A subscription can be based on usage that's measured in compute units, hours, or transactions. The cost includes hardware, software, disk storage, and labor. Because of economies of scale, an on-premises system can rarely compete with the cloud in terms of the measurement of the service usage.
 
-
-
 The cost of operating an on-premises server system rarely aligns with the actual usage of the system. In cloud systems, the cost usually aligns more closely with the actual usage.
 
 #### Comment
 
 > However, many companies use the cloud still in a wasting way. The cost in cloud systems in fact rarely aligns with the actual usage, too.
->
+> 
 > The main advantage of Cloud is that it can **be charged on usage**. Thus, this advantage only works when using the cloud by need. Otherwise, the cloud advantage evaporates, especially from the aspect of cost.
->
+> 
 > The advantages of cloud:
->
+> 
 > 1. charge on usage
->2. enjoy the high quality and compresensive services of big company.
+> 2. enjoy the high quality and compresensive services of big company.
 
 ## Data types
 
@@ -99,47 +97,47 @@ Ask yourself these questions:
 [a storage solution example on the e-commerce system](https://docs.microsoft.com/en-us/learn/modules/choose-storage-approach-in-azure/5-choose-the-right-azure-service-for-your-data): 
 
 * Product catalog data: cosmosDB
-
+  
   * **Data classification:** Semi-structured because of the need to extend or modify the schema for new products
-
+    
     **Operations:**
-
+    
     - Customers require a high number of read operations, with the ability to query on many fields within the database.
     - The business requires a high number of write operations to track the constantly changing inventory.
-
+    
     **Latency & throughput:** High throughput and low latency
-
+    
     **Transactional support:** Required
 
 * Photos & videos: azure blob (with azure CDN)
-
+  
   * **Data classification:** Unstructured
-
+    
     **Operations:**
-
+    
     - Only need to be retrieved by ID.
     - Customers require a high number of read operations with low latency.
     - Creates and updates will be somewhat infrequent and can have higher latency than read operations.
-
+    
     **Latency & throughput:** Retrievals by ID need to support low latency and high throughput. Creates and updates can have higher latency than read operations.
-
+    
     **Transactional support:** Not required
 
 * Buisiness Data: azure sql (with azure analysis services)
-
+  
   * **Data classification:** Structured
-
+    
     **Operations:** Read-only, complex analytical queries across multiple databases
-
+    
     **Latency & throughput:** Some latency in the results is expected based on the complex nature of the queries.
-
+    
     **Transactional support:** Required
 
 # Questions
 
 ## Private cloud vs Public Cloud vs Specific Cloud
 
-- [x] Are there still private cloud and public cloud??	===> yes
+- [x] Are there still private cloud and public cloud??    ===> yes
 
 - [ ] What's the difference? The private cloud will have higher quality cloud? The so-called SLA of public cloud is in fact not assured??
 
@@ -181,4 +179,3 @@ Cassendra: Wide Column Stores
 
 - [ ] how azure sql support queries across multiple databases??
 - [ ] Why does azure sql data warehouse not support???
-

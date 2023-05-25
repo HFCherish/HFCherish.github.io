@@ -2,10 +2,9 @@
 title: hikariCP configuration
 toc: true
 tags:
-  - database
+  - storage
 date: 2018-07-19 10:56:58
 ---
-
 
 [hikariCP](https://github.com/brettwooldridge/HikariCP) 是一个轻量级的数据库连接池。引用 [数据库连接池性能对比](https://github.com/brettwooldridge/HikariCP) 的说法（我并没有测试过）：
 
@@ -38,9 +37,9 @@ spring.datasource.hikari.maximum-pool-size:1000
 
 按 [hikariCP owner 的解释](https://github.com/brettwooldridge/HikariCP/issues/657)，这可能是因为当设置 `maximumPoolSize` 后，这就变成了 fix-size 的连接池了，即总是会占有 1000（上边的设置）个连接池。idle 连接不会被释放，因为释放了也要创建新的 idle 连接池来保证 fix-size。从而新的连接就无法建立了。
 
->When running as a fixed-size pool (default) the `idleTimeout` has no effect. Your example is a fixed-size pool -- when `minimumIdle` is not defined it defaults to `maximumPoolSize`.
->
->`idleTimeout` is meant to shrink the pool from `maximumPoolSize` down toward `minimumIdle` when connections are unused in the pool. However, when `minimumIdle` == `maximumPoolSize` then closing an "idle" connection makes no sense as it will be replaced immediately in the pool.
+> When running as a fixed-size pool (default) the `idleTimeout` has no effect. Your example is a fixed-size pool -- when `minimumIdle` is not defined it defaults to `maximumPoolSize`.
+> 
+> `idleTimeout` is meant to shrink the pool from `maximumPoolSize` down toward `minimumIdle` when connections are unused in the pool. However, when `minimumIdle` == `maximumPoolSize` then closing an "idle" connection makes no sense as it will be replaced immediately in the pool.
 
 所以配置 `minimumIdle` 可以解决上述问题。
 
@@ -55,13 +54,13 @@ spring.datasource.hikari.miniumIdle:10
 
 引用原文：
 
->Choose a reasonable `wait_timeout` value. Stateless PHP environments do well with a 60 second timeout or less. Stateful applications that use a connection pool (Java, .NET, etc.) will need to adjust `wait_timeout` to match their connection pool settings. The default 8 hours (`wait_timeout = 28800`) works well with properly configured connection pools.
->
->Configure the `wait_timeout` to be slightly longer than the application connection pool’s expected connection lifetime. This is a good safety check.
+> Choose a reasonable `wait_timeout` value. Stateless PHP environments do well with a 60 second timeout or less. Stateful applications that use a connection pool (Java, .NET, etc.) will need to adjust `wait_timeout` to match their connection pool settings. The default 8 hours (`wait_timeout = 28800`) works well with properly configured connection pools.
+> 
+> Configure the `wait_timeout` to be slightly longer than the application connection pool’s expected connection lifetime. This is a good safety check.
 
 在设置了合理的 mysql `wait_timeout` 后，同样也设置 hikariCP 的连接池空闲时间，参考[FAQ](https://github.com/brettwooldridge/HikariCP/wiki/FAQ#q-i-am-getting-a-commysqljdbcexceptionsjdbc4communicationsexception-communications-link-failure-exception-logged-in-the-isconnectionalive-method-of-hikaripool-in-my-logs-what-is-happening)
 
->If you set the MySQL `wait_timeout = 28800` (seconds = 8 hours), you should set HikariCP `idleTimeout` and `maxLifetime` to the slightly shorter 28000000 (milliseconds = 7 hours 46 minutes).
+> If you set the MySQL `wait_timeout = 28800` (seconds = 8 hours), you should set HikariCP `idleTimeout` and `maxLifetime` to the slightly shorter 28000000 (milliseconds = 7 hours 46 minutes).
 
 ```yaml
 spring.datasource.hikari.maximum-pool-size:1000

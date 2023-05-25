@@ -1,13 +1,11 @@
 ---
-title: asure storage
+title: azure storage
 toc: true
 date: 2018-07-27 11:09:53
 tags:
-	- cloud
-	- asure
+    - cloud
+    - azure
 ---
-
-
 
 asure storage 提供四种存储支持（[asure storage overview (youtube)](https://www.youtube.com/watch?v=y6bIUHtdp6Y)）：
 
@@ -27,7 +25,7 @@ storage 的所有存储都必须在一个 storage account 内发生。这有点�
 1. ***key***：创建 account 时，就会生成俩 key，primary key 就是你用来登录访问数据的 key。不过这种方式对于有 client 时不太方便，因为可能不能 share key
 2. ***saas token***：就是可以登录认证获得 token，然后拿 token 访问数据。
 
-##  数据容器 + 数据
+## 数据容器 + 数据
 
 在每个 storage account 里，你可以创建上述四种类型的存储容器，去存放数据。
 

@@ -77,6 +77,7 @@ pagination_dir: page
 theme: next
 plugins:
   - hexo-symbols-count-time
+excerpt_length: 600
 
 # security count config
 # reference: https://github.com/theme-next/hexo-leancloud-counter-security
@@ -116,8 +117,8 @@ algolia:
 # article count & time
 # reference: https://github.com/theme-next/hexo-symbols-count-time
 symbols_count_time:
-  symbols: true
-  time: true
+  symbols: false
+  time: false
   total_symbols: true
   total_time: true
   exclude_codeblock: false
@@ -146,6 +147,6 @@ jsonContent:
     comments: false
     link: false
     permalink: false
-    excerpt: false
+    excerpt: true
     categories: false
     tags: true

@@ -3,16 +3,16 @@ title: 在 aws lambda 中应用 jersey
 toc: true
 tags:
   - aws
-  - aws lambda
+  - cloud
 date: 2018-06-27 10:39:55
 ---
-
 
 使用 [aws serverless java container](https://github.com/awslabs/aws-serverless-java-container) 实现。
 
 # 使用 [aws cli](https://aws.amazon.com/cn/cli/)
 
 ## 创建项目，配置 aws cli
+
 ```sh
 # 利用原型创建项目
 $ mvn archetype:generate -DgroupId=my.service -DartifactId=my-service -Dversion=1.0-SNAPSHOT \
@@ -142,17 +142,17 @@ $ sam deploy \
 ```sh
 # 可查看 stack 详情
 $ aws cloudformation describe-stacks \
-	--stack-name your-stack-name \
-	--query 'Stacks[].Outputs'
+    --stack-name your-stack-name \
+    --query 'Stacks[].Outputs'
 [
-	[
-	    {
-	        "Description": "URL for application",
-	        "ExportName": "AwsLambdaJerseyApi",  
-	        "OutputKey": "AwsLambdaJerseyApi",
-	        "OutputValue": "https://xxxxxxx.execute-api.us-west-2.amazonaws.com/Prod/ping"
-	    }
-	]
+    [
+        {
+            "Description": "URL for application",
+            "ExportName": "AwsLambdaJerseyApi",  
+            "OutputKey": "AwsLambdaJerseyApi",
+            "OutputValue": "https://xxxxxxx.execute-api.us-west-2.amazonaws.com/Prod/ping"
+        }
+    ]
 ]
 
 # 根据生成的链接访问 api

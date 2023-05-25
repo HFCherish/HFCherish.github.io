@@ -2,10 +2,9 @@
 title: 'NHibernate: inverse, cascade'
 toc: true
 tags:
-  - database
+  - storage
 date: 2020-05-25 11:38:17
 ---
-
 
 [playing-nhibernate-inverse-and-cascade](https://dzone.com/articles/playing-nhibernate-inverse-and),
 
@@ -14,21 +13,22 @@ date: 2020-05-25 11:38:17
 [bidirectional associations](https://nhibernate.info/doc/nhibernate-reference/collections.html#collections-bidirectional)
 
 In database, there may be biodirectional relationships, e.g. Parent has multiple child, and Child has a parent. 
+
 ```yaml
 #### class definition
 class Parent:
-	- String id
-	- IList<Child> childs	
+    - String id
+    - IList<Child> childs    
 class Child:
-	- String id
-	- Parent parent
-	
+    - String id
+    - Parent parent
+
 #### db definition
 table Parent:
-	- id
+    - id
 table Child:
-	- id
-	- parentId
+    - id
+    - parentId
 ```
 
 ## Inverse
@@ -39,14 +39,11 @@ By default, `invert=false`, then the assignment of `parentId` is maintened when 
 
 > `many-to-one` is **always** `inverse="false"` (the attribute does not exist), that is, it means nothing to set `child.parent.inverse=true`
 
-
 ## Cascade
 
 `cascade` instead will focus on the associated objects. It defines if the current object is responsible of the maintenance of associated objects.
 
 By default, `cascade=None`, that is, when saving parent, the childs on parent won't be saved cascadelly.
-
-
 
 See [cascade stackoverflow](https://stackoverflow.com/questions/1994433/nhibernate-cascade)
 

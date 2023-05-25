@@ -3,13 +3,12 @@ layout: yarn
 title: hadoop
 tags:
   - hadoop
-  - distributed storage
+  - storage
   - distributed computing
   - big data
 toc: true
 date: 2019-01-07 14:46:44
 ---
-
 
 Hadoop is a framework of distributed storage & computing.
 
@@ -17,11 +16,9 @@ Hadoop is a framework of distributed storage & computing.
 * **distributed computing**: hadoop use **map-reduce** framework to conduct fast data analysis (query & writing) over data in HDFS.
 * **resource manager & job schedular**: hadoop use **yarn** to manage/allocate cluster resources (memory, cpu, etc.) and to schedule  and moniter job executing.
 
-
-
 # Architecture
 
-## cluster architecture 
+## cluster architecture
 
 ![image-20201026164010368](/images/hadoop-20201026164010368.png)
 
@@ -65,10 +62,6 @@ Secondary Name Node is not necessary. If needed, you can build it on the standby
 
 ![image-20201026171217319](/images/hadoop-20201026171217319.png)
 
-
-
-
-
 ### [install hadoop on mac](http://www.cnblogs.com/micrari/p/5716851.html)
 
 see [default ports used by hadoop services 3.1.0](http://kontext.tech/docs/DataAndBusinessIntelligence/p/default-ports-used-by-hadoop-services-hdfs-mapreduce-yarn)
@@ -110,7 +103,7 @@ $ stop-yarn.sh
 ```
 
 > Note:
->
+> 
 > The `hdfs namenode -format` command must be executed everytime you restarted your computer. And it's initialized again. Need to figure out other ways to avoid this.
 
 There are other commands used to start these daemon:
@@ -123,4 +116,3 @@ $ start-all.sh
 $ hadoop-daemon.sh start datanode/namenode
 $ yarn-daemon.sh start resourcemanager
 ```
-

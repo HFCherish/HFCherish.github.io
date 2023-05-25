@@ -2,11 +2,10 @@
 title: responsive-web-design
 toc: true
 tags:
-  - js
+  - javascript
   - css
 date: 2018-12-13 17:57:19
 ---
-
 
 自适应一般是设定基准值，宽、高、字体大小都指定为基准值的百分比。当基准值改变时，页面元素、宽高也会按比例变化。
 
@@ -18,8 +17,8 @@ date: 2018-12-13 17:57:19
 
 ```scss
 body: {
-	width: 100%;
-	// or width: auto;
+    width: 100%;
+    // or width: auto;
 }
 ```
 
@@ -73,7 +72,7 @@ img {
 ```scss
 parent: {
     height: 100px;
-    
+
     child: {
         height: 80%;
     }
@@ -104,7 +103,6 @@ Html:
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.
     </div>
 </div>
-
 ```
 
 Css:
@@ -128,7 +126,6 @@ Css:
     height: 100%;
     background-color: #7da;
 }
-
 ```
 
 ### 利用 viewport units

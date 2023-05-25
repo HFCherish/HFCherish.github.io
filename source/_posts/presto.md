@@ -1,10 +1,11 @@
 ---
 title: presto
 toc: true
-date: 2021-05-10 11:10:15
 tags:
-	- big data
+  - big data
+date: 2021-05-10 11:10:15
 ---
+
 
 # 背景
 
@@ -43,10 +44,9 @@ Presto使用Catalog、Schema和Table这3层结构来管理数据。
 
 在Presto中定位一张表，一般是catalog为根，例如：一张表的全称为 hive.test_data.test，标识 hive(catalog)下的 test_data(schema)中test表。
 
-
-
         kadmin.local addprinc -randkey ${USER}@FTMS.COM
         kadmin.local xst -k keytabs/${USER}.keytab ${USER}@FTMS.COM
+
 # OLAP 引擎对比
 
 为什么presto查询速度比Hive快？
@@ -82,4 +82,3 @@ https://cloud.tencent.com/developer/article/1158362
 [limitations](https://docs.treasuredata.com/display/public/PD/Presto+Known+Limitations)
 
 [Presto内存管理与相关参数设置](https://zhuanlan.zhihu.com/p/89381163)
-
