@@ -34,7 +34,7 @@
 <meta property="og:image" content="http://hfcherish.github.io/images/hadoop-20201026170521244.png">
 <meta property="og:image" content="http://hfcherish.github.io/images/hadoop-20201026171217319.png">
 <meta property="article:published_time" content="2019-01-07T06:46:44.000Z">
-<meta property="article:modified_time" content="2023-05-25T01:18:53.986Z">
+<meta property="article:modified_time" content="2023-05-30T01:47:32.064Z">
 <meta property="article:author" content="Cherish">
 <meta property="article:tag" content="big data">
 <meta property="article:tag" content="storage">
@@ -245,7 +245,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-25 09:18:53" itemprop="dateModified" datetime="2023-05-25T09:18:53+08:00">2023-05-25</time>
+      <time title="Modified: 2023-05-30 09:47:32" itemprop="dateModified" datetime="2023-05-30T09:47:32+08:00">2023-05-30</time>
     </span>
 
   
@@ -263,22 +263,22 @@
 <li><strong>distributed computing</strong>: hadoop use <strong>map-reduce</strong> framework to conduct fast data analysis (query &amp; writing) over data in HDFS.</li>
 <li><strong>resource manager &amp; job schedular</strong>: hadoop use <strong>yarn</strong> to manage&#x2F;allocate cluster resources (memory, cpu, etc.) and to schedule  and moniter job executing.</li>
 </ul>
-<h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><h2 id="cluster-architecture"><a href="#cluster-architecture" class="headerlink" title="cluster architecture"></a>cluster architecture</h2><p><img src="/images/hadoop-20201026164010368.png" alt="image-20201026164010368"></p>
-<p><img src="/images/hadoop-20201026164402103.png" alt="image-20201026164402103"></p>
-<h2 id="request-processing"><a href="#request-processing" class="headerlink" title="request processing"></a>request processing</h2><p><img src="/images/hadoop-20201026164147039.png" alt="image-20201026164147039"></p>
+<h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><h2 id="cluster-architecture"><a href="#cluster-architecture" class="headerlink" title="cluster architecture"></a>cluster architecture</h2><p><img src="/../images/hadoop-20201026164010368.png" alt="image-20201026164010368"></p>
+<p><img src="/../images/hadoop-20201026164402103.png" alt="image-20201026164402103"></p>
+<h2 id="request-processing"><a href="#request-processing" class="headerlink" title="request processing"></a>request processing</h2><p><img src="/../images/hadoop-20201026164147039.png" alt="image-20201026164147039"></p>
 <h2 id="Fault-Tolerance"><a href="#Fault-Tolerance" class="headerlink" title="Fault Tolerance"></a>Fault Tolerance</h2><p>Use <strong>rack aware</strong> so that your replicas will be saved into different racks, which can solve the rack failure issue.</p>
 <p>Each data node will send heartbeat and block report to the namenode. Thus when data node fails, the name node knows it and will re-replicated to 3.</p>
-<p><img src="/images/hadoop-20201026164613209.png" alt="image-20201026164613209"></p>
+<p><img src="/../images/hadoop-20201026164613209.png" alt="image-20201026164613209"></p>
 <h2 id="High-Availability"><a href="#High-Availability" class="headerlink" title="High Availability"></a>High Availability</h2><p><strong>High Availability: Percentage of Uptime of the system</strong>. Fault Tolerance, on the other hand, mainly focus on the data loss &#x2F; system un-recovered damage tolerance. For example, a name-node failure can be processed by reboot from the aspect of fault-tolerance, while there must be a <strong>quick</strong> working solution from the aspect of high availability.</p>
 <h3 id="Name-Node-Failure"><a href="#Name-Node-Failure" class="headerlink" title="Name Node Failure"></a>Name Node Failure</h3><p>For a name node failure, we want to switch to a standby name node with all the informations quickly. How?</p>
 <p>A name node saves the file namespaces in memory, besides, it also saved editlog for each change into the disk. A name node failure will lose the in-memory fsImage, but we can reproduce the fsImage from the editlogs</p>
-<p><img src="/images/hadoop-20201026165814244.png" alt="y"></p>
+<p><img src="/../images/hadoop-20201026165814244.png" alt="y"></p>
 <p>A common solution is to use QJM to save the editlogs. And the standby name node will read from the editlogs to rebuild the fsImage. Besides, there’s  two failover controllers on each name node and a zookeeper. ZooKeeper keeps a lock, and both name nodes are requesting the lock. When the active name node fails, it lost the lock, and the standby nn will acquire the lock.</p>
-<p><img src="/images/hadoop-20201026170521244.png" alt="image-20201026170521244"></p>
+<p><img src="/../images/hadoop-20201026170521244.png" alt="image-20201026170521244"></p>
 <h3 id="Name-Node-Reboot"><a href="#Name-Node-Reboot" class="headerlink" title="Name Node Reboot"></a>Name Node Reboot</h3><p>What if you just want to reboot the name node, and since the fsImage is in memory, it will be gone at once and it takes a long time to rebuild from the editlogs?</p>
 <p>The main issue here is that the fsImage is in memory. Thus to reboot quickly, we need to save the fsImage into disk. The secondary name node is for this. It periodically merge the old fsImage with the editlogs, and replace the old fsImage in the disk, and then truncate the logs.</p>
 <p>Secondary Name Node is not necessary. If needed, you can build it on the standby nn.</p>
-<p><img src="/images/hadoop-20201026171217319.png" alt="image-20201026171217319"></p>
+<p><img src="/../images/hadoop-20201026171217319.png" alt="image-20201026171217319"></p>
 <h3 id="install-hadoop-on-mac"><a href="#install-hadoop-on-mac" class="headerlink" title="install hadoop on mac"></a><a href="http://www.cnblogs.com/micrari/p/5716851.html">install hadoop on mac</a></h3><p>see <a href="http://kontext.tech/docs/DataAndBusinessIntelligence/p/default-ports-used-by-hadoop-services-hdfs-mapreduce-yarn">default ports used by hadoop services 3.1.0</a></p>
 <blockquote>
 <p>when config password-free login by ssh, it may only work when generate key into id_rsa&#x2F;id_dsa. The other user defind key file name won’t work.</p>
@@ -364,14 +364,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">429k</span>
+    <span title="Word count total">467k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">6:30</span>
+    <span title="Reading time total">7:04</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

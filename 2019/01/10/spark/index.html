@@ -30,15 +30,16 @@
 <meta property="og:image" content="https://d2h0cx97tjks2p.cloudfront.net/blogs/wp-content/uploads/sites/2/2017/08/functions-of-sparkcontext-in-apache-spark.jpg">
 <meta property="og:image" content="https://spark.apache.org/docs/latest/img/cluster-overview.png">
 <meta property="og:image" content="https://d2h0cx97tjks2p.cloudfront.net/blogs/wp-content/uploads/sites/2/2017/08/Internals-of-job-execution-in-spark.jpg">
-<meta property="og:image" content="http://hfcherish.github.io/Users/zhenzheng/code/hfcherish.github.io/source/images/spark-storage-hierachy.png">
-<meta property="og:image" content="http://hfcherish.github.io/Users/zhenzheng/code/hfcherish.github.io/source/images/spark-straggling-task1.png">
-<meta property="og:image" content="http://hfcherish.github.io/Users/zhenzheng/code/hfcherish.github.io/source/images/spark-straggling-task2.png">
-<meta property="og:image" content="http://hfcherish.github.io/Users/zhenzheng/code/hfcherish.github.io/source/images/spark-gc-skew.png">
+<meta property="og:image" content="http://hfcherish.github.io/images/spark-storage-hierachy.png">
+<meta property="og:image" content="http://hfcherish.github.io/images/spark-memory-overhead.png">
+<meta property="og:image" content="http://hfcherish.github.io/images/spark-straggling-task1.png">
+<meta property="og:image" content="http://hfcherish.github.io/images/spark-straggling-task2.png">
+<meta property="og:image" content="http://hfcherish.github.io/images/spark-gc-skew.png">
 <meta property="og:image" content="https://miro.medium.com/max/1570/1*ddtDqMvoDGhxsw0CDEnfag.png">
 <meta property="og:image" content="https://miro.medium.com/max/1415/1*SMlxTZJBsAPKmpdRH5VFVw.png">
 <meta property="og:image" content="https://miro.medium.com/max/1500/1*FFi8Yk6mwSc6AvI-avWcYw.png">
 <meta property="article:published_time" content="2019-01-10T02:17:01.000Z">
-<meta property="article:modified_time" content="2023-05-10T02:57:43.543Z">
+<meta property="article:modified_time" content="2023-12-26T09:20:09.062Z">
 <meta property="article:author" content="Cherish">
 <meta property="article:tag" content="big data">
 <meta property="article:tag" content="hadoop">
@@ -153,7 +154,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Concept"><span class="nav-number">1.</span> <span class="nav-text">Concept</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spark-Ecosystem"><span class="nav-number">1.1.</span> <span class="nav-text">Spark Ecosystem</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spark-Core"><span class="nav-number">1.1.1.</span> <span class="nav-text">Spark Core</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Action-Job-Stage-Task"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">Action, Job, Stage, Task</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RDD"><span class="nav-number">1.1.2.</span> <span class="nav-text">RDD</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SparkContext"><span class="nav-number">1.2.</span> <span class="nav-text">SparkContext</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#How-does-it-run"><span class="nav-number">2.</span> <span class="nav-text">How does it run</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#API"><span class="nav-number">3.</span> <span class="nav-text">API</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Installation-On-Yarn"><span class="nav-number">4.</span> <span class="nav-text">Installation On Yarn</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#history-server-config"><span class="nav-number">4.1.</span> <span class="nav-text">history server config</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#example-execution"><span class="nav-number">4.2.</span> <span class="nav-text">example execution</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Glossary"><span class="nav-number">5.</span> <span class="nav-text">Glossary</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Deploy-mode"><span class="nav-number">6.</span> <span class="nav-text">Deploy mode</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#yarn-client-vs-yarn-cluster"><span class="nav-number">6.1.</span> <span class="nav-text">yarn-client vs yarn-cluster</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#spark-shell-vs-spark-submit"><span class="nav-number">7.</span> <span class="nav-text">spark-shell vs spark-submit</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spark-DataFrame"><span class="nav-number">8.</span> <span class="nav-text">Spark DataFrame</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#auto-increment-id"><span class="nav-number">8.1.</span> <span class="nav-text">auto increment id</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Row-number"><span class="nav-number">8.1.1.</span> <span class="nav-text">Row_number</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rdd-zipWithIndex"><span class="nav-number">8.1.2.</span> <span class="nav-text">rdd.zipWithIndex</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-constant-column"><span class="nav-number">8.2.</span> <span class="nav-text">Add constant column</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#select-latest-record"><span class="nav-number">8.3.</span> <span class="nav-text">select latest record</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hive-Hints"><span class="nav-number">9.</span> <span class="nav-text">Hive Hints</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Optimization"><span class="nav-number">10.</span> <span class="nav-text">Optimization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Get-Baseline"><span class="nav-number">10.1.</span> <span class="nav-text">Get Baseline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Memory-spill"><span class="nav-number">10.2.</span> <span class="nav-text">Memory spill</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E8%B5%84%E6%BA%90%E9%9C%80%E6%B1%82"><span class="nav-number">10.3.</span> <span class="nav-text">指定资源需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Some-issues"><span class="nav-number">10.4.</span> <span class="nav-text">Some issues</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%93executor-cores-settinng-not-working"><span class="nav-number">10.4.1.</span> <span class="nav-text">–executor-cores settinng not working</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%93spark-dynamicAllocation-maxExecutors-not-working"><span class="nav-number">10.4.2.</span> <span class="nav-text">–spark.dynamicAllocation.maxExecutors not working</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Partitions"><span class="nav-number">10.5.</span> <span class="nav-text">Partitions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%EF%BC%88input%EF%BC%89"><span class="nav-number">10.5.1.</span> <span class="nav-text">输入（input）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Shuffle"><span class="nav-number">10.5.2.</span> <span class="nav-text">Shuffle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%EF%BC%88output%EF%BC%89"><span class="nav-number">10.5.3.</span> <span class="nav-text">输出（output）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Balance"><span class="nav-number">10.6.</span> <span class="nav-text">Balance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Persistence"><span class="nav-number">10.7.</span> <span class="nav-text">Persistence</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cache"><span class="nav-number">10.7.1.</span> <span class="nav-text">cache</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#broadcast-join"><span class="nav-number">10.8.</span> <span class="nav-text">broadcast join</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-spark-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E5%B0%8F%E8%A1%A8-broadcast"><span class="nav-number">10.8.1.</span> <span class="nav-text">1. spark 自动识别小表 broadcast</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8-hint"><span class="nav-number">10.8.2.</span> <span class="nav-text">2. 使用 hint</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BD%BF%E7%94%A8-dataframe-api"><span class="nav-number">10.8.3.</span> <span class="nav-text">3. 使用 dataframe api</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cache-vs-broadcast"><span class="nav-number">10.9.</span> <span class="nav-text">cache vs broadcast</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98"><span class="nav-number">10.10.</span> <span class="nav-text">小文件问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%9C%89%E5%B0%8F%E6%96%87%E4%BB%B6%EF%BC%9F"><span class="nav-number">10.10.0.1.</span> <span class="nav-text">为什么会有小文件？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">10.10.0.2.</span> <span class="nav-text">解决方案</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python-udf-vs-scala-udf"><span class="nav-number">10.11.</span> <span class="nav-text">python udf vs scala udf</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Issues"><span class="nav-number">11.</span> <span class="nav-text">Issues</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Null-aware-predicate-sub-queries-cannot-be-used-in-nested-conditions"><span class="nav-number">11.1.</span> <span class="nav-text">Null-aware predicate sub-queries cannot be used in nested conditions</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Concept"><span class="nav-number">1.</span> <span class="nav-text">Concept</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spark-Ecosystem"><span class="nav-number">1.1.</span> <span class="nav-text">Spark Ecosystem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Core-concepts"><span class="nav-number">1.2.</span> <span class="nav-text">Core concepts???</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spark-Core"><span class="nav-number">1.2.1.</span> <span class="nav-text">Spark Core</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Action-Job-Stage-Task"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">Action, Job, Stage, Task</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RDD"><span class="nav-number">1.2.2.</span> <span class="nav-text">RDD</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SparkContext"><span class="nav-number">1.3.</span> <span class="nav-text">SparkContext</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#How-does-it-run"><span class="nav-number">2.</span> <span class="nav-text">How does it run</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Execution-Framework"><span class="nav-number">2.1.</span> <span class="nav-text">Execution Framework???</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#API"><span class="nav-number">3.</span> <span class="nav-text">API</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Installation-On-Yarn"><span class="nav-number">4.</span> <span class="nav-text">Installation On Yarn</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#understand-spark-installation"><span class="nav-number">4.1.</span> <span class="nav-text">understand spark installation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#spark-versions"><span class="nav-number">4.1.1.</span> <span class="nav-text">spark versions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#install"><span class="nav-number">4.2.</span> <span class="nav-text">install</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#history-server-config"><span class="nav-number">4.3.</span> <span class="nav-text">history server config</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#example-execution"><span class="nav-number">4.4.</span> <span class="nav-text">example execution</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Glossary"><span class="nav-number">5.</span> <span class="nav-text">Glossary</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Deploy-mode"><span class="nav-number">6.</span> <span class="nav-text">Deploy mode</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#yarn-client-vs-yarn-cluster"><span class="nav-number">6.1.</span> <span class="nav-text">yarn-client vs yarn-cluster</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#spark-shell-vs-spark-submit"><span class="nav-number">7.</span> <span class="nav-text">spark-shell vs spark-submit</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spark-DataFrame"><span class="nav-number">8.</span> <span class="nav-text">Spark DataFrame</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#auto-increment-id"><span class="nav-number">8.1.</span> <span class="nav-text">auto increment id</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Row-number"><span class="nav-number">8.1.1.</span> <span class="nav-text">Row_number</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rdd-zipWithIndex"><span class="nav-number">8.1.2.</span> <span class="nav-text">rdd.zipWithIndex</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-constant-column"><span class="nav-number">8.2.</span> <span class="nav-text">Add constant column</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#select-latest-record"><span class="nav-number">8.3.</span> <span class="nav-text">select latest record</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hive-Hints"><span class="nav-number">9.</span> <span class="nav-text">Hive Hints</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PySpark"><span class="nav-number">10.</span> <span class="nav-text">PySpark???</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#context-switching"><span class="nav-number">10.1.</span> <span class="nav-text">context switching</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pyspark-udf-vs-scala-udf"><span class="nav-number">10.2.</span> <span class="nav-text">pyspark udf vs scala udf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Arrow"><span class="nav-number">10.3.</span> <span class="nav-text">Arrow</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Optimization"><span class="nav-number">11.</span> <span class="nav-text">Optimization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Get-Baseline"><span class="nav-number">11.1.</span> <span class="nav-text">Get Baseline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Memory-spill"><span class="nav-number">11.2.</span> <span class="nav-text">Memory spill</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E8%B5%84%E6%BA%90%E9%9C%80%E6%B1%82"><span class="nav-number">11.3.</span> <span class="nav-text">指定资源需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Some-issues"><span class="nav-number">11.4.</span> <span class="nav-text">Some issues</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%93executor-cores-settinng-not-working"><span class="nav-number">11.4.1.</span> <span class="nav-text">–executor-cores settinng not working</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%93spark-dynamicAllocation-maxExecutors-not-working"><span class="nav-number">11.4.2.</span> <span class="nav-text">–spark.dynamicAllocation.maxExecutors not working</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Partitions"><span class="nav-number">11.5.</span> <span class="nav-text">Partitions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%EF%BC%88input%EF%BC%89"><span class="nav-number">11.5.1.</span> <span class="nav-text">输入（input）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Shuffle"><span class="nav-number">11.5.2.</span> <span class="nav-text">Shuffle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%EF%BC%88output%EF%BC%89"><span class="nav-number">11.5.3.</span> <span class="nav-text">输出（output）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Balance"><span class="nav-number">11.6.</span> <span class="nav-text">Balance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Persistence"><span class="nav-number">11.7.</span> <span class="nav-text">Persistence</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cache"><span class="nav-number">11.7.1.</span> <span class="nav-text">cache</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#broadcast-join"><span class="nav-number">11.8.</span> <span class="nav-text">broadcast join</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-spark-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E5%B0%8F%E8%A1%A8-broadcast"><span class="nav-number">11.8.1.</span> <span class="nav-text">1. spark 自动识别小表 broadcast</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8-hint"><span class="nav-number">11.8.2.</span> <span class="nav-text">2. 使用 hint</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BD%BF%E7%94%A8-dataframe-api"><span class="nav-number">11.8.3.</span> <span class="nav-text">3. 使用 dataframe api</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cache-vs-broadcast"><span class="nav-number">11.9.</span> <span class="nav-text">cache vs broadcast</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98"><span class="nav-number">11.10.</span> <span class="nav-text">小文件问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%9C%89%E5%B0%8F%E6%96%87%E4%BB%B6%EF%BC%9F"><span class="nav-number">11.10.0.1.</span> <span class="nav-text">为什么会有小文件？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">11.10.0.2.</span> <span class="nav-text">解决方案</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python-udf-vs-scala-udf"><span class="nav-number">11.11.</span> <span class="nav-text">python udf vs scala udf</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Issues"><span class="nav-number">12.</span> <span class="nav-text">Issues</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Null-aware-predicate-sub-queries-cannot-be-used-in-nested-conditions"><span class="nav-number">12.1.</span> <span class="nav-text">Null-aware predicate sub-queries cannot be used in nested conditions</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">13.</span> <span class="nav-text">References</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -248,7 +249,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-10 10:57:43" itemprop="dateModified" datetime="2023-05-10T10:57:43+08:00">2023-05-10</time>
+      <time title="Modified: 2023-12-26 17:20:09" itemprop="dateModified" datetime="2023-12-26T17:20:09+08:00">2023-12-26</time>
     </span>
 
   
@@ -270,6 +271,36 @@
 <li><a href="https://spark.apache.org/docs/2.4.0/graphx-programming-guide.html">GraphX</a> for graph processing</li>
 <li><a href="https://spark.apache.org/docs/2.4.0/streaming-programming-guide.html">Spark Streaming</a>.</li>
 </ul>
+<h2 id="Core-concepts"><a href="#Core-concepts" class="headerlink" title="Core concepts???"></a>Core concepts???</h2><ul>
+<li><strong>RDDs (Resilient Distributed Datasets)</strong>: RDDs are the fundamental data structure in Spark. They are immutable and can be split into multiple partitions that can be processed in parallel.</li>
+<li><strong>Transformations:</strong> Transformations are operations that are applied to RDDs to create new RDDs. Transformations are lazy, which means that they are not executed until an action is called.</li>
+<li><strong>Actions:</strong> Actions are operations that are applied to RDDs to produce a result. Actions trigger the execution of all of the transformations that have been applied to the RDD.</li>
+<li><strong>DAG (Directed Acyclic Graph)</strong>: A DAG is a graph that represents the dependencies between transformations. Spark uses DAGs to schedule and execute transformations.</li>
+<li><strong>SparkContext:</strong> The SparkContext is the entry point to the Spark API. It provides methods for creating RDDs, submitting jobs, and managing resources.</li>
+<li><strong>SparkSession:</strong> The SparkSession is a newer API that provides a simpler and more concise way to use Spark. It is built on top of the SparkContext and provides a number of additional features, such as support for SQL and machine learning.</li>
+</ul>
+<p>Spark Core is the foundation of Apache Spark and provides the essential functionality and APIs for distributed data processing. Here are some key Spark Core concepts explained with examples:</p>
+<ol>
+<li>Resilient Distributed Datasets (RDDs): RDDs are the fundamental data structure in Spark Core. They represent an immutable distributed collection of objects that can be processed in parallel across a cluster. RDDs can be created from data in Hadoop Distributed File System (HDFS), local file systems, or by transforming existing RDDs. Here’s an example of creating an RDD from a list of numbers:</li>
+</ol>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> numbers = <span class="type">List</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)</span><br><span class="line"><span class="keyword">val</span> rdd = sparkContext.parallelize(numbers)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Transformations: Transformations are operations performed on RDDs to create new RDDs. Transformations are lazy and do not execute immediately but build a lineage graph to track the transformations applied. Examples of transformations include <code>map</code>, <code>filter</code>, <code>flatMap</code>, and <code>reduceByKey</code>. Here’s an example of applying a transformation to square each element of an RDD:</li>
+</ol>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> squaredRDD = rdd.map(num =&gt; num * num)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Actions: Actions are operations that trigger the execution of computations and return results or write data to external systems. Actions initiate the evaluation of RDDs and can trigger lineage-based optimizations. Examples of actions include <code>collect</code>, <code>count</code>, <code>reduce</code>, and <code>saveAsTextFile</code>. Here’s an example of performing a sum operation on an RDD:</li>
+</ol>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> sum = squaredRDD.reduce((a, b) =&gt; a + b)</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>Spark Context: The Spark Context (<code>sparkContext</code>) is the entry point and the central coordinator for Spark Core. It establishes a connection to the Spark cluster and manages the execution environment. The Spark Context is used to create RDDs and perform operations on them. Here’s an example of creating a Spark Context:</li>
+</ol>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.spark.&#123;<span class="type">SparkConf</span>, <span class="type">SparkContext</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">&quot;MySparkApp&quot;</span>).setMaster(<span class="string">&quot;local[*]&quot;</span>)</span><br><span class="line"><span class="keyword">val</span> sparkContext = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</span><br></pre></td></tr></table></figure>
+
+<p>These are the core concepts of Spark Core that lay the foundation for distributed data processing in Apache Spark. By understanding RDDs, transformations, actions, and the Spark Context, you can build powerful and scalable data processing applications using Spark.</p>
 <h3 id="Spark-Core"><a href="#Spark-Core" class="headerlink" title="Spark Core"></a>Spark Core</h3><p>Spark Core is the fundamental unit of the whole Spark project. Its key features are:</p>
 <ul>
 <li>It is in charge of essential I&#x2F;O functionalities.</li>
@@ -300,7 +331,8 @@
 <ol>
 <li>The *<strong>driver program*</strong> is this entire piece of code, running all 8 steps.</li>
 <li>Producing the entire HTML card set on step 5 is a *<strong>job*</strong> (clear because we are using the <em>save</em> action, not a transformation). Same with the <em>collect</em> on step 8</li>
-<li>Other steps will be organized into *<strong>stages*</strong>, with each job being the result of a sequence of stages. For simple things a job can have a single stage, but the need to repartition data (for instance, the join on step 3) or anything that breaks the locality of the data usually causes more stages to appear. You can think of stages as computations that produce intermediate results, which can in fact be persisted. For instance, we can persist RDD1 since we’ll be using it more than once, avoiding recomputation.</li>
+<li>Other steps will be organized into *<strong>stages*</strong>, with each job being the result of a sequence of stages. For simple things a job can have a single stage, but the need to repartition data (for instance, the join on step 3) or anything that breaks the locality of the data usually causes more stages to appear. </li>
+<li>You can think of stages as computations that produce intermediate results, which can in fact be persisted. For instance, we can persist RDD1 since we’ll be using it more than once, avoiding recomputation.</li>
 <li>All 3 above basically talk about how the <em>logic</em> of a given algorithm will be broken. In contrast, a *<strong>task*</strong> is a particular <em>piece of data</em> that will go through a given stage, on a given executor.</li>
 </ol>
 </blockquote>
@@ -344,7 +376,8 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> operator <span class="keyword">import</span> add</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(sys.argv) != <span class="number">2</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Usage: wordcount &lt;file&gt;&quot;</span>, file=sys.stderr)</span><br><span class="line">        sys.exit(-<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># the builder here defines the sparkConf, and then create a sparkSession with an underlying SparkContext `spark.sparkContext`</span></span><br><span class="line">    spark = SparkSession\</span><br><span class="line">        .builder\</span><br><span class="line">        .appName(<span class="string">&quot;PythonWordCount&quot;</span>)\</span><br><span class="line">        .getOrCreate()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># here by `spark.read.text(&#x27;some.txt&#x27;)`, we use SparkContext create an DataFrame</span></span><br><span class="line">    lines = spark.read.text(sys.argv[<span class="number">1</span>]).rdd.<span class="built_in">map</span>(<span class="keyword">lambda</span> r: r[<span class="number">0</span>])</span><br><span class="line">    counts = lines.flatMap(<span class="keyword">lambda</span> x: x.split(<span class="string">&#x27; &#x27;</span>)) \</span><br><span class="line">                  .<span class="built_in">map</span>(<span class="keyword">lambda</span> x: (x, <span class="number">1</span>)) \</span><br><span class="line">                  .reduceByKey(add)</span><br><span class="line">    <span class="comment"># this is the spark action `collect`</span></span><br><span class="line">    output = counts.collect()</span><br><span class="line">    <span class="keyword">for</span> (word, count) <span class="keyword">in</span> output:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;%s: %i&quot;</span> % (word, count))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># this in fact stop the sparkContext</span></span><br><span class="line">    spark.stop()</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://d2h0cx97tjks2p.cloudfront.net/blogs/wp-content/uploads/sites/2/2017/08/functions-of-sparkcontext-in-apache-spark.jpg" alt="10 Important Functions of SparkContext in Apache Spark"></p>
-<h1 id="How-does-it-run"><a href="#How-does-it-run" class="headerlink" title="How does it run"></a>How does it run</h1><p>Spark core contains the main api, driver engine, scheduler… to support the cluster computing. The real computing is completed on the cluster. Spark can connect to many cluster managers(spark’s own standalone cluster manager, mesos, yarn) to complete the jobs. Typically, the process is like this:</p>
+<h1 id="How-does-it-run"><a href="#How-does-it-run" class="headerlink" title="How does it run"></a>How does it run</h1><p><a href="https://spark.apache.org/docs/latest/cluster-overview.html">Cluster Mode Overview - Spark 3.4.1 Documentation</a></p>
+<p>Spark core contains the main api, driver engine, scheduler… to support the cluster computing. The real computing is completed on the cluster. Spark can connect to many cluster managers(spark’s own standalone cluster manager, mesos, yarn) to complete the jobs. Typically, the process is like this:</p>
 <ol>
 <li>The user submits a spark application using the <code>spark-submit</code> command.</li>
 <li>Spark-submit launches the driver program on the same node in (client mode) or on the cluster (cluster mode) and invokes the main method specified by the user.</li>
@@ -357,9 +390,120 @@
 </ol>
 <p><img src="https://spark.apache.org/docs/latest/img/cluster-overview.png" alt="cluster mode overview"></p>
 <p><img src="https://d2h0cx97tjks2p.cloudfront.net/blogs/wp-content/uploads/sites/2/2017/08/Internals-of-job-execution-in-spark.jpg" alt="Complete Picture of Apache Spark Job Execution Flow."></p>
-<h1 id="API"><a href="#API" class="headerlink" title="API"></a>API</h1><p>You can write spark function (eg. map function, reduce funciton) using Java&#x2F;scala&#x2F;python&#x2F;R API. See <a href="https://spark.apache.org/docs/latest/">api docs</a>.</p>
-<h1 id="Installation-On-Yarn"><a href="#Installation-On-Yarn" class="headerlink" title="Installation On Yarn"></a>Installation On Yarn</h1><p>See <a href="https://spark.apache.org/docs/2.4.0/running-on-yarn.html">run spark on Yarn</a>, <a href="https://www.linode.com/docs/databases/hadoop/install-configure-run-spark-on-top-of-hadoop-yarn-cluster/">Install, Configure, and Run Spark on Top of a Hadoop YARN Cluster</a></p>
+<h2 id="Execution-Framework"><a href="#Execution-Framework" class="headerlink" title="Execution Framework???"></a>Execution Framework???</h2><p>The execution framework in Apache Spark is responsible for executing the computations on RDDs and managing the distributed processing across a cluster. Spark provides a flexible execution model that optimizes the execution of transformations and actions based on the directed acyclic graph (DAG) of the computation. Let’s explore the execution framework with examples:</p>
 <ol>
+<li>DAG Scheduling: Spark’s execution framework utilizes a DAG scheduler to analyze the sequence of transformations applied on RDDs and determine an optimal execution plan. It breaks down the computation into stages, where each stage represents a set of transformations that can be executed independently. For example:</li>
+</ol>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> rdd = sparkContext.parallelize(<span class="type">List</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>))</span><br><span class="line"><span class="keyword">val</span> squaredRDD = rdd.map(num =&gt; num * num)</span><br><span class="line"><span class="keyword">val</span> sum = squaredRDD.reduce((a, b) =&gt; a + b)</span><br></pre></td></tr></table></figure>
+
+<p>In this example, Spark recognizes that the <code>map</code> transformation can be executed in a single stage, and the <code>reduce</code> action requires a separate stage.</p>
+<ol start="2">
+<li>Task Execution: Spark’s execution framework assigns tasks to the available executors in the cluster. Each task is a unit of computation that operates on a subset of the data. The tasks are sent to the executors, where they are executed in parallel. Spark dynamically partitions the data and assigns partitions to different tasks for efficient parallel processing. For example:</li>
+</ol>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> data = sparkContext.parallelize(<span class="number">1</span> to <span class="number">1000</span>)</span><br><span class="line"><span class="keyword">val</span> filteredData = data.filter(num =&gt; num % <span class="number">2</span> == <span class="number">0</span>)</span><br><span class="line"><span class="keyword">val</span> count = filteredData.count()</span><br></pre></td></tr></table></figure>
+
+<p>In this example, Spark distributes the data across the cluster and assigns tasks to different partitions of the RDD for parallel execution.</p>
+<ol start="3">
+<li>Lazy Evaluation: Spark’s execution framework incorporates lazy evaluation, which means that transformations on RDDs are not executed immediately. Instead, Spark builds a lineage graph that tracks the transformations applied to the RDDs. The transformations are evaluated only when an action is triggered. This allows Spark to optimize the execution plan based on the entire computation flow. For example:</li>
+</ol>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> rdd = sparkContext.parallelize(<span class="type">List</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>))</span><br><span class="line"><span class="keyword">val</span> squaredRDD = rdd.map(num =&gt; num * num)</span><br><span class="line"><span class="keyword">val</span> filteredRDD = squaredRDD.filter(num =&gt; num &gt; <span class="number">10</span>)</span><br><span class="line"><span class="keyword">val</span> count = filteredRDD.count()</span><br></pre></td></tr></table></figure>
+
+<p>In this example, Spark defers the execution of transformations until the <code>count</code> action is called. It optimizes the execution plan by combining the <code>map</code> and <code>filter</code> operations into a single stage.</p>
+<ol start="4">
+<li><p>Data Shuffling: Spark’s execution framework handles data shuffling, which is the process of redistributing data across the cluster. Shuffling occurs when operations like groupBy, sortBy, or join require data to be redistributed to ensure that related data is co-located. The execution framework optimizes data shuffling by minimizing data movement and leveraging in-memory operations when possible.</p>
+</li>
+<li><p>Fault Tolerance: Spark’s execution framework provides fault tolerance by maintaining the lineage information of RDDs. If a partition or task fails, Spark can use the lineage graph to recompute the lost or corrupted data. This ensures the resiliency and reliability of computations.</p>
+</li>
+</ol>
+<p>Overall, Spark’s execution framework efficiently manages the distributed execution of transformations and actions on RDDs. It optimizes the execution plan, leverages parallel processing, and provides fault tolerance to ensure fast and reliable data processing across large-scale clusters.</p>
+<p>The Spark execution framework consists of the following components:</p>
+<ul>
+<li><strong>SparkContext:</strong> The SparkContext is the entry point to the Spark API. It provides methods for creating RDDs, submitting jobs, and managing resources.</li>
+<li><strong>DAGScheduler:</strong> The DAGScheduler is responsible for scheduling Spark jobs. It creates a Directed Acyclic Graph (DAG) of transformations and then schedules the execution of the DAG.</li>
+<li><strong>TaskScheduler:</strong> The TaskScheduler is responsible for executing Spark jobs. It assigns tasks to executors and monitors the progress of tasks.</li>
+<li><strong>Executors:</strong> Executors are the worker nodes in a Spark cluster. They are responsible for executing tasks.</li>
+<li><strong>Driver:</strong> The driver is the main process in a Spark cluster. It is responsible for submitting jobs, managing resources, and collecting results.</li>
+</ul>
+<p>The Spark execution framework works as follows:</p>
+<ol>
+<li>A user submits a Spark job to the driver.</li>
+<li>The driver creates a SparkContext.</li>
+<li>The SparkContext creates a DAG of transformations.</li>
+<li>The DAGScheduler schedules the execution of the DAG.</li>
+<li>The TaskScheduler assigns tasks to executors.</li>
+<li>The executors execute the tasks.</li>
+<li>The driver collects the results of the tasks.</li>
+</ol>
+<p>The Spark execution framework is a powerful and flexible system that can be used to run a wide variety of Spark jobs. It is designed to be efficient and scalable, and it can be used to run jobs on a variety of cluster sizes.</p>
+<p>Here are some examples of how the Spark execution framework can be used:</p>
+<ul>
+<li>To run a simple word count job, you can use the following code:</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import org.apache.spark.sql.SparkSession</span><br><span class="line"></span><br><span class="line">object WordCount &#123;</span><br><span class="line"></span><br><span class="line">  def main(args: Array[String]) &#123;</span><br><span class="line"></span><br><span class="line">    // Create a SparkSession</span><br><span class="line">    val spark = SparkSession.builder.appName(&quot;WordCount&quot;).getOrCreate()</span><br><span class="line"></span><br><span class="line">    // Read the input data</span><br><span class="line">    val inputData = spark.read.text(&quot;input.txt&quot;)</span><br><span class="line"></span><br><span class="line">    // Split the input data into words</span><br><span class="line">    val words = inputData.flatMap(_.split(&quot; &quot;))</span><br><span class="line"></span><br><span class="line">    // Count the number of occurrences of each word</span><br><span class="line">    val counts = words.countByValue()</span><br><span class="line"></span><br><span class="line">    // Print the results</span><br><span class="line">    counts.show()</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="API"><a href="#API" class="headerlink" title="API"></a>API</h1><p>You can write spark function (eg. map function, reduce funciton) using Java&#x2F;scala&#x2F;python&#x2F;R API. See <a href="https://spark.apache.org/docs/latest/">api docs</a>.</p>
+<h1 id="Installation-On-Yarn"><a href="#Installation-On-Yarn" class="headerlink" title="Installation On Yarn"></a>Installation On Yarn</h1><p>See <a href="https://spark.apache.org/docs/2.4.0/running-on-yarn.html">run spark on Yarn</a>, <a href="https://www.linode.com/docs/databases/hadoop/install-configure-run-spark-on-top-of-hadoop-yarn-cluster/">https://www.linode.com/docs/databases/hadoop/install-configure-run-spark-on-top-of-hadoop-yarn-cluster/</a></p>
+<h2 id="understand-spark-installation"><a href="#understand-spark-installation" class="headerlink" title="understand spark installation"></a>understand spark installation</h2><p>Here, we have:</p>
+<ul>
+<li><p><strong>machine ‘A’</strong>: which is the place to install spark and run <code>spark-submit</code> script</p>
+<ul>
+<li><p>this can be inside or outside of yarn cluster</p>
+</li>
+<li><p>spark is installed here</p>
+</li>
+<li><p>yarn configuration files(e.g. <code>yarn-site.xml</code>), hadoop configuration files (e.g. <code>core-site.xml</code>) must be maintained here. And in the <code>spark-env.sh</code>, <code>HADOOP_CONF_DIR</code> and <code>YARN_CONF_DIR</code> must be set to point the these configuration files.</p>
+</li>
+</ul>
+</li>
+<li><p><strong>yarn cluster</strong>: where the spark applications really run. </p>
+<ul>
+<li><p>We don’t need to pre-install spark here.</p>
+</li>
+<li><p>YARN will take care of distributing the necessary Spark binaries (JAR) to the nodes dynamically when you submit a Spark application.</p>
+</li>
+</ul>
+</li>
+<li><p><strong><code>spark.yarn.jars</code> Configuration</strong> (used in <code>spark-submit</code>)</p>
+<ul>
+<li>specifies the Spark JARs that will be distributed to the YARN cluster when you submit your application. This version should match the Spark version installed on machine ‘A’.</li>
+<li>If not specified, the default jars, located in <code>lib</code> directory of your Spark installation on machine ‘A’</li>
+</ul>
+</li>
+<li><p>Key properties in <code>yarn-site.xml</code> that can be relevant for Spark on a client machine:</p>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- YARN ResourceManager address --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">YARN_RESOURCEMANAGER_ADDRESS</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>Key properties in <code>core-site.xml</code> that can be relevant for Spark on a client machine:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Hadoop NameNode address --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.defaultFS<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span><span class="tag">&lt;<span class="name">HADOOP_NAMENODE_ADDRESS</span>&gt;</span><span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="spark-versions"><a href="#spark-versions" class="headerlink" title="spark versions"></a>spark versions</h3><p>There are 4 versions in topic:</p>
+<ol>
+<li><p><strong>Version 1: Spark Dependency Version (Application Code):</strong></p>
+<ul>
+<li>This is the version of Spark that your application code depends on when you write and build your Spark application. It includes Spark libraries and APIs used in your code.</li>
+</ul>
+</li>
+<li><p><strong>Version 2: Installed Spark Version on Machine ‘A’ (spark-submit):</strong></p>
+<ul>
+<li>This is the version of Spark installed on the machine from which you submit your Spark application using <code>spark-submit</code>. It is the Spark version that the <code>spark-submit</code> script uses to package and submit your application to the cluster.</li>
+</ul>
+</li>
+<li><p><strong>Version 3: Spark Version for Driver and Executors (spark.yarn.jars):</strong></p>
+<ul>
+<li>This is the Spark version used by the driver program and executors running on the YARN cluster. The <code>spark.yarn.jars</code> configuration points to the Spark JARs (libraries) that will be distributed to the YARN cluster for executing your application.</li>
+<li>If <code>spark.yarn.jars</code> not specified, this version is the same as the Version 2, as the jar of that installed spark is used.</li>
+</ul>
+</li>
+<li><p><strong>Version 4: Spark Version Installed on YARN Cluster:</strong></p>
+<ul>
+<li>This is the version of Spark installed on the machines in the YARN cluster where your Spark application will run. This is in fact the same as Version 3.  Version 3 is the configuration, and Version 4 is the final distributed binaries based on this configuration.</li>
+</ul>
+</li>
+</ol>
+<p>Generally speaking, all these versions, in fact the first 3 versions, should point to the same spark binary distribution to avoid compatibility issues. Version 1 and Version 3 must be the same. Even though when <code>spark.yarn.jars</code> provided, the Version 2 may not influence at all. We still recommend to keep it the same to avoid some unknown compatible issues.</p>
+<h2 id="install"><a href="#install" class="headerlink" title="install"></a>install</h2><ol>
 <li><p><a href="https://spark.apache.org/downloads.html">downloads page</a> download the spark</p>
 </li>
 <li><p><code>tar -xvf spark-xxx.tgz</code></p>
@@ -376,6 +520,8 @@
 <li>config in <code>/conf/spark-default.conf</code>. (<a href="https://spark.apache.org/docs/2.4.0/configuration.html#spark-properties">all configuration properties</a>)</li>
 </ul>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># config the spark master</span></span><br><span class="line">spark.master                     yarn</span><br><span class="line">spark.driver.memory    512m</span><br><span class="line">spark.yarn.am.memory    512m</span><br><span class="line">spark.executor.memory          512m</span><br></pre></td></tr></table></figure>
+
+
 
 <h2 id="history-server-config"><a href="#history-server-config" class="headerlink" title="history server config"></a>history server config</h2><p>When the spark job is running, you can access the job log by <code>localhost:4040</code>. When the job is finished, by default, the log is not persisted which means you can’t access it. To access the logs later, need to config the following: (see <a href="https://spark.apache.org/docs/latest/monitoring.html">spark Monitoring and Instrumentation</a> and <a href="https://spark.apache.org/docs/2.4.0/running-on-yarn.html#using-the-spark-history-server-to-replace-the-spark-web-ui">using history server to replace the spark web ui</a>)</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># in /conf/spark-default.conf</span></span><br><span class="line"><span class="comment"># config history server</span></span><br><span class="line">spark.ui.filters         org.apache.spark.deploy.yarn.YarnProxyRedirectFilter</span><br><span class="line"></span><br><span class="line"><span class="comment"># tell spark use history server url as the trackint url</span></span><br><span class="line">spark.yarn.historyServer.allowTracking  <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># enable log persistence</span></span><br><span class="line">spark.eventLog.enabled           <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># log write dir. Here use the hdfs dir and you must create the dir in hdfs first</span></span><br><span class="line">spark.eventLog.<span class="built_in">dir</span>               hdfs://localhost:9000/spark-logs</span><br><span class="line"></span><br><span class="line"><span class="comment"># log read dir. Sometimes logs are transfered.</span></span><br><span class="line">spark.history.fs.logDirectory     hdfs://localhost:9000/spark-logs</span><br></pre></td></tr></table></figure>
@@ -456,6 +602,106 @@
 
 <h2 id="select-latest-record"><a href="#select-latest-record" class="headerlink" title="select latest record"></a>select latest record</h2><p><a href="https://stackoverflow.com/questions/55615716/select-latest-record-from-spark-dataframe">stackoverflow</a></p>
 <h1 id="Hive-Hints"><a href="#Hive-Hints" class="headerlink" title="Hive Hints"></a>Hive Hints</h1><p><a href="https://spark.apache.org/docs/latest/sql-ref-syntax-qry-select-hints.html#partitioning-hints">hive hints</a></p>
+<h1 id="PySpark"><a href="#PySpark" class="headerlink" title="PySpark???"></a>PySpark???</h1><h2 id="context-switching"><a href="#context-switching" class="headerlink" title="context switching"></a>context switching</h2><p>When executing Python code, such as Pandas or PySpark UDFs, the related data is processed within the executor’s Python interpreter. The executor’s Python interpreter operates directly on the data available on the executor node, without the need to transfer the data back to the driver node.</p>
+<p>This is one of the benefits of using PySpark and executing Python code within the Spark framework. The data is distributed across the worker nodes, and the Python code is executed in parallel on the executor nodes where the data resides. This avoids unnecessary data transfer between the executor nodes and the driver node, which can improve performance and reduce network overhead.</p>
+<p>When you invoke Python code, such as a Pandas or PySpark UDF, on a Spark DataFrame, the processing happens in a distributed manner on the executor nodes. Each executor processes the corresponding subset of the data and applies the Python code to that subset independently. The results are then combined, and the final result is returned to the driver node.</p>
+<p>It’s worth noting that the data transfer between the executor nodes and the driver node typically occurs when there is a need to <strong>exchange intermediate results, aggregate data, or perform actions that require collecting data to the driver</strong>, such as calling <code>collect()</code> or <code>toPandas()</code>. In those cases, the relevant data is transferred from the executor nodes to the driver node. However, for processing performed within the executor’s Python interpreter, the data remains on the executor node and is processed locally within the Python environment of each executor.</p>
+<p>Within each executor process on the worker nodes, there is an instance of the Spark engine. The Spark engine is responsible for coordinating the execution of tasks, managing data partitions, optimizing query plans, and handling data distribution and parallelization.</p>
+<p>The Spark engine within the executor process, often referred to as the “Spark Task Execution Engine,” is implemented in Java and runs within the JVM portion of the executor. It handles the coordination and execution of tasks assigned to that executor, manages data partitioning, and applies optimizations to the execution plan.</p>
+<p>The Python interpreter within the executor process interacts with the Spark engine through a bridge, commonly known as the PySpark API or PySpark Gateway. This bridge facilitates the communication and coordination between the Python interpreter and the Spark engine. It allows the Python interpreter to send instructions and data to the Spark engine, and the Spark engine to send results and intermediate data back to the Python interpreter.</p>
+<p>The PySpark API acts as a bridge between the Python code and the Spark engine, enabling seamless integration between Python and Spark. It allows Python code, including Pandas or PySpark UDFs, to interact with the Spark engine’s distributed computing capabilities and leverage its optimizations and parallel processing.</p>
+<p>Through this bridge, the Python interpreter can issue Spark operations, manipulate distributed data, and coordinate with the Spark engine for task execution, data shuffling, and data serialization. The Spark engine, in turn, manages the execution plan, coordinates task execution across worker nodes, and optimizes the execution for distributed processing.</p>
+<p>So, in summary, there is a Spark engine within each executor process on the worker nodes, and there is a bridge (PySpark API) that facilitates communication between the Python interpreter and the Spark engine within the executor process.</p>
+<p>————–wrong????———————–</p>
+<ol>
+<li>The Python interpreter referred to in the context of PySpark is primarily associated with the driver program. The driver program runs the user code and coordinates the execution of the Spark job. It initiates the execution of tasks on the worker nodes (executors) and manages the overall workflow of the Spark application.</li>
+</ol>
+<p>When a PySpark UDF is used, the UDF code itself runs within the Python interpreter on the driver. However, the data on which the UDF operates is distributed across the worker nodes. PySpark leverages a client-server architecture to transfer the necessary data from the worker nodes to the Python interpreter on the driver. This means that when the UDF is applied to a DataFrame column, the data required for computation is shipped from the executor nodes to the driver node. This movement of data incurs serialization and deserialization overhead.</p>
+<ol start="2">
+<li><p>When using PySpark to define a UDF, the UDF operates within the Python environment. The UDF defined in Python is not directly converted to a Scala UDF. Instead, PySpark provides a bridge between Python and the underlying Spark engine, allowing the execution of Python code within the Spark framework. The UDF is executed by the Python interpreter on the driver, and the necessary data is shipped from the executors to the driver for computation.</p>
+</li>
+<li><p>Let’s dive into the practices mentioned in more detail:</p>
+</li>
+</ol>
+<ul>
+<li><p>Use Broadcast Variables: Spark’s broadcast variables allow you to efficiently share small read-only data structures across all the tasks in a Spark job. Instead of sending the data separately to each executor, the data is broadcasted to all the nodes, reducing the need for repeated serialization and deserialization. This is particularly useful when you have small lookup tables or configuration data that is required by multiple tasks. Broadcasting such variables helps in avoiding the overhead of transferring the same data to each task individually.</p>
+</li>
+<li><p>Utilize Vectorized Operations: Vectorized operations refer to performing operations on entire arrays or columns of data instead of individual elements. Libraries like NumPy and Pandas provide vectorized operations, which process data in bulk using optimized low-level operations. By leveraging these libraries within PySpark, you can take advantage of efficient vectorized operations and reduce the need for individual serialization and deserialization of data. This can significantly improve performance, especially when working with large datasets.</p>
+</li>
+</ul>
+<p>By using broadcast variables and utilizing vectorized operations, you can optimize the performance of your PySpark applications by reducing the serialization overhead and minimizing data movement across the Python and Java&#x2F;Scala runtime environments.</p>
+<ol>
+<li><p>The bridge between Python and the underlying Spark engine is primarily established on the driver node. PySpark acts as a connector between the Python code running on the driver and the Spark engine, which is typically implemented in Scala and Java. The driver node runs the Python interpreter and coordinates the execution of Spark tasks on the executor nodes.</p>
+</li>
+<li><p>The Scala UDF definition&#x2F;registration is sent to the executor nodes during the execution of a Spark job. When you define or register a Scala UDF, it is part of the overall job’s execution plan. When the job is submitted to Spark for execution, the plan is distributed to the worker nodes (executors). The necessary functions, including the Scala UDF, are then available on each executor to perform the required computations.</p>
+</li>
+<li><p>When utilizing vectorized operations with libraries like Pandas or NumPy within PySpark, it is correct that the data required for processing needs to be sent from the data nodes to the driver node. This transfer of data incurs serialization and deserialization overhead. However, vectorized operations are designed to process data in bulk, leveraging highly optimized low-level operations. This allows for efficient computation within the Python interpreter on the driver node, potentially reducing the overall processing time. It’s important to consider the trade-off between the serialization overhead and the performance gain achieved through vectorized operations. This approach is most effective when the benefits of vectorized operations outweigh the cost of data transfer between the nodes.</p>
+</li>
+</ol>
+<p>Certainly! Let’s walk through the end-to-end process and the components involved when a PySpark application is submitted. We’ll consider a scenario where both Spark UDFs and Python UDFs are registered and used, and Pandas is utilized to process certain columns. The example will cover the key components and steps involved in the process:</p>
+<ol>
+<li><p>Driver Node and Application Submission:</p>
+<ul>
+<li>The driver node is a machine where the PySpark application is submitted and executed.</li>
+<li>The driver node runs the Python interpreter and initiates the execution of the Spark application.</li>
+</ul>
+</li>
+<li><p>Spark Context and Session:</p>
+<ul>
+<li>The Spark Context (SparkContext) is created on the driver node as the entry point to the Spark application.</li>
+<li>The Spark Session (SparkSession) is a higher-level API that provides a unified interface for interacting with Spark and enables DataFrame and Dataset operations.</li>
+</ul>
+</li>
+<li><p>Job Execution and Task Distribution:</p>
+<ul>
+<li>The PySpark application code, including the registration of Spark UDFs and Python UDFs, is executed on the driver node.</li>
+<li>The application code defines transformations and actions on Spark DataFrames or RDDs.</li>
+<li>Spark breaks down the transformations into a directed acyclic graph (DAG) of stages and tasks.</li>
+<li>The tasks are distributed across the worker nodes (executors) for parallel execution.</li>
+</ul>
+</li>
+<li><p>Data Processing:</p>
+<ul>
+<li>When a transformation or action is invoked, Spark creates a logical plan that represents the computations required.</li>
+<li>If a Python UDF is used, data required for processing is transferred from the executor nodes to the driver node for UDF computation.</li>
+<li>If a Spark UDF is used, the UDF computation occurs within the Spark engine on the executor nodes, without data transfer to the driver.</li>
+</ul>
+</li>
+<li><p>Serialization and Deserialization:</p>
+<ul>
+<li>Data serialization and deserialization occur when transferring data between the Python and Java&#x2F;Scala runtime environments.</li>
+<li>When using Pandas to process columns, the data may need to be serialized for transfer to the driver and deserialized back into Pandas DataFrame structures.</li>
+</ul>
+</li>
+<li><p>Spark Catalyst Optimizer and Execution:</p>
+<ul>
+<li>Spark’s Catalyst optimizer analyzes the logical plan and optimizes it by applying various rule-based transformations to generate an optimized physical plan.</li>
+<li>The optimized physical plan is executed by the Spark engine on the executor nodes, leveraging Spark’s execution engine components such as the Task Scheduler, Shuffle Manager, and Memory Management.</li>
+</ul>
+</li>
+<li><p>Result Aggregation and Return:</p>
+<ul>
+<li>The results of transformations and actions are aggregated and returned to the driver node.</li>
+<li>If required, Pandas can be used to process the result data on the driver node, leveraging its functionality for further analysis or visualization.</li>
+</ul>
+</li>
+</ol>
+<p>It’s important to note that the components and steps involved can vary depending on the specifics of the PySpark application and the cluster configuration. The example provided highlights the major components and steps, focusing on the interactions between the driver node, executor nodes, and data transfer between Python and Java&#x2F;Scala environments.</p>
+<p>—————-wrong????——————</p>
+<h2 id="pyspark-udf-vs-scala-udf"><a href="#pyspark-udf-vs-scala-udf" class="headerlink" title="pyspark udf vs scala udf"></a>pyspark udf vs scala udf</h2><p>Certainly! Let’s delve into the performance aspect of using UDFs defined in Scala versus PySpark in more detail:</p>
+<ol>
+<li><p>Execution Engine Integration: Scala UDFs have a closer integration with Spark’s execution engine since Scala is the native language for Spark. This tight integration allows Scala UDFs to leverage Spark’s Catalyst optimizer and take advantage of advanced query optimization techniques. This can potentially lead to better query planning and execution, resulting in improved performance.</p>
+</li>
+<li><p>Serialization and Deserialization Overhead: When using PySpark UDFs, data must be serialized and deserialized between the Python and Java&#x2F;Scala runtime environments. This incurs additional overhead and can impact performance, especially when working with large datasets. In contrast, Scala UDFs avoid this serialization overhead since they operate directly within the Spark engine.</p>
+</li>
+<li><p>JIT Compilation: Scala benefits from just-in-time (JIT) compilation provided by the Java Virtual Machine (JVM). This means that Scala UDFs can be optimized at runtime, potentially resulting in better performance. In contrast, Python code executed within PySpark does not have the same level of JIT compilation, which can lead to slower execution.</p>
+</li>
+<li><p>Data Movement and Shuffling: Both Scala and PySpark UDFs may involve data movement and shuffling operations, which can impact performance. However, since Scala UDFs have a closer integration with Spark’s execution engine, they may enable more efficient data processing and minimize data shuffling, leading to better performance in certain scenarios.</p>
+</li>
+</ol>
+<p>It’s important to note that the performance impact of using UDFs can vary depending on the specific workload, data size, and operations performed. In some cases, the overhead introduced by PySpark UDFs may not be significant, especially if the UDFs themselves are not the main bottleneck in the application. Additionally, other factors such as cluster configuration, data skew, and overall data processing pipeline design can also influence performance.</p>
+<p>To determine the performance implications of using UDFs, it’s recommended to benchmark and profile your specific Spark application using both Scala and PySpark implementations. This will provide insights into the actual performance differences and help you make an informed decision based on your specific requirements and constraints.</p>
+<h2 id="Arrow"><a href="#Arrow" class="headerlink" title="Arrow"></a>Arrow</h2><p><a href="https://spark.apache.org/docs/latest/api/python/user_guide/sql/arrow_pandas.html">Apache Arrow in PySpark 3.4.1 documentation</a></p>
 <h1 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h1><p><a href="https://www.youtube.com/watch?v=daXEp4HmS-E">deep dive - spark optimization</a></p>
 <p><a href="https://spark.apache.org/docs/latest/sql-performance-tuning.html">performance tuning</a></p>
 <h2 id="Get-Baseline"><a href="#Get-Baseline" class="headerlink" title="Get Baseline"></a>Get Baseline</h2><ol>
@@ -478,7 +724,8 @@
 <li>有不均衡出现，导致某些 task 处理的数据尤其多 &#x3D;&#x3D;&#x3D;&#x3D;》see <a href="#balance">balance</a></li>
 <li>有太多 persist，持久化了太多东西，占用过多的 storage memory &#x3D;&#x3D;&#x3D;&#x3D;》see <a href="#persistence">persistence</a></li>
 </ol>
-<p><img src="/Users/zhenzheng/code/hfcherish.github.io/source/images/spark-storage-hierachy.png" alt="image-20210319124829765"></p>
+<p><img src="/../images/spark-storage-hierachy.png" alt="image-20210319124829765"></p>
+<p><img src="/../images/spark-memory-overhead.png" alt="memory overhead"></p>
 <h2 id="指定资源需求"><a href="#指定资源需求" class="headerlink" title="指定资源需求"></a>指定资源需求<a name="specify-resources" /></h2><p>Spark-submit 运行时，可通过指定以下参数来定义运行所需的资源：</p>
 <ul>
 <li><code>--conf spark.num.executors=xx</code> (或 <code>--num-executors xx</code>)：指定运行时需要几个 executor（也可以通过 <a href="#dynamic-allocation">dynamic allocation</a> 来根据运算动态分配 executors）</li>
@@ -516,19 +763,19 @@
 <p>Balance 体现在很多方面：网络、GC、数据，当然最常见的问题是数据的不均匀。</p>
 <p>通过查看 spark ui 可以看到不均匀的任务（这个时候需要停掉重跑）：</p>
 <ol>
-<li>查看 staggling tasks<ol>
+<li>查看 straggling tasks<ol>
 <li>查看 stage 执行进度：stage 里剩余几个 task 执行特别慢，这个时候各个 task 处理的数据肯定存在不均匀，导致那几个 task 处理的尤其慢<ol>
-<li><img src="/Users/zhenzheng/code/hfcherish.github.io/source/images/spark-straggling-task1.png" alt="image-20210317130715804"></li>
+<li><img src="/../images/spark-straggling-task1.png" alt="image-20210317130715804"></li>
 </ol>
 </li>
 <li>查看 stage 执行 metric：大部分时候没有 spill，但是 max 的时候有 spill；或者大部分的时候 read size 和 max read size 有很大差别<ol>
-<li><img src="/Users/zhenzheng/code/hfcherish.github.io/source/images/spark-straggling-task2.png" alt="image-20210317130618356"></li>
+<li><img src="/../images/spark-straggling-task2.png" alt="image-20210317130618356"></li>
 </ol>
 </li>
 </ol>
 </li>
 <li>查看 stage 里各个节点的 GC time，GC time 分布不均匀，也是有问题的（什么问题？？）<ol>
-<li><img src="/Users/zhenzheng/code/hfcherish.github.io/source/images/spark-gc-skew.png" alt="image-20210317130839506"></li>
+<li><img src="/../images/spark-gc-skew.png" alt="image-20210317130839506"></li>
 </ol>
 </li>
 <li></li>
@@ -605,6 +852,22 @@
 <p><img src="https://miro.medium.com/max/1415/1*SMlxTZJBsAPKmpdRH5VFVw.png" alt="img"></p>
 <p><img src="https://miro.medium.com/max/1500/1*FFi8Yk6mwSc6AvI-avWcYw.png" alt="img"></p>
 <h1 id="Issues"><a href="#Issues" class="headerlink" title="Issues"></a>Issues</h1><h2 id="Null-aware-predicate-sub-queries-cannot-be-used-in-nested-conditions"><a href="#Null-aware-predicate-sub-queries-cannot-be-used-in-nested-conditions" class="headerlink" title="Null-aware predicate sub-queries cannot be used in nested conditions"></a>Null-aware predicate sub-queries cannot be used in nested conditions</h2><p><code>not in</code> 不能和 <code>or</code> 之类的 condition 一块用。现在好像还没有修复，参见：<a href="https://github.com/apache/spark/pull/22141">SPARK-25154</a></p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ol>
+<li><p>Apache Spark Documentation: The official documentation for Apache Spark is an excellent resource to understand Spark’s concepts, APIs, and optimization techniques. It includes a Quick Start guide and in-depth documentation on Spark’s features and optimizations.</p>
+</li>
+<li><p>Hadoop Definitive Guide: Although this is a book, it is freely available online. “Hadoop: The Definitive Guide” by Tom White provides a comprehensive understanding of Hadoop and its ecosystem. It covers various optimization techniques and best practices for managing Hadoop clusters.</p>
+</li>
+<li><p>YouTube Tutorials:</p>
+<ul>
+<li>Simplilearn’s Spark Tutorial: Simplilearn offers a comprehensive Spark tutorial series on YouTube, covering various aspects of Spark programming, optimization, and cluster management.</li>
+<li>Hadoop Tutorials by edureka!: edureka! provides a playlist of Hadoop tutorials on YouTube that cover the basics of Hadoop, including optimization and cluster management topics.</li>
+</ul>
+</li>
+<li><p>Apache Hadoop YouTube Channel: The official Apache Hadoop YouTube channel hosts a collection of videos covering different topics related to Hadoop. You can find videos on optimization techniques, cluster management, and other Hadoop-related aspects.</p>
+</li>
+<li><p>Hortonworks Community Connection (HCC): Hortonworks Community Connection is a platform where Hadoop enthusiasts share knowledge and resources. It includes articles, tutorials, and videos related to Hadoop optimization and cluster management. You can explore the HCC website to find relevant resources.</p>
+</li>
+</ol>
 
     </div>
 
@@ -663,14 +926,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">429k</span>
+    <span title="Word count total">467k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">6:30</span>
+    <span title="Reading time total">7:04</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
