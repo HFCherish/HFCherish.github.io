@@ -5477,4 +5477,135 @@ Maybe there’re also specific cloud, like financial cloud (maybe more secure an
         <tag>data modeling</tag>
       </tags>
   </entry>
+  <entry>
+    <title>copilot-extension</title>
+    <url>/2025/08/18/copilot-extension/</url>
+    <content><![CDATA[<h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>We can implement copilot extensions so that it can use copilot llm abilities and do special things for us. There are several ways to implement the extensions:</p>
+<ol>
+<li><p><strong>client side extensions</strong>: Now only vscode support to add copilot extensions. It’s running locally in your machine, and thus use your local resource and can access all your local workspace and utilize your local installed tools. <strong>Ideal for tasks deeply embedded in developer workflows, like editing, real-time code generation, or using local context</strong></p>
+</li>
+<li><p><strong>server side extensions</strong>: it’s executed on your backend server. Since it’s a backend server, it can be run on any clients (e.g. vscode, vs, github mobile app…). Therefore you can have single implementation runs on any client where copilot is supported. However it can’t acccess your local workspace (e.g. you stashed changes, your local working files, etc.). </p>
+</li>
+<li><p><strong>MCP (model context protocol) server</strong>: As a protocol that enables automatic tool invocation based on intent, MCP is more flexible and powerful. It can work both client side and server side. A key distinction between Copilot Extensions and MCP is their activation model: Extensions require explicit invocation, while MCP servers are automatically called by Copilot based on the user’s intent. This “invisible” integration makes MCP particularly promising for the future of AI-assisted development.</p>
+</li>
+</ol>
+<h1 id="Abstract-copilot"><a href="#Abstract-copilot" class="headerlink" title="Abstract (copilot)"></a>Abstract (copilot)</h1><h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><p>GitHub introduced <strong>Copilot Extensions</strong> in public preview on September 17, 2024. These allow developers to enhance Copilot with customizable extensions right within their preferred environments—such as IDEs (like VS Code), GitHub.com, or the GitHub mobile app—letting them work with databases, testing tools, deployment systems, and internal knowledge without context switching (<a href="https://pascoal.net/2024/10/22/gh-copilot-extensions/?utm_source=chatgpt.com" title="GitHub Copilot Extensions - Tiago Pascoal">Tiago Pascoal</a>).</p>
+<hr>
+<h3 id="Extension-Types-Client-Side-vs-Server-Side"><a href="#Extension-Types-Client-Side-vs-Server-Side" class="headerlink" title="Extension Types: Client-Side vs Server-Side"></a>Extension Types: Client-Side vs Server-Side</h3><h4 id="Client-Side-Extensions"><a href="#Client-Side-Extensions" class="headerlink" title="Client-Side Extensions"></a><strong>Client-Side Extensions</strong></h4><ul>
+<li><p>Run locally within IDEs (currently only supported in VS Code) (<a href="https://pascoal.net/2024/10/22/gh-copilot-extensions/?utm_source=chatgpt.com" title="GitHub Copilot Extensions - Tiago Pascoal">Tiago Pascoal</a>).</p>
+</li>
+<li><p>Strengths:</p>
+<ul>
+<li><p>Full access to the local workspace (including uncommitted changes).</p>
+</li>
+<li><p>Integrates with other installed tools, terminal outputs, machine state, or other extensions.</p>
+</li>
+<li><p>Leverages Copilot’s Gen AI seamlessly—no need for manual authentication or API handling.</p>
+</li>
+<li><p>Accessible via Copilot Chat, command palette, or editor context menu (<a href="https://pascoal.net/2024/10/22/gh-copilot-extensions/?utm_source=chatgpt.com" title="GitHub Copilot Extensions - Tiago Pascoal">Tiago Pascoal</a>).</p>
+</li>
+</ul>
+</li>
+<li><p>Ideal for tasks deeply embedded in developer workflows, like editing, real-time code generation, or using local context (<a href="https://pascoal.net/2024/10/22/gh-copilot-extensions/?utm_source=chatgpt.com" title="GitHub Copilot Extensions - Tiago Pascoal">Tiago Pascoal</a>).</p>
+</li>
+</ul>
+<h4 id="Server-Side-Extensions"><a href="#Server-Side-Extensions" class="headerlink" title="Server-Side Extensions"></a><strong>Server-Side Extensions</strong></h4><ul>
+<li><p>Run on your own backend; accessible across all Copilot-supported clients including GitHub.com and mobile apps (<a href="https://pascoal.net/2024/10/22/gh-copilot-extensions/?utm_source=chatgpt.com" title="GitHub Copilot Extensions - Tiago Pascoal">Tiago Pascoal</a>).</p>
+</li>
+<li><p>Strengths:</p>
+<ul>
+<li><p>Unified implementation works across IDEs, web, and mobile.</p>
+</li>
+<li><p>Can access internal resources securely (e.g., databases, GPUs).</p>
+</li>
+<li><p>Ideal when local workspace access isn’t needed or for centralized resource control (<a href="https://pascoal.net/2024/10/22/gh-copilot-extensions/?utm_source=chatgpt.com" title="GitHub Copilot Extensions - Tiago Pascoal">Tiago Pascoal</a>).</p>
+</li>
+</ul>
+</li>
+<li><p>Limitations:</p>
+<ul>
+<li><p>Cannot access local files or uncommitted state.</p>
+</li>
+<li><p>Does not support client-side references.</p>
+</li>
+<li><p>Requires infrastructure to host and run the extension (<a href="https://pascoal.net/2024/10/22/gh-copilot-extensions/?utm_source=chatgpt.com" title="GitHub Copilot Extensions - Tiago Pascoal">Tiago Pascoal</a>).</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>A comparison table in the post summarizes these pros and cons in detail (<a href="https://pascoal.net/2024/10/22/gh-copilot-extensions/?utm_source=chatgpt.com" title="GitHub Copilot Extensions - Tiago Pascoal">Tiago Pascoal</a>).</p>
+<hr>
+<h3 id="Model-Context-Protocol-MCP"><a href="#Model-Context-Protocol-MCP" class="headerlink" title="Model Context Protocol (MCP)"></a>Model Context Protocol (MCP)</h3><ul>
+<li><p><strong>What is MCP?</strong><br>A specification originally developed by Anthropic for Claude AI, enabling AI agents to access external data sources (e.g., file systems, databases, third-party tools) via standard interfaces (<a href="https://pascoal.net/2024/10/22/gh-copilot-extensions/?utm_source=chatgpt.com" title="GitHub Copilot Extensions - Tiago Pascoal">Tiago Pascoal</a>).</p>
+</li>
+<li><p><strong>Transport Types Supported:</strong></p>
+<ul>
+<li><p>Local execution via standard input&#x2F;output.</p>
+</li>
+<li><p>Remote hosting via HTTP + SSE (Server-Sent Events), with recent support for streamable HTTP that upgrades to SSE (<a href="https://pascoal.net/2024/10/22/gh-copilot-extensions/?utm_source=chatgpt.com" title="GitHub Copilot Extensions - Tiago Pascoal">Tiago Pascoal</a>).</p>
+</li>
+</ul>
+</li>
+<li><p><strong>Capabilities Exposed by MCP Servers:</strong></p>
+<ul>
+<li><p>Resources (data access)</p>
+</li>
+<li><p>Prompts (pre-configured queries)</p>
+</li>
+<li><p>Tools (executable actions)</p>
+</li>
+<li><p>Sampling (data generation) (<a href="https://pascoal.net/2024/10/22/gh-copilot-extensions/?utm_source=chatgpt.com" title="GitHub Copilot Extensions - Tiago Pascoal">Tiago Pascoal</a>)</p>
+</li>
+</ul>
+</li>
+<li><p><strong>Recent Developments:</strong><br>On April 4, 2025, VS Code added MCP server support (preview), and GitHub open-sourced its own MCP server (<a href="https://pascoal.net/2024/10/22/gh-copilot-extensions/?utm_source=chatgpt.com" title="GitHub Copilot Extensions - Tiago Pascoal">Tiago Pascoal</a>).</p>
+</li>
+<li><p><strong>Key Difference from Extensions:</strong><br>While Copilot Extensions require explicit user invocation, MCP servers can be <strong>automatically called by Copilot</strong> when the user’s intent matches—making the toolchain more seamless and “invisible” (<a href="https://pascoal.net/2024/10/22/gh-copilot-extensions/?utm_source=chatgpt.com" title="GitHub Copilot Extensions - Tiago Pascoal">Tiago Pascoal</a>).</p>
+</li>
+</ul>
+<hr>
+<h3 id="Examples-amp-Ecosystem"><a href="#Examples-amp-Ecosystem" class="headerlink" title="Examples &amp; Ecosystem"></a>Examples &amp; Ecosystem</h3><h4 id="Client-Side-Examples"><a href="#Client-Side-Examples" class="headerlink" title="Client-Side Examples:"></a><strong>Client-Side Examples:</strong></h4><ul>
+<li><p><strong>copilot-pg</strong>: Queries PostgreSQL databases via Copilot.</p>
+</li>
+<li><p><strong>vscode-mssql-chat</strong>: Uses Copilot Chat to query SQL Server within VS Code.</p>
+</li>
+<li><p><strong>Data Analysis for Copilot</strong>: Runs Python locally for computations and data analysis.</p>
+</li>
+<li><p><strong>MongoDB for VS Code</strong>: Enables natural-language interactions with MongoDB clusters via Copilot Chat (<a href="https://pascoal.net/2024/10/22/gh-copilot-extensions/?utm_source=chatgpt.com" title="GitHub Copilot Extensions - Tiago Pascoal">Tiago Pascoal</a>).</p>
+</li>
+</ul>
+<h4 id="Server-Side-Examples"><a href="#Server-Side-Examples" class="headerlink" title="Server-Side Examples:"></a><strong>Server-Side Examples:</strong></h4><ul>
+<li><p>Launching a Docker deployment from GitHub.com Chat.</p>
+</li>
+<li><p>Extensions that interact with backend systems or GitHub APIs for unified cross-client experiences (<a href="https://pascoal.net/2024/10/22/gh-copilot-extensions/?utm_source=chatgpt.com" title="GitHub Copilot Extensions - Tiago Pascoal">Tiago Pascoal</a>).</p>
+</li>
+<li><p>You can discover extensions on GitHub Marketplace or VS Code Marketplace (<a href="https://pascoal.net/2024/10/22/gh-copilot-extensions/?utm_source=chatgpt.com" title="GitHub Copilot Extensions - Tiago Pascoal">Tiago Pascoal</a>).</p>
+</li>
+</ul>
+<hr>
+<h3 id="Key-Takeaways"><a href="#Key-Takeaways" class="headerlink" title="Key Takeaways"></a>Key Takeaways</h3><ol>
+<li><p><strong>Copilot as a Platform</strong><br>Copilot is now extendable—developers can create custom tools that integrate AI capabilities, their own data, and internal policies—all within the environments they already use (<a href="https://pascoal.net/2024/10/22/gh-copilot-extensions/?utm_source=chatgpt.com" title="GitHub Copilot Extensions - Tiago Pascoal">Tiago Pascoal</a>).</p>
+</li>
+<li><p><strong>Two Flexible Paths</strong></p>
+<ul>
+<li><p><em>Client-side</em> for local, context-rich workflows.</p>
+</li>
+<li><p><em>Server-side</em> for unified, centrally managed experiences.</p>
+</li>
+</ul>
+</li>
+<li><p><strong>MCP Enhances Transparency</strong><br>As a protocol that enables automatic tool invocation based on intent, MCP represents a powerful, emerging layer for intelligent, context-aware AI tooling (<a href="https://pascoal.net/2024/10/22/gh-copilot-extensions/?utm_source=chatgpt.com" title="GitHub Copilot Extensions - Tiago Pascoal">Tiago Pascoal</a>).</p>
+</li>
+<li><p><strong>Rising Ecosystem</strong><br>A growing library of example extensions and increasing Marketplace visibility shows mounting momentum behind Copilot’s extensibility (<a href="https://pascoal.net/2024/10/22/gh-copilot-extensions/?utm_source=chatgpt.com" title="GitHub Copilot Extensions - Tiago Pascoal">Tiago Pascoal</a>).</p>
+</li>
+</ol>
+<hr>
+<p>Let me know if you’d like me to deep-dive into how to <strong>build a client-side VS Code extension</strong> or work with <strong>MCP integration</strong>—happy to help craft implementation guidelines or examples!</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p><a href="https://pascoal.net/2024/10/22/gh-copilot-extensions/">github copilot extension mechnism overview | Tiago Pascoal</a></p>
+]]></content>
+      <tags>
+        <tag>ai</tag>
+        <tag>copilot</tag>
+      </tags>
+  </entry>
 </search>
