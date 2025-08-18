@@ -1,11 +1,12 @@
 ---
 title: MaxDOP of sql server
 toc: true
-date: 2020-04-08 12:43:51
 tags:
-    - sql-server
-    - database
+  - sql-server
+  - database
+date: 2020-04-08 12:43:51
 ---
+
 
 # What's MaxDOP
 

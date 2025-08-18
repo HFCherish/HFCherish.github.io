@@ -1,9 +1,10 @@
 ---
 title: sql performance
 toc: true
-date: 2020-07-22 14:37:30
 tags:
-    - database
+  - database
+  - sql
+date: 2020-07-22 14:37:30
 ---
 
 [sql performance explained](https://use-the-index-luke.com/sql/anatomy)
