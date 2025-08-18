@@ -148,13 +148,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">69</span>
+          <span class="site-state-item-count">71</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">39</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -1174,7 +1174,7 @@ In the IP network contex
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://hfcherish.github.io/2020/06/28/Cache-Memory/">
+    <link itemprop="mainEntityOfPage" href="http://hfcherish.github.io/2020/07/22/sql-performance/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1192,7 +1192,7 @@ In the IP network contex
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/06/28/Cache-Memory/" class="post-title-link" itemprop="url">Cache Memory</a>
+          <a href="/2020/07/22/sql-performance/" class="post-title-link" itemprop="url">sql performance</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1203,14 +1203,14 @@ In the IP network contex
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2020-06-28 15:29:22" itemprop="dateCreated datePublished" datetime="2020-06-28T15:29:22+08:00">2020-06-28</time>
+      <time title="Created: 2020-07-22 14:37:30" itemprop="dateCreated datePublished" datetime="2020-07-22T14:37:30+08:00">2020-07-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-10 10:46:52" itemprop="dateModified" datetime="2023-05-10T10:46:52+08:00">2023-05-10</time>
+      <time title="Modified: 2025-08-18 20:18:28" itemprop="dateModified" datetime="2025-08-18T20:18:28+08:00">2025-08-18</time>
     </span>
 
   
@@ -1223,77 +1223,22 @@ In the IP network contex
     
     
     <div class="post-body" itemprop="articleBody">
-          General Concept
+          sql performance explained
 
+ *  Read source code of HashMap in c#
+ *  Read source code of LinkedList in c#
+ *  Unlike the index, the table data is stored in a heap structure and is not sorted at all????? Heap is either min-heap or max-heap, all is partially sorted.
 
+Developers need to know this?
+Sql separate what & how.
 
+However, developers needs to know how. Because the access path is what influence the performance most, and developers instead of DBAs know it.
 
-
-
-
-
-CPU Core Caching
-
-
-
-
-
-
-
-
-
-
-
-
-Cache Lines
-
-
-
-
-Cache Memory
-Associative Memory
-
-
-
-
-
-
-
-
-Direct-Mapped Memory
-
-
-
-
-
-
-
-
-Set Associative Memory
-
-
-
-
-
-
-Cache Read/Write Policies
-
-
-
-
-
-
-
-
-cache coherency
-
-MESI protocol: (Modified, Exclusive, Shared, Invalid)
-
- * Invalid lines are cache lines that are either not present in the cache, or whose contents are known to be stale. For the purposes of caching, these are ignored. Once a cache line is invalidated, it’s as if it wasn’t in the cache in the first place.
- * Shared lines are clean copies of the contents of main memory. Cache line
+Structure (anatomy of an index)
+The primary purpose of an index is to provide an ordered representation of the indexed data. It is, ho
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/06/28/Cache-Memory/#more" rel="contents">
+              <a class="btn" href="/2020/07/22/sql-performance/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -1317,7 +1262,7 @@ MESI protocol: (Modified, Exclusive, Shared, Invalid)
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -1341,14 +1286,14 @@ MESI protocol: (Modified, Exclusive, Shared, Invalid)
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">473k</span>
+    <span title="Word count total">518k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">7:10</span>
+    <span title="Reading time total">7:51</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>

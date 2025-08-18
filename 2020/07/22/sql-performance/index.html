@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="Chinese">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"hfcherish.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="sql performance explained   *  Read source code of HashMap in c#  *  Read source code of LinkedList in c#  *  Unlike the index, the table data is stored in a heap structure and is not sorted at all???">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sql performance">
+<meta property="og:url" content="http://hfcherish.github.io/2020/07/22/sql-performance/index.html">
+<meta property="og:site_name" content="Cherish&#39;s Blog">
+<meta property="og:description" content="sql performance explained   *  Read source code of HashMap in c#  *  Read source code of LinkedList in c#  *  Unlike the index, the table data is stored in a heap structure and is not sorted at all???">
+<meta property="og:locale">
+<meta property="og:image" content="https://use-the-index-luke.com/static/fig01_01_index_leaf_nodes.en.MMHwYDFb.png">
+<meta property="og:image" content="https://use-the-index-luke.com/static/fig01_02_tree_structure.en.BdEzalqw.png">
+<meta property="og:image" content="https://use-the-index-luke.com/static/fig01_03_tree_traversal.en.niC7Q5jq.png">
+<meta property="og:image" content="https://databricks.com/wp-content/uploads/2017/08/Screen-Shot-2017-08-30-at-3.00.54-PM.png">
+<meta property="og:image" content="https://use-the-index-luke.com/static/fig02_01_concatenated_index.en.Q-6eso0Z.png">
+<meta property="og:image" content="https://use-the-index-luke.com/static/fig02_02_range_scan.en.swMTd1Fa.png">
+<meta property="og:image" content="https://use-the-index-luke.com/static/fig02_03_range_scan.en.vpSEKNtw.png">
+<meta property="og:image" content="https://use-the-index-luke.com/static/intentional-filter-predicate.en.N5J1kRR3.gif">
+<meta property="og:image" content="https://use-the-index-luke.com/static/fig05_02_index_on_heap_table.en.Mo+uOg1k.png">
+<meta property="og:image" content="https://use-the-index-luke.com/static/fig05_02_index_on_heap_table.en.Mo+uOg1k.png">
+<meta property="og:image" content="https://use-the-index-luke.com/static/fig06_05_asc_desc_nulls_overview.en.2+dRUs0p.png">
+<meta property="article:published_time" content="2020-07-22T06:37:30.000Z">
+<meta property="article:modified_time" content="2025-08-18T12:18:28.520Z">
+<meta property="article:author" content="Cherish">
+<meta property="article:tag" content="database">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://use-the-index-luke.com/static/fig01_01_index_leaf_nodes.en.MMHwYDFb.png">
+
+
+<link rel="canonical" href="http://hfcherish.github.io/2020/07/22/sql-performance/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"Chinese","comments":true,"permalink":"http://hfcherish.github.io/2020/07/22/sql-performance/","path":"2020/07/22/sql-performance/","title":"sql performance"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>sql performance | Cherish's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Cherish's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Developers-need-to-know-this"><span class="nav-number">1.</span> <span class="nav-text">Developers need to know this?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Structure-anatomy-of-an-index"><span class="nav-number">2.</span> <span class="nav-text">Structure (anatomy of an index)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Slow-Indexes"><span class="nav-number">3.</span> <span class="nav-text">Slow Indexes</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#over-indexing"><span class="nav-number">3.1.</span> <span class="nav-text">over indexing</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#query-optimizer"><span class="nav-number">4.</span> <span class="nav-text">query optimizer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#How-does-the-cost-based-optimizer-works"><span class="nav-number">4.1.</span> <span class="nav-text">How does the cost-based optimizer works</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-estimates-are-wrong"><span class="nav-number">4.2.</span> <span class="nav-text">the estimates are wrong?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Statistics"><span class="nav-number">4.3.</span> <span class="nav-text">Statistics</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Optimization-Points"><span class="nav-number">5.</span> <span class="nav-text">Optimization Points</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Where"><span class="nav-number">5.1.</span> <span class="nav-text">Where</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#concatenated-index-Index-order"><span class="nav-number">5.1.1.</span> <span class="nav-text">concatenated index (Index order)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Function-based-indexes"><span class="nav-number">5.1.2.</span> <span class="nav-text">Function-based indexes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Parameterized-queries"><span class="nav-number">5.1.3.</span> <span class="nav-text">Parameterized queries</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cursor-Sharing-and-Forced-Parameterization"><span class="nav-number">5.1.4.</span> <span class="nav-text">Cursor Sharing and Forced Parameterization</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Heuristic-execution-plan"><span class="nav-number">5.1.4.1.</span> <span class="nav-text">Heuristic execution plan</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Like"><span class="nav-number">5.1.5.</span> <span class="nav-text">Like</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#index-merge"><span class="nav-number">5.1.6.</span> <span class="nav-text">index merge</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bitmap-index"><span class="nav-number">5.1.6.1.</span> <span class="nav-text">bitmap index</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Partial-index"><span class="nav-number">5.1.7.</span> <span class="nav-text">Partial index</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Obfuscated-conditions"><span class="nav-number">5.1.8.</span> <span class="nav-text">Obfuscated conditions</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#null-in-the-oracle"><span class="nav-number">5.1.8.1.</span> <span class="nav-text">null in the oracle</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#date"><span class="nav-number">5.1.8.2.</span> <span class="nav-text">date</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Implict-type-conversion-in-query"><span class="nav-number">5.1.8.3.</span> <span class="nav-text">Implict type conversion in query</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#use-redundant-condition-x2F-column"><span class="nav-number">5.1.9.</span> <span class="nav-text">use redundant condition&#x2F;column</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Join"><span class="nav-number">5.2.</span> <span class="nav-text">Join</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#join-order"><span class="nav-number">5.2.1.</span> <span class="nav-text">join order</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Clustered-Index"><span class="nav-number">5.3.</span> <span class="nav-text">Clustered Index</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#use-index-to-avoid-sorting"><span class="nav-number">5.4.</span> <span class="nav-text">use index to avoid sorting</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Order-by"><span class="nav-number">5.4.1.</span> <span class="nav-text">Order by</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Group-by"><span class="nav-number">5.4.2.</span> <span class="nav-text">Group by</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Partial-Results"><span class="nav-number">5.5.</span> <span class="nav-text">Partial Results</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Control-the-index-scale"><span class="nav-number">6.</span> <span class="nav-text">Control the index scale!</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Horizontal-scalability"><span class="nav-number">7.</span> <span class="nav-text">Horizontal scalability</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Questions"><span class="nav-number">8.</span> <span class="nav-text">Questions</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#practice"><span class="nav-number">9.</span> <span class="nav-text">practice</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Sharing-notes"><span class="nav-number">10.</span> <span class="nav-text">Sharing notes</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">11.</span> <span class="nav-text"></span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Cherish</p>
+  <div class="site-description" itemprop="description">从心所欲不逾矩</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="sidebar-button animated">
+    <button><i class="fa fa-comment"></i>
+      Chat
+    </button>
+  </div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hfcherish" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hfcherish" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:pzcherishhf@gmail.com" title="E-Mail → mailto:pzcherishhf@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="Chinese">
+    <link itemprop="mainEntityOfPage" href="http://hfcherish.github.io/2020/07/22/sql-performance/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Cherish">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cherish's Blog">
+      <meta itemprop="description" content="从心所欲不逾矩">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="sql performance | Cherish's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          sql performance
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-07-22 14:37:30" itemprop="dateCreated datePublished" datetime="2020-07-22T14:37:30+08:00">2020-07-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-18 20:18:28" itemprop="dateModified" datetime="2025-08-18T20:18:28+08:00">2025-08-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a href="https://use-the-index-luke.com/sql/anatomy">sql performance explained</a></p>
+<ul>
+<li><input disabled="" type="checkbox"> Read source code of <code>HashMap</code> in c#</li>
+<li><input disabled="" type="checkbox"> Read source code of <code>LinkedList</code> in c#</li>
+<li><input disabled="" type="checkbox"> Unlike the index, the table data is stored in a heap structure and is not sorted at all?????  Heap is either min-heap or max-heap, all is partially sorted.</li>
+</ul>
+<h1 id="Developers-need-to-know-this"><a href="#Developers-need-to-know-this" class="headerlink" title="Developers need to know this?"></a>Developers need to know this?</h1><p>Sql separate what &amp; how.</p>
+<p>However, developers needs to know how. Because the access path is what influence the performance most, and developers instead of DBAs know it.</p>
+<h1 id="Structure-anatomy-of-an-index"><a href="#Structure-anatomy-of-an-index" class="headerlink" title="Structure (anatomy of an index)"></a>Structure (anatomy of an index)</h1><blockquote>
+<p>The primary purpose of an index is to <strong>provide an ordered representation</strong> of the indexed data. It is, however, not possible to store the data sequentially because an <code>insert</code> statement would need to move the following entries to make room for the new one. Moving large amounts of data is very time-consuming so the <code>insert</code> statement would be very slow. The solution to the problem is to establish a logical order that is independent of physical order in memory.</p>
+</blockquote>
+<p><strong>Doubly-linked list: (leaf nodes)</strong></p>
+<ul>
+<li>manage the logic order between leaf nodes, which is redundancy of unordered table data.</li>
+<li>a leaf node is saved in a database block or page (the database’s smallest storage unit). All blocks are of the same size, typically a few kilobytes.</li>
+<li>a leaf node contains several ordered index entries.</li>
+<li>Each index entry consists of the indexed columns (the key, column 2) and refers to the corresponding table row (via <code>ROWID</code> or <code>RID</code>)</li>
+<li>the index order is maintained on two different levels: the index entries within each leaf node, and the leaf nodes among each other using a doubly linked list.</li>
+</ul>
+<p><img src="https://use-the-index-luke.com/static/fig01_01_index_leaf_nodes.en.MMHwYDFb.png" alt="leaf nodes"></p>
+<p><strong>B+ Tree (branch nodes)</strong></p>
+<p><a href="https://www.cs.usfca.edu/~galles/visualization/BPlusTree.html">b+ tree simulator</a></p>
+<ul>
+<li>a balanced search tree</li>
+</ul>
+<blockquote>
+<p>The tree traversal is a very efficient operation—so efficient that I refer to it as the <em>first power of indexing</em>.</p>
+<p>That is primarily because of the tree balance, which allows accessing all elements with the same number of steps, and secondly because of the logarithmic growth of the tree depth.</p>
+<p> That means that the tree depth grows very slowly compared to the number of leaf nodes. Real world indexes with millions of records have a tree depth of four or five. A tree depth of six is hardly ever seen. </p>
+</blockquote>
+<p><img src="https://use-the-index-luke.com/static/fig01_02_tree_structure.en.BdEzalqw.png" alt="b-tree structure"></p>
+<p><img src="https://use-the-index-luke.com/static/fig01_03_tree_traversal.en.niC7Q5jq.png" alt="tree traversal"></p>
+<h1 id="Slow-Indexes"><a href="#Slow-Indexes" class="headerlink" title="Slow Indexes"></a>Slow Indexes</h1><blockquote>
+<p>An index lookup requires three steps: <strong>(1) the tree traversal; (2) following the leaf node chain; (3) fetching the table data.</strong> The tree traversal is the only step that has an upper bound for the number of accessed blocks—the index depth. The other two steps might need to access many blocks—they cause a slow index lookup.</p>
+</blockquote>
+<p>The Oracle database has three distinct operations that describe a basic index lookup:</p>
+<ol>
+<li>INDEX UNIQUE SCAN: performs the tree traversal only. (unique constraint)</li>
+<li>INDEX RANGE SCAN: performs the tree traversal <em>and</em> follows the leaf node chain to find all matching entries. (non-unique constraint)</li>
+<li>TABLE ACCESS BY INDEX ROWID: This operation is (often) performed for every matched record from a preceding index scan operation. This operation only get one block by the rowid once.</li>
+<li>TABLE FULL SCAN: this opertion won’t traverse the index tree, it scans the whole table. And it can get multiple blocks once. Sometimes it may be faster than index searching, since it can fetch batch blocks.</li>
+</ol>
+<h2 id="over-indexing"><a href="#over-indexing" class="headerlink" title="over indexing"></a>over indexing</h2><p>Every index causes ongoing maintenance. Function-based indexes are particularly troublesome because they make it very easy to create <em>redundant indexes</em>.</p>
+<blockquote>
+<p>Always aim to index the original data as that is often the most useful information you can put into an index.</p>
+</blockquote>
+<h1 id="query-optimizer"><a href="#query-optimizer" class="headerlink" title="query optimizer"></a>query optimizer<a name="query-optimizer" /></h1><p><a href="https://use-the-index-luke.com/sql/where-clause/the-equals-operator/slow-indexes-part-ii">slow indexes II</a></p>
+<blockquote>
+<p>The query optimizer, or query planner, is the database component that transforms an SQL statement into an execution plan. This process is also called <em>compiling</em> or <em>parsing</em>. There are two distinct optimizer types.</p>
+<p>Cost-based optimizers (CBO) generate many execution plan variations and calculate a cost value for each plan. The cost calculation is based on the operations in use and the estimated row numbers. In the end the cost value serves as the benchmark for picking the “best” execution plan.</p>
+<p>Rule-based optimizers (RBO) generate the execution plan using a hard-coded rule set. Rule based optimizers are less flexible and are seldom used today.</p>
+</blockquote>
+<h2 id="How-does-the-cost-based-optimizer-works"><a href="#How-does-the-cost-based-optimizer-works" class="headerlink" title="How does the cost-based optimizer works"></a>How does the cost-based optimizer works</h2><blockquote>
+<p>A cost-based optimizer uses statistics about tables, columns, and indexes. Most statistics are collected on the column level: the number of distinct values, the smallest and largest values (data range), the number of <code>NULL</code> occurrences and the column histogram (data distribution). The most important statistical value for a table is its size (in rows and blocks).</p>
+<p>The most important index statistics are the tree depth, the number of leaf nodes, the number of distinct keys and the clustering factor (see <a href="https://use-the-index-luke.com/sql/clustering">Chapter 5, “<em>Clustering Data</em>”</a>).</p>
+<p>The optimizer uses these values to estimate the selectivity of the <code>where</code> clause predicates.</p>
+<p>If there are no statistics available—for example because they were deleted—the optimizer uses default values. The default statistics of the Oracle database suggest a small index with medium selectivity. </p>
+</blockquote>
+<p>The following plan shows that the <code>INDEX RANGE SCAN</code> will return 40 rows. It is a gross underestimate, as there are 1000 employees working for this subsidiary.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- pk:  (subdiary_id, employ_id)</span></span><br><span class="line"><span class="keyword">SELECT</span> first_name, last_name, subsidiary_id, phone_number</span><br><span class="line">  <span class="keyword">FROM</span> employees</span><br><span class="line"> <span class="keyword">WHERE</span> last_name  <span class="operator">=</span> <span class="string">&#x27;WINAND&#x27;</span></span><br><span class="line">   <span class="keyword">AND</span> subsidiary_id <span class="operator">=</span> <span class="number">30</span>;</span><br><span class="line"></span><br><span class="line"># execution plan <span class="number">1</span> (picked <span class="keyword">when</span> <span class="keyword">no</span> statitics, <span class="keyword">and</span> it<span class="string">&#x27;s in fact slower)</span></span><br><span class="line"><span class="string">---------------------------------------------------------------</span></span><br><span class="line"><span class="string">|Id |Operation                   | Name         | Rows | Cost |</span></span><br><span class="line"><span class="string">---------------------------------------------------------------</span></span><br><span class="line"><span class="string">| 0 |SELECT STATEMENT            |              |    1 |   30 |</span></span><br><span class="line"><span class="string">|*1 | TABLE ACCESS BY INDEX ROWID| EMPLOYEES    |    1 |   30 |</span></span><br><span class="line"><span class="string">|*2 |  INDEX RANGE SCAN          | EMPLOYEES_PK |   40 |    2 |</span></span><br><span class="line"><span class="string">---------------------------------------------------------------</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Predicate Information (identified by operation id):</span></span><br><span class="line"><span class="string">---------------------------------------------------</span></span><br><span class="line"><span class="string">  1 - filter(&quot;LAST_NAME&quot;=&#x27;</span>WINAND<span class="string">&#x27;)</span></span><br><span class="line"><span class="string">  2 - access(&quot;SUBSIDIARY_ID&quot;=30)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># execution plan with statitics</span></span><br><span class="line"><span class="string">---------------------------------------------------------------</span></span><br><span class="line"><span class="string">|Id |Operation                   | Name         | Rows | Cost |</span></span><br><span class="line"><span class="string">---------------------------------------------------------------</span></span><br><span class="line"><span class="string">| 0 |SELECT STATEMENT            |              |    1 |  680 |</span></span><br><span class="line"><span class="string">|*1 | TABLE ACCESS BY INDEX ROWID| EMPLOYEES    |    1 |  680 |</span></span><br><span class="line"><span class="string">|*2 |  INDEX RANGE SCAN          | EMPLOYEES_PK | 1000 |    4 |</span></span><br><span class="line"><span class="string">---------------------------------------------------------------</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Predicate Information (identified by operation id):</span></span><br><span class="line"><span class="string">---------------------------------------------------</span></span><br><span class="line"><span class="string">  1 - filter(&quot;LAST_NAME&quot;=&#x27;</span>WINAND<span class="string">&#x27;)</span></span><br><span class="line"><span class="string">  2 - access(&quot;SUBSIDIARY_ID&quot;=30)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># execution plan 2 (picked when with statitics, and it&#x27;</span>s <span class="keyword">in</span> fact faster)</span><br><span class="line"><span class="keyword">SELECT</span> <span class="comment">/*+ NO_INDEX(EMPLOYEES EMPLOYEES_PK) */</span> </span><br><span class="line">       first_name, last_name, subsidiary_id, phone_number</span><br><span class="line">  <span class="keyword">FROM</span> employees</span><br><span class="line"> <span class="keyword">WHERE</span> last_name  <span class="operator">=</span> <span class="string">&#x27;WINAND&#x27;</span></span><br><span class="line">   <span class="keyword">AND</span> subsidiary_id <span class="operator">=</span> <span class="number">30</span>;</span><br><span class="line"><span class="comment">----------------------------------------------------</span></span><br><span class="line"><span class="operator">|</span> Id <span class="operator">|</span> Operation         <span class="operator">|</span> Name      <span class="operator">|</span> <span class="keyword">Rows</span> <span class="operator">|</span> Cost <span class="operator">|</span></span><br><span class="line"><span class="comment">----------------------------------------------------</span></span><br><span class="line"><span class="operator">|</span>  <span class="number">0</span> <span class="operator">|</span> <span class="keyword">SELECT</span> STATEMENT  <span class="operator">|</span>           <span class="operator">|</span>    <span class="number">1</span> <span class="operator">|</span>  <span class="number">477</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span><span class="operator">*</span> <span class="number">1</span> <span class="operator">|</span>  <span class="keyword">TABLE</span> ACCESS <span class="keyword">FULL</span><span class="operator">|</span> EMPLOYEES <span class="operator">|</span>    <span class="number">1</span> <span class="operator">|</span>  <span class="number">477</span> <span class="operator">|</span></span><br><span class="line"><span class="comment">----------------------------------------------------</span></span><br><span class="line"></span><br><span class="line">Predicate Information (identified <span class="keyword">by</span> operation id):</span><br><span class="line"><span class="comment">---------------------------------------------------</span></span><br><span class="line">   <span class="number">1</span> <span class="operator">-</span> <span class="keyword">filter</span>(&quot;LAST_NAME&quot;<span class="operator">=</span><span class="string">&#x27;WINAND&#x27;</span> <span class="keyword">AND</span> &quot;SUBSIDIARY_ID&quot;<span class="operator">=</span><span class="number">30</span>)</span><br></pre></td></tr></table></figure>
+
+<p>The execution plan with statistics uses the column histograms to estimate the number of rows returned from the index lookup—the result is used for the cost calculation. </p>
+<p>Column histograms are most useful if the values are not uniformly distributed. For columns with uniform distribution, it is often sufficient to divide the number of distinct values by the number of rows in the table. This method also works when using bind parameters.</p>
+<h2 id="the-estimates-are-wrong"><a href="#the-estimates-are-wrong" class="headerlink" title="the estimates are wrong?"></a>the estimates are wrong?</h2><p>Contradicting estimates often indicate problems with the statistics.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">range</span> scan gets <span class="number">40</span> <span class="keyword">rows</span>, while the substitute <span class="keyword">table</span> access gets <span class="number">100</span> rows. It<span class="string">&#x27;s weird estimate.</span></span><br><span class="line"><span class="string">--------------------------------------------------------------</span></span><br><span class="line"><span class="string">|Id |Operation                   | Name        | Rows | Cost |</span></span><br><span class="line"><span class="string">--------------------------------------------------------------</span></span><br><span class="line"><span class="string">| 0 |SELECT STATEMENT            |             |  100 |   41 |</span></span><br><span class="line"><span class="string">| 1 | TABLE ACCESS BY INDEX ROWID| EMPLOYEES   |  100 |   41 |</span></span><br><span class="line"><span class="string">|*2 |  INDEX RANGE SCAN          | EMP_UP_NAME |   40 |    1 |</span></span><br><span class="line"><span class="string">--------------------------------------------------------------</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Predicate Information (identified by operation id):</span></span><br><span class="line"><span class="string">---------------------------------------------------</span></span><br><span class="line"><span class="string">  2 - access(UPPER(&quot;LAST_NAME&quot;)=&#x27;</span>WINAND<span class="string">&#x27;)</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>The Oracle database maintains the information about the number of distinct column values as part of the table statistics. These figures are reused if a column is part of multiple indexes.</p>
+</blockquote>
+<p>Statistics for a function-based index (FBI) are also kept on table level as virtual columns. Although the Oracle database collects the <em>index statistics</em> for new indexes automatically (<a href="https://docs.oracle.com/cd/B14117_01/server.101/b10763/compat.htm#sthref320">since release 10<em>g</em></a>), it does not update the <em>table statistics</em>. For this reason, the Oracle documentation recommends updating the table statistics after creating a function-based index:</p>
+<blockquote>
+<p>After creating a function-based index, collect statistics on both the index and its base table using the <code>DBMS_STATS</code> package. Such statistics will enable Oracle Database to correctly decide when to use the index.</p>
+<p>— <a href="https://docs.oracle.com/database/122/SQLRF/CREATE-INDEX.htm#GUID-1F89BBC0-825F-4215-AF71-7588E31D8BFE__I2100962">Oracle Database SQL Language Reference</a></p>
+</blockquote>
+<p>My personal recommendation goes even further: after every index change, update the statistics for the base table and all its indexes. That might, however, also lead to unwanted side effects. Coordinate this activity with the database administrators (DBAs) and make a backup of the original statistics.</p>
+<h2 id="Statistics"><a href="#Statistics" class="headerlink" title="Statistics"></a>Statistics</h2><p>How to gather the statistics?</p>
+<ol>
+<li>mannually<ol>
+<li>in oracle: <code>EXEC DBMS_STATS.gather_table_stats(&#39;SCOTT&#39;, &#39;EMPLOYEES&#39;, estimate_percent =&gt; 15, cascade =&gt; TRUE);</code> (see <a href="https://oracle-base.com/articles/misc/cost-based-optimizer-and-database-statistics#table_index_stats">DBMS_STATS</a>)</li>
+<li>In hive&#x2F;spark: ((see <a href="https://www.waitingforcode.com/apache-spark-sql/spark-sql-cost-based-optimizer/read">spark cost-based optimizer</a>), <a href="https://www.waitingforcode.com/apache-spark-sql/reorder-join-optimizer-cost-based-optimization/read">spark reordering joins - cost-based optimization</a>) <ol>
+<li>Must generate statistics before the query execution</li>
+<li>Must enable some config: <code>spark.sql.cbo.enabled</code>, <code>spark.sql.cbo.joinReorder.enabled</code>, <code>spark.sql.statistics.histogram.enabled</code>…</li>
+<li>table level statistics: <code>analyze table xxx compute statitics</code></li>
+<li>column level statistics: <code>analyze table xxx compute statistics for columns col1, col2</code></li>
+<li>spark collected statistics for the following two types:</li>
+<li><img src="https://databricks.com/wp-content/uploads/2017/08/Screen-Shot-2017-08-30-at-3.00.54-PM.png" alt="img"></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>automatically<ol>
+<li>By default Oracle 10g automatically gathers optimizer statistics using a scheduled job called <code>GATHER_STATS_JOB</code>. By default this job runs within a maintenance windows between 10 P.M. to 6 A.M. week nights and all day on weekends. (see <a href="https://oracle-base.com/articles/10g/performance-tuning-enhancements-10g#automatic_optimizer_statistics_collection">automatic statistics collection</a>)</li>
+<li>seems no automatically collect in spark&#x2F;hive</li>
+</ol>
+</li>
+</ol>
+<h1 id="Optimization-Points"><a href="#Optimization-Points" class="headerlink" title="Optimization Points"></a>Optimization Points</h1><p>The <a href="https://use-the-index-luke.com/sql/anatomy/the-tree">B-Tree traversal</a> is the first power of indexing.</p>
+<p><a href="https://use-the-index-luke.com/sql/clustering">Clustering</a> is the second power of indexing.</p>
+<p>Pipelined <code>order by</code> is the third power of indexing.</p>
+<h2 id="Where"><a href="#Where" class="headerlink" title="Where"></a>Where</h2><h3 id="concatenated-index-Index-order"><a href="#concatenated-index-Index-order" class="headerlink" title="concatenated index (Index order)"></a>concatenated index (Index order)</h3><p><strong>Rule of thumb: index for equality first—then for ranges.</strong></p>
+<p><strong>Always aim to index the original data as that is often the most useful information you can put into an index.</strong></p>
+<p><strong>Avoid function-based indexing for expressions that cannot be used as access predicates.</strong></p>
+<p><strong>Avoid <code>select *</code> and fetch only the columns you need.</strong></p>
+<blockquote>
+<p>In general, a database can use a concatenated index when searching with the leading (leftmost) columns. An index with three columns can be used when searching for the first column, when searching with the first two columns together, and when searching using all columns.</p>
+<p>Even though the two-index solution delivers very good <code>select</code> performance as well, the single-index solution is preferable. It not only saves storage space, but also the maintenance overhead for the second index. The fewer indexes a table has, the better the <code>insert</code>, <code>delete</code> and <code>update</code> performance.</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">UNIQUE</span> INDEX employees_pk <span class="keyword">ON</span> employees (employee_id, subsidiary_id);</span><br><span class="line"><span class="keyword">SELECT</span> first_name, last_name  <span class="keyword">FROM</span> employees <span class="keyword">WHERE</span> subsidiary_id <span class="operator">=</span> <span class="number">20</span>; # slow query, <span class="keyword">no</span> index used</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">UNIQUE</span> INDEX employees_pk <span class="keyword">ON</span> employees (subsidiary_id, employee_id);</span><br><span class="line"><span class="keyword">SELECT</span> first_name, last_name  <span class="keyword">FROM</span> employees <span class="keyword">WHERE</span> subsidiary_id <span class="operator">=</span> <span class="number">20</span>; # index used</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://use-the-index-luke.com/static/fig02_01_concatenated_index.en.Q-6eso0Z.png" alt="img"></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> first_name, last_name, date_of_birth</span><br><span class="line">  <span class="keyword">FROM</span> employees</span><br><span class="line"> <span class="keyword">WHERE</span> date_of_birth <span class="operator">&gt;=</span> TO_DATE(?, <span class="string">&#x27;YYYY-MM-DD&#x27;</span>)</span><br><span class="line">   <span class="keyword">AND</span> date_of_birth <span class="operator">&lt;=</span> TO_DATE(?, <span class="string">&#x27;YYYY-MM-DD&#x27;</span>)</span><br><span class="line">   <span class="keyword">AND</span> subsidiary_id  <span class="operator">=</span> ?</span><br></pre></td></tr></table></figure>
+
+<p>The <em>access predicates</em> are the start and stop conditions for an index lookup. They define the scanned index range.</p>
+<p><em>Index filter predicates</em> are applied during the <a href="https://use-the-index-luke.com/sql/anatomy/the-leaf-nodes">leaf node traversal</a> only. They do not narrow the scanned index range.</p>
+<p>The appendix explains how to recognize access predicates in <a href="https://use-the-index-luke.com/sql/explain-plan/mysql/access-filter-predicates">MySQL</a>, <a href="https://use-the-index-luke.com/sql/explain-plan/sql-server/filter-predicates">SQL Server</a> and <a href="https://use-the-index-luke.com/sql/explain-plan/postgresql/filter-predicates">PostgreSQL</a>.</p>
+<p><img src="https://use-the-index-luke.com/static/fig02_02_range_scan.en.swMTd1Fa.png" alt="img"></p>
+<p><img src="https://use-the-index-luke.com/static/fig02_03_range_scan.en.vpSEKNtw.png" alt="img"></p>
+<h3 id="Function-based-indexes"><a href="#Function-based-indexes" class="headerlink" title="Function-based indexes"></a>Function-based indexes</h3><p>Almost all the db supports function-based indexes, or computed-column index. (see <a href="https://use-the-index-luke.com/sql/where-clause/functions">db support on function-based indexes</a>). In implementation,  the computation result is what to be put into the index.</p>
+<p>Although we can create function-based indexes, we must look out the over-indexing. And <strong>use a redundant condition</strong> on the most significant column when a range condition combines multiple columns, to avoid some  function-based indexes.</p>
+<p>Requirements: </p>
+<ul>
+<li>Only functions that always return the same result for the same parameters—<strong>functions that are deterministic</strong>—can be indexed.</li>
+<li>Besides <em>being</em> deterministic, PostgreSQL and the Oracle database require functions to be <em>declared</em> to be deterministic when used in an index so you have to use the keyword <code>DETERMINISTIC</code> (Oracle) or <code>IMMUTABLE</code> (PostgreSQL).</li>
+</ul>
+<blockquote>
+<p>An index whose definition contains functions or expressions is a so-called function-based index (FBI). Instead of copying the column data directly into the index, <strong>a function-based index applies the function first and puts the result into the index.</strong> As a result, the index stores the names in all caps notation.</p>
+<p>The database can use a function-based index if the <em>exact</em> expression of the index definition appears in an SQL statement</p>
+<p><strong>Warning</strong>:</p>
+<p>Sometimes ORM tools use <code>UPPER</code> and <code>LOWER</code> without the developer’s knowledge. Hibernate, for example, <a href="https://use-the-index-luke.com/sql/myth-directory/dynamic-sql-is-slow#myth-dynamic-sql-sample">injects an implicit <code>LOWER</code></a> for case-insensitive searches.</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># this <span class="keyword">function</span> cannot be used <span class="keyword">in</span> index, since it<span class="string">&#x27;s not derterministic.</span></span><br><span class="line"><span class="string">CREATE FUNCTION get_age(date_of_birth DATE) </span></span><br><span class="line"><span class="string">RETURN NUMBER</span></span><br><span class="line"><span class="string">AS</span></span><br><span class="line"><span class="string">BEGIN</span></span><br><span class="line"><span class="string">  RETURN </span></span><br><span class="line"><span class="string">    TRUNC(MONTHS_BETWEEN(SYSDATE, date_of_birth)/12);</span></span><br><span class="line"><span class="string">END</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># with concatenated indexes on (a,b) (order can be changed), the following query won&#x27;</span>t <span class="keyword">using</span> index</span><br><span class="line"><span class="keyword">SELECT</span> a, b <span class="keyword">FROM</span> table_name <span class="keyword">WHERE</span> <span class="number">3</span><span class="operator">*</span>a <span class="operator">+</span> <span class="number">5</span> <span class="operator">=</span> b;</span><br><span class="line"># <span class="keyword">with</span> functional index, the following query will use index</span><br><span class="line"><span class="keyword">CREATE</span> INDEX math <span class="keyword">ON</span> table_name (<span class="number">3</span><span class="operator">*</span>a <span class="operator">-</span> b);</span><br><span class="line"><span class="keyword">SELECT</span> a, b <span class="keyword">FROM</span> table_name <span class="keyword">WHERE</span> <span class="number">3</span><span class="operator">*</span>a <span class="operator">-</span> b <span class="operator">=</span> <span class="number">-5</span>;</span><br><span class="line"></span><br><span class="line"># this query won<span class="string">&#x27;t use index on numberic_number. Since to resolve this calculation expression, the optimizer need to resolve equotion, and most database vendors say no.</span></span><br><span class="line"><span class="string">SELECT numeric_number FROM table_name WHERE numeric_number - 1000 &gt; ?</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Parameterized-queries"><a href="#Parameterized-queries" class="headerlink" title="Parameterized queries"></a>Parameterized queries</h3><p>benefits:</p>
+<ul>
+<li><p>Security</p>
+<ul>
+<li>Bind variables are the best way to prevent <a href="https://en.wikipedia.org/wiki/SQL_injection">SQL injection</a>.</li>
+</ul>
+</li>
+<li><p>Performance</p>
+<ul>
+<li>Databases with an execution plan cache like SQL Server and the Oracle database can reuse an execution plan when executing the same statement multiple times. It saves effort in rebuilding the execution plan but works only if the SQL statement is <em>exactly</em> the same. If you put different values into the SQL statement, the database handles it like a different statement and recreates the execution plan.   When using bind parameters you do not write the actual values but instead insert placeholders into the SQL statement. That way the statements do not change when executing them with different values.</li>
+<li>this will only work if the data is equally distributted (for skewed data, the better plan maybe changed for each query value,  see <a href="#query-optimizer">query optimizer</a>). However, generating and evaluating all execution plan variants is a huge effort that does not pay off if you get the same result in the end anyway. Not using bind parameters is like recompiling a program every time.<ul>
+<li>Example: Unevenly distributed status codes like “todo” and “done” are a good example. The number of “done” entries often exceeds the “todo” records by an order of magnitude. Using an index only makes sense when searching for “todo” entries in that case.</li>
+</ul>
+</li>
+<li>Similar as the <code>reuse exchange</code> in spark execution plan</li>
+</ul>
+</li>
+</ul>
+<p>You should <strong>always use bind parameters except for</strong> values that <em>shall</em> influence the execution plan. In all reality, there are only a few cases in which the actual values affect the execution plan. You should therefore use bind parameters if in doubt—just to prevent SQL injections.</p>
+<blockquote>
+<h3 id="Cursor-Sharing-and-Forced-Parameterization"><a href="#Cursor-Sharing-and-Forced-Parameterization" class="headerlink" title="Cursor Sharing and Forced Parameterization"></a>Cursor Sharing and Forced Parameterization</h3><p>The more complex the optimizer and the SQL query become, the more important execution plan caching becomes. Many databases use a shared execution plan cache like DB2, the Oracle database, or SQL Server.</p>
+<p>The SQL Server and Oracle databases have features to automatically replace the literal values in a SQL string with bind parameters. These features are called <code>CURSOR_SHARING</code> (Oracle) or forced parameterization (SQL Server).</p>
+<p>Both features are workarounds for applications that do not use bind parameters at all. Enabling these features prevents developers from intentionally using literal values.</p>
+<p><a href="https://use-the-index-luke.com/blog/2011-07-16/planning-for-reuse">Planning for Execution Plan Reuse</a></p>
+</blockquote>
+<p>Example (See also: <a href="https://docs.oracle.com/javase/6/docs/api/java/sql/PreparedStatement.html"><code>PreparedStatement</code> </a>class documentation): </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> subsidiary_id;</span><br><span class="line"><span class="type">PreparedStatement</span> <span class="variable">command</span> <span class="operator">=</span> connection.prepareStatement(</span><br><span class="line">                    <span class="string">&quot;select first_name, last_name&quot;</span> </span><br><span class="line">                  + <span class="string">&quot;  from employees&quot;</span></span><br><span class="line">                  + <span class="string">&quot; where subsidiary_id = ?&quot;</span></span><br><span class="line">                  );</span><br><span class="line">command.setInt(<span class="number">1</span>, subsidiary_id);</span><br></pre></td></tr></table></figure>
+
+<h4 id="Heuristic-execution-plan"><a href="#Heuristic-execution-plan" class="headerlink" title="Heuristic execution plan"></a>Heuristic execution plan</h4><p>When the data is unevenly distributed, the sharing cache may bring new problems and bugs. The optimizer may try to use some <strong>smart logic</strong> to make it work better.</p>
+<blockquote>
+<p>The Oracle database uses a shared execution plan cache (“SQL area”) and is fully exposed to the problem described in this section.</p>
+</blockquote>
+<p>Oracle introduced the so-called bind peeking with release 9<em>i</em>. Bind peeking enables the optimizer to use the actual bind values of the first execution when preparing an execution plan. The problem with this approach is its nondeterministic behavior: the values from the first execution affect all executions. The execution plan can change whenever the database is restarted or, less predictably, the cached plan expires and the optimizer recreates it using different values the next time the statement is executed.</p>
+<blockquote>
+</blockquote>
+<p>Release 11<em>g</em> introduced adaptive cursor sharing to further improve the situation. This feature allows the database to cache multiple execution plans for the same SQL statement. Further, the optimizer peeks the bind parameters and stores their estimated selectivity along with the execution plan. When the cache is subsequently accessed, the selectivity of the current bind values must fall within the selectivity ranges of a cached execution plan to be reused. Otherwise the optimizer creates a new execution plan and compares it against the already cached execution plans for this query. If there is already such an execution plan, the database replaces it with a new execution plan that also covers the selectivity estimates of the current bind values. If not, it caches a new execution plan variant for this query — along with the selectivity estimates, of course.</p>
+<p>Sql server has similar polices, and adds <strong>hints</strong> to help the decision (see <a href="https://use-the-index-luke.com/sql/where-clause/obfuscation/smart-logic">smart optimizer logic in other database</a>):</p>
+<blockquote>
+<p>SQL Server uses so-called parameter sniffing. Parameter sniffing enables the optimizer to use the actual bind values of the first execution during parsing. The problem with this approach is its nondeterministic behavior: the values from the first execution affect all executions. The execution plan can change whenever the database is restarted or, less predictably, the cached plan expires and the optimizer recreates it using different values the next time the statement is executed.</p>
+</blockquote>
+<p>SQL Server 2005 added new query hints to gain more control over parameter sniffing and recompiling. The query hint RECOMPILE bypasses the plan cache for a selected statement. OPTIMIZE FOR allows the specification of actual parameter values that are used for optimization only. Finally, you can provide an entire execution plan with the USE PLAN hint.</p>
+<blockquote>
+</blockquote>
+<p>The original implementation of the OPTION(RECOMPILE) hint had a bug so it did not consider all bind variables. The new implementation introduced with SQL Server 2008 had another bug, making the situation very confusing. Erland Sommarskog has collected all the relevant information covering all SQL Server releases.</p>
+<h3 id="Like"><a href="#Like" class="headerlink" title="Like"></a>Like</h3><p><code>LIKE</code> filters can only use the characters <em>before the first wild card</em> during tree traversal. The remaining characters are just filter predicates that do not narrow the scanned index range. A single <code>LIKE</code> expression can therefore contain two predicate types: (1) the part before the first wild card as an access predicate; (2) the other characters as a filter predicate.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> first_name, last_name, date_of_birth</span><br><span class="line">  <span class="keyword">FROM</span> employees</span><br><span class="line"> <span class="keyword">WHERE</span> <span class="built_in">UPPER</span>(last_name) <span class="keyword">LIKE</span> <span class="string">&#x27;WIN%D&#x27;</span></span><br><span class="line"></span><br><span class="line"># plan</span><br><span class="line"><span class="comment">---------------------------------------------------------------</span></span><br><span class="line"><span class="operator">|</span>Id <span class="operator">|</span> Operation                   <span class="operator">|</span> Name        <span class="operator">|</span> <span class="keyword">Rows</span> <span class="operator">|</span> Cost <span class="operator">|</span></span><br><span class="line"><span class="comment">---------------------------------------------------------------</span></span><br><span class="line"><span class="operator">|</span> <span class="number">0</span> <span class="operator">|</span> <span class="keyword">SELECT</span> STATEMENT            <span class="operator">|</span>             <span class="operator">|</span>    <span class="number">1</span> <span class="operator">|</span>    <span class="number">4</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> <span class="number">1</span> <span class="operator">|</span>  <span class="keyword">TABLE</span> ACCESS <span class="keyword">BY</span> INDEX ROWID<span class="operator">|</span> EMPLOYEES   <span class="operator">|</span>    <span class="number">1</span> <span class="operator">|</span>    <span class="number">4</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span><span class="operator">*</span><span class="number">2</span> <span class="operator">|</span>   INDEX <span class="keyword">RANGE</span> SCAN          <span class="operator">|</span> EMP_UP_NAME <span class="operator">|</span>    <span class="number">1</span> <span class="operator">|</span>    <span class="number">2</span> <span class="operator">|</span></span><br><span class="line"><span class="comment">---------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line">Predicate Information (identified <span class="keyword">by</span> operation id):</span><br><span class="line"><span class="comment">---------------------------------------------------</span></span><br><span class="line">   <span class="number">2</span> <span class="operator">-</span> access(<span class="built_in">UPPER</span>(&quot;LAST_NAME&quot;) <span class="keyword">LIKE</span> <span class="string">&#x27;WIN%D&#x27;</span>)</span><br><span class="line">       <span class="keyword">filter</span>(<span class="built_in">UPPER</span>(&quot;LAST_NAME&quot;) <span class="keyword">LIKE</span> <span class="string">&#x27;WIN%D&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="index-merge"><a href="#index-merge" class="headerlink" title="index merge"></a>index merge</h3><p>is it better to create one index for each column or a single index for all columns of a <code>where</code> clause? </p>
+<ul>
+<li><p>one index with multiple columns is better—that is, a concatenated or compound index.</p>
+</li>
+<li><p>One index scan is faster than two.</p>
+</li>
+</ul>
+<p>Many database products offer a hybrid solution between B-tree and bitmap indexes. In the absence of a better access path, they convert the results of several B-tree scans into in-memory bitmap structures. Those can be combined efficiently. The bitmap structures are not stored persistently but discarded after statement execution, thus bypassing the problem of the poor write scalability. The downside is that it needs a lot of memory and CPU time. This method is, after all, an optimizer’s act of desperation.</p>
+<h4 id="bitmap-index"><a href="#bitmap-index" class="headerlink" title="bitmap index"></a>bitmap index</h4><p><strong>Bitmap indexes are almost unusable for online transaction pro­cessing (OLTP).</strong></p>
+<p>The advantage of bitmap indexes is that they can be combined rather easily. That means you get decent performance when indexing each column individually. Conversely if you know the query in advance, so that you can create a tailored multi-column B-tree index, it will still be faster than combining multiple bitmap indexes.</p>
+<p>By far the greatest weakness of bitmap indexes is the ridiculous <code>insert</code>, <code>update</code> and <code>delete</code> scalability. Concurrent write operations are virtually impossible. That is no problem in a data warehouse because the load processes are scheduled one after another. In online applications, bitmap indexes are mostly useless.</p>
+<h3 id="Partial-index"><a href="#Partial-index" class="headerlink" title="Partial index"></a>Partial index</h3><p>With <em>partial</em> (PostgreSQL) or <em>filtered</em> (SQL Server) indexes you can specify the <em>rows</em> that are indexed. It will decrease the index size and thus quicken the index search.</p>
+<blockquote>
+<p>The <code>where</code> clause of a partial index can become arbitrarily complex. The only fundamental limitation is about functions: you can only use deterministic functions as is the case everywhere in an index definition. SQL Server has, however, more restrictive rules and <a href="https://docs.microsoft.com/en-us/sql/t-sql/statements/create-index-transact-sql">neither allow functions nor the <code>OR</code> operator in index predicates</a>.</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> INDEX messages_todo <span class="keyword">ON</span> messages (receiver) <span class="keyword">WHERE</span> processed <span class="operator">=</span> <span class="string">&#x27;N&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Obfuscated-conditions"><a href="#Obfuscated-conditions" class="headerlink" title="Obfuscated conditions"></a>Obfuscated conditions</h3><h4 id="null-in-the-oracle"><a href="#null-in-the-oracle" class="headerlink" title="null in the oracle"></a>null in the oracle</h4><p>Null is processed differently in many dbs, e.g. <code>is null</code> instead of  <code>= null</code>. But in Oracle there’re more oddities.</p>
+<p>In oracle:</p>
+<ol>
+<li>Empty string <code>&#39;&#39;</code> is treated and stored as null</li>
+<li>for single column index, it’s in fact partial index, since all the rows with null index column are not included in the index.<ol>
+<li>however, for concatenated indexes, only when all the index columns are null, the row won’t be indexed.</li>
+</ol>
+</li>
+<li>For some query that requests <code>null</code> rows, Oracle only use the index when it knows the index is not nullable. When the index col is nullable, oracle thinks that some rows are not included in the index. And then for some queries, the indexes won’t be used, e.g. <code>count(*)</code>. Oracle can knows an index is not nullable in the following ways:<ol>
+<li><code>NOT NULL</code> constraint on the indexing column</li>
+<li>non-null constant expression as the index</li>
+<li><strong>Some internal functions</strong> that oracles knows (for other user defined functitons, oracle sees it as blackbox). <code>NOT NULL</code> constraint may still be required. e.g. <code>UPPER(last_name)</code></li>
+</ol>
+</li>
+</ol>
+<p>Solutions to index null in oracle:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># use concatenated index, <span class="keyword">for</span> the following <span class="number">2</span> indexes, last_name must has `<span class="keyword">NOT</span> <span class="keyword">NULL</span>` <span class="keyword">constraint</span></span><br><span class="line"><span class="keyword">CREATE</span> INDEX emp_dob_name <span class="keyword">ON</span> employees (date_of_birth, last_name);</span><br><span class="line"><span class="keyword">CREATE</span> INDEX emp_dob_upname <span class="keyword">ON</span> employees (date_of_birth, <span class="built_in">upper</span>(last_name))</span><br><span class="line"># however, <span class="keyword">for</span> the following <span class="number">2</span> queries, it will <span class="keyword">search</span> index <span class="keyword">only</span> <span class="keyword">when</span> the last_name has `<span class="keyword">NOT</span> <span class="keyword">NULL</span>` constraint.</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> employees <span class="keyword">WHERE</span> date_of_birth <span class="keyword">IS</span> <span class="keyword">NULL</span>;</span><br><span class="line"><span class="keyword">select</span> <span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">from</span> employees;</span><br><span class="line"></span><br><span class="line"># use <span class="keyword">function</span><span class="operator">-</span>index <span class="keyword">to</span> change <span class="keyword">to</span> non<span class="operator">-</span><span class="keyword">null</span> index. This will tell oracle the index <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">null</span>able, too.</span><br><span class="line"><span class="keyword">CREATE</span> INDEX emp_dob <span class="keyword">ON</span> employees (date_of_birth, <span class="string">&#x27;1&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="date"><a href="#date" class="headerlink" title="date"></a>date</h4><p>Oracle only has Date (with time part) type, so most of the time, you: </p>
+<ol>
+<li>must specify the exact range</li>
+<li>create simple index on the date col (instead of function-based index) &amp; do not use function for the left part in the query condition.</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># this will use the index</span><br><span class="line"><span class="keyword">SELECT</span> ...</span><br><span class="line">  <span class="keyword">FROM</span> sales</span><br><span class="line"> <span class="keyword">WHERE</span> sale_date <span class="operator">&gt;=</span> TO_DATE(<span class="string">&#x27;1970-01-01&#x27;</span>, <span class="string">&#x27;YYYY-MM-DD&#x27;</span>) </span><br><span class="line">   <span class="keyword">AND</span> sale_date <span class="operator">&lt;</span>  TO_DATE(<span class="string">&#x27;1970-01-01&#x27;</span>, <span class="string">&#x27;YYYY-MM-DD&#x27;</span>) </span><br><span class="line">                  <span class="operator">+</span> <span class="type">INTERVAL</span> <span class="string">&#x27;1&#x27;</span> <span class="keyword">DAY</span>                 </span><br><span class="line"></span><br><span class="line"># this won<span class="string">&#x27;t use index either, since in like, the `sale_date` will be converted to string implicitly</span></span><br><span class="line"><span class="string">select * from sales where sale_date like TO_DATE(&#x27;</span><span class="number">1970</span><span class="number">-01</span><span class="number">-01</span><span class="string">&#x27;, &#x27;</span>YYYY<span class="operator">-</span>MM<span class="operator">-</span>DD<span class="string">&#x27;) </span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Implict-type-conversion-in-query"><a href="#Implict-type-conversion-in-query" class="headerlink" title="Implict type conversion in query"></a>Implict type conversion in query</h4><p>DB may conduct some implict type conversion for query (e.g. the above <code>like</code>). When this  happens, the index won’t work since the index column changed. And the implict conversion alter decrease performance (even a little)</p>
+<p><strong>Avoid implict type conversion</strong></p>
+<p>e.g.</p>
+<ol>
+<li>Numeric strings: <code>select * from test where numberic_string = 42</code> is in fact <code>select * from test where to_number(numberic_string) = 42</code></li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">In</span> spark, it<span class="string">&#x27;s the same. Alwasy explicitly convert types.</span></span><br><span class="line"><span class="string">create temporary view test as select * from values </span></span><br><span class="line"><span class="string">    (&#x27;</span><span class="keyword">one</span><span class="string">&#x27;, &#x27;</span><span class="number">2.1</span><span class="string">&#x27;), (&#x27;</span>two<span class="string">&#x27;, &#x27;</span><span class="number">0.35</span><span class="string">&#x27;)</span></span><br><span class="line"><span class="string">as t1(col1, col2);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># return one, two</span></span><br><span class="line"><span class="string">select * from test where col1 = 0.0;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># return one</span></span><br><span class="line"><span class="string">select * from test where col1 = 0;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="use-redundant-condition-x2F-column"><a href="#use-redundant-condition-x2F-column" class="headerlink" title="use redundant condition&#x2F;column"></a>use redundant condition&#x2F;column</h3><p>Although we can create function-based indexes, we must look out the over-indexing. And <strong>use a redundant condition</strong> on the most significant column when a range condition combines multiple columns, to avoid some  function-based indexes.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># the will use the index, too. The <span class="keyword">second</span> <span class="keyword">condition</span> <span class="keyword">is</span> redundant, <span class="keyword">to</span> use the index first.</span><br><span class="line"><span class="keyword">SELECT</span> ...</span><br><span class="line">  <span class="keyword">FROM</span> sales                  </span><br><span class="line"> <span class="keyword">WHERE</span> ADDTIME(date_column, time_column)</span><br><span class="line">     <span class="operator">&gt;</span> DATE_ADD(now(), <span class="type">INTERVAL</span> <span class="number">-1</span> <span class="keyword">DAY</span>)</span><br><span class="line">   <span class="keyword">AND</span> date_column</span><br><span class="line">    <span class="operator">&gt;=</span> <span class="type">DATE</span>(DATE_ADD(now(), <span class="type">INTERVAL</span> <span class="number">-1</span> <span class="keyword">DAY</span>)) </span><br></pre></td></tr></table></figure>
+
+<h2 id="Join"><a href="#Join" class="headerlink" title="Join"></a>Join</h2><p>There are 3 kinds of join:</p>
+<ol>
+<li><strong>nested loop join:</strong><ol>
+<li>seems to be the least  useful. Spark doesn’t has this</li>
+<li>Join order is import here</li>
+<li>n+1 problem in orm</li>
+<li>Use case: when the outer loop has very few records and the inner loop can use index, it can be really fast</li>
+</ol>
+</li>
+<li><strong>hash join:</strong> <ol>
+<li>Build the smaller dataset as a hash table. In spark, broadcast hash join &amp; shuffle hash join, both use the hash join in the second join stage.</li>
+<li>The hash table size is the key to the performance. Shrink it both vertically (use more filters and add indexes on the independent filters)  and horizontally (project columns in use)</li>
+<li>use case: often used when joining big table &amp; small table</li>
+</ol>
+</li>
+<li><strong>sort merge join</strong><ol>
+<li>Similar to spark sortMergeJoin</li>
+<li>use case: join two tables with similar size</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"># this will use a <span class="keyword">as</span> <span class="keyword">outer</span> loop</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span></span><br><span class="line">    employees a</span><br><span class="line">        <span class="keyword">join</span> employees b <span class="keyword">on</span> a.last_name <span class="operator">=</span> b.last_name</span><br><span class="line"><span class="keyword">where</span> b.employee_id <span class="operator">&gt;</span> <span class="number">1000</span> <span class="keyword">and</span> a.employee_id <span class="operator">=</span> <span class="number">100</span> <span class="keyword">and</span> a.subsidiary_id <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="operator">|</span><span class="comment">--Nested Loops(Inner Join, WHERE:([employees].[last_name] as [b].[last_name]=[employees].[last_name] as [a].[last_name]))</span></span><br><span class="line">     <span class="operator">|</span><span class="comment">--Nested Loops(Inner Join, OUTER REFERENCES:([Bmk1000]))</span></span><br><span class="line">     <span class="operator">|</span>    <span class="operator">|</span><span class="comment">--Index Seek(OBJECT:([employees].[employees_pk] AS [a]), SEEK:([a].[employee_id]=(100.) AND [a].[subsidiary_id]=(1.)) ORDERED FORWARD)</span></span><br><span class="line">     <span class="operator">|</span>    <span class="operator">|</span><span class="comment">--RID Lookup(OBJECT:([employees] AS [a]), SEEK:([Bmk1000]=[Bmk1000]) LOOKUP ORDERED FORWARD)</span></span><br><span class="line">     <span class="operator">|</span><span class="comment">--Table Scan(OBJECT:([employees] AS [b]), WHERE:([employees].[employee_id] as [b].[employee_id]&gt;(1000.)))</span></span><br><span class="line"></span><br><span class="line"># this will use b <span class="keyword">as</span> <span class="keyword">outer</span> loop even we write the <span class="keyword">join</span> <span class="keyword">order</span> <span class="keyword">as</span> a <span class="keyword">first</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span></span><br><span class="line">    employees a</span><br><span class="line">        <span class="keyword">join</span> employees b <span class="keyword">on</span> a.last_name <span class="operator">=</span> b.last_name</span><br><span class="line"><span class="keyword">where</span> a.employee_id <span class="operator">&gt;</span> <span class="number">1000</span> <span class="keyword">and</span> b.employee_id <span class="operator">=</span> <span class="number">100</span> <span class="keyword">and</span> b.subsidiary_id <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="operator">|</span><span class="comment">--Nested Loops(Inner Join, WHERE:([employees].[last_name] as [b].[last_name]=[employees].[last_name] as [a].[last_name]))</span></span><br><span class="line">     <span class="operator">|</span><span class="comment">--Nested Loops(Inner Join, OUTER REFERENCES:([Bmk1002]))</span></span><br><span class="line">     <span class="operator">|</span>    <span class="operator">|</span><span class="comment">--Index Seek(OBJECT:([employees].[employees_pk] AS [b]), SEEK:([b].[employee_id]=(100.) AND [b].[subsidiary_id]=(1.)) ORDERED FORWARD)</span></span><br><span class="line">     <span class="operator">|</span>    <span class="operator">|</span><span class="comment">--RID Lookup(OBJECT:([employees] AS [b]), SEEK:([Bmk1002]=[Bmk1002]) LOOKUP ORDERED FORWARD)</span></span><br><span class="line">     <span class="operator">|</span><span class="comment">--Table Scan(OBJECT:([employees] AS [a]), WHERE:([employees].[employee_id] as [a].[employee_id]&gt;(1000.)))</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="join-order"><a href="#join-order" class="headerlink" title="join order"></a>join order</h3><p> pipelined execution</p>
+<h2 id="Clustered-Index"><a href="#Clustered-Index" class="headerlink" title="Clustered Index"></a>Clustered Index</h2><p>Clustering data means to store consecutively accessed data closely together so that accessing it requires fewer IO operations.</p>
+<blockquote>
+<p><strong>index clustering factor</strong>:</p>
+<p>The index clustering factor is an indirect measure of the probability that two succeeding index entries refer to the same table block. The optimizer takes this probability into account when calculating the cost value of the <code>TABLE ACCESS BY INDEX ROWID</code> operation.</p>
+</blockquote>
+<p>Index-only  scan</p>
+<p>clustered index: only used when you have one index for a table.  If a table has more than one index, then the other indexes would be the secodary index, which are very inefficient.</p>
+<p><img src="https://use-the-index-luke.com/static/intentional-filter-predicate.en.N5J1kRR3.gif" alt="img"></p>
+<p>index-based access on a heap table:</p>
+<p><img src="https://use-the-index-luke.com/static/fig05_02_index_on_heap_table.en.Mo+uOg1k.png" alt="img"></p>
+<p>Secondary index on an IOT:</p>
+<p><img src="https://use-the-index-luke.com/static/fig05_02_index_on_heap_table.en.Mo+uOg1k.png" alt="img"></p>
+<h2 id="use-index-to-avoid-sorting"><a href="#use-index-to-avoid-sorting" class="headerlink" title="use index to avoid sorting"></a>use index to avoid sorting</h2><h3 id="Order-by"><a href="#Order-by" class="headerlink" title="Order by"></a>Order by</h3><p>pipelined order by</p>
+<p>If the index order corresponds to the <code>order by</code> clause, the database can omit the explicit sort operation.</p>
+<p>Databases can read indexes in both directions.</p>
+<p>When using mixed <code>ASC</code> and <code>DESC</code> modifiers in the <code>order by</code> clause, you must define the index likewise in order to use it for a pipelined <code>order by</code>.</p>
+<p>This does not affect the index’s usability for the <code>where</code> clause.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"># use the index, <span class="keyword">omit</span> <span class="keyword">order</span></span><br><span class="line"><span class="keyword">CREATE</span> INDEX sales_dt_pr <span class="keyword">ON</span> sales (sale_date, product_id)</span><br><span class="line"><span class="keyword">SELECT</span> sale_date, product_id, quantity</span><br><span class="line">  <span class="keyword">FROM</span> sales</span><br><span class="line"> <span class="keyword">WHERE</span> sale_date <span class="operator">=</span> TRUNC(sysdate) <span class="operator">-</span> <span class="type">INTERVAL</span> <span class="string">&#x27;1&#x27;</span> <span class="keyword">DAY</span></span><br><span class="line"> <span class="keyword">ORDER</span> <span class="keyword">BY</span> sale_date, product_id</span><br><span class="line"><span class="comment">---------------------------------------------------------------</span></span><br><span class="line"><span class="operator">|</span>Id <span class="operator">|</span> Operation                   <span class="operator">|</span> Name        <span class="operator">|</span> <span class="keyword">Rows</span> <span class="operator">|</span> Cost <span class="operator">|</span></span><br><span class="line"><span class="comment">---------------------------------------------------------------</span></span><br><span class="line"><span class="operator">|</span> <span class="number">0</span> <span class="operator">|</span> <span class="keyword">SELECT</span> STATEMENT            <span class="operator">|</span>             <span class="operator">|</span>  <span class="number">320</span> <span class="operator">|</span>  <span class="number">300</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> <span class="number">1</span> <span class="operator">|</span>  <span class="keyword">TABLE</span> ACCESS <span class="keyword">BY</span> INDEX ROWID<span class="operator">|</span> SALES       <span class="operator">|</span>  <span class="number">320</span> <span class="operator">|</span>  <span class="number">300</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span><span class="operator">*</span><span class="number">2</span> <span class="operator">|</span>   INDEX <span class="keyword">RANGE</span> SCAN          <span class="operator">|</span> SALES_DT_PR <span class="operator">|</span>  <span class="number">320</span> <span class="operator">|</span>    <span class="number">4</span> <span class="operator">|</span></span><br><span class="line"><span class="comment">--------------------------------------------------------------- </span></span><br><span class="line"></span><br><span class="line"># this query can use index, too, because <span class="keyword">on</span> <span class="keyword">some</span> <span class="keyword">day</span>, the index <span class="keyword">order</span> <span class="keyword">is</span> already requested</span><br><span class="line"><span class="keyword">SELECT</span> sale_date, product_id, quantity</span><br><span class="line">  <span class="keyword">FROM</span> sales</span><br><span class="line"> <span class="keyword">WHERE</span> sale_date <span class="operator">=</span> TRUNC(sysdate) <span class="operator">-</span> <span class="type">INTERVAL</span> <span class="string">&#x27;1&#x27;</span> <span class="keyword">DAY</span></span><br><span class="line"> <span class="keyword">ORDER</span> <span class="keyword">BY</span> product_id</span><br><span class="line"></span><br><span class="line"># use the index, scan reversely</span><br><span class="line"><span class="keyword">SELECT</span> sale_date, product_id, quantity</span><br><span class="line">  <span class="keyword">FROM</span> sales</span><br><span class="line"> <span class="keyword">WHERE</span> sale_date <span class="operator">&gt;=</span> TRUNC(sysdate) <span class="operator">-</span> <span class="type">INTERVAL</span> <span class="string">&#x27;1&#x27;</span> <span class="keyword">DAY</span></span><br><span class="line"> <span class="keyword">ORDER</span> <span class="keyword">BY</span> sale_date <span class="keyword">DESC</span>, product_id <span class="keyword">DESC</span></span><br><span class="line"><span class="comment">---------------------------------------------------------------</span></span><br><span class="line"><span class="operator">|</span>Id <span class="operator">|</span>Operation                    <span class="operator">|</span> Name        <span class="operator">|</span> <span class="keyword">Rows</span> <span class="operator">|</span> Cost <span class="operator">|</span></span><br><span class="line"><span class="comment">---------------------------------------------------------------</span></span><br><span class="line"><span class="operator">|</span> <span class="number">0</span> <span class="operator">|</span><span class="keyword">SELECT</span> STATEMENT             <span class="operator">|</span>             <span class="operator">|</span>  <span class="number">320</span> <span class="operator">|</span>  <span class="number">300</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> <span class="number">1</span> <span class="operator">|</span> <span class="keyword">TABLE</span> ACCESS <span class="keyword">BY</span> INDEX ROWID <span class="operator">|</span> SALES       <span class="operator">|</span>  <span class="number">320</span> <span class="operator">|</span>  <span class="number">300</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span><span class="operator">*</span><span class="number">2</span> <span class="operator">|</span>  INDEX <span class="keyword">RANGE</span> SCAN DESCENDING<span class="operator">|</span> SALES_DT_PR <span class="operator">|</span>  <span class="number">320</span> <span class="operator">|</span>    <span class="number">4</span> <span class="operator">|</span></span><br><span class="line"><span class="comment">---------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"># use mixed <span class="keyword">order</span>, <span class="keyword">define</span> index <span class="keyword">with</span> <span class="keyword">asc</span><span class="operator">/</span><span class="keyword">desc</span>, <span class="keyword">to</span> use the index</span><br><span class="line"><span class="keyword">CREATE</span> INDEX sales_dt_pr <span class="keyword">ON</span> sales (sale_date <span class="keyword">ASC</span>, product_id <span class="keyword">DESC</span>)</span><br><span class="line"><span class="keyword">SELECT</span> sale_date, product_id, quantity</span><br><span class="line">  <span class="keyword">FROM</span> sales</span><br><span class="line"> <span class="keyword">WHERE</span> sale_date <span class="operator">&gt;=</span> TRUNC(sysdate) <span class="operator">-</span> <span class="type">INTERVAL</span> <span class="string">&#x27;1&#x27;</span> <span class="keyword">DAY</span></span><br><span class="line"> <span class="keyword">ORDER</span> <span class="keyword">BY</span> sale_date <span class="keyword">ASC</span>, product_id <span class="keyword">DESC</span></span><br><span class="line"><span class="comment">---------------------------------------------------------------</span></span><br><span class="line"><span class="operator">|</span>Id <span class="operator">|</span> Operation                   <span class="operator">|</span> Name        <span class="operator">|</span> <span class="keyword">Rows</span> <span class="operator">|</span> Cost <span class="operator">|</span></span><br><span class="line"><span class="comment">---------------------------------------------------------------</span></span><br><span class="line"><span class="operator">|</span> <span class="number">0</span> <span class="operator">|</span> <span class="keyword">SELECT</span> STATEMENT            <span class="operator">|</span>             <span class="operator">|</span>  <span class="number">320</span> <span class="operator">|</span>  <span class="number">301</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> <span class="number">1</span> <span class="operator">|</span>  <span class="keyword">TABLE</span> ACCESS <span class="keyword">BY</span> INDEX ROWID<span class="operator">|</span> SALES       <span class="operator">|</span>  <span class="number">320</span> <span class="operator">|</span>  <span class="number">301</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span><span class="operator">*</span><span class="number">2</span> <span class="operator">|</span>   INDEX <span class="keyword">RANGE</span> SCAN          <span class="operator">|</span> SALES_DT_PR <span class="operator">|</span>  <span class="number">320</span> <span class="operator">|</span>    <span class="number">4</span> <span class="operator">|</span></span><br><span class="line"><span class="comment">---------------------------------------------------------------</span></span><br></pre></td></tr></table></figure>
+
+<p>Figure 6.5 Database&#x2F;Feature Matrix</p>
+<p><img src="https://use-the-index-luke.com/static/fig06_05_asc_desc_nulls_overview.en.2+dRUs0p.png" alt="img"></p>
+<h3 id="Group-by"><a href="#Group-by" class="headerlink" title="Group by"></a>Group by</h3><p>pipelined group by</p>
+<p>Two group by algorithms:</p>
+<ul>
+<li>Hash algorithm: aggregates the input records in a temporary hash table. Once all input records are processed, the hash table is returned as the result. </li>
+<li>sort&#x2F;group algorithm: first sorts the input data by the grouping key so that the rows of each group follow each other in immediate succession. Afterwards, the database just needs to aggregate them</li>
+</ul>
+<p>In general, both algorithms need to materialize an intermediate state, so they are not executed in a pipelined manner. Nevertheless the sort&#x2F;group algorithm can use an index to avoid the sort operation, thus enabling a pipelined <code>group by</code>.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">omit</span> sort <span class="keyword">using</span> the index</span><br><span class="line"><span class="keyword">CREATE</span> INDEX sales_dt_pr <span class="keyword">ON</span> sales (sale_date, product_id)</span><br><span class="line"><span class="keyword">SELECT</span> product_id, <span class="built_in">sum</span>(eur_value)</span><br><span class="line">  <span class="keyword">FROM</span> sales</span><br><span class="line"> <span class="keyword">WHERE</span> sale_date <span class="operator">=</span> TRUNC(sysdate) <span class="operator">-</span> <span class="type">INTERVAL</span> <span class="string">&#x27;1&#x27;</span> <span class="keyword">DAY</span></span><br><span class="line"> <span class="keyword">GROUP</span> <span class="keyword">BY</span> product_id</span><br><span class="line"><span class="comment">---------------------------------------------------------------</span></span><br><span class="line"><span class="operator">|</span>Id <span class="operator">|</span>Operation                    <span class="operator">|</span> Name        <span class="operator">|</span> <span class="keyword">Rows</span> <span class="operator">|</span> Cost <span class="operator">|</span></span><br><span class="line"><span class="comment">---------------------------------------------------------------</span></span><br><span class="line"><span class="operator">|</span> <span class="number">0</span> <span class="operator">|</span><span class="keyword">SELECT</span> STATEMENT             <span class="operator">|</span>             <span class="operator">|</span>   <span class="number">17</span> <span class="operator">|</span>  <span class="number">192</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> <span class="number">1</span> <span class="operator">|</span> SORT <span class="keyword">GROUP</span> <span class="keyword">BY</span> NOSORT        <span class="operator">|</span>             <span class="operator">|</span>   <span class="number">17</span> <span class="operator">|</span>  <span class="number">192</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> <span class="number">2</span> <span class="operator">|</span>  <span class="keyword">TABLE</span> ACCESS <span class="keyword">BY</span> INDEX ROWID<span class="operator">|</span> SALES       <span class="operator">|</span>  <span class="number">321</span> <span class="operator">|</span>  <span class="number">192</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span><span class="operator">*</span><span class="number">3</span> <span class="operator">|</span>   INDEX <span class="keyword">RANGE</span> SCAN          <span class="operator">|</span> SALES_DT_PR <span class="operator">|</span>  <span class="number">321</span> <span class="operator">|</span>    <span class="number">3</span> <span class="operator">|</span></span><br><span class="line"><span class="comment">---------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"># cannot use index <span class="keyword">to</span> <span class="keyword">omit</span> the sort <span class="keyword">in</span> the query, thus choose the hash algorithm instead.</span><br><span class="line"><span class="keyword">SELECT</span> product_id, <span class="built_in">sum</span>(eur_value)</span><br><span class="line">  <span class="keyword">FROM</span> sales</span><br><span class="line"> <span class="keyword">WHERE</span> sale_date <span class="operator">&gt;=</span> TRUNC(sysdate) <span class="operator">-</span> <span class="type">INTERVAL</span> <span class="string">&#x27;1&#x27;</span> <span class="keyword">DAY</span></span><br><span class="line"> <span class="keyword">GROUP</span> <span class="keyword">BY</span> product_id</span><br><span class="line"><span class="comment">---------------------------------------------------------------</span></span><br><span class="line"><span class="operator">|</span>Id <span class="operator">|</span>Operation                    <span class="operator">|</span> Name        <span class="operator">|</span> <span class="keyword">Rows</span> <span class="operator">|</span> Cost <span class="operator">|</span></span><br><span class="line"><span class="comment">---------------------------------------------------------------</span></span><br><span class="line"><span class="operator">|</span> <span class="number">0</span> <span class="operator">|</span><span class="keyword">SELECT</span> STATEMENT             <span class="operator">|</span>             <span class="operator">|</span>   <span class="number">24</span> <span class="operator">|</span>  <span class="number">356</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> <span class="number">1</span> <span class="operator">|</span> HASH <span class="keyword">GROUP</span> <span class="keyword">BY</span>               <span class="operator">|</span>             <span class="operator">|</span>   <span class="number">24</span> <span class="operator">|</span>  <span class="number">356</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> <span class="number">2</span> <span class="operator">|</span>  <span class="keyword">TABLE</span> ACCESS <span class="keyword">BY</span> INDEX ROWID<span class="operator">|</span> SALES       <span class="operator">|</span>  <span class="number">596</span> <span class="operator">|</span>  <span class="number">355</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span><span class="operator">*</span><span class="number">3</span> <span class="operator">|</span>   INDEX <span class="keyword">RANGE</span> SCAN          <span class="operator">|</span> SALES_DT_PR <span class="operator">|</span>  <span class="number">596</span> <span class="operator">|</span>    <span class="number">4</span> <span class="operator">|</span></span><br><span class="line"><span class="comment">---------------------------------------------------------------</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Partial-Results"><a href="#Partial-Results" class="headerlink" title="Partial Results"></a>Partial Results</h2><p>Pipeline execution</p>
+<p>Inform the database whenever you don’t need all rows.</p>
+<p>The database can only optimize a query for a partial result if it knows this from the beginning.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">#  The respective top<span class="operator">-</span>N syntax just aborts the execution after fetching ten rows. <span class="keyword">And</span> it <span class="keyword">omit</span> sort <span class="keyword">by</span> <span class="keyword">using</span> index.</span><br><span class="line"># <span class="keyword">SQL</span> Server provides the top clause <span class="keyword">to</span> restrict the number <span class="keyword">of</span> <span class="keyword">rows</span> <span class="keyword">to</span> be fetched.</span><br><span class="line"><span class="keyword">CREATE</span> INDEX sales_dt_pr <span class="keyword">ON</span> sales (sale_date, product_id)</span><br><span class="line"><span class="keyword">SELECT</span> TOP <span class="number">10</span> <span class="operator">*</span></span><br><span class="line">  <span class="keyword">FROM</span> sales</span><br><span class="line"> <span class="keyword">ORDER</span> <span class="keyword">BY</span> sale_date <span class="keyword">DESC</span></span><br><span class="line"><span class="comment">-------------------------------------------------------------</span></span><br><span class="line"><span class="operator">|</span> Operation                     <span class="operator">|</span> Name        <span class="operator">|</span> <span class="keyword">Rows</span> <span class="operator">|</span> Cost <span class="operator">|</span></span><br><span class="line"><span class="comment">-------------------------------------------------------------</span></span><br><span class="line"><span class="operator">|</span> <span class="keyword">SELECT</span> STATEMENT              <span class="operator">|</span>             <span class="operator">|</span>   <span class="number">10</span> <span class="operator">|</span>    <span class="number">9</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>  COUNT STOPKEY                <span class="operator">|</span>             <span class="operator">|</span>      <span class="operator">|</span>      <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>   <span class="keyword">VIEW</span>                        <span class="operator">|</span>             <span class="operator">|</span>   <span class="number">10</span> <span class="operator">|</span>    <span class="number">9</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>    <span class="keyword">TABLE</span> ACCESS <span class="keyword">BY</span> INDEX ROWID<span class="operator">|</span> SALES       <span class="operator">|</span> <span class="number">1004</span>K<span class="operator">|</span>    <span class="number">9</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>     INDEX <span class="keyword">FULL</span> SCAN DESCENDING<span class="operator">|</span> SALES_DT_PR <span class="operator">|</span>   <span class="number">10</span> <span class="operator">|</span>    <span class="number">3</span> <span class="operator">|</span></span><br><span class="line"><span class="comment">-------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"># <span class="keyword">without</span> the index, it must sort the whole <span class="keyword">table</span> <span class="keyword">first</span>, <span class="keyword">and</span> <span class="keyword">then</span> stroke the <span class="keyword">result</span></span><br><span class="line"><span class="keyword">drop</span> index sales_dt_pr</span><br><span class="line"><span class="comment">--------------------------------------------------</span></span><br><span class="line"><span class="operator">|</span> Operation               <span class="operator">|</span> Name  <span class="operator">|</span> <span class="keyword">Rows</span> <span class="operator">|</span>  Cost <span class="operator">|</span></span><br><span class="line"><span class="comment">--------------------------------------------------</span></span><br><span class="line"><span class="operator">|</span> <span class="keyword">SELECT</span> STATEMENT        <span class="operator">|</span>       <span class="operator">|</span>   <span class="number">10</span> <span class="operator">|</span> <span class="number">59558</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>  COUNT STOPKEY          <span class="operator">|</span>       <span class="operator">|</span>      <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>   <span class="keyword">VIEW</span>                  <span class="operator">|</span>       <span class="operator">|</span> <span class="number">1004</span>K<span class="operator">|</span> <span class="number">59558</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>    SORT <span class="keyword">ORDER</span> <span class="keyword">BY</span> STOPKEY<span class="operator">|</span>       <span class="operator">|</span> <span class="number">1004</span>K<span class="operator">|</span> <span class="number">59558</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>     <span class="keyword">TABLE</span> ACCESS <span class="keyword">FULL</span>   <span class="operator">|</span> SALES <span class="operator">|</span> <span class="number">1004</span>K<span class="operator">|</span>  <span class="number">9246</span> <span class="operator">|</span></span><br><span class="line"><span class="comment">--------------------------------------------------</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Control-the-index-scale"><a href="#Control-the-index-scale" class="headerlink" title="Control the index scale!"></a>Control the index scale!</h1><p><strong>Index maintenance is expensive! The tree balance, the block size</strong>… e.g. During insert, once the correct leaf node has been identified, the database confirms that there is enough free space left in this node. If not, the database splits the leaf node and distributes the entries between the old and a new node. This process also affects the reference in the corresponding branch node as that must be duplicated as well. Needless to say, the branch node can run out of space as well so it might have to be split too. In the worst case, the database has to split all nodes up to the root node. This is the only case in which the tree gains an additional layer and grows in depth.</p>
+<p>Nevertheless, the performance without indexes is so good that it can make sense to <strong>temporarily drop all indexes while loading large amounts of data</strong>—provided the indexes are not needed by any other SQL statements in the meantime. This can unleash a dramatic speed-up which is visible in the chart and is, in fact, a common practice in data warehouses.</p>
+<h1 id="Horizontal-scalability"><a href="#Horizontal-scalability" class="headerlink" title="Horizontal scalability"></a>Horizontal scalability</h1><p>Bigger hardware is not always faster—but it can usually handle more load. </p>
+<p>With more nodes, you have complex consistency problems to solve; and there is network latency and even firewall latency between nodes. It is really not always faster, even slower.</p>
+<blockquote>
+<p>Performance has two dimensions: response time and throughput.<br>More hardware will typically not improve query response time.<br>Proper indexing is the best way to improve query response time.</p>
+</blockquote>
+<h1 id="Questions"><a href="#Questions" class="headerlink" title="Questions"></a>Questions</h1><ul>
+<li><input checked="" disabled="" type="checkbox"> How’s the tree traversal going? especially on each node, branch node, leaf node?</li>
+</ul>
+<ol>
+<li>For leaf node, <ol>
+<li>if it’s index unique scan, then it will locate a leaf node, and then use binary search or traverse that leaf node (from the image, it should be  using tragersing), that will touch the target.</li>
+<li>If it’s index range scan, then it will locate a start_leaf_node (maybe end_leaf_node by the sort order), and then it can determine all the rows to fetch.</li>
+<li>If decide to not use index, it will traverse all the table rows</li>
+</ol>
+</li>
+<li>For branch node,<ol>
+<li>if it’s the index unique scan, then it will traverse the balance tree to get to the only target leaf node.</li>
+<li>if it’s the index range scan, then it will traverse the balance tree to get to the start_leaf_node (and the end_leaf_node &#x3D;&#x3D;&#x3D;&gt; maybe optional)</li>
+<li>if it’s no index scan, then it will not traverse any branch nodes, and to to the table directly</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> If we traverse the branch node &amp; the leaf node in the same way, and the branch node &amp; the leaf node contain the same count of entries, then they are the same for step (1) and step (2)</li>
+</ul>
+<ol>
+<li>for unique scan, yes, it is. For range scan, no, you need to traverse several leaf nodes sequentially.</li>
+</ol>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> For equality condition and concatenated index, does the order in where matter?<ul>
+<li><input checked="" disabled="" type="checkbox"> No. What matters is the the order in index. When there is  range condition in where, the index column order matters.</li>
+</ul>
+</li>
+<li><input checked="" disabled="" type="checkbox"> why for like operator, it only uses the characters <em>before the first wild card</em> during tree traversal???<ul>
+<li><input checked="" disabled="" type="checkbox"> because if  you want to traverse, you must know some leading chars to conduct the traversing. No leading chars, how to traverse?</li>
+</ul>
+</li>
+<li><input checked="" disabled="" type="checkbox"> if we create indexes for multiple column, in index searching, will it use all these indexes or just pick one???<ol>
+<li>will use all  indexes, and then trigger the index merge</li>
+<li>Then the database must scan both indexes first and then combine the results. The duplicate index lookup alone already involves more effort because the database has to traverse two index trees. Additionally, the database needs a lot of memory and CPU time to combine the intermediate results.</li>
+</ol>
+</li>
+<li><input checked="" disabled="" type="checkbox"> how does the bitmap index work?<ul>
+<li><input checked="" disabled="" type="checkbox"> <a href="http://yihongwei.com/2012/03/data-structure-bitmap/">bitmap explain</a></li>
+<li><input checked="" disabled="" type="checkbox"> <a href="http://yihongwei.com/2012/03/data-structure-bitmap/">bitmap use cases</a></li>
+<li><input checked="" disabled="" type="checkbox"> <a href="https://www.cnblogs.com/lbser/p/3322630.html">bitmap index in example</a></li>
+</ul>
+</li>
+<li><input checked="" disabled="" type="checkbox"> Why is there nested loop join? How oracle choose the 3 kinds of join? Is join order important for the hash join &amp; sort merge join?<ul>
+<li><input checked="" disabled="" type="checkbox"> Nested loop join: when the outer loop records are little and the inner loop can use index, it may be very fast, whereas the sort merge join must sort &amp; merge which can be slower</li>
+<li><input checked="" disabled="" type="checkbox"> Sort merge join: often used when join two tables with simlar size</li>
+<li><input checked="" disabled="" type="checkbox"> hash join: other used when join big table and small table</li>
+<li><input checked="" disabled="" type="checkbox"> Join order: seems that the optimizer will optimize it.</li>
+</ul>
+</li>
+<li><input checked="" disabled="" type="checkbox"> How to share this knowlege?<ul>
+<li><input checked="" disabled="" type="checkbox"> By knowing the index structure, what improvment we can conduct?</li>
+<li><input checked="" disabled="" type="checkbox"> What kind of strategy to improve performance?<ul>
+<li><input checked="" disabled="" type="checkbox"> use the index</li>
+<li><input checked="" disabled="" type="checkbox"> join (order, hash join, sort merge join)</li>
+<li><input checked="" disabled="" type="checkbox"> clustering data</li>
+<li><input checked="" disabled="" type="checkbox"> decrease I&#x2F;O</li>
+</ul>
+</li>
+<li><input checked="" disabled="" type="checkbox"> some principals</li>
+</ul>
+</li>
+<li><input checked="" disabled="" type="checkbox"> Can hive have index?<ul>
+<li><input checked="" disabled="" type="checkbox"> it has index first, but dropped since 3.0 because it’s kind of useless in hive</li>
+</ul>
+</li>
+<li><input checked="" disabled="" type="checkbox"> why does hive remove index?<ul>
+<li><input checked="" disabled="" type="checkbox"> because if we save data in columnar file formats (parquet&#x2F;orc), the data is kind of indexed by nature. </li>
+<li><input checked="" disabled="" type="checkbox"> And there’s materialized views with automatic rewriting. This will improve performance to some extent, maybe from this way it works similarily to indexing??</li>
+<li><input checked="" disabled="" type="checkbox"> see <a href="https://juejin.cn/post/6844904118872440840">什么是列式存储</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="practice"><a href="#practice" class="headerlink" title="practice"></a>practice</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># concatenated indexes <span class="keyword">order</span> (pk1, pk2, pk3)</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> test <span class="keyword">where</span> pk1 <span class="operator">=</span> <span class="string">&#x27;x&#x27;</span> <span class="keyword">and</span> pk2 <span class="operator">=</span> <span class="string">&#x27;y&#x27;</span>;</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> test <span class="keyword">where</span> pk2 <span class="operator">=</span> <span class="string">&#x27;y&#x27;</span> <span class="keyword">and</span> pk1 <span class="operator">=</span> <span class="string">&#x27;x&#x27;</span>;</span><br><span class="line"></span><br><span class="line"># index <span class="keyword">range</span> <span class="keyword">search</span> maybe slower than <span class="keyword">table</span> <span class="keyword">full</span> scan</span><br><span class="line"># does the cost, <span class="keyword">rows</span> <span class="keyword">in</span> explain correct <span class="keyword">when</span> there<span class="string">&#x27;s no statistics? How to get the statistics?</span></span><br><span class="line"><span class="string">select * from test where pk1 = &#x27;</span>x<span class="string">&#x27; and val1 = &#x27;</span>v<span class="string">&#x27;;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Sharing-notes"><a href="#Sharing-notes" class="headerlink" title="Sharing notes"></a>Sharing notes</h1><ul>
+<li>今天关注的是 sql 的 how，为什么要关注 how？<ul>
+<li>Sql 分离了 what &amp; how。sql 语句是对 what 的描述，但我们需要关注 how 吗？<ul>
+<li>需要。sql 的写法，直接影响 performance，很多时候是很大程度的影响，所以需要关注</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数据库存储结构是怎么样的？（剖析了结构后，才能知道 how）<ul>
+<li>索引的结构：b+ 树 + 双向链表</li>
+<li>索引的分类：<ul>
+<li>复合索引</li>
+<li>function-based 索引</li>
+<li>clustered 索引</li>
+<li>Partial index</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Query optimizer（how）<ul>
+<li>Cost-based optimizer</li>
+<li>execution plan</li>
+<li>execution plan 是怎么选择的</li>
+<li>statistics 是怎么获取的？</li>
+</ul>
+</li>
+<li>基于我们定义的索引，query 是如何被执行的？（How with instances）<ul>
+<li>简单的 equal 查询 （use the index）</li>
+<li>简单的 range 查询（use the index）</li>
+<li>function-based 查询（use the index？？？— need to change the index）</li>
+<li>复合索引查询（wrong order）（use the index？？？—no)</li>
+<li>复合索引查询（correct order - all cols)（use the index)</li>
+<li>复合索引查询（correct order - first few cols)（use the index）</li>
+<li>聚簇索引（单 table 单索引）</li>
+<li>聚簇索引（单 table 多索引）</li>
+<li>order by (use the index)</li>
+<li>group by (use the index)</li>
+<li>parameterized queries（why it’s better）</li>
+<li>like</li>
+<li>Implict type conversion</li>
+</ul>
+</li>
+<li>Some key points<ul>
+<li>index for equality first—then for ranges.</li>
+<li>Keep the scanned index range as small as possible</li>
+<li>Take care of over-indexing. </li>
+<li>Always aim to index the original data as that is often the most useful information you can put into an index.</li>
+<li>Avoid function-based indexing for expressions that cannot be used as access predicates.</li>
+<li>Avoid <code>select *</code> and fetch only the columns you need.</li>
+<li>concatenated index instead of multiple single col index on a table</li>
+<li>index order is very important</li>
+<li>prefer parameterized query</li>
+<li>Avoid implict type conversion</li>
+<li>Always aim to index the original data as that is often the most useful information you can put into an index</li>
+<li>only use clustered index when you have one index for a table</li>
+<li>be carefule with <code>like</code>, expecially when the leading chars are generic chars</li>
+</ul>
+</li>
+</ul>
+<h1 id=""><a href="#" class="headerlink" title=""></a></h1>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/database/" rel="tag"># database</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/06/28/Cache-Memory/" rel="prev" title="Cache Memory">
+                  <i class="fa fa-chevron-left"></i> Cache Memory
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/07/23/network/" rel="next" title="network">
+                  network <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cherish</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>Word count total: </span>
+    <span title="Word count total">518k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>Reading time total &asymp;</span>
+    <span title="Reading time total">7:51</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+<script class="next-config" data-name="chatra" type="application/json">{"enable":true,"async":true,"id":null}</script>
+<script src="/js/third-party/chat/chatra.js"></script>
+<script async src="https://call.chatra.io/chatra.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
