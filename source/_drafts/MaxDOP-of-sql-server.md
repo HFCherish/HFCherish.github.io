@@ -3,7 +3,8 @@ title: MaxDOP of sql server
 toc: true
 date: 2020-04-08 12:43:51
 tags:
-	sql-server
+    - sql-server
+    - database
 ---
 
 # What's MaxDOP
@@ -19,7 +20,5 @@ By default, it's 0, which means no limit, and sql server may use all the process
 When setting it as 1, you alwase process the query sequentially. You suppress the parallel plan generation.
 
 Why? While this options seems to give better performance on queries and other options, why do we want to reduce it?
-
-
 
 Say a server 

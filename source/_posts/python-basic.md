@@ -160,6 +160,91 @@ This involves use of the modules **setuptools** and **distutils**.
 
 6. install a package with `python setup.py install`.
 
+## Module
+
+In Python, a module is a file containing Python code that defines functions, classes, and variables that can be used in other Python programs. Modules allow code organization, reusability, and encapsulation.
+
+To use a module in your Python program, you need to import it using the `import` statement. Here's an example:
+
+```python
+# Importing the math module
+import math
+
+# Using functions from the math module
+print(math.sqrt(25))  # Output: 5.0
+print(math.pi)        # Output: 3.141592653589793
+```
+
+Python also allows you to import specific functions or variables from a module using the `from ... import` statement. Here's an example:
+
+```python
+# Importing specific functions from the math module
+from math import sqrt, pi
+
+# Using the imported functions directly
+print(sqrt(25))  # Output: 5.0
+print(pi)        # Output: 3.141592653589793
+```
+
+You can also import a module with a different name using the `as` keyword. This is useful when you want to provide a shorter or more descriptive alias for the module. 
+
+```python
+# Importing the math module with an alias
+import math as m
+
+# Using the alias to access functions and constants
+print(m.sqrt(25))  # Output: 5.0
+print(m.pi)        # Output: 3.141592653589793
+```
+
+Python also supports creating your own modules by creating Python files with `.py` extension. For example, let's assume we have a file named `my_module.py` containing the following code:
+
+```python
+# my_module.py
+
+def greet(name):
+    print(f"Hello, {name}!")
+
+my_variable = 42
+```
+
+We can then use this module in another Python program:
+
+```python
+# Importing a user-defined module
+import my_module
+
+# Using functions and variables from the module
+my_module.greet("John")  # Output: Hello, John!
+print(my_module.my_variable)  # Output: 42
+```
+
+In this case, we import the `my_module` module and use the `greet` function and `my_variable` variable defined in that module.
+
+Modules provide a way to organize and reuse code in Python, allowing you to break your program into smaller, manageable pieces. They help promote code modularity, readability, and maintainability.
+
+### python -m
+
+The `python -m` syntax is used to execute a module as a script using the Python interpreter. It allows you to run a Python module directly from the command line **without explicitly specifying the module's file path** (This is the difference between `python -m xxx` cand `python  /path/to/xxx.py`).
+
+When you use the `python -m` syntax, Python treats the specified argument as a module name and looks for that module in the module search path (`sys.path`). It then executes the module as if it were a script.
+
+Here's an example to illustrate the usage of `python -m`:
+
+```shell
+python -m unittest discover -s tests -p '*_test.py'
+```
+
+In this example, `python -m unittest` is used to run the `unittest` module as a script. The `discover` command is passed as an argument to the `unittest` module, and it is responsible for automatically discovering and running unit tests.
+
+The `-s tests` option specifies the starting directory for test discovery. In this case, it looks for tests in the `tests` directory.
+
+The `-p '*_test.py'` option defines a pattern for discovering test files. It looks for files that end with `_test.py`.
+
+By using `python -m`, you ensure that the `unittest` module is executed as a script, regardless of the specific location of the `unittest` module file.
+
+This `python -m` syntax is useful when working with Python modules that provide command-line interfaces or when you want to run a module as a standalone script without specifying the full path to the module's file.
+
 ## \__init__.py
 
 [Python __init__.py 作用详解](https://www.cnblogs.com/Lands-ljk/p/5880483.html)

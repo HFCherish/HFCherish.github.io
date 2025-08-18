@@ -15,6 +15,10 @@ In summary, to meet the needs of an Internet-scale distributed hypermedia system
 
 REST is a coordinated set of architectural constraints that attempts to minimize latency and network communication while at the same time maximizing the independence and scalability of component implementations. This is achieved by placing constraints on connector semantics where other styles have focused on component semantics. REST enables the caching and reuse of interactions, dynamic substitutability of components, and processing of actions by intermediaries, thereby meeting the needs of an Internet-scale distributed hypermedia system.
 
+> RESTful 架构风格是对互联网架构的反思。那么互联网架构的核心在于开放性和扩展性，因而 RESTful 架构风格的核心也是***开放性和扩展性***。因为开放，使得 RESTful API 的供应者不会对客户端作出任何假设。就好像互联网服务器并不会假设它的客户端只有浏览器一样，wget、telnet 等等都是可能的客户端；而因为扩展性，RESTful API 只会为客户端提供最基本的功能，大量的计算被分布到了客户端侧进行。
+> 
+> 这种架构的假设是不同于企业应用的客户端与服务器架构的，在企业应用架构的语境中，客户端与服务器有更多的耦合。服务端更多地是为客户端提供服务，而不是保持自己开放和稳定。那么为什么 RESTful API 最终还是成为“行业主流”了呢（虽然真的会，和真的用的人并不多）？***因为从大趋势上来说，将企业内的能力（而不仅仅是后台）构造成开放 API，并围绕着开放 API，形成企业内生态是大势。在这个大势之下，RESTful API、MicroService、企业内生态、能力平台、中台形成了一条清晰的企业架构现代化之路***。仅仅服务于某些（或者某个）前台的后台服务，终将会淡出历史的舞台。
+
 # What's REST
 
 REST is an architectural style that defines a set of constraints and elements for designing networked applications.

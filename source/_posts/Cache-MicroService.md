@@ -6,7 +6,6 @@ tags:
 date: 2020-06-03 10:42:53
 ---
 
-
 # Where is my cache for a service
 
 [Architectural Patterns for Caching Microservices](Architectural Patterns for Caching Microservices)
@@ -68,4 +67,3 @@ Now, there is no mature **HTTP Reverse Proxy Cache Sidecar** solution at all. Ng
 # Caching Practices
 
 * Always use caching in one place for a service. Mutliple caches will make the cache invalication and error-prone difficult.
-

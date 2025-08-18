@@ -24,6 +24,47 @@ date: 2019-01-10 10:17:01
 * [GraphX](https://spark.apache.org/docs/2.4.0/graphx-programming-guide.html) for graph processing
 * [Spark Streaming](https://spark.apache.org/docs/2.4.0/streaming-programming-guide.html).
 
+## Core concepts???
+
+- **RDDs (Resilient Distributed Datasets)**: RDDs are the fundamental data structure in Spark. They are immutable and can be split into multiple partitions that can be processed in parallel.
+- **Transformations:** Transformations are operations that are applied to RDDs to create new RDDs. Transformations are lazy, which means that they are not executed until an action is called.
+- **Actions:** Actions are operations that are applied to RDDs to produce a result. Actions trigger the execution of all of the transformations that have been applied to the RDD.
+- **DAG (Directed Acyclic Graph)**: A DAG is a graph that represents the dependencies between transformations. Spark uses DAGs to schedule and execute transformations.
+- **SparkContext:** The SparkContext is the entry point to the Spark API. It provides methods for creating RDDs, submitting jobs, and managing resources.
+- **SparkSession:** The SparkSession is a newer API that provides a simpler and more concise way to use Spark. It is built on top of the SparkContext and provides a number of additional features, such as support for SQL and machine learning.
+
+Spark Core is the foundation of Apache Spark and provides the essential functionality and APIs for distributed data processing. Here are some key Spark Core concepts explained with examples:
+
+1. Resilient Distributed Datasets (RDDs): RDDs are the fundamental data structure in Spark Core. They represent an immutable distributed collection of objects that can be processed in parallel across a cluster. RDDs can be created from data in Hadoop Distributed File System (HDFS), local file systems, or by transforming existing RDDs. Here's an example of creating an RDD from a list of numbers:
+
+```scala
+val numbers = List(1, 2, 3, 4, 5)
+val rdd = sparkContext.parallelize(numbers)
+```
+
+2. Transformations: Transformations are operations performed on RDDs to create new RDDs. Transformations are lazy and do not execute immediately but build a lineage graph to track the transformations applied. Examples of transformations include `map`, `filter`, `flatMap`, and `reduceByKey`. Here's an example of applying a transformation to square each element of an RDD:
+
+```scala
+val squaredRDD = rdd.map(num => num * num)
+```
+
+3. Actions: Actions are operations that trigger the execution of computations and return results or write data to external systems. Actions initiate the evaluation of RDDs and can trigger lineage-based optimizations. Examples of actions include `collect`, `count`, `reduce`, and `saveAsTextFile`. Here's an example of performing a sum operation on an RDD:
+
+```scala
+val sum = squaredRDD.reduce((a, b) => a + b)
+```
+
+4. Spark Context: The Spark Context (`sparkContext`) is the entry point and the central coordinator for Spark Core. It establishes a connection to the Spark cluster and manages the execution environment. The Spark Context is used to create RDDs and perform operations on them. Here's an example of creating a Spark Context:
+
+```scala
+import org.apache.spark.{SparkConf, SparkContext}
+
+val conf = new SparkConf().setAppName("MySparkApp").setMaster("local[*]")
+val sparkContext = new SparkContext(conf)
+```
+
+These are the core concepts of Spark Core that lay the foundation for distributed data processing in Apache Spark. By understanding RDDs, transformations, actions, and the Spark Context, you can build powerful and scalable data processing applications using Spark.
+
 ### Spark Core
 
 Spark Core is the fundamental unit of the whole Spark project. Its key features are:
@@ -64,8 +105,9 @@ When you call `collect()` on an RDD or Dataset, the whole data is sent to the **
 > 
 > 1. The ***driver program\*** is this entire piece of code, running all 8 steps.
 > 2. Producing the entire HTML card set on step 5 is a ***job\*** (clear because we are using the *save* action, not a transformation). Same with the *collect* on step 8
-> 3. Other steps will be organized into ***stages\***, with each job being the result of a sequence of stages. For simple things a job can have a single stage, but the need to repartition data (for instance, the join on step 3) or anything that breaks the locality of the data usually causes more stages to appear. You can think of stages as computations that produce intermediate results, which can in fact be persisted. For instance, we can persist RDD1 since we'll be using it more than once, avoiding recomputation.
-> 4. All 3 above basically talk about how the *logic* of a given algorithm will be broken. In contrast, a ***task\*** is a particular *piece of data* that will go through a given stage, on a given executor.
+> 3. Other steps will be organized into ***stages\***, with each job being the result of a sequence of stages. For simple things a job can have a single stage, but the need to repartition data (for instance, the join on step 3) or anything that breaks the locality of the data usually causes more stages to appear. 
+> 4. You can think of stages as computations that produce intermediate results, which can in fact be persisted. For instance, we can persist RDD1 since we'll be using it more than once, avoiding recomputation.
+> 5. All 3 above basically talk about how the *logic* of a given algorithm will be broken. In contrast, a ***task\*** is a particular *piece of data* that will go through a given stage, on a given executor.
 
 ### RDD
 
@@ -125,6 +167,8 @@ if __name__ == "__main__":
 
 # How does it run
 
+[Cluster Mode Overview - Spark 3.4.1 Documentation](https://spark.apache.org/docs/latest/cluster-overview.html)
+
 Spark core contains the main api, driver engine, scheduler... to support the cluster computing. The real computing is completed on the cluster. Spark can connect to many cluster managers(spark's own standalone cluster manager, mesos, yarn) to complete the jobs. Typically, the process is like this:
 
 1. The user submits a spark application using the `spark-submit` command.
@@ -140,13 +184,173 @@ Spark core contains the main api, driver engine, scheduler... to support the clu
 
 ![Complete Picture of Apache Spark Job Execution Flow.](https://d2h0cx97tjks2p.cloudfront.net/blogs/wp-content/uploads/sites/2/2017/08/Internals-of-job-execution-in-spark.jpg)
 
+## Execution Framework???
+
+The execution framework in Apache Spark is responsible for executing the computations on RDDs and managing the distributed processing across a cluster. Spark provides a flexible execution model that optimizes the execution of transformations and actions based on the directed acyclic graph (DAG) of the computation. Let's explore the execution framework with examples:
+
+1. DAG Scheduling: Spark's execution framework utilizes a DAG scheduler to analyze the sequence of transformations applied on RDDs and determine an optimal execution plan. It breaks down the computation into stages, where each stage represents a set of transformations that can be executed independently. For example:
+
+```scala
+val rdd = sparkContext.parallelize(List(1, 2, 3, 4, 5))
+val squaredRDD = rdd.map(num => num * num)
+val sum = squaredRDD.reduce((a, b) => a + b)
+```
+
+In this example, Spark recognizes that the `map` transformation can be executed in a single stage, and the `reduce` action requires a separate stage.
+
+2. Task Execution: Spark's execution framework assigns tasks to the available executors in the cluster. Each task is a unit of computation that operates on a subset of the data. The tasks are sent to the executors, where they are executed in parallel. Spark dynamically partitions the data and assigns partitions to different tasks for efficient parallel processing. For example:
+
+```scala
+val data = sparkContext.parallelize(1 to 1000)
+val filteredData = data.filter(num => num % 2 == 0)
+val count = filteredData.count()
+```
+
+In this example, Spark distributes the data across the cluster and assigns tasks to different partitions of the RDD for parallel execution.
+
+3. Lazy Evaluation: Spark's execution framework incorporates lazy evaluation, which means that transformations on RDDs are not executed immediately. Instead, Spark builds a lineage graph that tracks the transformations applied to the RDDs. The transformations are evaluated only when an action is triggered. This allows Spark to optimize the execution plan based on the entire computation flow. For example:
+
+```scala
+val rdd = sparkContext.parallelize(List(1, 2, 3, 4, 5))
+val squaredRDD = rdd.map(num => num * num)
+val filteredRDD = squaredRDD.filter(num => num > 10)
+val count = filteredRDD.count()
+```
+
+In this example, Spark defers the execution of transformations until the `count` action is called. It optimizes the execution plan by combining the `map` and `filter` operations into a single stage.
+
+4. Data Shuffling: Spark's execution framework handles data shuffling, which is the process of redistributing data across the cluster. Shuffling occurs when operations like groupBy, sortBy, or join require data to be redistributed to ensure that related data is co-located. The execution framework optimizes data shuffling by minimizing data movement and leveraging in-memory operations when possible.
+
+5. Fault Tolerance: Spark's execution framework provides fault tolerance by maintaining the lineage information of RDDs. If a partition or task fails, Spark can use the lineage graph to recompute the lost or corrupted data. This ensures the resiliency and reliability of computations.
+
+Overall, Spark's execution framework efficiently manages the distributed execution of transformations and actions on RDDs. It optimizes the execution plan, leverages parallel processing, and provides fault tolerance to ensure fast and reliable data processing across large-scale clusters.
+
+The Spark execution framework consists of the following components:
+
+- **SparkContext:** The SparkContext is the entry point to the Spark API. It provides methods for creating RDDs, submitting jobs, and managing resources.
+- **DAGScheduler:** The DAGScheduler is responsible for scheduling Spark jobs. It creates a Directed Acyclic Graph (DAG) of transformations and then schedules the execution of the DAG.
+- **TaskScheduler:** The TaskScheduler is responsible for executing Spark jobs. It assigns tasks to executors and monitors the progress of tasks.
+- **Executors:** Executors are the worker nodes in a Spark cluster. They are responsible for executing tasks.
+- **Driver:** The driver is the main process in a Spark cluster. It is responsible for submitting jobs, managing resources, and collecting results.
+
+The Spark execution framework works as follows:
+
+1. A user submits a Spark job to the driver.
+2. The driver creates a SparkContext.
+3. The SparkContext creates a DAG of transformations.
+4. The DAGScheduler schedules the execution of the DAG.
+5. The TaskScheduler assigns tasks to executors.
+6. The executors execute the tasks.
+7. The driver collects the results of the tasks.
+
+The Spark execution framework is a powerful and flexible system that can be used to run a wide variety of Spark jobs. It is designed to be efficient and scalable, and it can be used to run jobs on a variety of cluster sizes.
+
+Here are some examples of how the Spark execution framework can be used:
+
+- To run a simple word count job, you can use the following code:
+
+```
+import org.apache.spark.sql.SparkSession
+
+object WordCount {
+
+  def main(args: Array[String]) {
+
+    // Create a SparkSession
+    val spark = SparkSession.builder.appName("WordCount").getOrCreate()
+
+    // Read the input data
+    val inputData = spark.read.text("input.txt")
+
+    // Split the input data into words
+    val words = inputData.flatMap(_.split(" "))
+
+    // Count the number of occurrences of each word
+    val counts = words.countByValue()
+
+    // Print the results
+    counts.show()
+
+  }
+
+}
+```
+
 # API
 
 You can write spark function (eg. map function, reduce funciton) using Java/scala/python/R API. See [api docs](https://spark.apache.org/docs/latest/).
 
 # Installation On Yarn
 
-See [run spark on Yarn](https://spark.apache.org/docs/2.4.0/running-on-yarn.html), [Install, Configure, and Run Spark on Top of a Hadoop YARN Cluster](https://www.linode.com/docs/databases/hadoop/install-configure-run-spark-on-top-of-hadoop-yarn-cluster/)
+See [run spark on Yarn](https://spark.apache.org/docs/2.4.0/running-on-yarn.html), https://www.linode.com/docs/databases/hadoop/install-configure-run-spark-on-top-of-hadoop-yarn-cluster/
+
+## understand spark installation
+
+Here, we have:
+
+- **machine 'A'**: which is the place to install spark and run `spark-submit` script
+  
+  - this can be inside or outside of yarn cluster
+  
+  - spark is installed here
+  
+  - yarn configuration files(e.g. `yarn-site.xml`), hadoop configuration files (e.g. `core-site.xml`) must be maintained here. And in the `spark-env.sh`, `HADOOP_CONF_DIR` and `YARN_CONF_DIR` must be set to point the these configuration files.
+
+- **yarn cluster**: where the spark applications really run. 
+  
+  - We don't need to pre-install spark here.
+  
+  - YARN will take care of distributing the necessary Spark binaries (JAR) to the nodes dynamically when you submit a Spark application.
+
+- **`spark.yarn.jars` Configuration** (used in `spark-submit`)
+  
+  - specifies the Spark JARs that will be distributed to the YARN cluster when you submit your application. This version should match the Spark version installed on machine 'A'.
+  - If not specified, the default jars, located in `lib` directory of your Spark installation on machine 'A'
+
+- Key properties in `yarn-site.xml` that can be relevant for Spark on a client machine:
+
+```xml
+<!-- YARN ResourceManager address -->
+<property>
+  <name>yarn.resourcemanager.address</name>
+  <value><YARN_RESOURCEMANAGER_ADDRESS></value>
+</property>
+```
+
+- Key properties in `core-site.xml` that can be relevant for Spark on a client machine:
+  
+  ```xml
+  <!-- Hadoop NameNode address -->
+  <property>
+    <name>fs.defaultFS</name>
+    <value><HADOOP_NAMENODE_ADDRESS></value>
+  </property>
+  ```
+
+### spark versions
+
+There are 4 versions in topic:
+
+1. **Version 1: Spark Dependency Version (Application Code):**
+   
+   - This is the version of Spark that your application code depends on when you write and build your Spark application. It includes Spark libraries and APIs used in your code.
+
+2. **Version 2: Installed Spark Version on Machine 'A' (spark-submit):**
+   
+   - This is the version of Spark installed on the machine from which you submit your Spark application using `spark-submit`. It is the Spark version that the `spark-submit` script uses to package and submit your application to the cluster.
+
+3. **Version 3: Spark Version for Driver and Executors (spark.yarn.jars):**
+   
+   - This is the Spark version used by the driver program and executors running on the YARN cluster. The `spark.yarn.jars` configuration points to the Spark JARs (libraries) that will be distributed to the YARN cluster for executing your application.
+   - If `spark.yarn.jars` not specified, this version is the same as the Version 2, as the jar of that installed spark is used.
+
+4. **Version 4: Spark Version Installed on YARN Cluster:**
+   
+   - This is the version of Spark installed on the machines in the YARN cluster where your Spark application will run. This is in fact the same as Version 3.  Version 3 is the configuration, and Version 4 is the final distributed binaries based on this configuration.
+
+Generally speaking, all these versions, in fact the first 3 versions, should point to the same spark binary distribution to avoid compatibility issues. Version 1 and Version 3 must be the same. Even though when `spark.yarn.jars` provided, the Version 2 may not influence at all. We still recommend to keep it the same to avoid some unknown compatible issues.
+
+## install
 
 1. [downloads page](https://spark.apache.org/downloads.html) download the spark
 
@@ -171,6 +375,8 @@ spark.driver.memory    512m
 spark.yarn.am.memory    512m
 spark.executor.memory          512m
 ```
+
+
 
 ## history server config
 
@@ -307,6 +513,115 @@ df.withColumn('new_column', lit(10))
 
 [hive hints](https://spark.apache.org/docs/latest/sql-ref-syntax-qry-select-hints.html#partitioning-hints)
 
+# PySpark???
+
+## context switching
+
+When executing Python code, such as Pandas or PySpark UDFs, the related data is processed within the executor's Python interpreter. The executor's Python interpreter operates directly on the data available on the executor node, without the need to transfer the data back to the driver node.
+
+This is one of the benefits of using PySpark and executing Python code within the Spark framework. The data is distributed across the worker nodes, and the Python code is executed in parallel on the executor nodes where the data resides. This avoids unnecessary data transfer between the executor nodes and the driver node, which can improve performance and reduce network overhead.
+
+When you invoke Python code, such as a Pandas or PySpark UDF, on a Spark DataFrame, the processing happens in a distributed manner on the executor nodes. Each executor processes the corresponding subset of the data and applies the Python code to that subset independently. The results are then combined, and the final result is returned to the driver node.
+
+It's worth noting that the data transfer between the executor nodes and the driver node typically occurs when there is a need to **exchange intermediate results, aggregate data, or perform actions that require collecting data to the driver**, such as calling `collect()` or `toPandas()`. In those cases, the relevant data is transferred from the executor nodes to the driver node. However, for processing performed within the executor's Python interpreter, the data remains on the executor node and is processed locally within the Python environment of each executor.
+
+Within each executor process on the worker nodes, there is an instance of the Spark engine. The Spark engine is responsible for coordinating the execution of tasks, managing data partitions, optimizing query plans, and handling data distribution and parallelization.
+
+The Spark engine within the executor process, often referred to as the "Spark Task Execution Engine," is implemented in Java and runs within the JVM portion of the executor. It handles the coordination and execution of tasks assigned to that executor, manages data partitioning, and applies optimizations to the execution plan.
+
+The Python interpreter within the executor process interacts with the Spark engine through a bridge, commonly known as the PySpark API or PySpark Gateway. This bridge facilitates the communication and coordination between the Python interpreter and the Spark engine. It allows the Python interpreter to send instructions and data to the Spark engine, and the Spark engine to send results and intermediate data back to the Python interpreter.
+
+The PySpark API acts as a bridge between the Python code and the Spark engine, enabling seamless integration between Python and Spark. It allows Python code, including Pandas or PySpark UDFs, to interact with the Spark engine's distributed computing capabilities and leverage its optimizations and parallel processing.
+
+Through this bridge, the Python interpreter can issue Spark operations, manipulate distributed data, and coordinate with the Spark engine for task execution, data shuffling, and data serialization. The Spark engine, in turn, manages the execution plan, coordinates task execution across worker nodes, and optimizes the execution for distributed processing.
+
+So, in summary, there is a Spark engine within each executor process on the worker nodes, and there is a bridge (PySpark API) that facilitates communication between the Python interpreter and the Spark engine within the executor process.
+
+--------------wrong????-----------------------
+
+1. The Python interpreter referred to in the context of PySpark is primarily associated with the driver program. The driver program runs the user code and coordinates the execution of the Spark job. It initiates the execution of tasks on the worker nodes (executors) and manages the overall workflow of the Spark application.
+
+When a PySpark UDF is used, the UDF code itself runs within the Python interpreter on the driver. However, the data on which the UDF operates is distributed across the worker nodes. PySpark leverages a client-server architecture to transfer the necessary data from the worker nodes to the Python interpreter on the driver. This means that when the UDF is applied to a DataFrame column, the data required for computation is shipped from the executor nodes to the driver node. This movement of data incurs serialization and deserialization overhead.
+
+2. When using PySpark to define a UDF, the UDF operates within the Python environment. The UDF defined in Python is not directly converted to a Scala UDF. Instead, PySpark provides a bridge between Python and the underlying Spark engine, allowing the execution of Python code within the Spark framework. The UDF is executed by the Python interpreter on the driver, and the necessary data is shipped from the executors to the driver for computation.
+
+3. Let's dive into the practices mentioned in more detail:
+- Use Broadcast Variables: Spark's broadcast variables allow you to efficiently share small read-only data structures across all the tasks in a Spark job. Instead of sending the data separately to each executor, the data is broadcasted to all the nodes, reducing the need for repeated serialization and deserialization. This is particularly useful when you have small lookup tables or configuration data that is required by multiple tasks. Broadcasting such variables helps in avoiding the overhead of transferring the same data to each task individually.
+
+- Utilize Vectorized Operations: Vectorized operations refer to performing operations on entire arrays or columns of data instead of individual elements. Libraries like NumPy and Pandas provide vectorized operations, which process data in bulk using optimized low-level operations. By leveraging these libraries within PySpark, you can take advantage of efficient vectorized operations and reduce the need for individual serialization and deserialization of data. This can significantly improve performance, especially when working with large datasets.
+
+By using broadcast variables and utilizing vectorized operations, you can optimize the performance of your PySpark applications by reducing the serialization overhead and minimizing data movement across the Python and Java/Scala runtime environments.
+
+1. The bridge between Python and the underlying Spark engine is primarily established on the driver node. PySpark acts as a connector between the Python code running on the driver and the Spark engine, which is typically implemented in Scala and Java. The driver node runs the Python interpreter and coordinates the execution of Spark tasks on the executor nodes.
+
+2. The Scala UDF definition/registration is sent to the executor nodes during the execution of a Spark job. When you define or register a Scala UDF, it is part of the overall job's execution plan. When the job is submitted to Spark for execution, the plan is distributed to the worker nodes (executors). The necessary functions, including the Scala UDF, are then available on each executor to perform the required computations.
+
+3. When utilizing vectorized operations with libraries like Pandas or NumPy within PySpark, it is correct that the data required for processing needs to be sent from the data nodes to the driver node. This transfer of data incurs serialization and deserialization overhead. However, vectorized operations are designed to process data in bulk, leveraging highly optimized low-level operations. This allows for efficient computation within the Python interpreter on the driver node, potentially reducing the overall processing time. It's important to consider the trade-off between the serialization overhead and the performance gain achieved through vectorized operations. This approach is most effective when the benefits of vectorized operations outweigh the cost of data transfer between the nodes.
+
+Certainly! Let's walk through the end-to-end process and the components involved when a PySpark application is submitted. We'll consider a scenario where both Spark UDFs and Python UDFs are registered and used, and Pandas is utilized to process certain columns. The example will cover the key components and steps involved in the process:
+
+1. Driver Node and Application Submission:
+   
+   - The driver node is a machine where the PySpark application is submitted and executed.
+   - The driver node runs the Python interpreter and initiates the execution of the Spark application.
+
+2. Spark Context and Session:
+   
+   - The Spark Context (SparkContext) is created on the driver node as the entry point to the Spark application.
+   - The Spark Session (SparkSession) is a higher-level API that provides a unified interface for interacting with Spark and enables DataFrame and Dataset operations.
+
+3. Job Execution and Task Distribution:
+   
+   - The PySpark application code, including the registration of Spark UDFs and Python UDFs, is executed on the driver node.
+   - The application code defines transformations and actions on Spark DataFrames or RDDs.
+   - Spark breaks down the transformations into a directed acyclic graph (DAG) of stages and tasks.
+   - The tasks are distributed across the worker nodes (executors) for parallel execution.
+
+4. Data Processing:
+   
+   - When a transformation or action is invoked, Spark creates a logical plan that represents the computations required.
+   - If a Python UDF is used, data required for processing is transferred from the executor nodes to the driver node for UDF computation.
+   - If a Spark UDF is used, the UDF computation occurs within the Spark engine on the executor nodes, without data transfer to the driver.
+
+5. Serialization and Deserialization:
+   
+   - Data serialization and deserialization occur when transferring data between the Python and Java/Scala runtime environments.
+   - When using Pandas to process columns, the data may need to be serialized for transfer to the driver and deserialized back into Pandas DataFrame structures.
+
+6. Spark Catalyst Optimizer and Execution:
+   
+   - Spark's Catalyst optimizer analyzes the logical plan and optimizes it by applying various rule-based transformations to generate an optimized physical plan.
+   - The optimized physical plan is executed by the Spark engine on the executor nodes, leveraging Spark's execution engine components such as the Task Scheduler, Shuffle Manager, and Memory Management.
+
+7. Result Aggregation and Return:
+   
+   - The results of transformations and actions are aggregated and returned to the driver node.
+   - If required, Pandas can be used to process the result data on the driver node, leveraging its functionality for further analysis or visualization.
+
+It's important to note that the components and steps involved can vary depending on the specifics of the PySpark application and the cluster configuration. The example provided highlights the major components and steps, focusing on the interactions between the driver node, executor nodes, and data transfer between Python and Java/Scala environments.
+
+----------------wrong????------------------
+
+## pyspark udf vs scala udf
+
+Certainly! Let's delve into the performance aspect of using UDFs defined in Scala versus PySpark in more detail:
+
+1. Execution Engine Integration: Scala UDFs have a closer integration with Spark's execution engine since Scala is the native language for Spark. This tight integration allows Scala UDFs to leverage Spark's Catalyst optimizer and take advantage of advanced query optimization techniques. This can potentially lead to better query planning and execution, resulting in improved performance.
+
+2. Serialization and Deserialization Overhead: When using PySpark UDFs, data must be serialized and deserialized between the Python and Java/Scala runtime environments. This incurs additional overhead and can impact performance, especially when working with large datasets. In contrast, Scala UDFs avoid this serialization overhead since they operate directly within the Spark engine.
+
+3. JIT Compilation: Scala benefits from just-in-time (JIT) compilation provided by the Java Virtual Machine (JVM). This means that Scala UDFs can be optimized at runtime, potentially resulting in better performance. In contrast, Python code executed within PySpark does not have the same level of JIT compilation, which can lead to slower execution.
+
+4. Data Movement and Shuffling: Both Scala and PySpark UDFs may involve data movement and shuffling operations, which can impact performance. However, since Scala UDFs have a closer integration with Spark's execution engine, they may enable more efficient data processing and minimize data shuffling, leading to better performance in certain scenarios.
+
+It's important to note that the performance impact of using UDFs can vary depending on the specific workload, data size, and operations performed. In some cases, the overhead introduced by PySpark UDFs may not be significant, especially if the UDFs themselves are not the main bottleneck in the application. Additionally, other factors such as cluster configuration, data skew, and overall data processing pipeline design can also influence performance.
+
+To determine the performance implications of using UDFs, it's recommended to benchmark and profile your specific Spark application using both Scala and PySpark implementations. This will provide insights into the actual performance differences and help you make an informed decision based on your specific requirements and constraints.
+
+## Arrow
+
+[Apache Arrow in PySpark 3.4.1 documentation](https://spark.apache.org/docs/latest/api/python/user_guide/sql/arrow_pandas.html)
+
 # Optimization
 
 [deep dive - spark optimization](https://www.youtube.com/watch?v=daXEp4HmS-E)
@@ -335,7 +650,9 @@ working memory 不够有很多原因：
 3. 有不均衡出现，导致某些 task 处理的数据尤其多 ====》see [balance](#balance)
 4. 有太多 persist，持久化了太多东西，占用过多的 storage memory ====》see [persistence](#persistence)
 
-![image-20210319124829765](/Users/zhenzheng/code/hfcherish.github.io/source/images/spark-storage-hierachy.png)
+![image-20210319124829765](../images/spark-storage-hierachy.png)
+
+![memory overhead](../images/spark-memory-overhead.png)
 
 ## 指定资源需求<a name="specify-resources" />
 
@@ -410,13 +727,13 @@ Balance 体现在很多方面：网络、GC、数据，当然最常见的问题�
 
 通过查看 spark ui 可以看到不均匀的任务（这个时候需要停掉重跑）：
 
-1. 查看 staggling tasks
+1. 查看 straggling tasks
    1. 查看 stage 执行进度：stage 里剩余几个 task 执行特别慢，这个时候各个 task 处理的数据肯定存在不均匀，导致那几个 task 处理的尤其慢
-      1. ![image-20210317130715804](/Users/zhenzheng/code/hfcherish.github.io/source/images/spark-straggling-task1.png)
+      1. ![image-20210317130715804](../images/spark-straggling-task1.png)
    2. 查看 stage 执行 metric：大部分时候没有 spill，但是 max 的时候有 spill；或者大部分的时候 read size 和 max read size 有很大差别
-      1. ![image-20210317130618356](/Users/zhenzheng/code/hfcherish.github.io/source/images/spark-straggling-task2.png)
+      1. ![image-20210317130618356](../images/spark-straggling-task2.png)
 2. 查看 stage 里各个节点的 GC time，GC time 分布不均匀，也是有问题的（什么问题？？）
-   1. ![image-20210317130839506](/Users/zhenzheng/code/hfcherish.github.io/source/images/spark-gc-skew.png)
+   1. ![image-20210317130839506](../images/spark-gc-skew.png)
 3. 
 
 ## Persistence<a name="persistence" />
@@ -547,3 +864,18 @@ spark.conf.set("spark.sql.adaptive.shuffle.targetPostShuffleInputSize", '1342177
 ## Null-aware predicate sub-queries cannot be used in nested conditions
 
 `not in` 不能和 `or` 之类的 condition 一块用。现在好像还没有修复，参见：[SPARK-25154](https://github.com/apache/spark/pull/22141)
+
+# References
+
+1. Apache Spark Documentation: The official documentation for Apache Spark is an excellent resource to understand Spark's concepts, APIs, and optimization techniques. It includes a Quick Start guide and in-depth documentation on Spark's features and optimizations.
+
+2. Hadoop Definitive Guide: Although this is a book, it is freely available online. "Hadoop: The Definitive Guide" by Tom White provides a comprehensive understanding of Hadoop and its ecosystem. It covers various optimization techniques and best practices for managing Hadoop clusters.
+
+3. YouTube Tutorials:
+   
+   - Simplilearn's Spark Tutorial: Simplilearn offers a comprehensive Spark tutorial series on YouTube, covering various aspects of Spark programming, optimization, and cluster management.
+   - Hadoop Tutorials by edureka!: edureka! provides a playlist of Hadoop tutorials on YouTube that cover the basics of Hadoop, including optimization and cluster management topics.
+
+4. Apache Hadoop YouTube Channel: The official Apache Hadoop YouTube channel hosts a collection of videos covering different topics related to Hadoop. You can find videos on optimization techniques, cluster management, and other Hadoop-related aspects.
+
+5. Hortonworks Community Connection (HCC): Hortonworks Community Connection is a platform where Hadoop enthusiasts share knowledge and resources. It includes articles, tutorials, and videos related to Hadoop optimization and cluster management. You can explore the HCC website to find relevant resources.

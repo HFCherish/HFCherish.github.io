@@ -7,6 +7,7 @@ title: 使用 hexo + github 部署博客
 参考这个[知乎文章安装](https://zhuanlan.zhihu.com/p/26625249)
 
 ## 1. 准备 node、git
+
 ## 2. 安装 hexo-cli
 
 ```sh
@@ -14,6 +15,7 @@ $ npm i -g hexo-cli
 ```
 
 ## 3. 创建一个网站
+
 ```
 $ hexo init xxx.github.io
 ```
@@ -42,20 +44,20 @@ $ npm d
 
 注意：
 
->1. 可以选择同时部署到多个服务器。多写几个 'deploy' 配置即可
->2. git 用户名、网站用户名（`xxx.github.io` 中的 `xxx`）必须相同。因为它相当于使用 github 服务器
+> 1. 可以选择同时部署到多个服务器。多写几个 'deploy' 配置即可
+> 2. git 用户名、网站用户名（`xxx.github.io` 中的 `xxx`）必须相同。因为它相当于使用 github 服务器
 
 # 设置 theme
 
 在 [官方 themes](https://hexo.io/themes/index.html) 里挑。我比较喜欢以下几款：
 
 1. 带目录结构的：
-	2. [cactus](https://github.com/probberechts/hexo-theme-cactus/blob/master/README.md)：英文的，有几种颜色可以选，带目录，可以配置搜索，简洁，这是[white 版本的](https://probberechts.github.io/hexo-theme-cactus/cactus-white/public/archives/)
-	3. [aircloud](https://github.com/aircloud/hexo-theme-aircloud)：英文中文都 ok，有目录，还可以搜索
-	4. [next](https://github.com/theme-next/hexo-theme-next)：有目录，也有集成搜索的文档，这是一个 [example](http://www.itfanr.cc/about/)，参照 [第三方集成](https://theme-next.iissnan.com/third-party-services.html) 集成搜索等功能
-	5. [yilia](https://github.com/litten/hexo-theme-yilia)：有目录，有搜索，[owner 博客](http://litten.me/2017/12/29/diary-2017-1222-1229/)
-3. 没有目录，没有 tag
-	3. [apollo](https://github.com/pinggod/hexo-theme-apollo)：[blog](http://pinggod.com/archives/) 是中文的，比较简单，颜色也好看
+   2. [cactus](https://github.com/probberechts/hexo-theme-cactus/blob/master/README.md)：英文的，有几种颜色可以选，带目录，可以配置搜索，简洁，这是[white 版本的](https://probberechts.github.io/hexo-theme-cactus/cactus-white/public/archives/)
+   3. [aircloud](https://github.com/aircloud/hexo-theme-aircloud)：英文中文都 ok，有目录，还可以搜索
+   4. [next](https://github.com/theme-next/hexo-theme-next)：有目录，也有集成搜索的文档，这是一个 [example](http://www.itfanr.cc/about/)，参照 [第三方集成](https://theme-next.iissnan.com/third-party-services.html) 集成搜索等功能
+   5. [yilia](https://github.com/litten/hexo-theme-yilia)：有目录，有搜索，[owner 博客](http://litten.me/2017/12/29/diary-2017-1222-1229/)
+2. 没有目录，没有 tag
+   3. [apollo](https://github.com/pinggod/hexo-theme-apollo)：[blog](http://pinggod.com/archives/) 是中文的，比较简单，颜色也好看
 
 配置很简单，以 [yilia](https://github.com/litten/hexo-theme-yilia) 为例：
 
@@ -76,15 +78,15 @@ $ vi themes/yilia/_config.yml
 ## 修改 hexo config
 $ vi _config.yml
 theme_config:
-	...
-	...
-	...
-
+    ...
+    ...
+    ...
 ```
 
 # 发表博客
 
 ## 1. [创建博客](https://hexo.io/zh-cn/docs/commands.html#new)
+
 利用命令创建一个博客，存放在 `source/_posts/` 下。然后可以编辑这个文件。刷新页面就可以看到博客有更新了
 
 ```
@@ -94,6 +96,7 @@ $ hexo new titlename
 也可以直接把 md 文件 copy 到 `source/_posts/` 下，可以添加 [`frong-matter`](https://hexo.io/zh-cn/docs/front-matter.html) 指定 category、tag 等。
 
 ## 2. [生成静态文件](https://hexo.io/zh-cn/docs/generating.html)
+
 `hexo g` 会根据 md 生成 html、css 等静态文件。文章写完后，利用这个命令生成静态文件，然后再 `hexo d` 部署即可。
 
 也可以使用下述命令（两个命令等价），指同时 `generate` + `deploy`

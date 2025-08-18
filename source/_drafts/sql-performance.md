@@ -3,7 +3,7 @@ title: sql performance
 toc: true
 date: 2020-07-22 14:37:30
 tags:
-	- database
+    - database
 ---
 
 [sql performance explained](https://use-the-index-luke.com/sql/anatomy)
@@ -28,18 +28,20 @@ However, developers needs to know how. Because the access path is what influence
 * a leaf node is saved in a database block or page (the database's smallest storage unit). All blocks are of the same size, typically a few kilobytes.
 * a leaf node contains several ordered index entries.
 * Each index entry consists of the indexed columns (the key, column 2) and refers to the corresponding table row (via `ROWID` or `RID`)
-*  the index order is maintained on two different levels: the index entries within each leaf node, and the leaf nodes among each other using a doubly linked list.
+* the index order is maintained on two different levels: the index entries within each leaf node, and the leaf nodes among each other using a doubly linked list.
 
 ![leaf nodes](https://use-the-index-luke.com/static/fig01_01_index_leaf_nodes.en.MMHwYDFb.png)
 
-**B-Tree (branch nodes)**
+**B+ Tree (branch nodes)**
+
+[b+ tree simulator](https://www.cs.usfca.edu/~galles/visualization/BPlusTree.html)
 
 * a balanced search tree
 
 > The tree traversal is a very efficient operation—so efficient that I refer to it as the *first power of indexing*.
->
+> 
 > That is primarily because of the tree balance, which allows accessing all elements with the same number of steps, and secondly because of the logarithmic growth of the tree depth.
->
+> 
 >  That means that the tree depth grows very slowly compared to the number of leaf nodes. Real world indexes with millions of records have a tree depth of four or five. A tree depth of six is hardly ever seen. 
 
 ![b-tree structure](https://use-the-index-luke.com/static/fig01_02_tree_structure.en.BdEzalqw.png)
@@ -67,21 +69,21 @@ Every index causes ongoing maintenance. Function-based indexes are particularly 
 
 [slow indexes II](https://use-the-index-luke.com/sql/where-clause/the-equals-operator/slow-indexes-part-ii)
 
->The query optimizer, or query planner, is the database component that transforms an SQL statement into an execution plan. This process is also called *compiling* or *parsing*. There are two distinct optimizer types.
->
->Cost-based optimizers (CBO) generate many execution plan variations and calculate a cost value for each plan. The cost calculation is based on the operations in use and the estimated row numbers. In the end the cost value serves as the benchmark for picking the “best” execution plan.
->
->Rule-based optimizers (RBO) generate the execution plan using a hard-coded rule set. Rule based optimizers are less flexible and are seldom used today.
+> The query optimizer, or query planner, is the database component that transforms an SQL statement into an execution plan. This process is also called *compiling* or *parsing*. There are two distinct optimizer types.
+> 
+> Cost-based optimizers (CBO) generate many execution plan variations and calculate a cost value for each plan. The cost calculation is based on the operations in use and the estimated row numbers. In the end the cost value serves as the benchmark for picking the “best” execution plan.
+> 
+> Rule-based optimizers (RBO) generate the execution plan using a hard-coded rule set. Rule based optimizers are less flexible and are seldom used today.
 
 ## How does the cost-based optimizer works
 
->A cost-based optimizer uses statistics about tables, columns, and indexes. Most statistics are collected on the column level: the number of distinct values, the smallest and largest values (data range), the number of `NULL` occurrences and the column histogram (data distribution). The most important statistical value for a table is its size (in rows and blocks).
->
->The most important index statistics are the tree depth, the number of leaf nodes, the number of distinct keys and the clustering factor (see [Chapter 5, “*Clustering Data*”](https://use-the-index-luke.com/sql/clustering)).
->
->The optimizer uses these values to estimate the selectivity of the `where` clause predicates.
->
->If there are no statistics available—for example because they were deleted—the optimizer uses default values. The default statistics of the Oracle database suggest a small index with medium selectivity. 
+> A cost-based optimizer uses statistics about tables, columns, and indexes. Most statistics are collected on the column level: the number of distinct values, the smallest and largest values (data range), the number of `NULL` occurrences and the column histogram (data distribution). The most important statistical value for a table is its size (in rows and blocks).
+> 
+> The most important index statistics are the tree depth, the number of leaf nodes, the number of distinct keys and the clustering factor (see [Chapter 5, “*Clustering Data*”](https://use-the-index-luke.com/sql/clustering)).
+> 
+> The optimizer uses these values to estimate the selectivity of the `where` clause predicates.
+> 
+> If there are no statistics available—for example because they were deleted—the optimizer uses default values. The default statistics of the Oracle database suggest a small index with medium selectivity. 
 
 The following plan shows that the `INDEX RANGE SCAN` will return 40 rows. It is a gross underestimate, as there are 1000 employees working for this subsidiary.
 
@@ -105,7 +107,7 @@ Predicate Information (identified by operation id):
 ---------------------------------------------------
   1 - filter("LAST_NAME"='WINAND')
   2 - access("SUBSIDIARY_ID"=30)
-  
+
 # execution plan with statitics
 ---------------------------------------------------------------
 |Id |Operation                   | Name         | Rows | Cost |
@@ -119,7 +121,7 @@ Predicate Information (identified by operation id):
 ---------------------------------------------------
   1 - filter("LAST_NAME"='WINAND')
   2 - access("SUBSIDIARY_ID"=30)
-  
+
 # execution plan 2 (picked when with statitics, and it's in fact faster)
 SELECT /*+ NO_INDEX(EMPLOYEES EMPLOYEES_PK) */ 
        first_name, last_name, subsidiary_id, phone_number
@@ -142,8 +144,6 @@ The execution plan with statistics uses the column histograms to estimate the nu
 
 Column histograms are most useful if the values are not uniformly distributed. For columns with uniform distribution, it is often sufficient to divide the number of distinct values by the number of rows in the table. This method also works when using bind parameters.
 
-
-
 ## the estimates are wrong?
 
 Contradicting estimates often indicate problems with the statistics.
@@ -163,18 +163,14 @@ Predicate Information (identified by operation id):
   2 - access(UPPER("LAST_NAME")='WINAND')
 ```
 
->The Oracle database maintains the information about the number of distinct column values as part of the table statistics. These figures are reused if a column is part of multiple indexes.
->
+> The Oracle database maintains the information about the number of distinct column values as part of the table statistics. These figures are reused if a column is part of multiple indexes.
+
 Statistics for a function-based index (FBI) are also kept on table level as virtual columns. Although the Oracle database collects the *index statistics* for new indexes automatically ([since release 10*g*](https://docs.oracle.com/cd/B14117_01/server.101/b10763/compat.htm#sthref320)), it does not update the *table statistics*. For this reason, the Oracle documentation recommends updating the table statistics after creating a function-based index:
->
->
->
+
 > After creating a function-based index, collect statistics on both the index and its base table using the `DBMS_STATS` package. Such statistics will enable Oracle Database to correctly decide when to use the index.
->
+> 
 > — [Oracle Database SQL Language Reference](https://docs.oracle.com/database/122/SQLRF/CREATE-INDEX.htm#GUID-1F89BBC0-825F-4215-AF71-7588E31D8BFE__I2100962)
->
->
->
+
 My personal recommendation goes even further: after every index change, update the statistics for the base table and all its indexes. That might, however, also lead to unwanted side effects. Coordinate this activity with the database administrators (DBAs) and make a backup of the original statistics.
 
 ## Statistics
@@ -215,7 +211,7 @@ Pipelined `order by` is the third power of indexing.
 **Avoid `select *` and fetch only the columns you need.**
 
 > In general, a database can use a concatenated index when searching with the leading (leftmost) columns. An index with three columns can be used when searching for the first column, when searching with the first two columns together, and when searching using all columns.
->
+> 
 > Even though the two-index solution delivers very good `select` performance as well, the single-index solution is preferable. It not only saves storage space, but also the maintenance overhead for the second index. The fewer indexes a table has, the better the `insert`, `delete` and `update` performance.
 
 ```sql
@@ -225,8 +221,6 @@ SELECT first_name, last_name  FROM employees WHERE subsidiary_id = 20; # slow qu
 CREATE UNIQUE INDEX employees_pk ON employees (subsidiary_id, employee_id);
 SELECT first_name, last_name  FROM employees WHERE subsidiary_id = 20; # index used
 ```
-
-
 
 ![img](https://use-the-index-luke.com/static/fig02_01_concatenated_index.en.Q-6eso0Z.png)
 
@@ -260,11 +254,11 @@ Requirements:
 * Besides *being* deterministic, PostgreSQL and the Oracle database require functions to be *declared* to be deterministic when used in an index so you have to use the keyword `DETERMINISTIC` (Oracle) or `IMMUTABLE` (PostgreSQL).
 
 > An index whose definition contains functions or expressions is a so-called function-based index (FBI). Instead of copying the column data directly into the index, **a function-based index applies the function first and puts the result into the index.** As a result, the index stores the names in all caps notation.
->
+> 
 > The database can use a function-based index if the *exact* expression of the index definition appears in an SQL statement
->
+> 
 > **Warning**:
->
+> 
 > Sometimes ORM tools use `UPPER` and `LOWER` without the developer’s knowledge. Hibernate, for example, [injects an implicit `LOWER`](https://use-the-index-luke.com/sql/myth-directory/dynamic-sql-is-slow#myth-dynamic-sql-sample) for case-insensitive searches.
 
 ```sql
@@ -293,9 +287,11 @@ SELECT numeric_number FROM table_name WHERE numeric_number - 1000 > ?
 benefits:
 
 * Security
+  
   * Bind variables are the best way to prevent [SQL injection](https://en.wikipedia.org/wiki/SQL_injection).
 
-*  Performance
+* Performance
+  
   * Databases with an execution plan cache like SQL Server and the Oracle database can reuse an execution plan when executing the same statement multiple times. It saves effort in rebuilding the execution plan but works only if the SQL statement is *exactly* the same. If you put different values into the SQL statement, the database handles it like a different statement and recreates the execution plan.   When using bind parameters you do not write the actual values but instead insert placeholders into the SQL statement. That way the statements do not change when executing them with different values.
   * this will only work if the data is equally distributted (for skewed data, the better plan maybe changed for each query value,  see [query optimizer](#query-optimizer)). However, generating and evaluating all execution plan variants is a huge effort that does not pay off if you get the same result in the end anyway. Not using bind parameters is like recompiling a program every time.
     * Example: Unevenly distributed status codes like “todo” and “done” are a good example. The number of “done” entries often exceeds the “todo” records by an order of magnitude. Using an index only makes sense when searching for “todo” entries in that case.
@@ -303,15 +299,15 @@ benefits:
 
 You should **always use bind parameters except for** values that *shall* influence the execution plan. In all reality, there are only a few cases in which the actual values affect the execution plan. You should therefore use bind parameters if in doubt—just to prevent SQL injections.
 
->### Cursor Sharing and Forced Parameterization
->
->The more complex the optimizer and the SQL query become, the more important execution plan caching becomes. Many databases use a shared execution plan cache like DB2, the Oracle database, or SQL Server.
->
->The SQL Server and Oracle databases have features to automatically replace the literal values in a SQL string with bind parameters. These features are called `CURSOR_SHARING` (Oracle) or forced parameterization (SQL Server).
->
->Both features are workarounds for applications that do not use bind parameters at all. Enabling these features prevents developers from intentionally using literal values.
->
->[Planning for Execution Plan Reuse](https://use-the-index-luke.com/blog/2011-07-16/planning-for-reuse)
+> ### Cursor Sharing and Forced Parameterization
+> 
+> The more complex the optimizer and the SQL query become, the more important execution plan caching becomes. Many databases use a shared execution plan cache like DB2, the Oracle database, or SQL Server.
+> 
+> The SQL Server and Oracle databases have features to automatically replace the literal values in a SQL string with bind parameters. These features are called `CURSOR_SHARING` (Oracle) or forced parameterization (SQL Server).
+> 
+> Both features are workarounds for applications that do not use bind parameters at all. Enabling these features prevents developers from intentionally using literal values.
+> 
+> [Planning for Execution Plan Reuse](https://use-the-index-luke.com/blog/2011-07-16/planning-for-reuse)
 
 Example (See also: [`PreparedStatement` ](https://docs.oracle.com/javase/6/docs/api/java/sql/PreparedStatement.html)class documentation): 
 
@@ -329,17 +325,22 @@ command.setInt(1, subsidiary_id);
 
 When the data is unevenly distributed, the sharing cache may bring new problems and bugs. The optimizer may try to use some **smart logic** to make it work better.
 
->The Oracle database uses a shared execution plan cache (“SQL area”) and is fully exposed to the problem described in this section.
->
+> The Oracle database uses a shared execution plan cache (“SQL area”) and is fully exposed to the problem described in this section.
+
 Oracle introduced the so-called bind peeking with release 9*i*. Bind peeking enables the optimizer to use the actual bind values of the first execution when preparing an execution plan. The problem with this approach is its nondeterministic behavior: the values from the first execution affect all executions. The execution plan can change whenever the database is restarted or, less predictably, the cached plan expires and the optimizer recreates it using different values the next time the statement is executed.
->
+
+> 
+
 Release 11*g* introduced adaptive cursor sharing to further improve the situation. This feature allows the database to cache multiple execution plans for the same SQL statement. Further, the optimizer peeks the bind parameters and stores their estimated selectivity along with the execution plan. When the cache is subsequently accessed, the selectivity of the current bind values must fall within the selectivity ranges of a cached execution plan to be reused. Otherwise the optimizer creates a new execution plan and compares it against the already cached execution plans for this query. If there is already such an execution plan, the database replaces it with a new execution plan that also covers the selectivity estimates of the current bind values. If not, it caches a new execution plan variant for this query — along with the selectivity estimates, of course.
 
 Sql server has similar polices, and adds **hints** to help the decision (see [smart optimizer logic in other database](https://use-the-index-luke.com/sql/where-clause/obfuscation/smart-logic)):
->SQL Server uses so-called parameter sniffing. Parameter sniffing enables the optimizer to use the actual bind values of the first execution during parsing. The problem with this approach is its nondeterministic behavior: the values from the first execution affect all executions. The execution plan can change whenever the database is restarted or, less predictably, the cached plan expires and the optimizer recreates it using different values the next time the statement is executed.
->
+
+> SQL Server uses so-called parameter sniffing. Parameter sniffing enables the optimizer to use the actual bind values of the first execution during parsing. The problem with this approach is its nondeterministic behavior: the values from the first execution affect all executions. The execution plan can change whenever the database is restarted or, less predictably, the cached plan expires and the optimizer recreates it using different values the next time the statement is executed.
+
 SQL Server 2005 added new query hints to gain more control over parameter sniffing and recompiling. The query hint RECOMPILE bypasses the plan cache for a selected statement. OPTIMIZE FOR allows the specification of actual parameter values that are used for optimization only. Finally, you can provide an entire execution plan with the USE PLAN hint.
->
+
+> 
+
 The original implementation of the OPTION(RECOMPILE) hint had a bug so it did not consider all bind variables. The new implementation introduced with SQL Server 2008 had another bug, making the situation very confusing. Erland Sommarskog has collected all the relevant information covering all SQL Server releases.
 
 ### Like
@@ -365,8 +366,6 @@ Predicate Information (identified by operation id):
    2 - access(UPPER("LAST_NAME") LIKE 'WIN%D')
        filter(UPPER("LAST_NAME") LIKE 'WIN%D')
 ```
-
-
 
 ### index merge
 
@@ -396,8 +395,6 @@ With *partial* (PostgreSQL) or *filtered* (SQL Server) indexes you can specify t
 CREATE INDEX messages_todo ON messages (receiver) WHERE processed = 'N'
 ```
 
-
-
 ### Obfuscated conditions
 
 #### null in the oracle
@@ -410,7 +407,7 @@ In oracle:
 2. for single column index, it's in fact partial index, since all the rows with null index column are not included in the index.
    1. however, for concatenated indexes, only when all the index columns are null, the row won't be indexed.
 3. For some query that requests `null` rows, Oracle only use the index when it knows the index is not nullable. When the index col is nullable, oracle thinks that some rows are not included in the index. And then for some queries, the indexes won't be used, e.g. `count(*)`. Oracle can knows an index is not nullable in the following ways:
-   1.  `NOT NULL` constraint on the indexing column
+   1. `NOT NULL` constraint on the indexing column
    2. non-null constant expression as the index
    3. **Some internal functions** that oracles knows (for other user defined functitons, oracle sees it as blackbox). `NOT NULL` constraint may still be required. e.g. `UPPER(last_name)`
 
@@ -442,7 +439,7 @@ SELECT ...
  WHERE sale_date >= TO_DATE('1970-01-01', 'YYYY-MM-DD') 
    AND sale_date <  TO_DATE('1970-01-01', 'YYYY-MM-DD') 
                   + INTERVAL '1' DAY                 
-                  
+
 # this won't use index either, since in like, the `sale_date` will be converted to string implicitly
 select * from sales where sale_date like TO_DATE('1970-01-01', 'YYYY-MM-DD') 
 ```
@@ -460,9 +457,9 @@ e.g.
 ```sql
 # In spark, it's the same. Alwasy explicitly convert types.
 create temporary view test as select * from values 
-	('one', '2.1'), ('two', '0.35')
+    ('one', '2.1'), ('two', '0.35')
 as t1(col1, col2);
-	
+
 # return one, two
 select * from test where col1 = 0.0;
 
@@ -483,8 +480,6 @@ SELECT ...
    AND date_column
     >= DATE(DATE_ADD(now(), INTERVAL -1 DAY)) 
 ```
-
-
 
 ## Join
 
@@ -529,8 +524,6 @@ where a.employee_id > 1000 and b.employee_id = 100 and b.subsidiary_id = 1;
      |--Table Scan(OBJECT:([employees] AS [a]), WHERE:([employees].[employee_id] as [a].[employee_id]>(1000.)))
 ```
 
-
-
 ### join order
 
  pipelined execution
@@ -540,14 +533,12 @@ where a.employee_id > 1000 and b.employee_id = 100 and b.subsidiary_id = 1;
 Clustering data means to store consecutively accessed data closely together so that accessing it requires fewer IO operations.
 
 > **index clustering factor**:
->
+> 
 > The index clustering factor is an indirect measure of the probability that two succeeding index entries refer to the same table block. The optimizer takes this probability into account when calculating the cost value of the `TABLE ACCESS BY INDEX ROWID` operation.
 
 Index-only  scan
 
 clustered index: only used when you have one index for a table.  If a table has more than one index, then the other indexes would be the secodary index, which are very inefficient.
-
-
 
 ![img](https://use-the-index-luke.com/static/intentional-filter-predicate.en.N5J1kRR3.gif)
 
@@ -668,8 +659,6 @@ SELECT product_id, sum(eur_value)
 ---------------------------------------------------------------
 ```
 
-
-
 ## Partial Results
 
 Pipeline execution
@@ -706,10 +695,7 @@ drop index sales_dt_pr
 |    SORT ORDER BY STOPKEY|       | 1004K| 59558 |
 |     TABLE ACCESS FULL   | SALES | 1004K|  9246 |
 --------------------------------------------------
-
 ```
-
-
 
 # Control the index scale!
 
@@ -723,14 +709,13 @@ Bigger hardware is not always faster—but it can usually handle more load.
 
 With more nodes, you have complex consistency problems to solve; and there is network latency and even firewall latency between nodes. It is really not always faster, even slower.
 
->Performance has two dimensions: response time and throughput.
-More hardware will typically not improve query response time.
-Proper indexing is the best way to improve query response time.
+> Performance has two dimensions: response time and throughput.
+> More hardware will typically not improve query response time.
+> Proper indexing is the best way to improve query response time.
 
 # Questions
 
 - [x] How's the tree traversal going? especially on each node, branch node, leaf node?
-
 1. For leaf node, 
    1. if it's index unique scan, then it will locate a leaf node, and then use binary search or traverse that leaf node (from the image, it should be  using tragersing), that will touch the target.
    2. If it's index range scan, then it will locate a start_leaf_node (maybe end_leaf_node by the sort order), and then it can determine all the rows to fetch.
@@ -739,11 +724,8 @@ Proper indexing is the best way to improve query response time.
    1. if it's the index unique scan, then it will traverse the balance tree to get to the only target leaf node.
    2. if it's the index range scan, then it will traverse the balance tree to get to the start_leaf_node (and the end_leaf_node ===> maybe optional)
    3. if it's no index scan, then it will not traverse any branch nodes, and to to the table directly
-
 - [x] If we traverse the branch node & the leaf node in the same way, and the branch node & the leaf node contain the same count of entries, then they are the same for step (1) and step (2)
-
 1. for unique scan, yes, it is. For range scan, no, you need to traverse several leaf nodes sequentially.
-
 - [x] For equality condition and concatenated index, does the order in where matter?
   - [x] No. What matters is the the order in index. When there is  range condition in where, the index column order matters. 
 - [x] why for like operator, it only uses the characters *before the first wild card* during tree traversal???
@@ -785,7 +767,6 @@ select * from test where pk2 = 'y' and pk1 = 'x';
 # index range search maybe slower than table full scan
 # does the cost, rows in explain correct when there's no statistics? How to get the statistics?
 select * from test where pk1 = 'x' and val1 = 'v';
-
 ```
 
 # Sharing notes
@@ -835,4 +816,3 @@ select * from test where pk1 = 'x' and val1 = 'v';
   - be carefule with `like`, expecially when the leading chars are generic chars 
 
 # 
-

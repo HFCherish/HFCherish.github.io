@@ -53,6 +53,18 @@ Pod restarting is different from container restarting. **Pod provides the env fo
 
 Controllers (eg. deployment, statefulSet…) instead can create and manage multiple pods.
 
+### StatefulSet????
+
+When using a Kubernetes StatefulSet, each pod in the StatefulSet is typically assigned its own unique and stable hostname and ordinal index. This allows each pod to have its own identity and ensures that the pods maintain a predictable and consistent network identity across restarts or rescheduling.
+
+By default, each pod in a StatefulSet is provisioned with its own volume(s), which can be backed by physical storage or cloud-based storage solutions. This ensures data isolation and allows each pod to have its own storage space.
+
+However, it is possible to configure a StatefulSet to use shared storage among its pods. This can be achieved by using a shared network file system (NFS) or a distributed file system (such as CephFS or GlusterFS) as the underlying storage solution. With this configuration, all pods in the StatefulSet can mount the same shared storage, allowing them to access and share data stored within that storage.
+
+To achieve shared storage with StatefulSet, you would need to configure the appropriate volume and volume mount settings in the StatefulSet's pod template specification. The specific configuration details depend on the storage solution you are using.
+
+It's important to note that while sharing storage among pods can provide benefits like data sharing and consistency, it may introduce potential performance and scalability considerations. It's recommended to carefully evaluate your requirements and choose the appropriate storage solution based on your specific use case.
+
 ### Service
 
 Service is an **abstraction** which defines **a logical set of pods**, and **a policy by which to access the pods**.
@@ -62,6 +74,65 @@ It enables **the decoupling of access & the real pods**, which means you can acc
 > Q: How does k8s get all pod endpoints by service?
 > 
 > A: By `LabelSelector`. You can define labels for each pod. And we define `LabelSelector` in service, so that k8s can search pod node by label first, and then using the `targetPort` to locate the pod on node.
+
+### Secrets???
+
+In Kubernetes (k8s), a secret is an API object used to store sensitive data such as passwords, API keys, and TLS certificates. Secrets are typically used to securely provide this sensitive information to applications running within Kubernetes pods.
+
+Kubernetes supports different types of secrets, each designed for specific use cases. Here are a few examples:
+
+1. Opaque: The most commonly used secret type in Kubernetes. It stores arbitrary key-value pairs as Base64-encoded strings. These secrets are useful for storing generic sensitive data.
+
+Example:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-secret
+type: Opaque
+data:
+  username: dXNlcm5hbWU=
+  password: cGFzc3dvcmQ=
+```
+
+2. TLS: Specifically used for storing TLS certificates and private keys. This type of secret is often used for securing HTTPS connections.
+
+Example:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: tls-secret
+type: kubernetes.io/tls
+data:
+  tls.crt: <Base64-encoded TLS certificate>
+  tls.key: <Base64-encoded private key>
+```
+
+3. Docker-registry: Used to store authentication information for private Docker registries.
+
+Example:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: reg-cred
+type: kubernetes.io/dockerconfigjson
+data:
+  .dockerconfigjson: <Base64-encoded Docker registry credentials>
+```
+
+These are just a few examples of secret types in Kubernetes. Secrets allow you to securely manage sensitive information and provide it to your applications when needed.
+
+By default, `echo` command adds a newline character at the end of the output. The `-n` option prevents `echo` from appending the newline, ensuring that only the encoded string is printed without any additional characters.
+
+```shell
+echo -n "test" | base64
+dGVzdA==
+```
 
 ## kubernetes control plane
 
@@ -146,9 +217,9 @@ REDIS_MASTER_PORT_6379_TCP_PORT=6379
 REDIS_MASTER_PORT_6379_TCP_ADDR=10.0.0.11
 ```
 
-##### [DNS](https://kubernetes.io/docs/concepts/services-networking/service/#dns)
+##### DNS
 
-It's an add-on k8s object, which can be chosed to add to the cluster.
+[DNS](https://kubernetes.io/docs/concepts/services-networking/service/#dns) is an add-on k8s object, which can be chosed to add to the cluster.
 
 It's an in-cluster dns, which serves DNS records for Kubernetes services.
 
@@ -161,3 +232,103 @@ Containers started by Kubernetes automatically include this DNS server in their 
 1. NodePort: expose nodeIP
 2. LoadBalancer: expose loadbalancer ip
 3. Ingress: expose loadbalancer & path
+
+# Ingress
+
+[一篇搞懂 ingress](https://zhuanlan.zhihu.com/p/618328589)
+
+## what's ingress
+
+Ingress is a k8s resource to route external traffic into k8x cluster services. From functionality perspective, it provides:
+
+1. load balance
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. routing
+
+2. reverse proxy
+
+3. service discovery
+
+4. ...
+
+It can route by http path, host name, http method, etc.
+
+## IngressController
+
+However, Ingress itself is just a definition. IngressController is the one to really routing, load-balancing, and so on. IngressController config the load balancer etc. based on the ingress resource. And it routes based on the rules defined in ingress.
+
+IngressController is an independent component. There're many implementations. And different controller has different features, i.e. not all IngressControllers have all the above functionalities.
+
+- nginx ingress controller: in this case, it converts the ingress object innto nginx config, and apply this config to nginx server.
+
+- traefix ingress controller
+
+- istio ingress gateway
+
+- contour ingress controller: based on Envoy proxy.
+
+- kong ingress controller: a kinds of api gateways
+
+- ambassador api gateway: k8s-native api gateway
+
+## expose the service
+
+When external user wants to access some cluser service, the entrypoint is the address of IngressController. To expose IngressController, several ways:
+
+### 1. NodePort
+
+Expose service to all nodes in cluster.
+
+### 2. HostNetwork(共享主机网络)
+
+Expose ingressController to the network namespace of  host node, so that we can access IngressController by the host ip.
+
+### 3. LoadBalancer
+
+Expose IngressController to the LB, and then access through LB
+
+### 4. ExternalIPs
+
+Designate externalIP for ingressController, and access throught that.

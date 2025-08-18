@@ -20,13 +20,13 @@ Hadoop is a framework of distributed storage & computing.
 
 ## cluster architecture
 
-![image-20201026164010368](/images/hadoop-20201026164010368.png)
+![image-20201026164010368](../images/hadoop-20201026164010368.png)
 
-![image-20201026164402103](/images/hadoop-20201026164402103.png)
+![image-20201026164402103](../images/hadoop-20201026164402103.png)
 
 ## request processing
 
-![image-20201026164147039](/images/hadoop-20201026164147039.png)
+![image-20201026164147039](../images/hadoop-20201026164147039.png)
 
 ## Fault Tolerance
 
@@ -34,7 +34,7 @@ Use **rack aware** so that your replicas will be saved into different racks, whi
 
 Each data node will send heartbeat and block report to the namenode. Thus when data node fails, the name node knows it and will re-replicated to 3.
 
-![image-20201026164613209](/images/hadoop-20201026164613209.png)
+![image-20201026164613209](../images/hadoop-20201026164613209.png)
 
 ## High Availability
 
@@ -46,11 +46,11 @@ For a name node failure, we want to switch to a standby name node with all the i
 
 A name node saves the file namespaces in memory, besides, it also saved editlog for each change into the disk. A name node failure will lose the in-memory fsImage, but we can reproduce the fsImage from the editlogs
 
-![y](/images/hadoop-20201026165814244.png)
+![y](../images/hadoop-20201026165814244.png)
 
 A common solution is to use QJM to save the editlogs. And the standby name node will read from the editlogs to rebuild the fsImage. Besides, there's  two failover controllers on each name node and a zookeeper. ZooKeeper keeps a lock, and both name nodes are requesting the lock. When the active name node fails, it lost the lock, and the standby nn will acquire the lock.
 
-![image-20201026170521244](/images/hadoop-20201026170521244.png)
+![image-20201026170521244](../images/hadoop-20201026170521244.png)
 
 ### Name Node Reboot
 
@@ -60,7 +60,7 @@ The main issue here is that the fsImage is in memory. Thus to reboot quickly, we
 
 Secondary Name Node is not necessary. If needed, you can build it on the standby nn.
 
-![image-20201026171217319](/images/hadoop-20201026171217319.png)
+![image-20201026171217319](../images/hadoop-20201026171217319.png)
 
 ### [install hadoop on mac](http://www.cnblogs.com/micrari/p/5716851.html)
 

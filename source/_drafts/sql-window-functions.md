@@ -3,6 +3,7 @@ title: sql window functions
 toc: true
 date: 2021-07-02 12:06:41
 tags:
+    - database
 ---
 
 [sql 窗口函数](https://zhuanlan.zhihu.com/p/92654574)
