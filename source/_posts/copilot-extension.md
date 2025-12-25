@@ -7,7 +7,6 @@ tags:
 date: 2025-08-18 19:27:57
 ---
 
-
 # Abstract
 
 We can implement copilot extensions so that it can use copilot llm abilities and do special things for us. There are several ways to implement the extensions:
@@ -19,8 +18,6 @@ We can implement copilot extensions so that it can use copilot llm abilities and
 3. **MCP (model context protocol) server**: As a protocol that enables automatic tool invocation based on intent, MCP is more flexible and powerful. It can work both client side and server side. A key distinction between Copilot Extensions and MCP is their activation model: Extensions require explicit invocation, while MCP servers are automatically called by Copilot based on the user’s intent. This “invisible” integration makes MCP particularly promising for the future of AI-assisted development.
 
 # Abstract (copilot)
-
-
 
 ### Overview
 
@@ -141,10 +138,6 @@ A comparison table in the post summarizes these pros and cons in detail ([Tiago 
 ---
 
 Let me know if you'd like me to deep-dive into how to **build a client-side VS Code extension** or work with **MCP integration**—happy to help craft implementation guidelines or examples!
-
-
-
-
 
 # References
 
