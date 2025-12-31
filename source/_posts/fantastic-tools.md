@@ -77,6 +77,17 @@ tags:
 
 # Git
 
+## editors
+```sh
+# use vscode (graphical)
+git config --global core.editor "code --wait"
+
+# use vim
+git config --global core.editor "vim"
+```
+
+## configs
+
 * [git-fitler-repo](https://github.com/newren/git-filter-repo)
 * 常用的 git config 配置
 
