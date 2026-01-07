@@ -376,8 +376,6 @@ spark.yarn.am.memory    512m
 spark.executor.memory          512m
 ```
 
-
-
 ## history server config
 
 When the spark job is running, you can access the job log by `localhost:4040`. When the job is finished, by default, the log is not persisted which means you can't access it. To access the logs later, need to config the following: (see [spark Monitoring and Instrumentation](https://spark.apache.org/docs/latest/monitoring.html) and [using history server to replace the spark web ui](https://spark.apache.org/docs/2.4.0/running-on-yarn.html#using-the-spark-history-server-to-replace-the-spark-web-ui))
@@ -449,9 +447,56 @@ NoteThe following table summarizes terms you’ll see used to refer to cluster c
 
 [stackoverflow](https://stackoverflow.com/questions/41124428/spark-yarn-cluster-vs-client-how-to-choose-which-one-to-use)
 
+## Spark K8s Deployment & Execution Core Knowledge Cheat Sheet
+| **Module** | **Core Knowledge Points** | **Key Details** |
+|------------|---------------------------|-----------------|
+| **K8s Deployment Paradigm** | No Predefined Spark Cluster | Based on Docker images; on-demand create Driver+Executor Pods; cluster is destroyed after the task completes |
+| | Image Layered Strategy | Base image: Contains OS, Java, and Spark core<br>Business image: Builds on the base image, only adds project dependencies (e.g., `requirements.txt`, JAR packages) |
+| | Advantages | Consistency across development/test/production environments; Spark version upgrades only require replacing the base image |
+| **`spark-submit` Role** | Universal Submission Script | Specify the resource manager via `--master`:<br>`--master yarn` → YARN cluster<br>`--master k8s://<API address>` → K8s cluster<br>`--master local[*]` → Run locally |
+| | K8s Submission Flow | 1. Connect to K8s API and create a Driver Pod<br>2. After the Driver Pod starts, request to create Executor Pods<br>3. Form a temporary cluster to execute the task |
+| | Relationship with Docker Instructions | Overrides `CMD`/`ENTRYPOINT` in the Dockerfile; `tail -f /dev/null` in the image is only a placeholder for manual container startup |
+| **Multi-Language SDK Execution Logic** | Unified Execution Flow | Any language code → Generate **Logical Execution Plan** → Catalyst Optimizer generates **Physical Execution Plan** → Execute on JVM |
+| | Language Performance Comparison | Scala/Java: Runs natively on JVM, optimal performance<br>Python (PySpark): Rich ecosystem, but has performance overhead for UDFs |
+| | PySpark UDF Optimization | Regular UDFs: Serialize data between JVM and Python processes (high overhead)<br>Pandas UDFs: Use Apache Arrow columnar transfer to reduce overhead |
+| **Key Execution Clarifications** | Plan Generation Location | PySpark calls the JVM via Py4J to build the execution plan; logical/physical plans are stored on the JVM side |
+| | Efficient Execution Condition | When only using Spark built-in functions (e.g., `select`/`filter`), execution runs entirely within the JVM (benefits from Catalyst optimization) |
+| | Cross-Language Reuse | Write performance-critical logic in Scala/Java (packaged as JARs), then include them in PySpark tasks via the `--jars` parameter |
+
+## The Kubernetes Approach: A Modern Paradigm for Spark**
+The use of a Dockerfile points to a modern, container-based deployment strategy for Spark, which is fundamentally different from the traditional YARN model.
+
+- **No Predefined Spark Cluster:** Instead of a persistent, long-running Spark cluster (like on YARN), you have a general-purpose **Kubernetes (K8s) cluster**.
+- **On-Demand Spark Clusters:** A temporary, job-specific Spark cluster (a Driver and its Executors) is created dynamically on Kubernetes when you submit a job*. It is destroyed once the job completes, releasing all resources.
+- **The Role of the Docker Image:**
+  - The Dockerfile creates a self-contained, portable **environment** for your Spark application. This image packages the OS, a specific Spark version, all Python dependencies, and necessary JARs.
+  - This guarantees absolute consistency between development, testing, and production, eliminating "it works on my machine" issues.
+- **The Base Image Strategy:**
+  - To avoid managing the full Spark installation in every project, a layered approach is used.
+  - A central team creates a **base image** (e.g., `spark_3_5:1.6.0`) that contains the OS, Java, and the core Spark distribution.
+  - Your application's Dockerfile starts `FROM` this base image and only adds the components specific to your app (like `requirements.txt`).
+  - Upgrading Spark becomes as simple as changing the `FROM` line to a new base image version.
+
+
 # spark-shell vs spark-submit
 
 Spark shell is only intended to be use for testing and perhaps development of small applications - is only an interactive shell and should not be use to run production spark applications. For production application deployment you should use spark-submit. The last one will also allow you to run applications in yarn-cluster mode
+
+## The Role and Function of `spark-submit`**
+`spark-submit` is the universal launch script for all Spark applications, acting as the bridge between your code and the cluster manager.
+
+- **A Universal Client:** It's a script included in every Spark distribution that acts as a client for the chosen resource manager. The `--master` flag dictates its behavior:
+  - `--master yarn`: Talks to a YARN cluster.
+  - `--master pyspark`: Talks to the Kubernetes API server.
+  - `--master local[*]`: Runs locally on your machine.
+- **The Kubernetes Submission Process:**
+  1. You run `spark-submit` with `--master pyspark` and specify your application's Docker image (`--conf spark.kubernetes.container.image=...`).
+  2. `spark-submit` connects to the K8s API and requests the creation of a **Driver Pod** using your image.
+  3. Once the Driver Pod is running, the Spark Driver process inside it connects back to the K8s API and requests **Executor Pods**.
+  4. These pods form a temporary Spark cluster to run the job.
+- **`spark-submit` vs. Docker `ENTRYPOINT`:**
+  - The `spark-submit` command **overrides** the `CMD` or `ENTRYPOINT` in your Dockerfile.
+  - The Dockerfile's `CMD "tail -f /dev/null"` is a placeholder to keep the container running if started manually. The real Spark commands are injected by the submission process. The entry point to your application (e.g., the main Python file) is still specified as an argument to `spark-submit`, not in the Dockerfile.
 
 # Spark DataFrame
 
@@ -513,7 +558,35 @@ df.withColumn('new_column', lit(10))
 
 [hive hints](https://spark.apache.org/docs/latest/sql-ref-syntax-qry-select-hints.html#partitioning-hints)
 
-# PySpark???
+# PySpark
+
+## Spark Language SDKs and Internal Execution**
+Spark provides APIs in Scala, Java, Python, and R. They all work by building a plan for Spark's core engine.
+
+- **Key Clarifications on Spark Execution**
+  - Language SDKs (PySpark / Spark Java / Spark Scala / SparkR) present the same high-level APIs and result in a language-agnostic logical plan → optimizer → physical plan.
+  - The physical plan is executed by Spark’s engine (the JVM executors) in the common case.
+  - Language-specific user code (Python UDFs, R UDFs, etc.) runs outside the JVM and requires data to be serialized/deserialized between JVM and the language runtime.
+- **Language Comparison:**
+  - **Scala/Java:** Offer the best performance as they run natively on the JVM, the same as Spark itself.
+  - **Python (PySpark):** Easiest to use and has a massive data science ecosystem. It's the most common choice for new projects.
+- **How Spark Executes Code (The "Plan"):**
+  1. Your code (in any language) builds a language-agnostic **Logical Plan** describing the transformations you want.
+  2. This plan is sent to Spark's **Catalyst Optimizer**, which figures out the most efficient **Physical Plan** for execution.
+  3. This optimized plan is then executed on the JVMs in the executor pods.
+- **Python is NOT Translated to Scala:**
+  - The Spark executor (a JVM process) starts a separate **Python process** on the same worker node.
+  - For standard DataFrame operations (`select`, `filter`, `groupBy`), the optimized plan runs entirely inside the high-performance JVM.
+  - Data is only transferred from the JVM to the Python process when you call a Python **User-Defined Function (UDF)**. This data transfer creates overhead and is why Python UDFs can be slower than their Scala/Java counterparts.
+- **Using Scala/Java in PySpark:** You can get the best of both worlds. Write performance-critical logic in Scala/Java, package it as a JAR file, and include it in your PySpark job using the `--jars` flag in `spark-submit`.
+  - For Python UDFs:
+    - Regular UDFs run in separate Python worker processes; Spark serializes rows (Pickle or other) to Python, executes the UDF, then serializes results back – this is the expensive path.
+    - Pandas UDFs (vectorized UDFs) use Apache Arrow to transfer columnar batches, vastly reducing overhead and improving throughput.
+    - Py4J is used for driver ⇌ JVM communication; executor side Python workers are launched by the JVM executor process (not by the driver).
+- **Practical Implications**
+  - Prefer built-in Spark SQL functions or JVM UDFs for best performance.
+  - Use Pandas UDFs/Arrow for heavy Python UDF work to reduce serialization overhead.
+  - If you need heavy, reusable logic that must run in the JVM, implement it in Scala/Java, package as a JAR, and supply it with `--jars` or `--packages`; Python can call into it via SQL or registered UDFs.
 
 ## context switching
 
