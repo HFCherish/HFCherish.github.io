@@ -39,7 +39,7 @@
 <meta property="og:image" content="https://miro.medium.com/max/1415/1*SMlxTZJBsAPKmpdRH5VFVw.png">
 <meta property="og:image" content="https://miro.medium.com/max/1500/1*FFi8Yk6mwSc6AvI-avWcYw.png">
 <meta property="article:published_time" content="2019-01-10T02:17:01.000Z">
-<meta property="article:modified_time" content="2023-12-26T09:20:43.535Z">
+<meta property="article:modified_time" content="2026-01-07T08:40:58.949Z">
 <meta property="article:author" content="Cherish">
 <meta property="article:tag" content="big data">
 <meta property="article:tag" content="hadoop">
@@ -154,7 +154,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Concept"><span class="nav-number">1.</span> <span class="nav-text">Concept</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spark-Ecosystem"><span class="nav-number">1.1.</span> <span class="nav-text">Spark Ecosystem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Core-concepts"><span class="nav-number">1.2.</span> <span class="nav-text">Core concepts???</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spark-Core"><span class="nav-number">1.2.1.</span> <span class="nav-text">Spark Core</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Action-Job-Stage-Task"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">Action, Job, Stage, Task</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RDD"><span class="nav-number">1.2.2.</span> <span class="nav-text">RDD</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SparkContext"><span class="nav-number">1.3.</span> <span class="nav-text">SparkContext</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#How-does-it-run"><span class="nav-number">2.</span> <span class="nav-text">How does it run</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Execution-Framework"><span class="nav-number">2.1.</span> <span class="nav-text">Execution Framework???</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#API"><span class="nav-number">3.</span> <span class="nav-text">API</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Installation-On-Yarn"><span class="nav-number">4.</span> <span class="nav-text">Installation On Yarn</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#understand-spark-installation"><span class="nav-number">4.1.</span> <span class="nav-text">understand spark installation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#spark-versions"><span class="nav-number">4.1.1.</span> <span class="nav-text">spark versions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#install"><span class="nav-number">4.2.</span> <span class="nav-text">install</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#history-server-config"><span class="nav-number">4.3.</span> <span class="nav-text">history server config</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#example-execution"><span class="nav-number">4.4.</span> <span class="nav-text">example execution</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Glossary"><span class="nav-number">5.</span> <span class="nav-text">Glossary</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Deploy-mode"><span class="nav-number">6.</span> <span class="nav-text">Deploy mode</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#yarn-client-vs-yarn-cluster"><span class="nav-number">6.1.</span> <span class="nav-text">yarn-client vs yarn-cluster</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#spark-shell-vs-spark-submit"><span class="nav-number">7.</span> <span class="nav-text">spark-shell vs spark-submit</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spark-DataFrame"><span class="nav-number">8.</span> <span class="nav-text">Spark DataFrame</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#auto-increment-id"><span class="nav-number">8.1.</span> <span class="nav-text">auto increment id</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Row-number"><span class="nav-number">8.1.1.</span> <span class="nav-text">Row_number</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rdd-zipWithIndex"><span class="nav-number">8.1.2.</span> <span class="nav-text">rdd.zipWithIndex</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-constant-column"><span class="nav-number">8.2.</span> <span class="nav-text">Add constant column</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#select-latest-record"><span class="nav-number">8.3.</span> <span class="nav-text">select latest record</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hive-Hints"><span class="nav-number">9.</span> <span class="nav-text">Hive Hints</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PySpark"><span class="nav-number">10.</span> <span class="nav-text">PySpark???</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#context-switching"><span class="nav-number">10.1.</span> <span class="nav-text">context switching</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pyspark-udf-vs-scala-udf"><span class="nav-number">10.2.</span> <span class="nav-text">pyspark udf vs scala udf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Arrow"><span class="nav-number">10.3.</span> <span class="nav-text">Arrow</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Optimization"><span class="nav-number">11.</span> <span class="nav-text">Optimization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Get-Baseline"><span class="nav-number">11.1.</span> <span class="nav-text">Get Baseline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Memory-spill"><span class="nav-number">11.2.</span> <span class="nav-text">Memory spill</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E8%B5%84%E6%BA%90%E9%9C%80%E6%B1%82"><span class="nav-number">11.3.</span> <span class="nav-text">指定资源需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Some-issues"><span class="nav-number">11.4.</span> <span class="nav-text">Some issues</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%93executor-cores-settinng-not-working"><span class="nav-number">11.4.1.</span> <span class="nav-text">–executor-cores settinng not working</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%93spark-dynamicAllocation-maxExecutors-not-working"><span class="nav-number">11.4.2.</span> <span class="nav-text">–spark.dynamicAllocation.maxExecutors not working</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Partitions"><span class="nav-number">11.5.</span> <span class="nav-text">Partitions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%EF%BC%88input%EF%BC%89"><span class="nav-number">11.5.1.</span> <span class="nav-text">输入（input）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Shuffle"><span class="nav-number">11.5.2.</span> <span class="nav-text">Shuffle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%EF%BC%88output%EF%BC%89"><span class="nav-number">11.5.3.</span> <span class="nav-text">输出（output）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Balance"><span class="nav-number">11.6.</span> <span class="nav-text">Balance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Persistence"><span class="nav-number">11.7.</span> <span class="nav-text">Persistence</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cache"><span class="nav-number">11.7.1.</span> <span class="nav-text">cache</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#broadcast-join"><span class="nav-number">11.8.</span> <span class="nav-text">broadcast join</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-spark-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E5%B0%8F%E8%A1%A8-broadcast"><span class="nav-number">11.8.1.</span> <span class="nav-text">1. spark 自动识别小表 broadcast</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8-hint"><span class="nav-number">11.8.2.</span> <span class="nav-text">2. 使用 hint</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BD%BF%E7%94%A8-dataframe-api"><span class="nav-number">11.8.3.</span> <span class="nav-text">3. 使用 dataframe api</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cache-vs-broadcast"><span class="nav-number">11.9.</span> <span class="nav-text">cache vs broadcast</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98"><span class="nav-number">11.10.</span> <span class="nav-text">小文件问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%9C%89%E5%B0%8F%E6%96%87%E4%BB%B6%EF%BC%9F"><span class="nav-number">11.10.0.1.</span> <span class="nav-text">为什么会有小文件？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">11.10.0.2.</span> <span class="nav-text">解决方案</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python-udf-vs-scala-udf"><span class="nav-number">11.11.</span> <span class="nav-text">python udf vs scala udf</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Issues"><span class="nav-number">12.</span> <span class="nav-text">Issues</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Null-aware-predicate-sub-queries-cannot-be-used-in-nested-conditions"><span class="nav-number">12.1.</span> <span class="nav-text">Null-aware predicate sub-queries cannot be used in nested conditions</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">13.</span> <span class="nav-text">References</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Concept"><span class="nav-number">1.</span> <span class="nav-text">Concept</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spark-Ecosystem"><span class="nav-number">1.1.</span> <span class="nav-text">Spark Ecosystem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Core-concepts"><span class="nav-number">1.2.</span> <span class="nav-text">Core concepts???</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spark-Core"><span class="nav-number">1.2.1.</span> <span class="nav-text">Spark Core</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Action-Job-Stage-Task"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">Action, Job, Stage, Task</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RDD"><span class="nav-number">1.2.2.</span> <span class="nav-text">RDD</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SparkContext"><span class="nav-number">1.3.</span> <span class="nav-text">SparkContext</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#How-does-it-run"><span class="nav-number">2.</span> <span class="nav-text">How does it run</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Execution-Framework"><span class="nav-number">2.1.</span> <span class="nav-text">Execution Framework???</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#API"><span class="nav-number">3.</span> <span class="nav-text">API</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Installation-On-Yarn"><span class="nav-number">4.</span> <span class="nav-text">Installation On Yarn</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#understand-spark-installation"><span class="nav-number">4.1.</span> <span class="nav-text">understand spark installation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#spark-versions"><span class="nav-number">4.1.1.</span> <span class="nav-text">spark versions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#install"><span class="nav-number">4.2.</span> <span class="nav-text">install</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#history-server-config"><span class="nav-number">4.3.</span> <span class="nav-text">history server config</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#example-execution"><span class="nav-number">4.4.</span> <span class="nav-text">example execution</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Glossary"><span class="nav-number">5.</span> <span class="nav-text">Glossary</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Deploy-mode"><span class="nav-number">6.</span> <span class="nav-text">Deploy mode</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#yarn-client-vs-yarn-cluster"><span class="nav-number">6.1.</span> <span class="nav-text">yarn-client vs yarn-cluster</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spark-K8s-Deployment-amp-Execution-Core-Knowledge-Cheat-Sheet"><span class="nav-number">6.2.</span> <span class="nav-text">Spark K8s Deployment &amp; Execution Core Knowledge Cheat Sheet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Kubernetes-Approach-A-Modern-Paradigm-for-Spark"><span class="nav-number">6.3.</span> <span class="nav-text">The Kubernetes Approach: A Modern Paradigm for Spark**</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#spark-shell-vs-spark-submit"><span class="nav-number">7.</span> <span class="nav-text">spark-shell vs spark-submit</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Role-and-Function-of-spark-submit"><span class="nav-number">7.1.</span> <span class="nav-text">The Role and Function of spark-submit**</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spark-DataFrame"><span class="nav-number">8.</span> <span class="nav-text">Spark DataFrame</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#auto-increment-id"><span class="nav-number">8.1.</span> <span class="nav-text">auto increment id</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Row-number"><span class="nav-number">8.1.1.</span> <span class="nav-text">Row_number</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rdd-zipWithIndex"><span class="nav-number">8.1.2.</span> <span class="nav-text">rdd.zipWithIndex</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-constant-column"><span class="nav-number">8.2.</span> <span class="nav-text">Add constant column</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#select-latest-record"><span class="nav-number">8.3.</span> <span class="nav-text">select latest record</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hive-Hints"><span class="nav-number">9.</span> <span class="nav-text">Hive Hints</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PySpark"><span class="nav-number">10.</span> <span class="nav-text">PySpark</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spark-Language-SDKs-and-Internal-Execution"><span class="nav-number">10.1.</span> <span class="nav-text">Spark Language SDKs and Internal Execution**</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#context-switching"><span class="nav-number">10.2.</span> <span class="nav-text">context switching</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pyspark-udf-vs-scala-udf"><span class="nav-number">10.3.</span> <span class="nav-text">pyspark udf vs scala udf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Arrow"><span class="nav-number">10.4.</span> <span class="nav-text">Arrow</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Optimization"><span class="nav-number">11.</span> <span class="nav-text">Optimization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Get-Baseline"><span class="nav-number">11.1.</span> <span class="nav-text">Get Baseline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Memory-spill"><span class="nav-number">11.2.</span> <span class="nav-text">Memory spill</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E8%B5%84%E6%BA%90%E9%9C%80%E6%B1%82"><span class="nav-number">11.3.</span> <span class="nav-text">指定资源需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Some-issues"><span class="nav-number">11.4.</span> <span class="nav-text">Some issues</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%93executor-cores-settinng-not-working"><span class="nav-number">11.4.1.</span> <span class="nav-text">–executor-cores settinng not working</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%93spark-dynamicAllocation-maxExecutors-not-working"><span class="nav-number">11.4.2.</span> <span class="nav-text">–spark.dynamicAllocation.maxExecutors not working</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Partitions"><span class="nav-number">11.5.</span> <span class="nav-text">Partitions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%EF%BC%88input%EF%BC%89"><span class="nav-number">11.5.1.</span> <span class="nav-text">输入（input）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Shuffle"><span class="nav-number">11.5.2.</span> <span class="nav-text">Shuffle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%EF%BC%88output%EF%BC%89"><span class="nav-number">11.5.3.</span> <span class="nav-text">输出（output）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Balance"><span class="nav-number">11.6.</span> <span class="nav-text">Balance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Persistence"><span class="nav-number">11.7.</span> <span class="nav-text">Persistence</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cache"><span class="nav-number">11.7.1.</span> <span class="nav-text">cache</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#broadcast-join"><span class="nav-number">11.8.</span> <span class="nav-text">broadcast join</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-spark-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E5%B0%8F%E8%A1%A8-broadcast"><span class="nav-number">11.8.1.</span> <span class="nav-text">1. spark 自动识别小表 broadcast</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8-hint"><span class="nav-number">11.8.2.</span> <span class="nav-text">2. 使用 hint</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BD%BF%E7%94%A8-dataframe-api"><span class="nav-number">11.8.3.</span> <span class="nav-text">3. 使用 dataframe api</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cache-vs-broadcast"><span class="nav-number">11.9.</span> <span class="nav-text">cache vs broadcast</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98"><span class="nav-number">11.10.</span> <span class="nav-text">小文件问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%9C%89%E5%B0%8F%E6%96%87%E4%BB%B6%EF%BC%9F"><span class="nav-number">11.10.0.1.</span> <span class="nav-text">为什么会有小文件？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">11.10.0.2.</span> <span class="nav-text">解决方案</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python-udf-vs-scala-udf"><span class="nav-number">11.11.</span> <span class="nav-text">python udf vs scala udf</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Issues"><span class="nav-number">12.</span> <span class="nav-text">Issues</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Null-aware-predicate-sub-queries-cannot-be-used-in-nested-conditions"><span class="nav-number">12.1.</span> <span class="nav-text">Null-aware predicate sub-queries cannot be used in nested conditions</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">13.</span> <span class="nav-text">References</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -249,7 +249,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-12-26 17:20:43" itemprop="dateModified" datetime="2023-12-26T17:20:43+08:00">2023-12-26</time>
+      <time title="Modified: 2026-01-07 16:40:58" itemprop="dateModified" datetime="2026-01-07T16:40:58+08:00">2026-01-07</time>
     </span>
 
   
@@ -521,8 +521,6 @@
 </ul>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># config the spark master</span></span><br><span class="line">spark.master                     yarn</span><br><span class="line">spark.driver.memory    512m</span><br><span class="line">spark.yarn.am.memory    512m</span><br><span class="line">spark.executor.memory          512m</span><br></pre></td></tr></table></figure>
 
-
-
 <h2 id="history-server-config"><a href="#history-server-config" class="headerlink" title="history server config"></a>history server config</h2><p>When the spark job is running, you can access the job log by <code>localhost:4040</code>. When the job is finished, by default, the log is not persisted which means you can’t access it. To access the logs later, need to config the following: (see <a href="https://spark.apache.org/docs/latest/monitoring.html">spark Monitoring and Instrumentation</a> and <a href="https://spark.apache.org/docs/2.4.0/running-on-yarn.html#using-the-spark-history-server-to-replace-the-spark-web-ui">using history server to replace the spark web ui</a>)</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># in /conf/spark-default.conf</span></span><br><span class="line"><span class="comment"># config history server</span></span><br><span class="line">spark.ui.filters         org.apache.spark.deploy.yarn.YarnProxyRedirectFilter</span><br><span class="line"></span><br><span class="line"><span class="comment"># tell spark use history server url as the trackint url</span></span><br><span class="line">spark.yarn.historyServer.allowTracking  <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># enable log persistence</span></span><br><span class="line">spark.eventLog.enabled           <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># log write dir. Here use the hdfs dir and you must create the dir in hdfs first</span></span><br><span class="line">spark.eventLog.<span class="built_in">dir</span>               hdfs://localhost:9000/spark-logs</span><br><span class="line"></span><br><span class="line"><span class="comment"># log read dir. Sometimes logs are transfered.</span></span><br><span class="line">spark.history.fs.logDirectory     hdfs://localhost:9000/spark-logs</span><br></pre></td></tr></table></figure>
 
@@ -591,7 +589,114 @@
 </tbody></table>
 <h1 id="Deploy-mode"><a href="#Deploy-mode" class="headerlink" title="Deploy mode"></a>Deploy mode</h1><h2 id="yarn-client-vs-yarn-cluster"><a href="#yarn-client-vs-yarn-cluster" class="headerlink" title="yarn-client vs yarn-cluster"></a>yarn-client vs yarn-cluster</h2><p><a href="https://www.cnblogs.com/ittangtang/p/7967386.html">yarn-client vs yarn-cluster 深度剖析</a></p>
 <p><a href="https://stackoverflow.com/questions/41124428/spark-yarn-cluster-vs-client-how-to-choose-which-one-to-use">stackoverflow</a></p>
+<h2 id="Spark-K8s-Deployment-amp-Execution-Core-Knowledge-Cheat-Sheet"><a href="#Spark-K8s-Deployment-amp-Execution-Core-Knowledge-Cheat-Sheet" class="headerlink" title="Spark K8s Deployment &amp; Execution Core Knowledge Cheat Sheet"></a>Spark K8s Deployment &amp; Execution Core Knowledge Cheat Sheet</h2><table>
+<thead>
+<tr>
+<th><strong>Module</strong></th>
+<th><strong>Core Knowledge Points</strong></th>
+<th><strong>Key Details</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>K8s Deployment Paradigm</strong></td>
+<td>No Predefined Spark Cluster</td>
+<td>Based on Docker images; on-demand create Driver+Executor Pods; cluster is destroyed after the task completes</td>
+</tr>
+<tr>
+<td></td>
+<td>Image Layered Strategy</td>
+<td>Base image: Contains OS, Java, and Spark core<br>Business image: Builds on the base image, only adds project dependencies (e.g., <code>requirements.txt</code>, JAR packages)</td>
+</tr>
+<tr>
+<td></td>
+<td>Advantages</td>
+<td>Consistency across development&#x2F;test&#x2F;production environments; Spark version upgrades only require replacing the base image</td>
+</tr>
+<tr>
+<td><strong><code>spark-submit</code> Role</strong></td>
+<td>Universal Submission Script</td>
+<td>Specify the resource manager via <code>--master</code>:<br><code>--master yarn</code> → YARN cluster<br><code>--master k8s://&lt;API address&gt;</code> → K8s cluster<br><code>--master local[*]</code> → Run locally</td>
+</tr>
+<tr>
+<td></td>
+<td>K8s Submission Flow</td>
+<td>1. Connect to K8s API and create a Driver Pod<br>2. After the Driver Pod starts, request to create Executor Pods<br>3. Form a temporary cluster to execute the task</td>
+</tr>
+<tr>
+<td></td>
+<td>Relationship with Docker Instructions</td>
+<td>Overrides <code>CMD</code>&#x2F;<code>ENTRYPOINT</code> in the Dockerfile; <code>tail -f /dev/null</code> in the image is only a placeholder for manual container startup</td>
+</tr>
+<tr>
+<td><strong>Multi-Language SDK Execution Logic</strong></td>
+<td>Unified Execution Flow</td>
+<td>Any language code → Generate <strong>Logical Execution Plan</strong> → Catalyst Optimizer generates <strong>Physical Execution Plan</strong> → Execute on JVM</td>
+</tr>
+<tr>
+<td></td>
+<td>Language Performance Comparison</td>
+<td>Scala&#x2F;Java: Runs natively on JVM, optimal performance<br>Python (PySpark): Rich ecosystem, but has performance overhead for UDFs</td>
+</tr>
+<tr>
+<td></td>
+<td>PySpark UDF Optimization</td>
+<td>Regular UDFs: Serialize data between JVM and Python processes (high overhead)<br>Pandas UDFs: Use Apache Arrow columnar transfer to reduce overhead</td>
+</tr>
+<tr>
+<td><strong>Key Execution Clarifications</strong></td>
+<td>Plan Generation Location</td>
+<td>PySpark calls the JVM via Py4J to build the execution plan; logical&#x2F;physical plans are stored on the JVM side</td>
+</tr>
+<tr>
+<td></td>
+<td>Efficient Execution Condition</td>
+<td>When only using Spark built-in functions (e.g., <code>select</code>&#x2F;<code>filter</code>), execution runs entirely within the JVM (benefits from Catalyst optimization)</td>
+</tr>
+<tr>
+<td></td>
+<td>Cross-Language Reuse</td>
+<td>Write performance-critical logic in Scala&#x2F;Java (packaged as JARs), then include them in PySpark tasks via the <code>--jars</code> parameter</td>
+</tr>
+</tbody></table>
+<h2 id="The-Kubernetes-Approach-A-Modern-Paradigm-for-Spark"><a href="#The-Kubernetes-Approach-A-Modern-Paradigm-for-Spark" class="headerlink" title="The Kubernetes Approach: A Modern Paradigm for Spark**"></a>The Kubernetes Approach: A Modern Paradigm for Spark**</h2><p>The use of a Dockerfile points to a modern, container-based deployment strategy for Spark, which is fundamentally different from the traditional YARN model.</p>
+<ul>
+<li><strong>No Predefined Spark Cluster:</strong> Instead of a persistent, long-running Spark cluster (like on YARN), you have a general-purpose <strong>Kubernetes (K8s) cluster</strong>.</li>
+<li><strong>On-Demand Spark Clusters:</strong> A temporary, job-specific Spark cluster (a Driver and its Executors) is created dynamically on Kubernetes when you submit a job*. It is destroyed once the job completes, releasing all resources.</li>
+<li><strong>The Role of the Docker Image:</strong><ul>
+<li>The Dockerfile creates a self-contained, portable <strong>environment</strong> for your Spark application. This image packages the OS, a specific Spark version, all Python dependencies, and necessary JARs.</li>
+<li>This guarantees absolute consistency between development, testing, and production, eliminating “it works on my machine” issues.</li>
+</ul>
+</li>
+<li><strong>The Base Image Strategy:</strong><ul>
+<li>To avoid managing the full Spark installation in every project, a layered approach is used.</li>
+<li>A central team creates a <strong>base image</strong> (e.g., <code>spark_3_5:1.6.0</code>) that contains the OS, Java, and the core Spark distribution.</li>
+<li>Your application’s Dockerfile starts <code>FROM</code> this base image and only adds the components specific to your app (like <code>requirements.txt</code>).</li>
+<li>Upgrading Spark becomes as simple as changing the <code>FROM</code> line to a new base image version.</li>
+</ul>
+</li>
+</ul>
 <h1 id="spark-shell-vs-spark-submit"><a href="#spark-shell-vs-spark-submit" class="headerlink" title="spark-shell vs spark-submit"></a>spark-shell vs spark-submit</h1><p>Spark shell is only intended to be use for testing and perhaps development of small applications - is only an interactive shell and should not be use to run production spark applications. For production application deployment you should use spark-submit. The last one will also allow you to run applications in yarn-cluster mode</p>
+<h2 id="The-Role-and-Function-of-spark-submit"><a href="#The-Role-and-Function-of-spark-submit" class="headerlink" title="The Role and Function of spark-submit**"></a>The Role and Function of <code>spark-submit</code>**</h2><p><code>spark-submit</code> is the universal launch script for all Spark applications, acting as the bridge between your code and the cluster manager.</p>
+<ul>
+<li><strong>A Universal Client:</strong> It’s a script included in every Spark distribution that acts as a client for the chosen resource manager. The <code>--master</code> flag dictates its behavior:<ul>
+<li><code>--master yarn</code>: Talks to a YARN cluster.</li>
+<li><code>--master pyspark</code>: Talks to the Kubernetes API server.</li>
+<li><code>--master local[*]</code>: Runs locally on your machine.</li>
+</ul>
+</li>
+<li><strong>The Kubernetes Submission Process:</strong><ol>
+<li>You run <code>spark-submit</code> with <code>--master pyspark</code> and specify your application’s Docker image (<code>--conf spark.kubernetes.container.image=...</code>).</li>
+<li><code>spark-submit</code> connects to the K8s API and requests the creation of a <strong>Driver Pod</strong> using your image.</li>
+<li>Once the Driver Pod is running, the Spark Driver process inside it connects back to the K8s API and requests <strong>Executor Pods</strong>.</li>
+<li>These pods form a temporary Spark cluster to run the job.</li>
+</ol>
+</li>
+<li><strong><code>spark-submit</code> vs. Docker <code>ENTRYPOINT</code>:</strong><ul>
+<li>The <code>spark-submit</code> command <strong>overrides</strong> the <code>CMD</code> or <code>ENTRYPOINT</code> in your Dockerfile.</li>
+<li>The Dockerfile’s <code>CMD &quot;tail -f /dev/null&quot;</code> is a placeholder to keep the container running if started manually. The real Spark commands are injected by the submission process. The entry point to your application (e.g., the main Python file) is still specified as an argument to <code>spark-submit</code>, not in the Dockerfile.</li>
+</ul>
+</li>
+</ul>
 <h1 id="Spark-DataFrame"><a href="#Spark-DataFrame" class="headerlink" title="Spark DataFrame"></a>Spark DataFrame</h1><h2 id="auto-increment-id"><a href="#auto-increment-id" class="headerlink" title="auto increment id"></a>auto increment id</h2><p><a href="https://blog.csdn.net/k_wzzc/article/details/84996172">two ways for auto increment id</a></p>
 <h3 id="Row-number"><a href="#Row-number" class="headerlink" title="Row_number"></a>Row_number</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 设置窗口函数的分区以及排序，因为是全局排序而不是分组排序，所有分区依据为空</span></span><br><span class="line"><span class="comment">  * 排序规则没有特殊要求也可以随意填写</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="keyword">val</span> spec = <span class="type">Window</span>.partitionBy().orderBy($<span class="string">&quot;lon&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> df1 = dataframe.withColumn(<span class="string">&quot;id&quot;</span>, row_number().over(spec))</span><br><span class="line"></span><br><span class="line">df1.show()</span><br></pre></td></tr></table></figure>
 
@@ -602,7 +707,48 @@
 
 <h2 id="select-latest-record"><a href="#select-latest-record" class="headerlink" title="select latest record"></a>select latest record</h2><p><a href="https://stackoverflow.com/questions/55615716/select-latest-record-from-spark-dataframe">stackoverflow</a></p>
 <h1 id="Hive-Hints"><a href="#Hive-Hints" class="headerlink" title="Hive Hints"></a>Hive Hints</h1><p><a href="https://spark.apache.org/docs/latest/sql-ref-syntax-qry-select-hints.html#partitioning-hints">hive hints</a></p>
-<h1 id="PySpark"><a href="#PySpark" class="headerlink" title="PySpark???"></a>PySpark???</h1><h2 id="context-switching"><a href="#context-switching" class="headerlink" title="context switching"></a>context switching</h2><p>When executing Python code, such as Pandas or PySpark UDFs, the related data is processed within the executor’s Python interpreter. The executor’s Python interpreter operates directly on the data available on the executor node, without the need to transfer the data back to the driver node.</p>
+<h1 id="PySpark"><a href="#PySpark" class="headerlink" title="PySpark"></a>PySpark</h1><h2 id="Spark-Language-SDKs-and-Internal-Execution"><a href="#Spark-Language-SDKs-and-Internal-Execution" class="headerlink" title="Spark Language SDKs and Internal Execution**"></a>Spark Language SDKs and Internal Execution**</h2><p>Spark provides APIs in Scala, Java, Python, and R. They all work by building a plan for Spark’s core engine.</p>
+<ul>
+<li><strong>Key Clarifications on Spark Execution</strong><ul>
+<li>Language SDKs (PySpark &#x2F; Spark Java &#x2F; Spark Scala &#x2F; SparkR) present the same high-level APIs and result in a language-agnostic logical plan → optimizer → physical plan.</li>
+<li>The physical plan is executed by Spark’s engine (the JVM executors) in the common case.</li>
+<li>Language-specific user code (Python UDFs, R UDFs, etc.) runs outside the JVM and requires data to be serialized&#x2F;deserialized between JVM and the language runtime.</li>
+</ul>
+</li>
+<li><strong>Language Comparison:</strong><ul>
+<li><strong>Scala&#x2F;Java:</strong> Offer the best performance as they run natively on the JVM, the same as Spark itself.</li>
+<li><strong>Python (PySpark):</strong> Easiest to use and has a massive data science ecosystem. It’s the most common choice for new projects.</li>
+</ul>
+</li>
+<li><strong>How Spark Executes Code (The “Plan”):</strong><ol>
+<li>Your code (in any language) builds a language-agnostic <strong>Logical Plan</strong> describing the transformations you want.</li>
+<li>This plan is sent to Spark’s <strong>Catalyst Optimizer</strong>, which figures out the most efficient <strong>Physical Plan</strong> for execution.</li>
+<li>This optimized plan is then executed on the JVMs in the executor pods.</li>
+</ol>
+</li>
+<li><strong>Python is NOT Translated to Scala:</strong><ul>
+<li>The Spark executor (a JVM process) starts a separate <strong>Python process</strong> on the same worker node.</li>
+<li>For standard DataFrame operations (<code>select</code>, <code>filter</code>, <code>groupBy</code>), the optimized plan runs entirely inside the high-performance JVM.</li>
+<li>Data is only transferred from the JVM to the Python process when you call a Python <strong>User-Defined Function (UDF)</strong>. This data transfer creates overhead and is why Python UDFs can be slower than their Scala&#x2F;Java counterparts.</li>
+</ul>
+</li>
+<li><strong>Using Scala&#x2F;Java in PySpark:</strong> You can get the best of both worlds. Write performance-critical logic in Scala&#x2F;Java, package it as a JAR file, and include it in your PySpark job using the <code>--jars</code> flag in <code>spark-submit</code>.<ul>
+<li>For Python UDFs:<ul>
+<li>Regular UDFs run in separate Python worker processes; Spark serializes rows (Pickle or other) to Python, executes the UDF, then serializes results back – this is the expensive path.</li>
+<li>Pandas UDFs (vectorized UDFs) use Apache Arrow to transfer columnar batches, vastly reducing overhead and improving throughput.</li>
+<li>Py4J is used for driver ⇌ JVM communication; executor side Python workers are launched by the JVM executor process (not by the driver).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Practical Implications</strong><ul>
+<li>Prefer built-in Spark SQL functions or JVM UDFs for best performance.</li>
+<li>Use Pandas UDFs&#x2F;Arrow for heavy Python UDF work to reduce serialization overhead.</li>
+<li>If you need heavy, reusable logic that must run in the JVM, implement it in Scala&#x2F;Java, package as a JAR, and supply it with <code>--jars</code> or <code>--packages</code>; Python can call into it via SQL or registered UDFs.</li>
+</ul>
+</li>
+</ul>
+<h2 id="context-switching"><a href="#context-switching" class="headerlink" title="context switching"></a>context switching</h2><p>When executing Python code, such as Pandas or PySpark UDFs, the related data is processed within the executor’s Python interpreter. The executor’s Python interpreter operates directly on the data available on the executor node, without the need to transfer the data back to the driver node.</p>
 <p>This is one of the benefits of using PySpark and executing Python code within the Spark framework. The data is distributed across the worker nodes, and the Python code is executed in parallel on the executor nodes where the data resides. This avoids unnecessary data transfer between the executor nodes and the driver node, which can improve performance and reduce network overhead.</p>
 <p>When you invoke Python code, such as a Pandas or PySpark UDF, on a Spark DataFrame, the processing happens in a distributed manner on the executor nodes. Each executor processes the corresponding subset of the data and applies the Python code to that subset independently. The results are then combined, and the final result is returned to the driver node.</p>
 <p>It’s worth noting that the data transfer between the executor nodes and the driver node typically occurs when there is a need to <strong>exchange intermediate results, aggregate data, or perform actions that require collecting data to the driver</strong>, such as calling <code>collect()</code> or <code>toPandas()</code>. In those cases, the relevant data is transferred from the executor nodes to the driver node. However, for processing performed within the executor’s Python interpreter, the data remains on the executor node and is processed locally within the Python environment of each executor.</p>
@@ -914,7 +1060,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2025</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -926,14 +1072,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>Word count total: </span>
-    <span title="Word count total">528k</span>
+    <span title="Word count total">536k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>Reading time total &asymp;</span>
-    <span title="Reading time total">8:01</span>
+    <span title="Reading time total">8:07</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
